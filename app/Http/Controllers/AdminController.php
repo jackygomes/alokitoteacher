@@ -85,7 +85,7 @@ class AdminController extends Controller
         return view('course_edit',compact( 'user_info','info', 'contents'));
     }
 
-    function update(Request $request, $id) {
+    function course_update(Request $request, $id) {
 
 
         $courseVideo = CourseVideo::find($id);
@@ -97,6 +97,36 @@ class AdminController extends Controller
 
 
         $courseVideo->save();
+        return redirect()->route('course.edit', $courseId);
+
+    }
+
+    function course_quiz_update (Request $request, $id) {
+
+        $courseId = $id;
+        $quizId = $request->input('quiz_id');
+        $courseQuiz = CourseQuiz::find($quizId);
+        $courseQuiz->quiz_title = $request->input('quiz_name');
+
+        $courseQuiz->save();
+
+        $questionId = $request->input('quiz_question_id');
+        $courseQuestion = CourseQuestion::find($questionId);
+        $courseQuestion->query = $request->input('quiz_question');
+
+        $courseQuestion->save();
+
+        $optionCount = count($request->input('optionsId'));
+
+
+        for($x = 0; $x < $optionCount; $x++) {
+            $id = $request->input('optionsId.'.$x);
+            $courseQuestionOption = CourseQuizOption::find($id);
+            $courseQuestionOption->question_option = $request->input('options.'.$x);
+
+            $courseQuestionOption->save();
+        }
+
         return redirect()->route('course.edit', $courseId);
 
     }
@@ -123,7 +153,7 @@ class AdminController extends Controller
 
 
                 return response()->json([
-                    'html' => view('quiz', compact('quiz_details', 'questions', 'count'))->render(),
+                    'html' => view('quiz_edit', compact('quiz_details', 'questions', 'count'))->render(),
                 ]);
             }
 
@@ -139,7 +169,7 @@ class AdminController extends Controller
                     $count = $questions->count();
 
                     return response()->json([
-                        'html' => view('quiz', compact('quiz_details', 'questions', 'count'))->render(),
+                        'html' => view('quiz_edit', compact('quiz_details', 'questions', 'count'))->render(),
                     ]);
                 }
 

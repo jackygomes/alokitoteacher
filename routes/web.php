@@ -31,7 +31,8 @@ Route::get ('s/{username}', 'SchoolController@index');
 
 Route::get ('admin/{username}', 'AdminController@index');
 Route::get ('admin/course/edit/{id}', 'AdminController@course_edit')->name('course.edit');
-Route::post ('admin/course/update/{id}', 'AdminController@update')->name('course.update');
+Route::post ('admin/course/update/{id}', 'AdminController@course_update')->name('course.update');
+Route::post ('admin/course/quiz/update/{id}', 'AdminController@course_quiz_update')->name('course.quiz.update');
 
 Route::post ('admin/load_content', 'AdminController@load_content');
 Route::post ('admin/load_question', 'AdminController@load_question');
