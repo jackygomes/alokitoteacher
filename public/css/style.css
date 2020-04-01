@@ -1,0 +1,500 @@
+#sidebarCollapse {
+    width: 40px;
+    height: 40px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+#sidebarCollapse span {
+    width: 80%;
+    height: 2px;
+    margin: 0 auto;
+    display: block;
+    background: #ffffff;
+    transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+}
+
+#sidebarCollapse.active span:first-of-type {
+    transform: translate3d(3px,8px,5px) rotate(45deg);
+    transform-origin: right top;
+    width: 15px;
+}
+#sidebarCollapse.active span:nth-of-type(2) {
+    /* second one is not visible */
+   
+}
+#sidebarCollapse.active span:last-of-type {
+    /* rotate third one */
+    transform: translate3d(3px,-8px,5px) rotate(-45deg);
+    transform-origin: right bottom;
+    width: 15px;
+}
+
+#sidebarCollapse span {
+    /* no rotation */
+    transform: none;
+    /* all bars are visible */
+    opacity: 1;
+    margin: 5px auto;
+}
+
+
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+    perspective: 1500px; 
+}
+
+#sidebar {
+ /*   min-width: 250px;
+    max-width: 250px;*/
+    background: #ffffff;
+    color: #fff;
+    /*transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+    transform-origin: center left;*/ /* Set the transformed position of sidebar to center left side. */
+    position: absolute;
+    overflow-y: auto;
+    width: inherit;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+    transform: rotateY(100deg); /* Rotate sidebar vertically by 100 degrees. */
+}
+
+
+
+body{
+    background-color: #ffffff !important;
+    font-family: 'Exo', sans-serif;
+}
+
+
+.dot{
+  height: 10px;
+  width: 10px;
+  background-color: #ffbf00;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.navbar-toggler{
+    width: 47px;
+    height: 34px;
+    background-color: #f5b82f;
+    border:none;
+}
+.navbar-toggler .line{
+    width: 100%;
+    float: left;
+    height: 2px;
+    background-color: #fff;
+    margin-bottom: 5px;
+}
+
+.navbar {
+    background-color: #dad8d5!important;
+}
+
+
+.alokitologo img {
+    height : 70px;
+}
+
+
+/* Adjust Menu colors - Hover */
+.navbar-light .navbar-brand {
+    color: #1f1d1d;
+}
+
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color: #1f1d1d;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #1f1d1d;
+}
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+    color: #ffffff!important;
+}
+
+
+
+
+
+
+/*alokito jatra
+
+.alokitojatrabg{
+	background-color: #f5b82f;
+	padding-top:40px;
+	 padding-bottom:40px;
+}*/
+
+
+
+.fun-factor-area{
+	padding-top:60px;
+	padding-bottom:60px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+
+}
+
+.counter-count{
+    font-size: 90px;
+    line-height: 1;
+}
+
+.counter-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #522436;
+}
+
+.explore-teaching-courses{
+    margin-bottom: 0px !important;
+    padding-top: 25px !important;
+    background: #f9f9f9 url(/AlokitoTeacher/public/images/logo/A25A435311.jpg) !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+
+
+/* explore card*/
+.explore{
+	padding-top:90px;
+	 padding-bottom:90px;
+	 background: #f5c55d;
+
+}
+
+
+
+.checked{
+    color: #fff;
+}
+
+
+
+/* explore card*/
+
+/*teacehrstoolkits*/
+
+.avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+
+/* journey
+
+.journey{
+	padding-top:90px;
+	 
+	 background: #ffffff;
+
+}*/
+
+.zoom {
+  transition: transform .2s; /* Animation */
+}
+
+.zoom:hover {
+  transform: scale(1.5); /* (150% zoom - ) */
+  z-index: 9;
+}
+
+.zoom2 {
+  transition: transform .5s; /* Animation */
+}
+.zoom2:hover {
+  transform: scale(1.2); /* (100% zoom - ) */
+  z-index: 9;
+}
+
+.border-yellow {
+    border-color: #f5b82f!important;
+}
+
+.border-yellow-image{
+    border: 2px solid #f5b82f!important;
+}
+
+
+.text-yellow {
+    color: #f5b82f!important;
+}
+
+.background-yellow {
+    background-color: #f5b82f!important;
+}
+
+@media (min-width: 768px) {
+    .journey{
+        margin-bottom: -100px; 
+        margin-top: 100px;
+    }
+
+    .sidebar-job-all{
+        min-height: 100vh;
+    }
+}
+
+
+
+
+
+*******login page CSS******
+**************************/
+
+
+
+
+
+
+
+*******Teachers page******
+**************************/
+
+.progress-bar{
+    background-color: #ffea27;
+}
+
+
+
+
+
+
+
+
+*******Schools page******
+**************************/
+
+
+
+
+
+*******Courses page******
+**************************/
+
+
+
+*******addcourse page******
+**************************
+
+
+*******contact page******
+**************************
+
+
+
+/*footer style*/
+footer{
+	padding-top: 30px;
+	/*background: ;*/
+	background-size: cover;
+	background-color: #1f1d1d;
+}
+
+
+
+a:hover{
+	text-decoration: none;
+	color: #f5b82f;
+}
+
+
+
+/*changing pagination colour  */
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #f7e11bf2;
+    border-color: #d4c53d;
+}
+
+
+
+
+
+/* quiz_result decoration */
+
+.result-circle{
+    height:150px;
+    width:150px;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    
+
+}
+.red-border {
+    background-color:#fff;
+    border:2px solid red;    
+    
+}
+
+.green-border {
+    background-color:#fff;
+    border:2px solid green;
+}
+
+.black-border {
+    background-color:#fff;
+    border:2px solid black;    
+}
+.yellow-border {
+    background-color:#fff;
+    border:2px solid #f5b82f;    
+}
+.blue-border {
+    background-color:#fff;
+    border:2px solid blue;
+}
+
+
+
+
+/* quiz_result decoration */
+
+
+/* custom quiz radio btn */
+
+.custom-radio .custom-control-input:checked~.custom-control-label:before {
+    background-color: #2d995b;
+}
+.custom-control-input:checked~.custom-control-label:before {
+    color: #2d995b;
+    background-color: #2d995b;
+}
+
+.text_in_line {
+    display:inline-block;
+}
+
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    background-color: #f5b82f;
+    border: 2px solid #f5b82f;
+}
+
+.text-orange {
+    color: #f5b82f!important;
+}
+
+
+.custom-hover:hover{
+    color: #ffffff!important;
+}
+
+.custom-hover2:hover{
+    color: #f5b82f!important;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+    color: #495057;
+    background-color: #f5b82f;
+    border-color: #dee2e6 #dee2e6 #f8fafc;
+
+}
+
+.fa-clickable {
+    cursor:pointer;
+    outline:none;
+}
+
+.disable-click{
+    pointer-events: none;
+}
+
+.active-course-tab{
+    box-shadow: inset 0px 0px 3px 0.3rem rgba(245, 184, 47, 0.29);
+}
+
+/******************************************Rating Style Starts*****************/
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+
+.rating > label:before {
+    position: relative;
+    display: block;
+    font-size: 24px;
+    content: "\f005";
+    font-family: 'Font Awesome\ 5 Free';
+    font-weight: 900;
+    color: #ccc;
+    background: -webkit-linear-gradient(-45deg, #d9d9d9 0%, #b3b3b3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > label.selected:before,
+.rating > label.selected ~ label:before {
+    color: #f0ad4e;
+    background: -webkit-linear-gradient(-45deg, #fcb551 0%, #d69a45 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/******************************************Rating Style Ends*****************/
+hr.new4 {
+  border: 1px solid yellow;
+}
+
+.toast-success { 
+    color: black;
+    background-color: #ffffff;
+    top: 90px;
+    right: 10px;
+    position: fixed;
+    border-left: 10px solid #00822b;
+    width: 60vw;
+}
+
+.toast-danger { 
+    color: black;
+    background-color: #ffffff;
+    top: 90px;
+    right: 10px;
+    position: fixed;
+    border-left: 10px solid #e3342f;
+    width: 60vw;
+} 
+
+.job-button-active{
+    background-color: #a58744 !important;
+    color: #fff;
+}
+
+
+
+/******************************************leaderboard slider*****************/
+
+
