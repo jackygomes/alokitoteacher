@@ -7,11 +7,13 @@ use App\CourseQuestion;
 use App\CourseQuiz;
 use App\CourseQuizOption;
 use App\CourseVideo;
+use App\Toolkit;
 use App\ToolkitDocument;
 use App\ToolkitQuestion;
 use App\ToolkitQuiz;
 use App\ToolkitQuizOption;
 use App\ToolkitVideo;
+use App\TrackHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -43,9 +45,10 @@ class AdminController extends Controller
         $courses = Course::all();
 
 
-        $toolkits = DB::table('toolkits')->join('subjects', 'subjects.id', '=', 'toolkits.subject_id')->paginate(5);
+//        $toolkits = DB::table('toolkits')->join('subjects', 'subjects.id', '=', 'toolkits.subject_id')->paginate(5);
+        $toolkits = Toolkit::with('subject')->paginate(5);
 
-
+//        return $toolkits;
         return view ('admin',compact( 'user_info', 'courses', 'toolkits'));
     }
 
@@ -85,7 +88,7 @@ class AdminController extends Controller
         return view('course_edit',compact( 'user_info','info', 'contents'));
     }
 
-    function course_update(Request $request, $id) {
+    public function course_update(Request $request, $id) {
 
 
         $courseVideo = CourseVideo::find($id);
@@ -101,7 +104,7 @@ class AdminController extends Controller
 
     }
 
-    function course_quiz_update (Request $request, $id) {
+    public function course_quiz_update (Request $request, $id) {
 
         $courseId = $id;
         $quizId = $request->input('quiz_id');
@@ -131,13 +134,96 @@ class AdminController extends Controller
 
     }
 
-    function load_content(Request $request)
+    public function toolkit_edit($id) {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+
+        $info = Toolkit::find($id);
+
+        if ($info == null) {
+            return abort(404);
+        }
+
+        $trackHistory = TrackHistory::where('user_id', '=', Auth::id())
+            ->where('course_or_toolkit', '=', 0)
+            ->where('course_toolkit_id', '=', $info->id)
+            ->first();
+
+        $videos = DB::table('toolkit_videos')
+            ->select('id', 'video_title as title', 'sequence', DB::raw('1 as type'))
+            ->where('toolkit_id', '=', $info->id);
+
+        $documents = DB::table('toolkit_documents')
+            ->select('id', 'doc_title as title', 'sequence', DB::raw('2 as type'))
+            ->where('toolkit_id', '=', $info->id);
+
+        $contents = DB::table('toolkit_quizzes')
+            ->select('id', 'quiz_title as title', 'sequence', DB::raw('3 as type'))
+            ->where('toolkit_id', '=', $info->id)
+            ->union($documents)
+            ->union($videos)
+            ->orderBy('sequence', 'ASC')
+            ->get();
+
+//        return $contents;
+        return view('toolkit_edit', compact('info', 'contents'));
+    }
+
+    public function toolkit_video_update(Request $request, $id) {
+
+
+        $toolkitVideo = ToolkitVideo::find($id);
+        $toolkitVideo->url = $request->input('url');
+        $toolkitVideo->video_title = $request->input('title');
+        $toolkitVideo->short_description = $request->input('description');
+
+        $toolkitId = $request->input('toolkit_id');
+
+
+        $toolkitVideo->save();
+        return redirect()->route('toolkit.edit', $toolkitId);
+
+    }
+
+    public function toolkit_quiz_update (Request $request, $id) {
+
+        $toolkit = $id;
+        $quizId = $request->input('quiz_id');
+        $toolkitQuiz = toolkitQuiz::find($quizId);
+        $toolkitQuiz->quiz_title = $request->input('quiz_name');
+
+        $toolkitQuiz->save();
+
+        $questionId = $request->input('quiz_question_id');
+        $toolkitQuestion = ToolkitQuestion::find($questionId);
+        $toolkitQuestion->query = $request->input('quiz_question');
+
+        $toolkitQuestion->save();
+
+        $optionCount = count($request->input('optionsId'));
+
+
+        for($x = 0; $x < $optionCount; $x++) {
+            $id = $request->input('optionsId.'.$x);
+            $toolkitQuestionOption = ToolkitQuizOption::find($id);
+            $toolkitQuestionOption->question_option = $request->input('options.'.$x);
+
+            $toolkitQuestionOption->save();
+        }
+
+        return redirect()->route('toolkit.edit', $toolkit);
+
+    }
+
+    public function load_content(Request $request)
     {
         $id = $request->id;
         $type = $request->type;
         $course_toolkit = $request->course_toolkit;
-
-//        return "found type 1";
 
         if ($course_toolkit == 'course') {
             if ($type == 1) {
@@ -158,7 +244,7 @@ class AdminController extends Controller
             }
 
         } else {
-            if ($course_toolkit == 't') {
+            if ($course_toolkit == 'toolkit') {
                 if ($type == 1) {
                     return ToolkitVideo::find($id);
                 } elseif ($type == 2) {
@@ -167,9 +253,9 @@ class AdminController extends Controller
                     $quiz_details = ToolkitQuiz::find($id);
                     $questions = ToolkitQuestion::where('quiz_id', '=', $quiz_details->id)->get();
                     $count = $questions->count();
-
+//                    return $count;
                     return response()->json([
-                        'html' => view('quiz_edit', compact('quiz_details', 'questions', 'count'))->render(),
+                        'html' => view('toolkit_quiz_edit', compact('quiz_details', 'questions', 'count'))->render(),
                     ]);
                 }
 
@@ -180,7 +266,7 @@ class AdminController extends Controller
 
 
     }
-    function load_question(Request $request)
+    public function load_question(Request $request)
     {
         $course_toolkit = $request->course_toolkit;
 
@@ -195,7 +281,7 @@ class AdminController extends Controller
                 'options' => $options,
             ]);
         } else {
-            if ($course_toolkit == 't') {
+            if ($course_toolkit == 'toolkit') {
                 $quiz_details = ToolkitQuiz::find($request->quiz_id);
                 $question = ToolkitQuestion::where('quiz_id', '=',
                     $quiz_details->id)->offset($request->serial)->limit($request->serial)->first();

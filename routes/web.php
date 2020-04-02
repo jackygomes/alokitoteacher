@@ -34,6 +34,11 @@ Route::get ('admin/course/edit/{id}', 'AdminController@course_edit')->name('cour
 Route::post ('admin/course/update/{id}', 'AdminController@course_update')->name('course.update');
 Route::post ('admin/course/quiz/update/{id}', 'AdminController@course_quiz_update')->name('course.quiz.update');
 
+Route::get ('admin/toolkit/edit/{id}', 'AdminController@toolkit_edit')->name('toolkit.edit');
+Route::post ('admin/toolkit/video/update/{id}', 'AdminController@toolkit_video_update')->name('toolkit.video.edit');
+Route::post ('admin/toolkit/quiz/update/{id}', 'AdminController@toolkit_quiz_update')->name('toolkit.quiz.update');
+
+
 Route::post ('admin/load_content', 'AdminController@load_content');
 Route::post ('admin/load_question', 'AdminController@load_question');
 

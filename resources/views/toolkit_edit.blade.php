@@ -74,19 +74,6 @@
     @push('js')
         <script type="text/javascript">
 
-            // console.log(1);
-            // ;(function ($) {
-            //     $('.list-group-item').each( function() {
-            //         $(this).on('click', function(e) {
-            //             console.log(e);
-            //         })
-            //     });
-            //
-            //     $('#sidebar').on('click', function(e) {
-            //         console.log(1);
-            //     });
-            // })(jQuery);
-
             $(document).ready(function () {
 
                 $('.edit-button').on('click', function (e) {
@@ -114,7 +101,7 @@
                         },
                         success: function (result) {
                             console.log(result);
-                            let actionUrl = "{{ route('course.update', ':resultid') }}";
+                            let actionUrl = "{{ route('toolkit.video.edit', ':resultid') }}";
                             actionUrl = actionUrl.replace(":resultid", result.id);
 
 
@@ -124,7 +111,8 @@
                                     "<div class='form-group'><label>Video Url</label><input name='url' class='form-control' value='" + result.url + "'/></div>" +
                                     "<div class='form-group'><label>Video Title</label><input name='title' class='form-control' value='"+result.video_title+"'/></div>" +
                                     "<div class='form-group'><label>Video Description</label><input name='description' class='form-control' value='"+result.short_description+"'/></div>" +
-                                    "<input type='hidden' name='course_id' class='form-control' value='"+result.course_id+"'/>"+
+                                    "<input type='hidden' name='toolkit_id' class='form-control' value='"+result.toolkit_id+"'/>"+
+                                    "<input type='hidden' name='id' class='form-control' value='"+result.id+"'/>"+
                                     "<button type=\"submit\" class=\"btn btn-primary\">Update</button>" +
                                     "</form>";
 
@@ -134,6 +122,7 @@
                                 $('#content').html('<object style="height: 80vh" width="100%" data="' + result.doc_url + '"><p>Document</p></object><button class="btn background-yellow px-4 py-2 mt-5 shadow font-weight-bold text-white" id="nextSequence">Go to Next</button>');
                             }else{
                                 $('#content').html(result.html);
+                                console.log('before ques');
                                 loadQuestion(id, parseInt($('#serial-question').text())-1);
                             }
                         }

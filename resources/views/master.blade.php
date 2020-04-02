@@ -96,7 +96,11 @@
                         {{ Auth::user()->name }}
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="@if(Auth::user()->identifier == 1){{ url('t') }}@elseif(Auth::user()->identifier == 2) {{ url('s') }}@elseif(Auth::user()->identifier == 101) {{ url('admin') }}@endif/{{ Auth::user()->username }}">Profile</a>
+                        @if(Auth::user()->identifier == 101)
+                        <a class="dropdown-item" href="@if(Auth::user()->identifier == 101) {{ url('admin') }}@endif/{{ Auth::user()->username }}">Dashboard</a>
+                        @else
+                        <a class="dropdown-item" href="@if(Auth::user()->identifier == 1){{ url('t') }}@elseif(Auth::user()->identifier == 2) {{ url('s') }}@endif/{{ Auth::user()->username }}">Profile</a>
+                        @endif
                         <a class="dropdown-item" href="{{ url('settings') }}">Settings</a>
                         <form action="{{ url('logout') }}" method="POST">
                             {{csrf_field()}}

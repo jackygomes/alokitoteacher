@@ -27,7 +27,7 @@
                     <button type="button" id="pro_pic_choose" class="btn bg-white mt-2 mb-3">Upload</button>
                 </form>
 
-                <a href="{{ url('settings') }}" class="text-dark float-right mt-3"><i class="fas fa-pen" ></i> <small>Edit Details</small></a>
+{{--                <a href="{{ url('settings') }}" class="text-dark float-right mt-3"><i class="fas fa-pen" ></i> <small>Edit Details</small></a>--}}
 
             @endif
 
@@ -65,12 +65,12 @@
 
 
 
-                <h4 class="mt-3">Current Balance </h4>
-                <p>{{ round($user_info->balance, 2) }}</p>
-                <div class="">
-                    <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>
-                    <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
-                </div>
+{{--                <h4 class="mt-3">Current Balance </h4>--}}
+{{--                <p>{{ round($user_info->balance, 2) }}</p>--}}
+{{--                <div class="">--}}
+{{--                    <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>--}}
+{{--                    <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>--}}
+{{--                </div>--}}
             @endif
 
 
@@ -137,10 +137,10 @@
                                     @foreach ($toolkits as $toolkit)
                                         <tr>
                                             <td>{{$n}}</td>
-                                            <td>{{$toolkit->subject_name}}</td>
+                                            <td>{{$toolkit->subject->subject_name}}</td>
                                             <td>{{$toolkit->toolkit_title}}</td>
                                             <td>{{$toolkit->price}}</td>
-                                            <td><a href="#" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
+                                            <td><a href="toolkit/edit/{{$toolkit->id}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
                                         </tr>
                                         <?php $n++ ?>
                                     @endforeach
