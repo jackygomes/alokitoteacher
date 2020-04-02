@@ -308,7 +308,7 @@
                           <th style="width:20%">Institute</th>
                           <th style="width:10%">Passing Year</th>
                           <th style="width:10%">CGPA/GPA</th>
-                          <th style="width:20%">Date</th>
+{{--                          <th style="width:20%">Date</th>--}}
                           @if($user_info->id == Auth::id())
                            <th style="width:10%">Action</th>
                           @endif
@@ -332,7 +332,7 @@
                                     <td>{{$academic_info->institute}}</td>
                                     <td>{{ date("Y", strtotime($academic_info->passing_year)) }}
                                     <td>{{$academic_info->cgpa}}</td>
-                                    <td>{{ date("jS F, Y", strtotime($academic_info->date)) }}</td>
+{{--                                    <td>{{ date("jS F, Y", strtotime($academic_info->date)) }}</td>--}}
 
                                     @if($user_info->id == Auth::id())
                                     <td><a href="{{ url('remove') }}/academic/{{ $academic_info->id }}" class="btn btn-danger btn-sm">Remove</a></td>
@@ -429,7 +429,7 @@
                           <thead>
                             <tr>
                               <th style="width:15%">Training Title</th>
-                              <th style="width:15%">Topic</th>
+{{--                              <th style="width:15%">Topic</th>--}}
                               <th style="width:15%">Institute</th>
                               <th style="width:15%">Country</th>
                               <th style="width:15%">Location</th>
@@ -445,7 +445,7 @@
                             @foreach ($skill_info as $v_skill_info)
                             <tr>
                               <td>{{$v_skill_info->training_title}}</td>
-                              <td>{{$v_skill_info->topic}}</td>
+{{--                              <td>{{$v_skill_info->topic}}</td>--}}
                               <td>{{$v_skill_info->institute}}</td>
                               <td>{{$v_skill_info->country}}</td>
                               <td>{{$v_skill_info->location}}</td>
