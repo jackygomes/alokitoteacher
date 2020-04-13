@@ -11,18 +11,9 @@
 
     <div class="col-md-12">
 
-        <div class="form-group">
-            <label>Quiz Question</label>
-            <input id="question-query" name="quiz_question" class="form-control" value=""/>
-            <input type="hidden" id="question-query-hidden" name="quiz_question_id" class="form-control" value=""/>
-        </div>
-        <div class="form-group">
-            <label>Answer Options</label>
-            <div id="option-section">
-            </div>
-        </div>
+        <div id="questions"></div>
 
-        <button type="submit" class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Update</button>
+        <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Update</button>
     </div>
 </form>
 

@@ -122,7 +122,7 @@
                                 $('#content').html('<object style="height: 80vh" width="100%" data="' + result.doc_url + '"><p>Document</p></object><button class="btn background-yellow px-4 py-2 mt-5 shadow font-weight-bold text-white" id="nextSequence">Go to Next</button>');
                             }else{
                                 $('#content').html(result.html);
-                                console.log('before ques');
+                                // console.log('before ques');
                                 loadQuestion(id, parseInt($('#serial-question').text())-1);
                             }
                         }
@@ -146,22 +146,23 @@
                         success: function(result){
 
 
-                            $('#question-query').val(result.question.query);
-                            $('#question-query-hidden').val(result.question.id);
-                            $('#question-query').attr('question_id', result.question.id);
-                            console.log(result.options);
-                            if(result.options.length == 0){
-                                $('#option-section').html('<div class="form-row mt-1"><div class="col-md-12 mb-5"><input type="text" class="form-control border-yellow"  required  placeholder="Your Answer" autofocus></div></div>');
-                            }else{
-                                $('#option-section').empty();
-                                $.each(result.options, function(key,value){
-                                    // $('#option-section').append('<div class="custom-control custom-radio"><input type="radio" value='+(key+1)+' id="radio'+value.id+'" name="radio" class="custom-control-input"><label class="custom-control-label" for="radio'+value.id+'">'+value.question_option+'</label></div><hr>');
-                                    $('#option-section').append("<input type='hidden' class='form-control mb-2' name='optionsId[]' value='"+value.id+"'/>");
-                                    $('#option-section').append("<input type='text' class='form-control mb-2' name='options[]' value='"+value.question_option+"'/>");
-
-                                });
-
-                            }
+                            // $('#question-query').val(result.question.query);
+                            // $('#question-query-hidden').val(result.question.id);
+                            // $('#question-query').attr('question_id', result.question.id);
+                            console.log(result);
+                            $('#questions').html(result.html);
+                            // if(result.options.length == 0){
+                            //     $('#option-section').html('<div class="form-row mt-1"><div class="col-md-12 mb-5"><input type="text" class="form-control border-yellow"  required  placeholder="Your Answer" autofocus></div></div>');
+                            // }else{
+                            //     $('#option-section').empty();
+                            //     $.each(result.options, function(key,value){
+                            //         // $('#option-section').append('<div class="custom-control custom-radio"><input type="radio" value='+(key+1)+' id="radio'+value.id+'" name="radio" class="custom-control-input"><label class="custom-control-label" for="radio'+value.id+'">'+value.question_option+'</label></div><hr>');
+                            //         $('#option-section').append("<input type='hidden' class='form-control mb-2' name='optionsId[]' value='"+value.id+"'/>");
+                            //         $('#option-section').append("<input type='text' class='form-control mb-2' name='options[]' value='"+value.question_option+"'/>");
+                            //
+                            //     });
+                            //
+                            // }
                         }
                     });
                 }

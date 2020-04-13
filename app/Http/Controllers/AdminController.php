@@ -106,6 +106,8 @@ class AdminController extends Controller
 
     public function course_quiz_update (Request $request, $id) {
 
+
+
         $courseId = $id;
         $quizId = $request->input('quiz_id');
         $courseQuiz = CourseQuiz::find($quizId);
@@ -113,17 +115,18 @@ class AdminController extends Controller
 
         $courseQuiz->save();
 
-        $questionId = $request->input('quiz_question_id');
-        $courseQuestion = CourseQuestion::find($questionId);
-        $courseQuestion->query = $request->input('quiz_question');
+        $questionCount = count($request->input('questionIds'));
+        for($x = 0; $x < $questionCount; $x++) {
+            $id = $request->input('questionIds.'.$x);
+            $courseQuestion = CourseQuestion::find($id);
+            $courseQuestion->query = $request->input('questions.'.$x);
 
-        $courseQuestion->save();
+            $courseQuestion->save();
+        }
 
-        $optionCount = count($request->input('optionsId'));
-
-
+        $optionCount = count($request->input('optionsIds'));
         for($x = 0; $x < $optionCount; $x++) {
-            $id = $request->input('optionsId.'.$x);
+            $id = $request->input('optionsIds.'.$x);
             $courseQuestionOption = CourseQuizOption::find($id);
             $courseQuestionOption->question_option = $request->input('options.'.$x);
 
@@ -198,17 +201,21 @@ class AdminController extends Controller
 
         $toolkitQuiz->save();
 
-        $questionId = $request->input('quiz_question_id');
-        $toolkitQuestion = ToolkitQuestion::find($questionId);
-        $toolkitQuestion->query = $request->input('quiz_question');
 
-        $toolkitQuestion->save();
+        $questionCount = count($request->input('questionIds'));
+        for($x = 0; $x < $questionCount; $x++) {
+            $id = $request->input('questionIds.'.$x);
+            $toolkitQuestion = ToolkitQuestion::find($id);
+            $toolkitQuestion->query = $request->input('questions.'.$x);
 
-        $optionCount = count($request->input('optionsId'));
+            $toolkitQuestion->save();
+        }
+
+        $optionCount = count($request->input('optionsIds'));
 
 
         for($x = 0; $x < $optionCount; $x++) {
-            $id = $request->input('optionsId.'.$x);
+            $id = $request->input('optionsIds.'.$x);
             $toolkitQuestionOption = ToolkitQuizOption::find($id);
             $toolkitQuestionOption->question_option = $request->input('options.'.$x);
 
@@ -272,24 +279,20 @@ class AdminController extends Controller
 
         if ($course_toolkit == 'course') {
             $quiz_details = CourseQuiz::find($request->quiz_id);
-            $question = CourseQuestion::where('quiz_id', '=',
-                $quiz_details->id)->offset($request->serial)->limit($request->serial)->first();
-            $options = CourseQuizOption::where('question_id', '=', $question->id)->get();
+            $questions = CourseQuestion::where('quiz_id', '=', $quiz_details->id)->get();
 
+            return $questions;
             return response()->json([
-                'question' => $question,
-                'options' => $options,
+                'html' => view('question_edit', compact('questions'))->render(),
             ]);
         } else {
             if ($course_toolkit == 'toolkit') {
+
                 $quiz_details = ToolkitQuiz::find($request->quiz_id);
-                $question = ToolkitQuestion::where('quiz_id', '=',
-                    $quiz_details->id)->offset($request->serial)->limit($request->serial)->first();
-                $options = ToolkitQuizOption::where('question_id', '=', $question->id)->get();
+                $questions = ToolkitQuestion::where('quiz_id', '=', $quiz_details->id)->get();
 
                 return response()->json([
-                    'question' => $question,
-                    'options' => $options,
+                    'html' => view('toolkit_question_edit', compact('questions'))->render(),
                 ]);
             } else {
                 return 'Error';
