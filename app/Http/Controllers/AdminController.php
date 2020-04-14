@@ -281,7 +281,6 @@ class AdminController extends Controller
             $quiz_details = CourseQuiz::find($request->quiz_id);
             $questions = CourseQuestion::where('quiz_id', '=', $quiz_details->id)->get();
 
-            return $questions;
             return response()->json([
                 'html' => view('question_edit', compact('questions'))->render(),
             ]);
