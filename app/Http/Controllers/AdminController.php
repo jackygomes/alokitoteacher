@@ -116,10 +116,12 @@ class AdminController extends Controller
         $courseQuiz->save();
 
         $questionCount = count($request->input('questionIds'));
+
         for($x = 0; $x < $questionCount; $x++) {
             $id = $request->input('questionIds.'.$x);
             $courseQuestion = CourseQuestion::find($id);
             $courseQuestion->query = $request->input('questions.'.$x);
+            $courseQuestion->correct_option = $request->input('correctOption_'.$id);
 
             $courseQuestion->save();
         }
@@ -132,6 +134,7 @@ class AdminController extends Controller
 
             $courseQuestionOption->save();
         }
+
 
         return redirect()->route('course.edit', $courseId);
 
@@ -207,13 +210,12 @@ class AdminController extends Controller
             $id = $request->input('questionIds.'.$x);
             $toolkitQuestion = ToolkitQuestion::find($id);
             $toolkitQuestion->query = $request->input('questions.'.$x);
+            $toolkitQuestion->correct_option = $request->input('correctOption_'.$id);
 
             $toolkitQuestion->save();
         }
 
         $optionCount = count($request->input('optionsIds'));
-
-
         for($x = 0; $x < $optionCount; $x++) {
             $id = $request->input('optionsIds.'.$x);
             $toolkitQuestionOption = ToolkitQuizOption::find($id);

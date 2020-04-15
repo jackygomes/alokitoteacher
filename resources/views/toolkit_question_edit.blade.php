@@ -15,5 +15,25 @@
             @endforeach
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <label>Choose Correct Answer</label>
+        </div>
+        @for($x=1; $x<=4; $x++)
+            <div class="col-lg-1">
+                <div class="form-check">
+                    @if($question->correct_option == $x)
+                        <input class="form-check-input" type="radio" name="correctOption_{{$question->id}}" id="radios_{{$x}}" value="{{$x}}" checked>
+                    @else
+                        <input class="form-check-input" type="radio" name="correctOption_{{$question->id}}" id="radios_{{$x}}" value="{{$x}}">
+                    @endif
+                    <label class="form-check-label" for="radios_{{$x}}">
+                        {{$x}}
+                    </label>
+                </div>
+            </div>
+        @endfor
+
+    </div>
     <hr>
 @endforeach
