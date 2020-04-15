@@ -9,15 +9,22 @@
     <div class="form-group">
         <label>Answer Options</label>
         <div id="option-section">
+            @php $ansNo = 0; @endphp
             @foreach($question->quizOptions as $option)
-                <input type="text" class="form-control mb-1" name="options[]" value="{{$option->question_option}}"/>
-                <input type="hidden" class="form-control mb-2" name="optionsIds[]" value="{{$option->id}}"/>
+                @php $ansNo++ @endphp
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" style="width: 35px;">{{$ansNo}}</div>
+                    </div>
+                    <input type="text" class="form-control" name="options[]" value="{{$option->question_option}}"/>
+                    <input type="hidden" class="form-control" name="optionsIds[]" value="{{$option->id}}"/>
+                </div>
             @endforeach
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <label>Choose Correct Answer</label>
+            <label>Set Correct Answer Option</label>
         </div>
         @for($x=1; $x<=4; $x++)
             <div class="col-lg-1">
