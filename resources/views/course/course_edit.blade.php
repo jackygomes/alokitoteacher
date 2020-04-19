@@ -81,7 +81,6 @@
                     var type = $(this).attr('type');
 
                     loadContent(id, type);
-                    // console.log('id '+ id+' {} type'+ type);
                 });
 
                 function loadContent(id, type) {
@@ -101,7 +100,7 @@
                         },
                         success: function (result) {
                             console.log(result);
-                            let actionUrl = "{{ route('toolkit.video.edit', ':resultid') }}";
+                            let actionUrl = "{{ route('course.update', ':resultid') }}";
                             actionUrl = actionUrl.replace(":resultid", result.id);
 
 
@@ -111,9 +110,8 @@
                                     "<div class='form-group'><label>Video Url</label><input name='url' class='form-control' value='" + result.url + "'/></div>" +
                                     "<div class='form-group'><label>Video Title</label><input name='title' class='form-control' value='"+result.video_title+"'/></div>" +
                                     "<div class='form-group'><label>Video Description</label><input name='description' class='form-control' value='"+result.short_description+"'/></div>" +
-                                    "<input type='hidden' name='toolkit_id' class='form-control' value='"+result.toolkit_id+"'/>"+
-                                    "<input type='hidden' name='id' class='form-control' value='"+result.id+"'/>"+
-                                    "<button type=\"submit\" class=\"btn btn-primary\">Update</button>" +
+                                    "<input type='hidden' name='course_id' class='form-control' value='"+result.course_id+"'/>"+
+                                    "<button type=\"submit\" class=\"btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white\" id=\"quizButton\">Update</button>"
                                     "</form>";
 
                                 $('#content').html(formHtml);
@@ -122,7 +120,6 @@
                                 $('#content').html('<object style="height: 80vh" width="100%" data="' + result.doc_url + '"><p>Document</p></object><button class="btn background-yellow px-4 py-2 mt-5 shadow font-weight-bold text-white" id="nextSequence">Go to Next</button>');
                             }else{
                                 $('#content').html(result.html);
-                                // console.log('before ques');
                                 loadQuestion(id, parseInt($('#serial-question').text())-1);
                             }
                         }
@@ -149,19 +146,19 @@
                             // $('#question-query').val(result.question.query);
                             // $('#question-query-hidden').val(result.question.id);
                             // $('#question-query').attr('question_id', result.question.id);
-                            console.log(result);
                             $('#questions').html(result.html);
+                            // console.log(result.html);
                             // if(result.options.length == 0){
                             //     $('#option-section').html('<div class="form-row mt-1"><div class="col-md-12 mb-5"><input type="text" class="form-control border-yellow"  required  placeholder="Your Answer" autofocus></div></div>');
                             // }else{
                             //     $('#option-section').empty();
-                            //     $.each(result.options, function(key,value){
+                            //     $.each(result.question, function(key,value){
                             //         // $('#option-section').append('<div class="custom-control custom-radio"><input type="radio" value='+(key+1)+' id="radio'+value.id+'" name="radio" class="custom-control-input"><label class="custom-control-label" for="radio'+value.id+'">'+value.question_option+'</label></div><hr>');
                             //         $('#option-section').append("<input type='hidden' class='form-control mb-2' name='optionsId[]' value='"+value.id+"'/>");
                             //         $('#option-section').append("<input type='text' class='form-control mb-2' name='options[]' value='"+value.question_option+"'/>");
                             //
                             //     });
-                            //
+
                             // }
                         }
                     });

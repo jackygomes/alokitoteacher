@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ToolkitQuestion extends Model
 {
+    protected $guarded = [];
     /**
      * Returns attached options for the Quiz
      *

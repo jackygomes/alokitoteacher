@@ -29,14 +29,20 @@ Route::get ('remove/{type}/{id}', 'TeacherController@remove_profile_item');
 
 Route::get ('s/{username}', 'SchoolController@index');
 
-Route::get ('admin/{username}', 'AdminController@index');
-Route::get ('admin/course/edit/{id}', 'AdminController@course_edit')->name('course.edit');
-Route::post ('admin/course/update/{id}', 'AdminController@course_update')->name('course.update');
-Route::post ('admin/course/quiz/update/{id}', 'AdminController@course_quiz_update')->name('course.quiz.update');
+Route::get ('admin/{username}', 'AdminController@index')->name('dashboard');
+Route::get ('admin/course/create', 'CourseController@create')->name('course.create');
+Route::get ('admin/course/edit/{id}', 'CourseController@course_edit')->name('course.edit');
+Route::post ('admin/course/update/{id}', 'CourseController@course_update')->name('course.update');
+Route::post ('admin/course/quiz/update/{id}', 'CourseController@course_quiz_update')->name('course.quiz.update');
 
-Route::get ('admin/toolkit/edit/{id}', 'AdminController@toolkit_edit')->name('toolkit.edit');
-Route::post ('admin/toolkit/video/update/{id}', 'AdminController@toolkit_video_update')->name('toolkit.video.edit');
-Route::post ('admin/toolkit/quiz/update/{id}', 'AdminController@toolkit_quiz_update')->name('toolkit.quiz.update');
+Route::get ('admin/toolkit/create', 'ToolkitController@create')->name('toolkit.create');
+Route::post ('admin/toolkit/store', 'ToolkitController@store')->name('toolkit.store');
+Route::post ('admin/toolkit/video/create/{id}', 'ToolkitController@videoCreate')->name('toolkit.video.create');
+Route::post ('admin/toolkit/question/create/{id}', 'ToolkitController@questionCreate')->name('toolkit.question.create');
+
+Route::get ('admin/toolkit/edit/{id}', 'ToolkitController@toolkit_edit')->name('toolkit.edit');
+Route::post ('admin/toolkit/video/update/{id}', 'ToolkitController@toolkit_video_update')->name('toolkit.video.edit');
+Route::post ('admin/toolkit/quiz/update/{id}', 'ToolkitController@toolkit_quiz_update')->name('toolkit.quiz.update');
 
 
 Route::post ('admin/load_content', 'AdminController@load_content');

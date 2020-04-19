@@ -62,15 +62,6 @@
 
                 </div>
 
-
-
-
-{{--                <h4 class="mt-3">Current Balance </h4>--}}
-{{--                <p>{{ round($user_info->balance, 2) }}</p>--}}
-{{--                <div class="">--}}
-{{--                    <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>--}}
-{{--                    <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>--}}
-{{--                </div>--}}
             @endif
 
 
@@ -79,9 +70,14 @@
         <div class="col-md-9 col-sm-12 mt-5">
             <div class="container-fluid">
                 <div class="row">
+                    @if($message = Session::get('success'))
+                        <div class="alert alert-success">
+                            {{$message}}
+                        </div>
+                    @endif
                     <div class=" mt-5 col-sm-12">
                         <h3 class="font-weight-bold mr-3" style="display: inline-block">Courses</h3>
-                        <span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span>
+                        <a href="course/create"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
                         <div class="mr=2">
                             <div class="table-responsive-sm">
                                 <table class="table ">
@@ -119,7 +115,7 @@
                 <div class="row">
                     <div class=" mt-5 mb-3 col-sm-12">
                         <h3 class="font-weight-bold mr-3" style="display: inline-block">Toolkits</h3>
-                        {{--<span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span>--}}
+                        <a href="toolkit/create"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
                         <div class="mr=2">
                             <div class="table-responsive-sm">
                                 <table class="table ">
