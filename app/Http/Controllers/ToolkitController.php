@@ -195,8 +195,7 @@ class ToolkitController extends Controller
         return redirect()->route('toolkit.edit', $toolkitId)->with('success', 'Questions created successfully');
     }
 
-    public function toolkit_edit($id) {
-        $toolkitId = $id;
+    public function toolkit_edit($toolkitId) {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if(isset($user_info) && $user_info->identifier != 101){
@@ -204,35 +203,36 @@ class ToolkitController extends Controller
             return abort(404);
         }
 
-        $info = Toolkit::find($id);
+        $toolkit = Toolkit::find($toolkitId);
 
-        if ($info == null) {
+        if ($toolkit == null) {
             return abort(404);
         }
+        $subjects = Subject::all();
 
         $trackHistory = TrackHistory::where('user_id', '=', Auth::id())
             ->where('course_or_toolkit', '=', 0)
-            ->where('course_toolkit_id', '=', $info->id)
+            ->where('course_toolkit_id', '=', $toolkit->id)
             ->first();
 
         $videos = DB::table('toolkit_videos')
             ->select('id', 'video_title as title', 'sequence', DB::raw('1 as type'))
-            ->where('toolkit_id', '=', $info->id);
+            ->where('toolkit_id', '=', $toolkit->id);
 
         $documents = DB::table('toolkit_documents')
             ->select('id', 'doc_title as title', 'sequence', DB::raw('2 as type'))
-            ->where('toolkit_id', '=', $info->id);
+            ->where('toolkit_id', '=', $toolkit->id);
 
         $contents = DB::table('toolkit_quizzes')
             ->select('id', 'quiz_title as title', 'sequence', DB::raw('3 as type'))
-            ->where('toolkit_id', '=', $info->id)
+            ->where('toolkit_id', '=', $toolkit->id)
             ->union($documents)
             ->union($videos)
             ->orderBy('sequence', 'ASC')
             ->get();
 
 //        return $contents;
-        return view('toolkit.toolkit_edit', compact('info', 'contents', 'toolkitId'));
+        return view('toolkit.toolkit_edit', compact('toolkit', 'contents', 'toolkitId', 'subjects'));
     }
 
     public function toolkit_video_update(Request $request, $id)

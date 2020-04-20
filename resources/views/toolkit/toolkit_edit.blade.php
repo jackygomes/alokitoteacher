@@ -86,6 +86,62 @@
                         {{$message}}
                     </div>
                 @endif
+                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="editToolkit">Edit Toolkit Details</button>
+                <div id="toolkitSection">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>Edit Toolkit:</h3>
+                        </div>
+                    </div>
+                    <form action="{{ route('toolkit.store') }}" method="post" enctype="multipart/form-data" style="width: 100%;">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        <div class="form-group row">
+                            <label for="toolkitName" class="col-sm-2 col-form-label">Name:</label>
+                            <div class="col-sm-10">
+                                <input type="text" value="{{$toolkit->toolkit_title}}" name="toolkit_name" class="form-control" id="toolkitName" placeholder="Toolkit Name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="toolkitDescription" class="col-sm-2 col-form-label">Description:</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="toolkit_description" placeholder="Description" id="toolkitDescription" rows="3">{{$toolkit->description}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="toolkitPrice" class="col-sm-2 col-form-label">Price:</label>
+                            <div class="col-sm-10">
+                                <input type="text" value="{{$toolkit->price}}" name="toolkit_price" class="form-control" id="toolkitPrice" placeholder="Toolkit Price">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="subjects" class="col-sm-2 col-form-label">Subject:</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select mr-sm-2" name="subject" id="subjects">
+                                    <option>Choose Subject...</option>
+{{--                                    <option selected="selected">sdsdsd...</option>--}}
+                                    @foreach($subjects as $subject)
+                                        <option value="{{$subject->id}}" {{$toolkit->subject_id == $subject->id ? "selected" : ""}}>{{$subject->subject_name}}</option>
+{{--                                        <option value="{{$subject->id}}" >{{$subject->subject_name}}</option>--}}
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="thumbnail_image" class="col-sm-2 col-form-label">Image:</label>
+                            <div class="col-sm-10">
+                                <img style="width: 300px;" src="{{ url('images/thumbnail') }}/{{$toolkit->thumbnail}}" alt="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="thumbnail_image" class="col-sm-2 col-form-label">Choose New Image:</label>
+                            <div class="col-sm-10">
+                                <input type="file" name="thumbnailImage" class="form-control-file" id="thumbnail_image">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Update</button>
+                    </form>
+                </div>
                 <div id="addContentSection">
                     <div id="videoSection">
                         <form action="{{ route('toolkit.video.create', $toolkitId) }}" method="post">
@@ -111,7 +167,6 @@
                                 <div class="form-group">
                                     <label>Quiz Question {{$count}}</label>
                                     <input id="question-query" name="questions{{$ques}}" class="form-control" value="" placeholder="Enter Question"/>
-{{--                                    <input type="hidden" id="question-query-hidden" name="questionIds[]" class="form-control" value=""/>--}}
                                 </div>
                                 <div class="form-group">
                                     <label>Answer Options</label>
@@ -124,7 +179,6 @@
                                                     <div class="input-group-text" style="width: 35px;">{{$x}}</div>
                                                 </div>
                                                 <input type="text" class="form-control" name="options{{$ques}}[]" value="" placeholder="Enter answer option"/>
-{{--                                                <input type="hidden" class="form-control" name="optionsIds[]" value=""/>--}}
                                             </div>
                                         @endfor
                                     </div>
@@ -165,18 +219,34 @@
             $(document).ready(function () {
                 $("#videoSection").hide();
                 $("#questionSection").hide();
+                $('#editToolkit').hide();
+
+                $('#editToolkit').on('click', function(e){
+                    $("#videoSection").hide();
+                    $("#questionSection").hide();
+                    $("#toolkitSection").show();
+                    $("#content").hide();
+                    $('#editToolkit').hide();
+                });
                 $('#addVideo').on('click', function(e){
                     $("#questionSection").hide();
                     $("#videoSection").show();
+                    $("#toolkitSection").hide();
+                    $('#editToolkit').show();
                 });
                 $('#addQuestion').on('click', function(e){
                     $("#videoSection").hide();
                     $("#questionSection").show();
+                    $("#toolkitSection").hide();
+                    $('#editToolkit').show();
                 });
 
                 $('.edit-button').on('click', function (e) {
                     $("#videoSection").hide();
                     $("#questionSection").hide();
+                    $("#toolkitSection").hide();
+                    $("#content").show();
+                    $('#editToolkit').show();
 
                     var id = $(this).attr('id');
                     var type = $(this).attr('type');
