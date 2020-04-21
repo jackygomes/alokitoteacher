@@ -93,7 +93,7 @@
                             <h3>Edit Toolkit:</h3>
                         </div>
                     </div>
-                    <form action="{{ route('toolkit.store') }}" method="post" enctype="multipart/form-data" style="width: 100%;">
+                    <form action="{{ route('toolkit.update', $toolkitId) }}" method="post" enctype="multipart/form-data" style="width: 100%;">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <div class="form-group row">
                             <label for="toolkitName" class="col-sm-2 col-form-label">Name:</label>
@@ -119,10 +119,8 @@
                             <div class="col-sm-10">
                                 <select class="custom-select mr-sm-2" name="subject" id="subjects">
                                     <option>Choose Subject...</option>
-{{--                                    <option selected="selected">sdsdsd...</option>--}}
                                     @foreach($subjects as $subject)
                                         <option value="{{$subject->id}}" {{$toolkit->subject_id == $subject->id ? "selected" : ""}}>{{$subject->subject_name}}</option>
-{{--                                        <option value="{{$subject->id}}" >{{$subject->subject_name}}</option>--}}
                                     @endforeach
                                 </select>
                             </div>
@@ -136,7 +134,7 @@
                         <div class="form-group row">
                             <label for="thumbnail_image" class="col-sm-2 col-form-label">Choose New Image:</label>
                             <div class="col-sm-10">
-                                <input type="file" name="thumbnailImage" class="form-control-file" id="thumbnail_image">
+                                <input type="file" name="toolkitThumbnailImage" class="form-control-file" id="thumbnail_image">
                             </div>
                         </div>
                         <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Update</button>

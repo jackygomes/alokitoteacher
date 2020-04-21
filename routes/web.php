@@ -37,6 +37,7 @@ Route::post ('admin/course/quiz/update/{id}', 'CourseController@course_quiz_upda
 
 Route::get ('admin/toolkit/create', 'ToolkitController@create')->name('toolkit.create');
 Route::post ('admin/toolkit/store', 'ToolkitController@store')->name('toolkit.store');
+Route::post ('admin/toolkit/update/{id}', 'ToolkitController@toolkit_details_edit')->name('toolkit.update');
 Route::post ('admin/toolkit/video/create/{id}', 'ToolkitController@videoCreate')->name('toolkit.video.create');
 Route::post ('admin/toolkit/question/create/{id}', 'ToolkitController@questionCreate')->name('toolkit.question.create');
 

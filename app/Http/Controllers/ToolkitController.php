@@ -90,6 +90,48 @@ class ToolkitController extends Controller
         return redirect()->route('dashboard', $user_info->username)->with('success', 'Toolkit created successfully');
     }
 
+    public function toolkit_details_edit(Request $request, $toolkitId) {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+
+        $toolkit = Toolkit::find($toolkitId);
+        if ($toolkit == null) {
+            return abort(404);
+        }
+
+        $this->validate($request, [
+            'subject'               => 'required',
+            'toolkit_name'          => 'required',
+            'toolkit_description'   => 'required',
+            'toolkit_price'         => 'required',
+            'toolkitThumbnailImage'        => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $randomText = Str::random(10);
+        $slug = Str::slug($request->input('toolkit_name'), '-');
+        $slug = $slug.'-'.$randomText;
+
+        $image = $request->file('toolkitThumbnailImage');
+        $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
+        $image->move(public_path("images/thumbnail"), $image_name);
+
+        $toolkit = Toolkit::find($toolkitId);
+        $toolkit->subject_id = $request->input('subject');
+        $toolkit->user_id = $userId;
+        $toolkit->toolkit_title = $request->input('toolkit_name');
+        $toolkit->description = $request->input('toolkit_description');
+        $toolkit->price = $request->input('toolkit_price');
+        $toolkit->slug = $slug;
+        $toolkit->thumbnail = $image_name;
+
+        $toolkit->save();
+        return redirect()->route('toolkit.edit', $toolkitId)->with('success', 'Toolkit Edited successfully');
+    }
+
     public function videoCreate(Request $request, $id){
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
