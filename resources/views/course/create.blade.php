@@ -57,7 +57,8 @@
                     <h3>Create Course:</h3>
                 </div>
                 <div class="row">
-                    <form style="width: 100%;">
+                    <form action="{{ route('course.store') }}" method="post" enctype="multipart/form-data" style="width: 100%;">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <div class="form-group row">
                             <label for="courseName" class="col-sm-2 col-form-label">Course Name:</label>
                             <div class="col-sm-10">
@@ -71,15 +72,40 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="thumbnailImage" class="col-sm-2 col-form-label">Thumbnail Image:</label>
+                            <label for="coursePrice" class="col-sm-2 col-form-label">Course Price:</label>
                             <div class="col-sm-10">
-                                <input type="file" class="form-control-file" id="thumbnailImage">
+                                <input type="text" name="course_price" class="form-control" id="coursePrice" placeholder="Course Price">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="thumbnailImage" class="col-sm-2 col-form-label">Thumbnail Image:</label>
+                            <div class="col-sm-10">
+                                <input type="file" name="courseThumbnailImage" class="form-control-file" id="thumbnailImage">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@push('js')
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#coursePrice").keydown(function (event) {
+                // Allow Only: keyboard 0-9, numpad 0-9, backspace, tab, left arrow, right arrow, delete
+                if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46) {
+                    // Allow normal operation
+                } else {
+                    // Prevent the rest
+                    event.preventDefault();
+                }
+            });
+        });
+
+    </script>
+
+@endpush
 @endsection

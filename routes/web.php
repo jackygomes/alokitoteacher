@@ -31,14 +31,16 @@ Route::get ('s/{username}', 'SchoolController@index');
 
 Route::get ('admin/{username}', 'AdminController@index')->name('dashboard');
 Route::get ('admin/course/create', 'CourseController@create')->name('course.create');
+Route::post ('admin/course/store', 'CourseController@store')->name('course.store');
 Route::get ('admin/course/edit/{id}', 'CourseController@course_edit')->name('course.edit');
-Route::post ('admin/course/update/{id}', 'CourseController@course_update')->name('course.update');
+Route::post ('admin/course/update/{id}', 'CourseController@course_video_update')->name('course.update.edit');
 Route::post ('admin/course/quiz/update/{id}', 'CourseController@course_quiz_update')->name('course.quiz.update');
 
 Route::get ('admin/toolkit/create', 'ToolkitController@create')->name('toolkit.create');
 Route::post ('admin/toolkit/store', 'ToolkitController@store')->name('toolkit.store');
 Route::post ('admin/toolkit/update/{id}', 'ToolkitController@toolkit_details_edit')->name('toolkit.update');
 Route::post ('admin/toolkit/video/create/{id}', 'ToolkitController@videoCreate')->name('toolkit.video.create');
+Route::post ('admin/toolkit/quiz/create/{id}', 'ToolkitController@quizCreate')->name('toolkit.quiz.create');
 Route::post ('admin/toolkit/question/create/{id}', 'ToolkitController@questionCreate')->name('toolkit.question.create');
 
 Route::get ('admin/toolkit/edit/{id}', 'ToolkitController@toolkit_edit')->name('toolkit.edit');

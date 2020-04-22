@@ -75,7 +75,7 @@
                             {{$message}}
                         </div>
                     @endif
-                    <div class=" mt-5 col-sm-12">
+                    <div class="col-sm-12">
                         <h3 class="font-weight-bold mr-3" style="display: inline-block">Courses</h3>
                         <a href="course/create"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
                         <div class="mr=2">

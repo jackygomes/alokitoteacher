@@ -73,7 +73,7 @@ class ToolkitController extends Controller
         $slug = $slug.'-'.$randomText;
 
         $image = $request->file('thumbnailImage');
-        $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
+        $image_name = $userId.'_toolkit_'.md5(rand()).'.'.$image->getClientOriginalExtension();
         $image->move(public_path("images/thumbnail"), $image_name);
 
         $toolkit = new Toolkit();
@@ -156,6 +156,32 @@ class ToolkitController extends Controller
 
         return redirect()->route('toolkit.edit', $id)->with('success', 'Video created successfully');
     }
+
+    public function quizCreate(Request $request, $toolkitId){
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 101){
+            return abort(404);
+        }
+
+        try{
+            $quizData = [
+                'toolkit_id'    => $toolkitId,
+                'quiz_title'    => isset($request->quiz_name) ? $request->quiz_name : "",
+                'description'    => isset($request->quiz_description) ? $request->quiz_description : "",
+                'sequence'      => 2
+            ];
+//            return $quizData;
+            ToolkitQuiz::create($quizData);
+
+        } catch(\Exception $e) {
+            return "Quiz insertion error: " . $e->getMessage();
+        }
+
+        return redirect()->route('toolkit.edit', $toolkitId)->with('success', 'Quiz created successfully');
+
+    }
+
     public function questionCreate(Request $request, $toolkitId){
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
@@ -165,6 +191,8 @@ class ToolkitController extends Controller
 
         // Merge Questions and Options
         $data = $request->all();
+//        return $data;
+//        exit();
 
         $questions = array_map(function($value) {
             return ["question" => $value];
@@ -190,49 +218,36 @@ class ToolkitController extends Controller
 
         try {
             // TODO: Create Quiz
-            $quizData = [
-                'toolkit_id'    => $toolkitId,
-                'quiz_title'    => isset($request->quiz_name) ? $request->quiz_name : "",
-                'sequence'      => 2
-            ];
+            foreach ($questions as $question) {
+                if($question['question'] != null){
+                    $questionData = [
+                        'quiz_id'    => $request->quiz_id,
+                        'query'    => isset($question['question'][0]) ? $question['question'][0] : "",
+                        'points'      => 2,
+                        'mcq_or_not' => 2,
+                        'correct_option' => $question['correct_option'],
+                    ];
+//                        return $questionData;
 
-            if($quiz = ToolkitQuiz::create($quizData)) {
-                foreach ($questions as $question) {
-                    if($question['question'] != null){
-                        $questionData = [
-                            'quiz_id'    => $quiz->id,
-                            'query'    => isset($question['question']) ? $question['question'] : "",
-                            'points'      => 2,
-                            'mcq_or_not' => 2,
-                            'correct_option' => $question['correct_option'],
-                        ];
-
-                        if($questionInsert = ToolkitQuestion::create($questionData)) {
-                            foreach ($question['options'] as $option){
-                                if($option != null){
-                                    $optionData = [
-                                        'question_id'    => $questionInsert->id,
-                                        'question_option'    => isset($option) ? $option : "",
-                                    ];
-                                    ToolkitQuizOption::create($optionData);
-                                }
+                    if($questionInsert = ToolkitQuestion::create($questionData)) {
+                        foreach ($question['options'] as $option){
+                            if($option != null){
+                                $optionData = [
+                                    'question_id'    => $questionInsert->id,
+                                    'question_option'    => isset($option) ? $option : "",
+                                ];
+                                ToolkitQuizOption::create($optionData);
                             }
-                        } else {
-                            return "Question insertion error: Failed to insert Question";
                         }
+                    } else {
+                        return "Question insertion error: Failed to insert Question";
                     }
                 }
-            } else {
-                return "Quiz insertion error: Failed to insert Quiz";
             }
-
-
         } catch(\Exception $e) {
             return "Quiz insertion error: " . $e->getMessage();
         }
 
-
-//        return $request->quiz_name;
 
         return redirect()->route('toolkit.edit', $toolkitId)->with('success', 'Questions created successfully');
     }

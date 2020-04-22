@@ -56,25 +56,25 @@
 
                             @endif
                         @endforeach
-                        @if(count($contents) == 1)
+{{--                        @if(count($contents) == 1)--}}
 
-                            <div class="list-group-item list-group-item-action bg-light ItemButton">
+{{--                            <div class="list-group-item list-group-item-action bg-light ItemButton">--}}
 
-                                    @if($contents[0]->type == 1)
-                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
-                                    @elseif($contents[0]->type == 3)
-                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
-                                    @else
-                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
-                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
-                                    @endif
-                            </div>
-                        @elseif(count($contents) <= 0)
-                            <div class="list-group-item list-group-item-action bg-light ItemButton">
-                                <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
-                                <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
-                            </div>
-                        @endif
+{{--                                    @if($contents[0]->type == 1)--}}
+{{--                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>--}}
+{{--                                    @elseif($contents[0]->type == 3)--}}
+{{--                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>--}}
+{{--                                    @else--}}
+{{--                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>--}}
+{{--                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>--}}
+{{--                                    @endif--}}
+{{--                            </div>--}}
+{{--                        @elseif(count($contents) <= 0)--}}
+{{--                            <div class="list-group-item list-group-item-action bg-light ItemButton">--}}
+{{--                                <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>--}}
+{{--                                <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
 
                     </div>
                 </div>
@@ -86,7 +86,34 @@
                         {{$message}}
                     </div>
                 @endif
-                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="editToolkit">Edit Toolkit Details</button>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @if(count($contents) == 1)
+                                @if($contents[0]->type == 1)
+                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
+                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                                @elseif($contents[0]->type == 3)
+                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
+                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                                @else
+                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
+                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
+                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                                @endif
+                        @elseif(count($contents) <= 0)
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                        @else
+                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                        @endif
+{{--                        <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>--}}
+{{--                        <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>--}}
+{{--                        <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>--}}
+                        <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="editToolkit">Edit Toolkit Details</button>
+                    </div>
+                </div>
+{{--                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="editToolkit">Edit Toolkit Details</button>--}}
                 <div id="toolkitSection">
                     <div class="row">
                         <div class="col-lg-12">
@@ -150,55 +177,106 @@
                             <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Create</button>
                         </form>
                     </div>
-                    <div id="questionSection">
-                        <form action="{{ route('toolkit.question.create', $toolkitId) }}" method="post">
+                    <div id="quizSection">
+                        <form action="{{ route('toolkit.quiz.create', $toolkitId) }}" method="post">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             <div class="form-group">
                                 <label>Quiz Name</label>
                                 <input name="quiz_name" class="form-control" placeholder="Enter quiz name" value=""/>
                             </div>
-                            @php
-                                $count = 0;
-                            @endphp
-                            @for($ques=0; $ques<=4; $ques++)
-                                @php $count++ @endphp
-                                <div class="form-group">
-                                    <label>Quiz Question {{$count}}</label>
-                                    <input id="question-query" name="questions{{$ques}}" class="form-control" value="" placeholder="Enter Question"/>
-                                </div>
-                                <div class="form-group">
-                                    <label>Answer Options</label>
-                                    <div id="option-section">
-                                        @php $ansNo = 0; @endphp
-                                        @for($x=1; $x<=4; $x++)
-                                            @php $ansNo++ @endphp
-                                            <div class="input-group mb-2 mr-sm-2">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text" style="width: 35px;">{{$x}}</div>
-                                                </div>
-                                                <input type="text" class="form-control" name="options{{$ques}}[]" value="" placeholder="Enter answer option"/>
-                                            </div>
-                                        @endfor
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <label>Choose Correct Answer Option</label>
-                                    </div>
+                            <div class="form-group">
+                                <label>Quiz Description</label>
+                                <textarea class="form-control" name="quiz_description" placeholder="Description" id="quizDescription" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Create</button>
+                        </form>
+                    </div>
+                    <div id="questionSection">
+                        <form action="{{ route('toolkit.question.create', $toolkitId) }}" method="post">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+
+                            <div class="form-group">
+                                <label>Quiz Question</label>
+                                <input id="question-query" name="questions0[]" class="form-control" value="" placeholder="Enter Question"/>
+                                @foreach($contents as $content)
+                                    @if($content->type == 3)
+                                    <input name="quiz_id" type="hidden" class="form-control" value="{{$content->id}}" placeholder="Enter Question"/>
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="form-group">
+                                <label>Answer Options</label>
+                                <div id="option-section">
+                                    @php $ansNo = 0; @endphp
                                     @for($x=1; $x<=4; $x++)
-                                        <div class="col-lg-1">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="correctOption_{{$ques}}" id="radios_{{$x}}" value="{{$x}}">
-                                                <label class="form-check-label" for="radios_{{$x}}">
-                                                    {{$x}}
-                                                </label>
+{{--                                        @php $ansNo++ @endphp--}}
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text" style="width: 35px;">{{$x}}</div>
                                             </div>
+                                            <input type="text" class="form-control" name="options{{$ansNo}}[]" value="" placeholder="Enter answer option"/>
                                         </div>
                                     @endfor
-
                                 </div>
-                                <hr>
-                            @endfor
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Choose Correct Answer Option</label>
+                                </div>
+                                @for($x=1; $x<=4; $x++)
+                                    <div class="col-lg-1">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="correctOption_0" id="radios_{{$x}}" value="{{$x}}">
+                                            <label class="form-check-label" for="radios_{{$x}}">
+                                                {{$x}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endfor
+
+                            </div>
+{{--                            @php--}}
+{{--                                $count = 0;--}}
+{{--                            @endphp--}}
+{{--                            @for($ques=0; $ques<=4; $ques++)--}}
+{{--                                @php $count++ @endphp--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label>Quiz Question {{$count}}</label>--}}
+{{--                                    <input id="question-query" name="questions{{$ques}}" class="form-control" value="" placeholder="Enter Question"/>--}}
+{{--                                </div>--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label>Answer Options</label>--}}
+{{--                                    <div id="option-section">--}}
+{{--                                        @php $ansNo = 0; @endphp--}}
+{{--                                        @for($x=1; $x<=4; $x++)--}}
+{{--                                            @php $ansNo++ @endphp--}}
+{{--                                            <div class="input-group mb-2 mr-sm-2">--}}
+{{--                                                <div class="input-group-prepend">--}}
+{{--                                                    <div class="input-group-text" style="width: 35px;">{{$x}}</div>--}}
+{{--                                                </div>--}}
+{{--                                                <input type="text" class="form-control" name="options{{$ques}}[]" value="" placeholder="Enter answer option"/>--}}
+{{--                                            </div>--}}
+{{--                                        @endfor--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-lg-12">--}}
+{{--                                        <label>Choose Correct Answer Option</label>--}}
+{{--                                    </div>--}}
+{{--                                    @for($x=1; $x<=4; $x++)--}}
+{{--                                        <div class="col-lg-1">--}}
+{{--                                            <div class="form-check">--}}
+{{--                                                <input class="form-check-input" type="radio" name="correctOption_{{$ques}}" id="radios_{{$x}}" value="{{$x}}">--}}
+{{--                                                <label class="form-check-label" for="radios_{{$x}}">--}}
+{{--                                                    {{$x}}--}}
+{{--                                                </label>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    @endfor--}}
+
+{{--                                </div>--}}
+{{--                                <hr>--}}
+{{--                            @endfor--}}
                             <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Create</button>
                         </form>
                     </div>
@@ -218,6 +296,7 @@
                 $("#videoSection").hide();
                 $("#questionSection").hide();
                 $('#editToolkit').hide();
+                $("#quizSection").hide();
 
                 $('#editToolkit').on('click', function(e){
                     $("#videoSection").hide();
@@ -230,19 +309,30 @@
                     $("#questionSection").hide();
                     $("#videoSection").show();
                     $("#toolkitSection").hide();
+                    $("#quizSection").hide();
+                    $('#editToolkit').show();
+                });
+                $('#addQuiz').on('click', function(e){
+                    $("#questionSection").hide();
+                    $("#videoSection").hide();
+                    $("#quizSection").show();
+                    $("#toolkitSection").hide();
                     $('#editToolkit').show();
                 });
                 $('#addQuestion').on('click', function(e){
                     $("#videoSection").hide();
                     $("#questionSection").show();
+                    $("#quizSection").hide();
                     $("#toolkitSection").hide();
                     $('#editToolkit').show();
+                    $("#content").hide();
                 });
 
                 $('.edit-button').on('click', function (e) {
                     $("#videoSection").hide();
                     $("#questionSection").hide();
                     $("#toolkitSection").hide();
+                    $("#quizSection").hide();
                     $("#content").show();
                     $('#editToolkit').show();
 

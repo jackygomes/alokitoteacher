@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Course;
-
+use Illuminate\Support\Str;
 
 
 class CourseController extends Controller
@@ -51,6 +51,41 @@ class CourseController extends Controller
         return view('course.create', compact('user_info'));
     }
 
+    public function store(Request $request){
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+        $this->validate($request, [
+            'course_name'          => 'required',
+            'course_description'   => 'required',
+            'course_price'   => 'required',
+            'courseThumbnailImage' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        $randomText = Str::random(6);
+        $slug = Str::slug($request->input('course_name'), '-');
+        $slug = $slug.'-'.$randomText;
+
+        $image = $request->file('courseThumbnailImage');
+        $image_name = $userId.'_course_'.md5(rand()).'.'.$image->getClientOriginalExtension();
+
+        $image->move(public_path("images/thumbnail"), $image_name);
+
+        $course = [
+            'user_id'    => $userId,
+            'title'    => isset($request->course_name) ? $request->course_name : "",
+            'description'    => isset($request->course_description) ? $request->course_description : "",
+            'price'    => isset($request->course_price) ? $request->course_price : "",
+            'slug'    => $slug,
+            'thumbnail'    => $image_name,
+        ];
+        Course::create($course);
+
+        return redirect()->route('dashboard', $user_info->username)->with('success', 'Course created successfully');
+    }
+
     public function course_edit($id)
     {
         $userId = Auth::id();
@@ -82,7 +117,7 @@ class CourseController extends Controller
         return view('course.course_edit',compact( 'user_info','info', 'contents'));
     }
 
-    public function course_update(Request $request, $id) {
+    public function course_video_update(Request $request, $id) {
 
 
         $courseVideo = CourseVideo::find($id);
