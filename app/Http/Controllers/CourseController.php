@@ -117,6 +117,51 @@ class CourseController extends Controller
         return view('course.course_edit',compact( 'user_info','info', 'contents'));
     }
 
+    public function courseObjectiveEdit($courseId) {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+
+        $info = Course::find($courseId);
+
+        $videos = DB::table('course_videos')
+            ->select('id', 'video_title as title', 'sequence', DB::raw('1 as type'))
+            ->where('course_id', '=', $info->id);
+
+
+        $documents = DB::table('course_documents')
+            ->select('id', 'doc_title as title', 'sequence', DB::raw('2 as type'))
+            ->where('course_id', '=', $info->id);
+
+        $contents = DB::table('course_quizzes')
+            ->select('id', 'quiz_title as title', 'sequence', DB::raw('3 as type'))
+            ->where('course_id', '=', $info->id)
+            ->union($documents)
+            ->union($videos)
+            ->orderBy('sequence', 'ASC')
+            ->get();
+
+//        return "asdasd";
+        return view('course.edit_objective',compact( 'info', 'contents'));
+    }
+
+    // TODO: course objective create
+
+    public function courseVideoCreate(Request $request, $courseId) {
+        $data = [
+            'courseId' => $courseId,
+            'requests' => $request->all(),
+        ];
+        return $data;
+    }
+
+    public function courseSequenceUpdate(Request $request, $courseId) {
+        return $request->all();
+    }
+
     public function course_video_update(Request $request, $id) {
 
 
