@@ -108,25 +108,33 @@ class ToolkitController extends Controller
             'toolkit_name'          => 'required',
             'toolkit_description'   => 'required',
             'toolkit_price'         => 'required',
-            'toolkitThumbnailImage'        => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $randomText = Str::random(10);
         $slug = Str::slug($request->input('toolkit_name'), '-');
         $slug = $slug.'-'.$randomText;
 
-        $image = $request->file('toolkitThumbnailImage');
-        $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
-        $image->move(public_path("images/thumbnail"), $image_name);
 
         $toolkit = Toolkit::find($toolkitId);
+
+        if($toolkit->toolkit_title == $request->input('toolkit_name')){
+            $slug = $toolkit->slug;
+        }
+
         $toolkit->subject_id = $request->input('subject');
         $toolkit->user_id = $userId;
         $toolkit->toolkit_title = $request->input('toolkit_name');
         $toolkit->description = $request->input('toolkit_description');
         $toolkit->price = $request->input('toolkit_price');
         $toolkit->slug = $slug;
-        $toolkit->thumbnail = $image_name;
+
+        if(isset($request->toolkitThumbnailImage)) {
+            $image = $request->file('toolkitThumbnailImage');
+            $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
+            $image->move(public_path("images/thumbnail"), $image_name);
+            $toolkit->thumbnail = $image_name;
+        }
+
 
         $toolkit->save();
         return redirect()->route('toolkit.edit', $toolkitId)->with('success', 'Toolkit Edited successfully');

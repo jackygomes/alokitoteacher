@@ -96,7 +96,7 @@
                                         <tr>
                                             <td>{{$n}}</td>
                                             <td>{{$course->title}}</td>
-                                            <td>{{$course->price}}</td>
+                                            <td>{{($course->price == 0) ? 'Free' : $course->price}}</td>
                                             <td>approved</td>
                                             <td><a href="course/edit/{{$course->id}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
                                         </tr>
@@ -135,7 +135,7 @@
                                             <td>{{$n}}</td>
                                             <td>{{$toolkit->subject->subject_name}}</td>
                                             <td>{{$toolkit->toolkit_title}}</td>
-                                            <td>{{$toolkit->price}}</td>
+                                            <td>{{($toolkit->price == 0) ? 'Free' : $toolkit->price}}</td>
                                             <td><a href="toolkit/edit/{{$toolkit->id}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
                                         </tr>
                                         <?php $n++ ?>

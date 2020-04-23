@@ -138,6 +138,7 @@
                             <label for="toolkitPrice" class="col-sm-2 col-form-label">Price:</label>
                             <div class="col-sm-10">
                                 <input type="text" value="{{$toolkit->price}}" name="toolkit_price" class="form-control" id="toolkitPrice" placeholder="Toolkit Price">
+                                <p style="margin: 5px 0 0; font-size: 14px; color: #385d7a">* Enter 0 in price field if the toolkit is free.</p>
                             </div>
                         </div>
 
@@ -171,9 +172,18 @@
                     <div id="videoSection">
                         <form action="{{ route('toolkit.video.create', $toolkitId) }}" method="post">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            <div class='form-group'><label>Video Url</label><input name="url" class="form-control" placeholder="Enter Video Url" value="" required/></div>
-                            <div class='form-group'><label>Video Title</label><input name="title" class="form-control" placeholder="Enter Video Title" value="" required/></div>
-                            <div class='form-group'><label>Video Description</label><input name='description' class='form-control' placeholder="Enter Video Description" value=""/></div>
+                            <div class='form-group'>
+                                <label>Video Url</label>
+                                <input name="url" class="form-control" placeholder="Enter Video Url" value="" required/>
+                            </div>
+                            <div class='form-group'>
+                                <label>Video Title</label>
+                                <input name="title" class="form-control" placeholder="Enter Video Title" value="" required/>
+                            </div>
+                            <div class='form-group'>
+                                <label>Video Description</label>
+                                <textarea class="form-control" name="description" placeholder="Enter Video Description" rows="3"></textarea>
+                            </div>
                             <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Create</button>
                         </form>
                     </div>
@@ -343,6 +353,13 @@
                     // console.log('id '+ id+' {} type'+ type);
                 });
 
+                $("#toolkitPrice").keydown(function (event) {
+                    if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46) {
+                    } else {
+                        event.preventDefault();
+                    }
+                });
+
                 function loadContent(id, type) {
                     // $('#content').html('id = '+id+' type= '+ type)
                     $.ajaxSetup({
@@ -369,7 +386,7 @@
                                     "<input type=\"hidden\" name=\"_token\" value=\"{{csrf_token()}}\">"+
                                     "<div class='form-group'><label>Video Url</label><input name='url' class='form-control' value='" + result.url + "'/></div>" +
                                     "<div class='form-group'><label>Video Title</label><input name='title' class='form-control' value='"+result.video_title+"'/></div>" +
-                                    "<div class='form-group'><label>Video Description</label><input name='description' class='form-control' value='"+result.short_description+"'/></div>" +
+                                    "<div class='form-group'><label>Video Description</label><textarea name='description' class='form-control' value='"+result.short_description+"' rows=\"3\"></textarea></div>" +
                                     "<input type='hidden' name='toolkit_id' class='form-control' value='"+result.toolkit_id+"'/>"+
                                     "<input type='hidden' name='id' class='form-control' value='"+result.id+"'/>"+
                                     "<button type=\"submit\" class=\"btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white\" id=\"quizButton\">Update</button>"
