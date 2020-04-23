@@ -171,8 +171,8 @@
                     <div id="videoSection">
                         <form action="{{ route('toolkit.video.create', $toolkitId) }}" method="post">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            <div class='form-group'><label>Video Url</label><input name="url" class="form-control" placeholder="Enter Video Url" value=""/></div>
-                            <div class='form-group'><label>Video Title</label><input name="title" class="form-control" placeholder="Enter Video Title" value=""/></div>
+                            <div class='form-group'><label>Video Url</label><input name="url" class="form-control" placeholder="Enter Video Url" value="" required/></div>
+                            <div class='form-group'><label>Video Title</label><input name="title" class="form-control" placeholder="Enter Video Title" value="" required/></div>
                             <div class='form-group'><label>Video Description</label><input name='description' class='form-control' placeholder="Enter Video Description" value=""/></div>
                             <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Create</button>
                         </form>

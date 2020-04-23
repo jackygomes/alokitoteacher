@@ -63,14 +63,14 @@
             </div>
 
             <div id="contentCol" class="col-md-8 order-1 order-md-2 mt-3">
-                <div class="row">
-                    <div class="col-lg-12 mb-4">
-                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
-                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Quiz</button>
-                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Question</button>
-                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Set Sequence</button>
-                    </div>
-                </div>
+{{--                <div class="row">--}}
+{{--                    <div class="col-lg-12 mb-4">--}}
+{{--                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>--}}
+{{--                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Quiz</button>--}}
+{{--                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Question</button>--}}
+{{--                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Set Sequence</button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div id="content">
 
 

@@ -149,7 +149,7 @@ class ToolkitController extends Controller
         $video->toolkit_id = $id;
         $video->url = $request->input('url');
         $video->video_title = $request->input('title');
-        $video->short_description = $request->input('description');
+        $video->short_description = isset($request->description) ? $request->description : "";
         $video->sequence = '1';
 
         $video->save();
