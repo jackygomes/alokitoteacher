@@ -350,8 +350,10 @@ class ToolkitController extends Controller
 
         $quiz = ToolkitQuiz::where('toolkit_id', '=', $toolkitId)->get();
 
-        if( $quiz[0]->question_count >= 4) $publishEnable = 1;
-        else $publishEnable = 0;
+        if(count($quiz) > 0){
+            if( $quiz[0]->question_count >= 4) $publishEnable = 1;
+            else $publishEnable = 0;
+        } else $publishEnable = 0;
 
 //        return $contents;
         return view('toolkit.toolkit_edit', compact('publishEnable', 'user_info', 'toolkit', 'contents', 'toolkitId', 'subjects'));
