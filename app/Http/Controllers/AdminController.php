@@ -33,9 +33,11 @@ class AdminController extends Controller
 
     function index(Request $request){
 
-        $username = $request->username;
-
-        $user_info = User::where('username', '=', $username)->first();
+//        $username = $request->username;
+//
+//        $user_info = User::where('username', '=', $username)->first();
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
 
         if(isset($user_info) && $user_info->identifier != 101){
 
@@ -47,7 +49,7 @@ class AdminController extends Controller
 
         $toolkits = Toolkit::with('subject')->paginate(5);
 
-//        return $toolkits;
+//        return $user_info;
         return view ('admin',compact( 'user_info', 'courses', 'toolkits'));
     }
 

@@ -82,7 +82,7 @@
                                 <label for="toolkitPrice" class="col-sm-2 col-form-label">Price:</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="toolkit_price" class="form-control" id="toolkitPrice" placeholder="Toolkit Price">
-                                    <p style="margin: 5px 0 0; font-size: 14px; color: #385d7a">* Enter 0 in price field if the toolkit is free.</p>
+                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the toolkit is free.</p>
                                 </div>
                             </div>
 
