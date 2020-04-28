@@ -402,6 +402,12 @@ class ToolkitController extends Controller
 
             $toolkitQuestionOption->save();
         }
+        // this code is just to fill the question_count field as it was newly created
+        $questionCount = ToolkitQuestion::where('quiz_id', '=', $quizId)->count();
+        $quiz = ToolkitQuiz::find($quizId);
+        $quiz->question_count = $questionCount;
+        $quiz->save();
+        // end
 
         return redirect()->route('toolkit.edit', $toolkit);
 
