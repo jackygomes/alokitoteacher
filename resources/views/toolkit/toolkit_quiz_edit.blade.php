@@ -7,6 +7,10 @@
             <input name="quiz_name" class="form-control" value="{{ $quiz_details->quiz_title }}"/>
             <input type="hidden" name="quiz_id" class="form-control" value="{{ $quiz_details->id }}"/>
         </div>
+        <div class="form-group">
+            <label>Quiz Description</label>
+            <textarea class="form-control" name="quiz_description" placeholder="Description" id="quizDescription" rows="3">{{ $quiz_details->description }}</textarea>
+        </div>
     </div>
 
     <div class="col-md-12">

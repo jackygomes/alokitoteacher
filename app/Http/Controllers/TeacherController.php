@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Toolkit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +55,7 @@ class TeacherController extends Controller
 		FROM toolkits as tk
 		JOIN subjects as s ON s.id = tk.subject_id
 		JOIN toolkit_quizzes as tq ON tq.toolkit_id = tk.id
-		JOIN toolkit_histories as th ON th.quiz_id = tq.id AND th.user_id = '$user_info->id' 
+		JOIN toolkit_histories as th ON th.quiz_id = tq.id AND th.user_id = '$user_info->id'
 		GROUP BY tk.id
 		 ");
 
@@ -69,7 +70,22 @@ class TeacherController extends Controller
 
 	}
 
+	public function dashboard() {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 1){
 
+            return abort(404);
+        }
+        $users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+        $recent_work = WorkExperience::where('user_id', '=', $user_info->id)->where('to_date', '=', '0000-00-00')->first();
+        $recent_institute = Academic::where('user_id', '=', $user_info->id)->orderBy('passing_year', 'DESC')->first();
+        $toolkits = Toolkit::with('subject')->where('user_id', '=', $userId)->paginate(5);
+
+//        return $toolkits;
+
+        return view('teacher.dashboard', compact('toolkits', 'user_info','recent_work', 'users', 'recent_institute'));
+    }
 
 	 function picture(Request $request){
 		$this->validate($request, [

@@ -86,24 +86,37 @@
                         {{$message}}
                     </div>
                 @endif
+                @if($message = Session::get('warning'))
+                    <div class="alert alert-danger">
+                        {{$message}}
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-lg-12">
                         @if(count($contents) == 1)
-                                @if($contents[0]->type == 1)
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
-                                @elseif($contents[0]->type == 3)
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
-                                @else
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                            @if($contents[0]->type == 1)
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
+                                @if($hasQuiz == 1)
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
                                 @endif
-                        @elseif(count($contents) <= 0)
+                            @elseif($contents[0]->type == 3)
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
+                                @if($hasQuiz == 1)
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                                @endif
+                            @else
                                 <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
                                 <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
+                                @if($hasQuiz == 1)
                                 <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                                @endif
+                            @endif
+                        @elseif(count($contents) <= 0)
+                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
+                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
+                            @if($hasQuiz == 1)
+                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                            @endif
                         @else
                             <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
                         @endif
@@ -138,9 +151,25 @@
                             <label for="toolkitPrice" class="col-sm-2 col-form-label">Price:</label>
                             <div class="col-sm-10">
                                 <input type="text" value="{{$toolkit->price}}" name="toolkit_price" class="form-control" id="toolkitPrice" placeholder="Toolkit Price">
+                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the toolkit is free.</p>
                             </div>
                         </div>
-
+                        @if($user_info->identifier == 101)
+                        @php $statusOptions = ['Pending', 'Approved']; @endphp
+                        <div class="form-group row">
+                            <label for="subjects" class="col-sm-2 col-form-label">Status:</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select mr-sm-2" name="status" id="subjects" {{ $publishEnable == 1 ? "" : "disabled"}}>
+                                    @foreach($statusOptions as $options)
+                                        <option value="{{$options}}" {{$toolkit->status == $options ? "selected" : ""}}>{{$options}}</option>
+                                    @endforeach
+                                </select>
+                                @if($publishEnable == 0)
+                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* This toolkit doesn't have minimum quiz question.</p>
+                                @endif
+                            </div>
+                        </div>
+                        @endif
                         <div class="form-group row">
                             <label for="subjects" class="col-sm-2 col-form-label">Subject:</label>
                             <div class="col-sm-10">
@@ -171,15 +200,25 @@
                     <div id="videoSection">
                         <form action="{{ route('toolkit.video.create', $toolkitId) }}" method="post">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            <div class='form-group'><label>Video Url</label><input name="url" class="form-control" placeholder="Enter Video Url" value=""/></div>
-                            <div class='form-group'><label>Video Title</label><input name="title" class="form-control" placeholder="Enter Video Title" value=""/></div>
-                            <div class='form-group'><label>Video Description</label><input name='description' class='form-control' placeholder="Enter Video Description" value=""/></div>
+                            <div class='form-group'>
+                                <label>Video Url</label>
+                                <input name="url" class="form-control" placeholder="Enter Video Url" value="" required/>
+                            </div>
+                            <div class='form-group'>
+                                <label>Video Title</label>
+                                <input name="title" class="form-control" placeholder="Enter Video Title" value="" required/>
+                            </div>
+                            <div class='form-group'>
+                                <label>Video Description</label>
+                                <textarea class="form-control" name="description" placeholder="Enter Video Description" rows="3"></textarea>
+                            </div>
                             <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Create</button>
                         </form>
                     </div>
                     <div id="quizSection">
                         <form action="{{ route('toolkit.quiz.create', $toolkitId) }}" method="post">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Create quiz first then create quiz question.</p>
                             <div class="form-group">
                                 <label>Quiz Name</label>
                                 <input name="quiz_name" class="form-control" placeholder="Enter quiz name" value=""/>
@@ -192,6 +231,7 @@
                         </form>
                     </div>
                     <div id="questionSection">
+                        <p style="font-size: 14px; color: #721c24">Add minimum 4 and maximum 10 question.</p>
                         <form action="{{ route('toolkit.question.create', $toolkitId) }}" method="post">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
 
@@ -343,6 +383,13 @@
                     // console.log('id '+ id+' {} type'+ type);
                 });
 
+                $("#toolkitPrice").keydown(function (event) {
+                    if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46) {
+                    } else {
+                        event.preventDefault();
+                    }
+                });
+
                 function loadContent(id, type) {
                     // $('#content').html('id = '+id+' type= '+ type)
                     $.ajaxSetup({
@@ -356,7 +403,7 @@
                         data: {
                             id: id,
                             type: type,
-                            course_toolkit: '{{ Request::segment(2) }}'
+                            course_toolkit: '{{ Request::segment(1) }}'
                         },
                         success: function (result) {
                             console.log(result);
@@ -369,7 +416,7 @@
                                     "<input type=\"hidden\" name=\"_token\" value=\"{{csrf_token()}}\">"+
                                     "<div class='form-group'><label>Video Url</label><input name='url' class='form-control' value='" + result.url + "'/></div>" +
                                     "<div class='form-group'><label>Video Title</label><input name='title' class='form-control' value='"+result.video_title+"'/></div>" +
-                                    "<div class='form-group'><label>Video Description</label><input name='description' class='form-control' value='"+result.short_description+"'/></div>" +
+                                    "<div class='form-group'><label>Video Description</label><textarea name='description' class='form-control' rows=\"3\">"+result.short_description+"</textarea></div>" +
                                     "<input type='hidden' name='toolkit_id' class='form-control' value='"+result.toolkit_id+"'/>"+
                                     "<input type='hidden' name='id' class='form-control' value='"+result.id+"'/>"+
                                     "<button type=\"submit\" class=\"btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white\" id=\"quizButton\">Update</button>"
@@ -400,7 +447,7 @@
                         data: {
                             quiz_id: quiz_id,
                             serial: serial,
-                            course_toolkit: '{{ Request::segment(2) }}',
+                            course_toolkit: '{{ Request::segment(1) }}',
                         },
                         success: function(result){
 

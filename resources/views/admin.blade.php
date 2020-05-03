@@ -96,9 +96,9 @@
                                         <tr>
                                             <td>{{$n}}</td>
                                             <td>{{$course->title}}</td>
-                                            <td>{{$course->price}}</td>
-                                            <td>approved</td>
-                                            <td><a href="course/edit/{{$course->id}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
+                                            <td>{{($course->price == 0) ? 'Free' : $course->price}}</td>
+                                            <td>{{$course->status}}</td>
+                                            <td><a href="{{route('course.edit', $course->id)}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
                                         </tr>
                                         <?php $n++ ?>
                                     @endforeach
@@ -124,7 +124,8 @@
                                         <th style="width:10%">No.</th>
                                         <th style="width:20%">Subject</th>
                                         <th style="width:30%">Toolkit Name</th>
-                                        <th style="width:20%">price</th>
+                                        <th style="width:10%">Price</th>
+                                        <th style="width:10%">Status</th>
                                         <th style="width:20%">Action</th>
                                     </tr>
                                     </thead>
@@ -135,8 +136,9 @@
                                             <td>{{$n}}</td>
                                             <td>{{$toolkit->subject->subject_name}}</td>
                                             <td>{{$toolkit->toolkit_title}}</td>
-                                            <td>{{$toolkit->price}}</td>
-                                            <td><a href="toolkit/edit/{{$toolkit->id}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
+                                            <td>{{($toolkit->price == 0) ? 'Free' : $toolkit->price}}</td>
+                                            <td>{{$toolkit->status}}</td>
+                                            <td><a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
                                         </tr>
                                         <?php $n++ ?>
                                     @endforeach

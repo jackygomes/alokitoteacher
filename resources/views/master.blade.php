@@ -97,8 +97,11 @@
                     </button>
                     <div class="dropdown-menu">
                         @if(Auth::user()->identifier == 101)
-                        <a class="dropdown-item" href="@if(Auth::user()->identifier == 101) {{ url('admin') }}@endif/{{ Auth::user()->username }}">Dashboard</a>
+                        <a class="dropdown-item" href="@if(Auth::user()->identifier == 101) {{ url('dashboard') }}@endif">Dashboard</a>
                         @else
+                            @if(Auth::user()->identifier == 1)
+                                <a class="dropdown-item" href="{{url('t/dashboard')}}">Dashboard</a>
+                            @endif
                         <a class="dropdown-item" href="@if(Auth::user()->identifier == 1){{ url('t') }}@elseif(Auth::user()->identifier == 2) {{ url('s') }}@endif/{{ Auth::user()->username }}">Profile</a>
                         @endif
                         <a class="dropdown-item" href="{{ url('settings') }}">Settings</a>

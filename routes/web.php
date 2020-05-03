@@ -21,6 +21,13 @@ Route::get('test-email', function() {
 Route::get ('/', 'HomeController@index');
 Route::post ('email_subscribe', 'HomeController@email_subscribe');
 
+
+Route::get ('t/dashboard', 'TeacherController@dashboard')->name('teacher.dashboard');
+//Route::get ('t/toolkit/create', 'ToolkitController@create')->name('teacher.toolkit.create');
+//Route::post ('toolkit/store', 'ToolkitController@store')->name('teacher.toolkit.store');
+//Route::get ('toolkit/edit/{id}', 'ToolkitController@toolkit_edit')->name('teacher.toolkit.edit');
+
+
 Route::get ('t/{username}', 'TeacherController@index');
 Route::post ('add_work_experience', 'TeacherController@add_work_experience');
 Route::post ('add_academics', 'TeacherController@add_academics');
@@ -29,7 +36,9 @@ Route::get ('remove/{type}/{id}', 'TeacherController@remove_profile_item');
 
 Route::get ('s/{username}', 'SchoolController@index');
 
-Route::get ('admin/{username}', 'AdminController@index')->name('dashboard');
+
+// admin routes
+Route::get ('dashboard', 'AdminController@index')->name('dashboard');
 Route::get ('admin/course/create', 'CourseController@create')->name('course.create');
 Route::post ('admin/course/store', 'CourseController@store')->name('course.store');
 Route::get ('admin/course/edit/{id}', 'CourseController@course_edit')->name('course.edit');
@@ -40,20 +49,22 @@ Route::post ('admin/course/update/{id}', 'CourseController@course_video_update')
 Route::post ('admin/course/quiz/update/{id}', 'CourseController@course_quiz_update')->name('course.quiz.update');
 
 
-Route::get ('admin/toolkit/edit/{id}', 'ToolkitController@toolkit_edit')->name('toolkit.edit');
-Route::post ('admin/toolkit/video/update/{id}', 'ToolkitController@toolkit_video_update')->name('toolkit.video.edit');
-Route::post ('admin/toolkit/quiz/update/{id}', 'ToolkitController@toolkit_quiz_update')->name('toolkit.quiz.update');
+Route::get ('toolkit/create', 'ToolkitController@create')->name('toolkit.create');
+Route::post ('toolkit/store', 'ToolkitController@store')->name('toolkit.store');
+Route::post ('toolkit/update/{id}', 'ToolkitController@toolkitDetailsUpdate')->name('toolkit.update');
+Route::post ('toolkit/video/create/{id}', 'ToolkitController@videoCreate')->name('toolkit.video.create');
+Route::post ('toolkit/quiz/create/{id}', 'ToolkitController@quizCreate')->name('toolkit.quiz.create');
+Route::post ('toolkit/question/create/{id}', 'ToolkitController@questionCreate')->name('toolkit.question.create');
 
-Route::get ('admin/toolkit/create', 'ToolkitController@create')->name('toolkit.create');
-Route::post ('admin/toolkit/store', 'ToolkitController@store')->name('toolkit.store');
-Route::post ('admin/toolkit/update/{id}', 'ToolkitController@toolkit_details_edit')->name('toolkit.update');
-Route::post ('admin/toolkit/video/create/{id}', 'ToolkitController@videoCreate')->name('toolkit.video.create');
-Route::post ('admin/toolkit/quiz/create/{id}', 'ToolkitController@quizCreate')->name('toolkit.quiz.create');
-Route::post ('admin/toolkit/question/create/{id}', 'ToolkitController@questionCreate')->name('toolkit.question.create');
+Route::get ('toolkit/edit/{id}', 'ToolkitController@toolkit_edit')->name('toolkit.edit');
+Route::post ('toolkit/video/update/{id}', 'ToolkitController@toolkit_video_update')->name('toolkit.video.edit');
+Route::post ('toolkit/quiz/update/{id}', 'ToolkitController@toolkit_quiz_update')->name('toolkit.quiz.update');
 
 
 Route::post ('admin/load_content', 'AdminController@load_content');
 Route::post ('admin/load_question', 'AdminController@load_question');
+// admin routes ends
+
 
 Route::get ('all', 'AllController@index');
 

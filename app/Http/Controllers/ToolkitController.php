@@ -29,9 +29,12 @@ class ToolkitController extends Controller
 	    ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
 	    ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
 	    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
-	    ->groupBy('toolkits.id')
+	    ->where('toolkits.status', '=', 'Approved')
+        ->groupBy('toolkits.id')
 	    ->orderby('toolkits.subject_id','asc')
 	    ->paginate(12);
+
+//        return $toolkit_info;
 
 	    return view ('toolkits',compact('toolkit_info'));
 	    //return var_dump($data);
@@ -42,8 +45,12 @@ class ToolkitController extends Controller
     public function create () {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
-
+        if($user_info) {
+            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            } else {
+                return abort(404);
+            }
+        }else {
             return abort(404);
         }
 
@@ -55,8 +62,12 @@ class ToolkitController extends Controller
     public function store(Request $request) {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
-
+        if($user_info) {
+            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            } else {
+                return abort(404);
+            }
+        }else {
             return abort(404);
         }
 
@@ -82,19 +93,30 @@ class ToolkitController extends Controller
         $toolkit->toolkit_title = $request->input('toolkit_name');
         $toolkit->description = $request->input('toolkit_description');
         $toolkit->price = $request->input('toolkit_price');
+        $toolkit->status = 'Pending';
         $toolkit->slug = $slug;
         $toolkit->thumbnail = $image_name;
 
         $toolkit->save();
 
-        return redirect()->route('dashboard', $user_info->username)->with('success', 'Toolkit created successfully');
+        if($user_info->identifier == 1){
+            return redirect()->route('teacher.dashboard')->with('success', 'Toolkit created successfully');
+        }else {
+            return redirect()->route('dashboard')->with('success', 'Toolkit created successfully');
+        }
+
     }
 
-    public function toolkit_details_edit(Request $request, $toolkitId) {
+    public function toolkitDetailsUpdate(Request $request, $toolkitId) {
+
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
-
+        if($user_info) {
+            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            } else {
+                return abort(404);
+            }
+        }else {
             return abort(404);
         }
 
@@ -108,25 +130,34 @@ class ToolkitController extends Controller
             'toolkit_name'          => 'required',
             'toolkit_description'   => 'required',
             'toolkit_price'         => 'required',
-            'toolkitThumbnailImage'        => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $randomText = Str::random(10);
         $slug = Str::slug($request->input('toolkit_name'), '-');
         $slug = $slug.'-'.$randomText;
 
-        $image = $request->file('toolkitThumbnailImage');
-        $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
-        $image->move(public_path("images/thumbnail"), $image_name);
 
         $toolkit = Toolkit::find($toolkitId);
+
+        if($toolkit->toolkit_title == $request->input('toolkit_name')){
+            $slug = $toolkit->slug;
+        }
+
         $toolkit->subject_id = $request->input('subject');
-        $toolkit->user_id = $userId;
+//        $toolkit->user_id = $userId;
         $toolkit->toolkit_title = $request->input('toolkit_name');
         $toolkit->description = $request->input('toolkit_description');
         $toolkit->price = $request->input('toolkit_price');
+        $toolkit->status = $request->input('status');
         $toolkit->slug = $slug;
-        $toolkit->thumbnail = $image_name;
+
+        if(isset($request->toolkitThumbnailImage)) {
+            $image = $request->file('toolkitThumbnailImage');
+            $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
+            $image->move(public_path("images/thumbnail"), $image_name);
+            $toolkit->thumbnail = $image_name;
+        }
+
 
         $toolkit->save();
         return redirect()->route('toolkit.edit', $toolkitId)->with('success', 'Toolkit Edited successfully');
@@ -135,8 +166,12 @@ class ToolkitController extends Controller
     public function videoCreate(Request $request, $id){
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
-
+        if($user_info) {
+            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            } else {
+                return abort(404);
+            }
+        }else {
             return abort(404);
         }
 
@@ -149,7 +184,7 @@ class ToolkitController extends Controller
         $video->toolkit_id = $id;
         $video->url = $request->input('url');
         $video->video_title = $request->input('title');
-        $video->short_description = $request->input('description');
+        $video->short_description = isset($request->description) ? $request->description : "";
         $video->sequence = '1';
 
         $video->save();
@@ -160,7 +195,12 @@ class ToolkitController extends Controller
     public function quizCreate(Request $request, $toolkitId){
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
+        if($user_info) {
+            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            } else {
+                return abort(404);
+            }
+        }else {
             return abort(404);
         }
 
@@ -185,14 +225,23 @@ class ToolkitController extends Controller
     public function questionCreate(Request $request, $toolkitId){
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
+        if($user_info) {
+            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            } else {
+                return abort(404);
+            }
+        }else {
             return abort(404);
+        }
+        // Maximum question count check
+        $questionCountCheck = ToolkitQuiz::find($request->quiz_id);
+
+        if($questionCountCheck->question_count >= 10) {
+            return redirect()->route('toolkit.edit', $toolkitId)->with('warning', 'Sorry! You can add maximum 10 question.');
         }
 
         // Merge Questions and Options
         $data = $request->all();
-//        return $data;
-//        exit();
 
         $questions = array_map(function($value) {
             return ["question" => $value];
@@ -248,15 +297,26 @@ class ToolkitController extends Controller
             return "Quiz insertion error: " . $e->getMessage();
         }
 
+        $questionCount = ToolkitQuestion::where('quiz_id', '=', $request->quiz_id)->count();
+
+        $quiz = ToolkitQuiz::find($request->quiz_id);
+        $quiz->question_count = $questionCount;
+        $quiz->save();
+
 
         return redirect()->route('toolkit.edit', $toolkitId)->with('success', 'Questions created successfully');
     }
 
     public function toolkit_edit($toolkitId) {
+
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
-
+        if($user_info) {
+            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            } else {
+                return abort(404);
+            }
+        } else {
             return abort(404);
         }
 
@@ -288,8 +348,19 @@ class ToolkitController extends Controller
             ->orderBy('sequence', 'ASC')
             ->get();
 
+        $quiz = ToolkitQuiz::where('toolkit_id', '=', $toolkitId)->get();
+
+        if(count($quiz) > 0){
+            $hasQuiz = 1;
+            if( $quiz[0]->question_count >= 4) $publishEnable = 1;
+            else $publishEnable = 0;
+        } else {
+            $publishEnable = 0;
+            $hasQuiz = 0;
+        }
+
 //        return $contents;
-        return view('toolkit.toolkit_edit', compact('toolkit', 'contents', 'toolkitId', 'subjects'));
+        return view('toolkit.toolkit_edit', compact('hasQuiz', 'publishEnable', 'user_info', 'toolkit', 'contents', 'toolkitId', 'subjects'));
     }
 
     public function toolkit_video_update(Request $request, $id)
@@ -313,6 +384,7 @@ class ToolkitController extends Controller
         $quizId = $request->input('quiz_id');
         $toolkitQuiz = toolkitQuiz::find($quizId);
         $toolkitQuiz->quiz_title = $request->input('quiz_name');
+        $toolkitQuiz->description = $request->input('quiz_description');
 
         $toolkitQuiz->save();
 
@@ -335,6 +407,14 @@ class ToolkitController extends Controller
 
             $toolkitQuestionOption->save();
         }
+
+        // TODO: below code will get deleted
+        // this code is just to fill the question_count field as it was newly created
+        $questionCount = ToolkitQuestion::where('quiz_id', '=', $quizId)->count();
+        $quiz = ToolkitQuiz::find($quizId);
+        $quiz->question_count = $questionCount;
+        $quiz->save();
+        // end
 
         return redirect()->route('toolkit.edit', $toolkit);
 
