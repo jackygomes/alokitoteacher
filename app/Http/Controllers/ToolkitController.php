@@ -351,12 +351,16 @@ class ToolkitController extends Controller
         $quiz = ToolkitQuiz::where('toolkit_id', '=', $toolkitId)->get();
 
         if(count($quiz) > 0){
+            $hasQuiz = 1;
             if( $quiz[0]->question_count >= 4) $publishEnable = 1;
             else $publishEnable = 0;
-        } else $publishEnable = 0;
+        } else {
+            $publishEnable = 0;
+            $hasQuiz = 0;
+        }
 
 //        return $contents;
-        return view('toolkit.toolkit_edit', compact('publishEnable', 'user_info', 'toolkit', 'contents', 'toolkitId', 'subjects'));
+        return view('toolkit.toolkit_edit', compact('hasQuiz', 'publishEnable', 'user_info', 'toolkit', 'contents', 'toolkitId', 'subjects'));
     }
 
     public function toolkit_video_update(Request $request, $id)
@@ -380,6 +384,7 @@ class ToolkitController extends Controller
         $quizId = $request->input('quiz_id');
         $toolkitQuiz = toolkitQuiz::find($quizId);
         $toolkitQuiz->quiz_title = $request->input('quiz_name');
+        $toolkitQuiz->description = $request->input('quiz_description');
 
         $toolkitQuiz->save();
 

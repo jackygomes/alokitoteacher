@@ -94,21 +94,29 @@
                 <div class="row">
                     <div class="col-lg-12">
                         @if(count($contents) == 1)
-                                @if($contents[0]->type == 1)
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
-                                @elseif($contents[0]->type == 3)
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
-                                @else
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
-                                    <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                            @if($contents[0]->type == 1)
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
+                                @if($hasQuiz == 1)
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
                                 @endif
-                        @elseif(count($contents) <= 0)
+                            @elseif($contents[0]->type == 3)
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
+                                @if($hasQuiz == 1)
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                                @endif
+                            @else
                                 <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
                                 <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
+                                @if($hasQuiz == 1)
                                 <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                                @endif
+                            @endif
+                        @elseif(count($contents) <= 0)
+                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
+                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
+                            @if($hasQuiz == 1)
+                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
+                            @endif
                         @else
                             <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
                         @endif
@@ -210,6 +218,7 @@
                     <div id="quizSection">
                         <form action="{{ route('toolkit.quiz.create', $toolkitId) }}" method="post">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Create quiz first then create quiz question.</p>
                             <div class="form-group">
                                 <label>Quiz Name</label>
                                 <input name="quiz_name" class="form-control" placeholder="Enter quiz name" value=""/>
