@@ -31,7 +31,8 @@ class CourseController extends Controller
 	    ->rightJoin('courses', 'users.id', '=','courses.user_id')
 	    ->leftJoin('course_ratings', 'courses.id', '=', 'course_ratings.course_id')
 	    ->select('users.id','users.name','users.email', 'users.image','users.phone_number','users.balance','users.username','courses.id','courses.thumbnail','courses.title','courses.description','courses.price','courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
-	    ->groupBy('courses.id')
+        ->where('courses.status', '=', 'Approved')
+        ->groupBy('courses.id')
 	    ->paginate(4);
 
 	    return view ('courses',compact('course_info'));
