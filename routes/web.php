@@ -42,10 +42,15 @@ Route::get ('dashboard', 'AdminController@index')->name('dashboard');
 Route::get ('admin/course/create', 'CourseController@create')->name('course.create');
 Route::post ('admin/course/store', 'CourseController@store')->name('course.store');
 Route::get ('admin/course/edit/{id}', 'CourseController@course_edit')->name('course.edit');
+Route::post ('admin/course/update/{id}', 'CourseController@courseDetailsUpdate')->name('course.details.update');
+
 Route::get ('admin/course/objective/edit/{id}', 'CourseController@courseObjectiveEdit')->name('course.objective.edit');
 Route::post ('admin/course/objective/update/{id}', 'CourseController@courseSequenceUpdate')->name('course.objective.update');
+Route::post ('admin/course/video/create/{id}', 'CourseController@videoCreate')->name('course.video.create');
+Route::post ('admin/course/quiz/create/{id}', 'CourseController@quizCreate')->name('course.quiz.create');
+Route::post ('admin/course/question/create/{id}', 'CourseController@questionCreate')->name('course.question.create');
 
-Route::post ('admin/course/update/{id}', 'CourseController@course_video_update')->name('course.update.edit');
+Route::post ('admin/course/video/update/{id}', 'CourseController@course_video_update')->name('course.update.edit');
 Route::post ('admin/course/quiz/update/{id}', 'CourseController@course_quiz_update')->name('course.quiz.update');
 
 

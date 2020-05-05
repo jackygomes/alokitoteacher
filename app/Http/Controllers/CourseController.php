@@ -145,22 +145,229 @@ class CourseController extends Controller
             ->orderBy('sequence', 'ASC')
             ->get();
 
-//        return "asdasd";
-        return view('course.edit_objective',compact( 'info', 'contents'));
+        $quizzes = CourseQuiz::where('course_id', '=', $courseId)->get();
+            if(count($quizzes) > 0) {
+                foreach ($quizzes as $quiz) {
+                    if($quiz->question_count < 4) {
+                        $publishEnable = 0;
+                        break;
+                    } else {
+                        $publishEnable = 1;
+                    }
+                }
+            } else $publishEnable = 0;
+//            return $quizzes;
+
+        return view('course.edit_objective',compact( 'publishEnable', 'quizzes', 'info', 'contents'));
     }
 
-    // TODO: course objective create
+    public function courseDetailsUpdate(Request $request, $courseId) {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 101){
 
-    public function courseVideoCreate(Request $request, $courseId) {
-        $data = [
-            'courseId' => $courseId,
-            'requests' => $request->all(),
-        ];
-        return $data;
+            return abort(404);
+        }
+
+        $this->validate($request, [
+            'course_name'          => 'required',
+            'course_description'   => 'required',
+            'course_price'         => 'required',
+        ]);
+        $randomText = Str::random(10);
+        $slug = Str::slug($request->input('course_name'), '-');
+        $slug = $slug.'-'.$randomText;
+
+        $course = Course::find($courseId);
+        if($course->title  == $request->input('course_name')){
+            $slug = $course->slug;
+        }
+
+        $course->title = $request->input('course_name');
+        $course->description = $request->input('course_description');
+        $course->price = $request->input('course_price');
+        $course->status = isset($request->status) ? $request->input('status') : "Pending";
+        $course->slug = $slug;
+
+        if(isset($request->courseThumbnailImage)) {
+            $image = $request->file('courseThumbnailImage');
+            $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
+            $image->move(public_path("images/thumbnail"), $image_name);
+            $course->thumbnail = $image_name;
+        }
+
+        $course->save();
+
+        // TODO this code will get delete after question_count fills
+        $quizzes = CourseQuiz::where('course_id', '=', $courseId)->get();
+        if(count($quizzes) > 0) {
+            foreach ($quizzes as $quiz) {
+                $questionCount = CourseQuestion::where('quiz_id', '=', $quiz->id)->count();
+                $quiz = CourseQuiz::find($quiz->id);
+                $quiz->question_count = $questionCount;
+                $quiz->save();
+            }
+        }
+        // End
+
+        return redirect()->route('course.objective.edit', $courseId)->with('success', 'Course Details Edited successfully');
+    }
+
+    public function videoCreate(Request $request, $courseId) {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+        $this->validate($request, [
+            'url' => 'required',
+            'title' => 'required',
+        ]);
+
+        try{
+            $videoData = [
+                'course_id'    => $courseId,
+                'url'    => isset($request->url) ? $request->url : "",
+                'video_title'    => isset($request->title) ? $request->title : "",
+                'sequence' => 0,
+                'short_description' => isset($request->description) ? $request->description : "",
+            ];
+
+            CourseVideo::create($videoData);
+
+        } catch(\Exception $e) {
+            return "Quiz insertion error: " . $e->getMessage();
+        }
+        return redirect()->route('course.objective.edit', $courseId)->with('success', 'Video created successfully');
+    }
+    public function quizCreate(Request $request, $courseId) {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+
+        $this->validate($request, [
+            'quiz_name' => 'required',
+        ]);
+
+        try{
+            $quizData = [
+                'course_id'    => $courseId,
+                'quiz_title'    => isset($request->quiz_name) ? $request->quiz_name : "",
+                'sequence' => 0,
+                'description' => isset($request->quiz_description) ? $request->quiz_description : "",
+            ];
+
+            CourseQuiz::create($quizData);
+
+        } catch(\Exception $e) {
+            return "Quiz insertion error: " . $e->getMessage();
+        }
+        return redirect()->route('course.objective.edit', $courseId)->with('success', 'Quiz created successfully');
+    }
+
+    public function questionCreate(Request $request, $courseId) {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+
+
+        $this->validate($request, [
+            'quiz' => 'required',
+            'question' => 'required',
+            'correctOption' => 'required',
+        ]);
+
+        // Maximum question count check
+        $questionCountCheck = CourseQuiz::find($request->quiz);
+
+        if($questionCountCheck->question_count >= 10) {
+            return redirect()->route('course.objective.edit', $courseId)->with('warning', 'Sorry! You can add maximum 10 question.');
+        }
+
+        try{
+            $questionData = [
+                'quiz_id'    => $request->quiz,
+                'query'    => isset($request->question) ? $request->question : "",
+                'points' => 10,
+                'mcq_or_not' => 1,
+                'correct_option' => $request->correctOption,
+            ];
+
+            if($questionInsert = CourseQuestion::create($questionData)){
+                foreach ($request->options0 as $option){
+                    if($option != null){
+                        $optionData = [
+                            'question_id'    => $questionInsert->id,
+                            'question_option'    => isset($option) ? $option : "",
+                        ];
+                        CourseQuizOption::create($optionData) ;
+                    }
+                }
+            }
+
+        } catch(\Exception $e) {
+            return "Quiz insertion error: " . $e->getMessage();
+        }
+        return redirect()->route('course.objective.edit', $courseId)->with('success', 'Question created successfully');
     }
 
     public function courseSequenceUpdate(Request $request, $courseId) {
-        return $request->all();
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+
+        // Merge Sequence type and ID
+
+        $data = $request->all();
+
+        $items = array_map(function($value) {
+            return ["item_sequence" => $value];
+        }, array_filter($data, function($value, $key) {
+            return Str::contains($key, 'item_sequence');
+        }, ARRAY_FILTER_USE_BOTH));
+
+        $id = array_filter($data, function($value, $key) {
+            return Str::contains($key, 'item_id');
+        }, ARRAY_FILTER_USE_BOTH);
+
+        $type = array_filter($data, function($value, $key) {
+            return Str::contains($key, 'item_type');
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach ($items as $key => $item) {
+            $index = str_replace("item_sequence", "", $key);
+            $items["item_sequence$index"]['id'] = $id["item_id$index"];
+            $items["item_sequence$index"]['type'] = $type["item_type$index"];
+        }
+
+        try {
+            foreach ($items as $item){
+                if($item['type'][0] == 1) {
+                    $courseVideo = CourseVideo::find($item['id'][0]);
+                    $courseVideo->sequence = $item['item_sequence'][0];
+                    $courseVideo->save();
+                }elseif($item['type'][0] == 3) {
+                    $courseQuiz = CourseQuiz::find($item['id'][0]);
+                    $courseQuiz->sequence = $item['item_sequence'][0];
+
+                    $courseQuiz->save();
+                }
+            }
+        } catch(\Exception $e) {
+            return "Quiz insertion error: " . $e->getMessage();
+        }
+
+        return redirect()->route('course.objective.edit', $courseId)->with('success', 'Sequence Updated successfully');
     }
 
     public function course_video_update(Request $request, $id) {

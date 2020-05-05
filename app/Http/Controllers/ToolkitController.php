@@ -107,62 +107,6 @@ class ToolkitController extends Controller
 
     }
 
-    public function toolkitDetailsUpdate(Request $request, $toolkitId) {
-
-        $userId = Auth::id();
-        $user_info = User::where('id', '=', $userId)->first();
-        if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
-            } else {
-                return abort(404);
-            }
-        }else {
-            return abort(404);
-        }
-
-        $toolkit = Toolkit::find($toolkitId);
-        if ($toolkit == null) {
-            return abort(404);
-        }
-
-        $this->validate($request, [
-            'subject'               => 'required',
-            'toolkit_name'          => 'required',
-            'toolkit_description'   => 'required',
-            'toolkit_price'         => 'required',
-        ]);
-
-        $randomText = Str::random(10);
-        $slug = Str::slug($request->input('toolkit_name'), '-');
-        $slug = $slug.'-'.$randomText;
-
-
-        $toolkit = Toolkit::find($toolkitId);
-
-        if($toolkit->toolkit_title == $request->input('toolkit_name')){
-            $slug = $toolkit->slug;
-        }
-
-        $toolkit->subject_id = $request->input('subject');
-//        $toolkit->user_id = $userId;
-        $toolkit->toolkit_title = $request->input('toolkit_name');
-        $toolkit->description = $request->input('toolkit_description');
-        $toolkit->price = $request->input('toolkit_price');
-        $toolkit->status = $request->input('status');
-        $toolkit->slug = $slug;
-
-        if(isset($request->toolkitThumbnailImage)) {
-            $image = $request->file('toolkitThumbnailImage');
-            $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
-            $image->move(public_path("images/thumbnail"), $image_name);
-            $toolkit->thumbnail = $image_name;
-        }
-
-
-        $toolkit->save();
-        return redirect()->route('toolkit.edit', $toolkitId)->with('success', 'Toolkit Edited successfully');
-    }
-
     public function videoCreate(Request $request, $id){
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
@@ -361,6 +305,62 @@ class ToolkitController extends Controller
 
 //        return $contents;
         return view('toolkit.toolkit_edit', compact('hasQuiz', 'publishEnable', 'user_info', 'toolkit', 'contents', 'toolkitId', 'subjects'));
+    }
+
+    public function toolkitDetailsUpdate(Request $request, $toolkitId) {
+
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if($user_info) {
+            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            } else {
+                return abort(404);
+            }
+        }else {
+            return abort(404);
+        }
+
+        $toolkit = Toolkit::find($toolkitId);
+        if ($toolkit == null) {
+            return abort(404);
+        }
+
+        $this->validate($request, [
+            'subject'               => 'required',
+            'toolkit_name'          => 'required',
+            'toolkit_description'   => 'required',
+            'toolkit_price'         => 'required',
+        ]);
+
+        $randomText = Str::random(10);
+        $slug = Str::slug($request->input('toolkit_name'), '-');
+        $slug = $slug.'-'.$randomText;
+
+
+        $toolkit = Toolkit::find($toolkitId);
+
+        if($toolkit->toolkit_title == $request->input('toolkit_name')){
+            $slug = $toolkit->slug;
+        }
+
+        $toolkit->subject_id = $request->input('subject');
+//        $toolkit->user_id = $userId;
+        $toolkit->toolkit_title = $request->input('toolkit_name');
+        $toolkit->description = $request->input('toolkit_description');
+        $toolkit->price = $request->input('toolkit_price');
+        $toolkit->status = $request->input('status');
+        $toolkit->slug = $slug;
+
+        if(isset($request->toolkitThumbnailImage)) {
+            $image = $request->file('toolkitThumbnailImage');
+            $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
+            $image->move(public_path("images/thumbnail"), $image_name);
+            $toolkit->thumbnail = $image_name;
+        }
+
+
+        $toolkit->save();
+        return redirect()->route('toolkit.edit', $toolkitId)->with('success', 'Toolkit Edited successfully');
     }
 
     public function toolkit_video_update(Request $request, $id)

@@ -159,7 +159,7 @@
                         <div class="form-group row">
                             <label for="subjects" class="col-sm-2 col-form-label">Status:</label>
                             <div class="col-sm-10">
-                                <select class="custom-select mr-sm-2" name="status" id="subjects" {{ $publishEnable == 1 ? "" : "disabled"}}>
+                                <select class="custom-select mr-sm-2" name="status" id="status" {{ $publishEnable == 1 ? "" : "disabled"}}>
                                     @foreach($statusOptions as $options)
                                         <option value="{{$options}}" {{$toolkit->status == $options ? "selected" : ""}}>{{$options}}</option>
                                     @endforeach
