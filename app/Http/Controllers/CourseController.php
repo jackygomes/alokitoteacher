@@ -121,8 +121,12 @@ class CourseController extends Controller
     public function courseObjectiveEdit($courseId) {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
-
+        if($user_info) {
+            if($user_info->identifier == 101){
+            } else {
+                return abort(404);
+            }
+        }else {
             return abort(404);
         }
 
