@@ -151,6 +151,7 @@
     @push('js')
 
     <script src="https://player.vimeo.com/api/player.js"></script>
+    <script src="http://www.youtube.com/player_api"></script>
 
     <script type="text/javascript">
 
@@ -202,7 +203,11 @@
                     success: function(result){
 
                         if(type == 1){
-                            $('#content').html('<div class="embed-responsive  embed-responsive-16by9 "><iframe src="'+result.url+'" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div><h3 class="text-center font-weight-bold mt-2">'+result.video_title+'</h3><p class="mt-3 text-center mb-3">'+result.short_description+'</p>');
+                            if(result.url.includes("youtube")){
+                                $('#content').html('<div class="embed-responsive  embed-responsive-16by9 "><div id="videoPlayer" data-url="'+result.url+'"></div></div><h3 class="text-center font-weight-bold mt-2">'+result.video_title+'</h3><p class="mt-3 text-center mb-3">'+result.short_description+'</p>');
+                            }else {
+                                $('#content').html('<div class="embed-responsive  embed-responsive-16by9 "><iframe src="'+result.url+'" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div><h3 class="text-center font-weight-bold mt-2">'+result.video_title+'</h3><p class="mt-3 text-center mb-3">'+result.short_description+'</p>');
+                            }
                             videoControl();
                         }else if(type == 2){
                             $('#content').html('<object style="height: 80vh" width="100%" data="'+result.doc_url+'"><p>Document</p></object><button class="btn background-yellow px-4 py-2 mt-5 shadow font-weight-bold text-white" id="nextSequence">Go to Next</button>');
@@ -342,15 +347,30 @@ console.log(result.options);
                 }, 1000);
             }
 
-            function videoControl(){
-              if($('iframe').length > 0) {
-                var iframe = document.querySelector('iframe');
-                var player = new Vimeo.Player(iframe);
-
-                player.on('ended', function(data) {
+            // when video ends
+            function onPlayerStateChange(event) {
+                if(event.data === 0) {
                     updateTrackHistory(1);
-                });
-              }
+                }
+            }
+            function videoControl(){
+                if($('#videoPlayer').data('url')){
+                    var videoId = $('#videoPlayer').data('url').split('/');
+                    var player = new YT.Player('videoPlayer', {
+                        videoId: videoId[4],
+                        events: {
+                            onStateChange: onPlayerStateChange
+                        }
+                    });
+                }
+                if($('iframe').length > 0) {
+                    var iframe = document.querySelector('iframe');
+                    var player = new Vimeo.Player(iframe);
+
+                    player.on('ended', function(data) {
+                        updateTrackHistory(1);
+                    });
+                }
             }
 
             function verifyTrackHistory(){

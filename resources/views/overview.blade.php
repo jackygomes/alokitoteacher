@@ -10,11 +10,11 @@
       </div>
 
       <div class="col-md-8">
-       
+
         {!! $thumbnailPart !!}
 
         <p style="margin-bottom: 0; background-color: #f3f2f0;" class="mt-5 p-5 card font-weight-bold text-center"> {{ $info->description }}</p>
-        
+
       </div>
       <div class="col-md-4 background-yellow text-center p-5">
 
@@ -27,9 +27,15 @@
         </div>
         <br>
         <h3><a href="{{ url('t') }}/{{ $creator->username }}" class="font-weight-bold text-white">{{ $creator->name }}</a></h3>
-        
 
-        <span>Course Rating: </span>
+
+        <span>
+            @if(Request::segment(2) == 't')
+                Toolkit Rating:
+            @elseif(Request::segment(2) == 'c')
+                Course Rating:
+            @endif
+        </span>
 
         @for($i = 1; $i <= 5; $i++)
           @if($content_rating - $i >= 0)
@@ -40,7 +46,13 @@
         @endfor
         <br>
         <br>
-        <span>Course Price: <span class="h3">Free</span></span>
+        <span>
+            @if(Request::segment(2) == 't')
+                Toolkit Price:
+            @elseif(Request::segment(2) == 'c')
+                Course Price:
+            @endif
+        <span class="h3">Free</span></span>
         <br>
         <!-- <button class="your-button-class" id="sslczPayBtn"
                   token="{{ csrf_token() }}"
@@ -58,14 +70,22 @@
 
         </form>
         @else
-         <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">View Course</a>
+         <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
+             @if(Request::segment(2) == 't')
+             View Toolkit
+             @elseif(Request::segment(2) == 'c')
+                 View Course
+             @endif
+         </a>
         </form>
         @endif
-        
+
         @if(Request::segment(2) == 't')
+        <p class="text-danger mt-3">***You can not retake this toolkit</p>
+        @elseif(Request::segment(2) == 'c')
         <p class="text-danger mt-3">***You can not retake this course</p>
         @endif
-        
+
       </div>
 
       @if($info->title != null)
@@ -79,11 +99,11 @@
         <h3 class="font-weight-bold" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">{{ $info->title }}</h3>
         <h3 class="font-weight-bold" style="position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%);">{{ Auth::user()->name }}</h3>
       </div>
-      
+
       @endif
-       
-                
-                
+
+
+
 
     </div>
 </div>
