@@ -21,22 +21,41 @@ use Illuminate\Support\Str;
 
 class ToolkitController extends Controller
 {
-    function index(){
+    function index(Request $request ){
+        $subject = null;
+        $subjects = Subject::all();
 
+        if(isset($request->subject)){
+            $subject = Subject::where('id', $request->subject)->first();
+//            return $subject;
+        }
+        if($subject) {
+            $toolkit_info = DB::table('users')
+                ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
+                ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
+                ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
+                ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                ->where('toolkits.status', '=', 'Approved')
+                ->where('toolkits.subject_id', '=', $subject->id)
+                ->groupBy('toolkits.id')
+                ->orderby('toolkits.subject_id','asc')
+                ->paginate(12);
+        } else {
+            $toolkit_info = DB::table('users')
+                ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
+                ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
+                ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
+                ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                ->where('toolkits.status', '=', 'Approved')
+                ->groupBy('toolkits.id')
+                ->orderby('toolkits.subject_id','asc')
+                ->paginate(12);
+        }
 
-	    $toolkit_info = DB::table('users')
-	    ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
-	    ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
-	    ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
-	    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
-	    ->where('toolkits.status', '=', 'Approved')
-        ->groupBy('toolkits.id')
-	    ->orderby('toolkits.subject_id','asc')
-	    ->paginate(12);
 
 //        return $toolkit_info;
 
-	    return view ('toolkits',compact('toolkit_info'));
+	    return view ('toolkits',compact('toolkit_info', 'subjects'));
 	    //return var_dump($data);
 	    //return view('toolkits');
     }
@@ -75,6 +94,7 @@ class ToolkitController extends Controller
             'subject'               => 'required',
             'toolkit_name'          => 'required',
             'toolkit_description'   => 'required',
+            'toolkit_type'          => 'required',
             'toolkit_price'         => 'required',
             'thumbnailImage'        => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
@@ -92,6 +112,7 @@ class ToolkitController extends Controller
         $toolkit->user_id = $userId;
         $toolkit->toolkit_title = $request->input('toolkit_name');
         $toolkit->description = $request->input('toolkit_description');
+        $toolkit->type = $request->input('toolkit_type');
         $toolkit->price = $request->input('toolkit_price');
         $toolkit->status = 'Pending';
         $toolkit->slug = $slug;
@@ -329,6 +350,7 @@ class ToolkitController extends Controller
             'subject'               => 'required',
             'toolkit_name'          => 'required',
             'toolkit_description'   => 'required',
+            'toolkit_type'          => 'required',
             'toolkit_price'         => 'required',
         ]);
 
@@ -347,6 +369,7 @@ class ToolkitController extends Controller
 //        $toolkit->user_id = $userId;
         $toolkit->toolkit_title = $request->input('toolkit_name');
         $toolkit->description = $request->input('toolkit_description');
+        $toolkit->type = $request->input('toolkit_type');
         $toolkit->price = $request->input('toolkit_price');
         $toolkit->status = $request->input('status');
         $toolkit->slug = $slug;

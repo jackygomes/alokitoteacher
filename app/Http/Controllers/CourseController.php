@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CoursePreview;
 use App\CourseQuestion;
 use App\CourseQuiz;
 use App\CourseQuizOption;
@@ -63,6 +64,7 @@ class CourseController extends Controller
             'course_name'          => 'required',
             'course_description'   => 'required',
             'course_price'   => 'required',
+            'preview_video'   => 'required',
             'courseThumbnailImage' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         $randomText = Str::random(6);
@@ -82,7 +84,14 @@ class CourseController extends Controller
             'slug'    => $slug,
             'thumbnail'    => $image_name,
         ];
-        Course::create($course);
+
+        if($courseInsert = Course::create($course)) {
+            $previewVideo = [
+                'course_id' => $courseInsert->id,
+                'url'       => $request->preview_video,
+            ];
+            CoursePreview::create($previewVideo);
+        }
 
         return redirect()->route('dashboard', $user_info->username)->with('success', 'Course created successfully');
     }
@@ -132,6 +141,9 @@ class CourseController extends Controller
 
         $info = Course::find($courseId);
 
+        $previewVideo = CoursePreview::where('course_id','=', $courseId)->first();
+//        return $previewVideo;
+
         $videos = DB::table('course_videos')
             ->select('id', 'video_title as title', 'sequence', DB::raw('1 as type'))
             ->where('course_id', '=', $info->id);
@@ -162,7 +174,7 @@ class CourseController extends Controller
             } else $publishEnable = 0;
 //            return $quizzes;
 
-        return view('course.edit_objective',compact( 'publishEnable', 'quizzes', 'info', 'contents'));
+        return view('course.edit_objective',compact( 'previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
     }
 
     public function courseDetailsUpdate(Request $request, $courseId) {
@@ -177,10 +189,17 @@ class CourseController extends Controller
             'course_name'          => 'required',
             'course_description'   => 'required',
             'course_price'         => 'required',
+            'preview_video'         => 'required',
         ]);
         $randomText = Str::random(10);
         $slug = Str::slug($request->input('course_name'), '-');
         $slug = $slug.'-'.$randomText;
+
+
+        $previewVideo = CoursePreview::find($courseId);
+        $previewVideo->url = $request->preview_video;
+
+        $previewVideo->save();
 
         $course = Course::find($courseId);
         if($course->title  == $request->input('course_name')){

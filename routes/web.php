@@ -23,9 +23,6 @@ Route::post ('email_subscribe', 'HomeController@email_subscribe');
 
 
 Route::get ('t/dashboard', 'TeacherController@dashboard')->name('teacher.dashboard');
-//Route::get ('t/toolkit/create', 'ToolkitController@create')->name('teacher.toolkit.create');
-//Route::post ('toolkit/store', 'ToolkitController@store')->name('teacher.toolkit.store');
-//Route::get ('toolkit/edit/{id}', 'ToolkitController@toolkit_edit')->name('teacher.toolkit.edit');
 
 
 Route::get ('t/{username}', 'TeacherController@index');
@@ -35,6 +32,8 @@ Route::post ('add_skills', 'TeacherController@add_skills');
 Route::get ('remove/{type}/{id}', 'TeacherController@remove_profile_item');
 
 Route::get ('s/{username}', 'SchoolController@index');
+
+Route::get ('stu/{username}', 'StudentController@index');
 
 
 // admin routes
@@ -98,7 +97,7 @@ Route::post ('updatePassword', 'SettingsController@updatePassword')->name('updat
 //Route::post ('load_question', 'ToolkitContentController@load_question'); //newly created
 
 
-Route::get ('toolkit', 'ToolkitController@index');
+Route::get ('toolkit', 'ToolkitController@index')->name('allToolkit');
 
 Route::get ('about_us', 'AboutUsController@index');
 

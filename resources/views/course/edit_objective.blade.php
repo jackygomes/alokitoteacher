@@ -89,6 +89,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="previewVideo" class="col-sm-2 col-form-label">Preview Video:</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="preview_video" class="form-control" value="{{$previewVideo->url}}" id="previewVideo" placeholder="Preview Video Url">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="thumbnail_image" class="col-sm-2 col-form-label">Image:</label>
                             <div class="col-sm-10">
                                 <img style="width: 300px;" src="{{ url('images/thumbnail') }}/{{$info->thumbnail}}" alt="">

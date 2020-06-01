@@ -12,7 +12,7 @@
                   <div class="container-fluid">
                     <div class="form-row mb-4">
                       <div class="col-md-12">
-                        
+
                          <input id="email" type="text" class="form-control border-yellow @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email" autofocus>
 
                         @error('email')
@@ -24,13 +24,13 @@
 
 
                       </div>
-                      
+
                     </div>
-                   </div> 
+                   </div>
                   <div class="container-fluid">
                     <div class="form-row mt-1">
                       <div class="col-md-12 mb-5">
-                        
+
                         <input id="password" type="password" class="form-control border-yellow @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="password" placeholder="Password" autofocus>
 
                         @error('password')
@@ -40,7 +40,7 @@
                         @enderror
 
                       </div>
-                      
+
                     </div>
                   </div>
 
@@ -65,7 +65,7 @@
 
 
                  </form>
-     
+
 
          </div>
 
@@ -74,7 +74,7 @@
             <h2 class="text-white" style="padding: 30%;">OR</h2>
           </div>
         </div>
-        
+
         <div class="col-md-4 mr-1 ml-2">
             <h1 class="font-weight-bold my-5">Sign-Up</h1>
             <div>
@@ -84,7 +84,7 @@
                   <div class="container-fluid">
                     <div class="form-row mb-4">
                       <div class="col-md-12">
-                        
+
 
                         <input id="name" type="text" class="form-control border-yellow @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="Full Name" autofocus>
 
@@ -95,9 +95,9 @@
                         @enderror
 
                       </div>
-                      
+
                     </div>
-                   </div>  
+                   </div>
                   <div class="container-fluid">
                     <div class="form-row mt-1">
                       <div class="col-md-12 mb-3">
@@ -111,14 +111,14 @@
                         @enderror
 
                       </div>
-                      
+
                     </div>
                   </div>
 
                   <div class="container-fluid">
                     <div class="form-row mt-1">
                       <div class="col-md-12 mb-3">
-                        
+
                         <input id="email" type="email" class="form-control border-yellow @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email" autofocus>
 
                         @error('email')
@@ -128,15 +128,15 @@
                         @enderror
 
                       </div>
-                      
+
                     </div>
                   </div>
 
                   <div class="container-fluid">
                     <div class="form-row mt-1">
                       <div class="col-md-12 mb-3">
-                        
-                        <input id="phone_number" type="tel" class="form-control border-yellow @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="phone_number" placeholder="Phone Ex: 01XXXXXXXXX"  pattern="[0-9]{11}" autofocus>
+
+                        <input id="phone_number" type="tel" class="form-control border-yellow @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" autocomplete="phone_number" placeholder="Phone Ex: 01XXXaXXXXXX"  pattern="[0-9]{11}" autofocus>
 
                         @error('phone_number')
                             <span class="invalid-feedback" role="alert">
@@ -145,14 +145,14 @@
                         @enderror
 
                       </div>
-                      
+
                     </div>
                   </div>
 
                   <div class="container-fluid">
                     <div class="form-row mt-1">
                       <div class="col-md-12 mb-3">
-                        
+
                         <input id="password" type="password" class="form-control border-yellow @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="password" placeholder="Password" autofocus>
 
                         @error('password')
@@ -162,13 +162,13 @@
                         @enderror
 
                       </div>
-                      
+
                     </div>
                   </div>
                   <div class="container-fluid">
                     <div class="form-row mt-1">
                       <div class="col-md-12 mb-3">
-                        
+
                         <input id="password_confirmation" type="password" class="form-control border-yellow @error('password_confirmation') is-invalid @enderror" name="password_confirmation" value="{{ old('password_confirmation') }}" required autocomplete="password_confirmation" placeholder="Confirm Password" autofocus>
 
                         @error('password_confirmation')
@@ -178,7 +178,7 @@
                         @enderror
 
                       </div>
-                      
+
                     </div>
 
                   </div>
@@ -193,6 +193,7 @@
                             <option value="1">Teacher</option>
                             <option value="2">School</option>
                             <!-- <option value="3">Parents</option> -->
+                            <option value="4">Student</option>
                           </select>
                         </div>
                       </div>
@@ -217,5 +218,5 @@
 
     </div>
 </div>
-   
+
     @endsection

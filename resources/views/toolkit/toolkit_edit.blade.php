@@ -182,6 +182,16 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="subjects" class="col-sm-2 col-form-label">Type:</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select mr-sm-2" name="toolkit_type" id="type">
+                                    <option selected>Choose Type...</option>
+                                    <option value="Teacher" {{$toolkit->type == 'Teacher' ? "selected" : ""}}>Teacher</option>
+                                    <option value="Student" {{$toolkit->type == 'Student' ? "selected" : ""}}>Student</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="thumbnail_image" class="col-sm-2 col-form-label">Image:</label>
                             <div class="col-sm-10">
                                 <img style="width: 300px;" src="{{ url('images/thumbnail') }}/{{$toolkit->thumbnail}}" alt="">

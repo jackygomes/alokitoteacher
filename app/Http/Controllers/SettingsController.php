@@ -30,9 +30,12 @@ class SettingsController extends Controller
 		    return view ('settings_teacher', compact('recent_work', 'recent_institute'));
 
     	}elseif(Auth::user()->identifier == 2) {
-    		return view ('settings_school');
+            return view ('settings_school');
 
-    	}
+        } elseif(Auth::user()->identifier == 4) {
+            return view ('student.settings');
+
+        }
 
 	}
 
@@ -45,7 +48,7 @@ class SettingsController extends Controller
 
 //        return $user;
 
-		if($user->identifier == 1){
+		if($user->identifier == 1 || $user->identifier == 4){
 			$user->date_of_birth = $request->date_of_birth;
 		}elseif($user->identifier == 2){
 			$user->location = $request->location;

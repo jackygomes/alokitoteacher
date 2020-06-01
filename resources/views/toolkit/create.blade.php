@@ -98,6 +98,16 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="subjects" class="col-sm-2 col-form-label">Type:</label>
+                                <div class="col-sm-10">
+                                    <select class="custom-select mr-sm-2" name="toolkit_type" id="type">
+                                        <option selected>Choose Type...</option>
+                                        <option value="Teacher">Teacher</option>
+                                        <option value="Student">Student</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="thumbnail_image" class="col-sm-2 col-form-label">Thumbnail Image:</label>
                                 <div class="col-sm-10">
                                     <input type="file" name="thumbnailImage" class="form-control-file" id="thumbnail_image">

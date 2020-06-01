@@ -78,6 +78,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="previewVideo" class="col-sm-2 col-form-label">Preview Video:</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="preview_video" class="form-control" id="previewVideo" placeholder="Preview Video Url">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="thumbnailImage" class="col-sm-2 col-form-label">Thumbnail Image:</label>
                             <div class="col-sm-10">
                                 <input type="file" name="courseThumbnailImage" class="form-control-file" id="thumbnailImage">
