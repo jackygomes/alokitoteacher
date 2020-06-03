@@ -3,6 +3,7 @@
 
 
 <section class="container" style="min-height: 49.2vh">
+    @if($user_info->identifier != 4)
     <div class="row">
         <div class="col-lg-12">
             <h2 class="mt-3 text-center font-weight-bold">Courses</h2>
@@ -50,7 +51,9 @@
         </div>
     </div>
     @else
-    <h4 class="text-center text-muted">No Coureses Available</h4> @endif
+    <h4 class="text-center text-muted">No Coureses Available</h4>
+    @endif
+    @endif
 
 
     <div class="row">
@@ -102,7 +105,8 @@
         </div>
     </div>
     @else
-    <h4 class="text-center text-muted">No Coureses Available</h4> @endif
+    <h4 class="text-center text-muted mb-4">No Toolkit Available</h4>
+    @endif
 
 
 </section>

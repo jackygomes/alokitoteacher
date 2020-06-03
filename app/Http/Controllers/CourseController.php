@@ -22,9 +22,10 @@ use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
-
-
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     function index(){
 
@@ -37,7 +38,6 @@ class CourseController extends Controller
 	    ->paginate(4);
 
 	    return view ('courses',compact('course_info'));
-	    //return var_dump($data);
 
 	}
 

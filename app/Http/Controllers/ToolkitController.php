@@ -21,43 +21,96 @@ use Illuminate\Support\Str;
 
 class ToolkitController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     function index(Request $request ){
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
         $subject = null;
         $subjects = Subject::all();
 
         if(isset($request->subject)){
             $subject = Subject::where('id', $request->subject)->first();
-//            return $subject;
         }
         if($subject) {
-            $toolkit_info = DB::table('users')
-                ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
-                ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
-                ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
-                ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
-                ->where('toolkits.status', '=', 'Approved')
-                ->where('toolkits.subject_id', '=', $subject->id)
-                ->groupBy('toolkits.id')
-                ->orderby('toolkits.subject_id','asc')
-                ->paginate(12);
+            if($user_info->identifier == 4) {
+                $toolkit_info = DB::table('users')
+                    ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
+                    ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
+                    ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
+                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.subject_id', '=', $subject->id)
+                    ->where('toolkits.type', '=', 'Student')
+                    ->groupBy('toolkits.id')
+                    ->orderby('toolkits.subject_id','asc')
+                    ->paginate(12);
+            } elseif ($user_info->identifier == 1){
+                $toolkit_info = DB::table('users')
+                    ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
+                    ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
+                    ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
+                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.subject_id', '=', $subject->id)
+                    ->where('toolkits.type', '=', 'Teacher')
+                    ->groupBy('toolkits.id')
+                    ->orderby('toolkits.subject_id','asc')
+                    ->paginate(12);
+            }else {
+                $toolkit_info = DB::table('users')
+                    ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
+                    ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
+                    ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
+                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.subject_id', '=', $subject->id)
+                    ->groupBy('toolkits.id')
+                    ->orderby('toolkits.subject_id','asc')
+                    ->paginate(12);
+            }
         } else {
-            $toolkit_info = DB::table('users')
-                ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
-                ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
-                ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
-                ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
-                ->where('toolkits.status', '=', 'Approved')
-                ->groupBy('toolkits.id')
-                ->orderby('toolkits.subject_id','asc')
-                ->paginate(12);
+            if($user_info->identifier == 4) {
+                $toolkit_info = DB::table('users')
+                    ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
+                    ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
+                    ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
+                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.type', '=', 'Student')
+                    ->groupBy('toolkits.id')
+                    ->orderby('toolkits.subject_id','asc')
+                    ->paginate(12);
+            } elseif ($user_info->identifier == 1){
+                $toolkit_info = DB::table('users')
+                    ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
+                    ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
+                    ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
+                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.type', '=', 'Teacher')
+                    ->groupBy('toolkits.id')
+                    ->orderby('toolkits.subject_id','asc')
+                    ->paginate(12);
+            } else {
+                $toolkit_info = DB::table('users')
+                    ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
+                    ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
+                    ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
+                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->where('toolkits.status', '=', 'Approved')
+                    ->groupBy('toolkits.id')
+                    ->orderby('toolkits.subject_id','asc')
+                    ->paginate(12);
+            }
         }
 
 
-//        return $toolkit_info;
-
 	    return view ('toolkits',compact('toolkit_info', 'subjects'));
-	    //return var_dump($data);
-	    //return view('toolkits');
     }
 
 //	Admin Functions
