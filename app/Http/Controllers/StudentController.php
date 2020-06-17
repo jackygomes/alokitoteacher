@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Job;
+use App\StudentPersonalInfo;
 use App\Toolkit;
 use App\User;
 use Illuminate\Http\Request;
@@ -36,7 +37,8 @@ class StudentController
 		JOIN toolkit_histories as th ON th.quiz_id = tq.id AND th.user_id = '$user_info->id'
 		GROUP BY tk.id
 		 ");
+        $personalInfo = StudentPersonalInfo::where('user_id', Auth::user()->id)->first();
 
-        return view ('student.profile',compact('user_info', 'subject_based_knowledges'));
+        return view ('student.profile',compact('user_info', 'subject_based_knowledges', 'personalInfo'));
     }
 }

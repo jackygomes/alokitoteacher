@@ -5,7 +5,7 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="col-md-2 col-sm-12 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
+            <div class="col-md-3 col-sm-12 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
 
                 <div style="width: 150px; height: 150px;" class="mx-auto">
                     @if($user_info->image == null)
@@ -92,6 +92,30 @@
                         </div>
 
                     </div>
+                    <div class="row text-left ">
+                        <div class="col-3">
+                            School:
+                        </div>
+                        <div class="col-9">
+                            <p style="margin:0">@if(isset($personalInfo)){{$personalInfo->school}}@endif</p>
+                        </div>
+                    </div>
+                    <div class="row text-left ">
+                        <div class="col-3">
+                            CLass:
+                        </div>
+                        <div class="col-9">
+                            <p style="margin:0">@if(isset($personalInfo)){{$personalInfo->class}}@endif</p>
+                        </div>
+                    </div>
+                    <div class="row text-left">
+                        <div class="col-3">
+                            Address:
+                        </div>
+                        <div class="col-9">
+                            <p style="margin:0"> @if(isset($personalInfo)) {{$personalInfo->address}}@endif</p>
+                        </div>
+                    </div>
 
 
 {{--                    <h4 class="mt-3">Current Balance </h4>--}}
@@ -105,7 +129,7 @@
 
             </div>
 
-            <div class="col-md-8 col-sm-12 mt-5">
+            <div class="col-md-7 col-sm-12 mt-5">
                 <div class="container-fluid ">
 
                     <div class="row">
