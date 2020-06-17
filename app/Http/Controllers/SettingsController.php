@@ -45,6 +45,7 @@ class SettingsController extends Controller
         $user = User::find(Auth::id());
 		$user->name = $request->name;
 		$user->phone_number = $request->phone_number;
+		$user->gender = $request->gender;
 
 //        return $user;
 

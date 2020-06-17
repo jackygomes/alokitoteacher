@@ -132,7 +132,7 @@
 
       </div>
       <div class="modal-body text-center">
-        You can not retake toolkits.
+        You can not retake this toolkits.
 
       </div>
       <div class="modal-footer">

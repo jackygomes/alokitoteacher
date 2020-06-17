@@ -94,12 +94,12 @@
                     </div>
 
 
-                    <h4 class="mt-3">Current Balance </h4>
-                    <p>{{ round($user_info->balance, 2) }}</p>
-                    <div class="">
-                        <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>
-                        <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
-                    </div>
+{{--                    <h4 class="mt-3">Current Balance </h4>--}}
+{{--                    <p>{{ round($user_info->balance, 2) }}</p>--}}
+{{--                    <div class="">--}}
+{{--                        <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>--}}
+{{--                        <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>--}}
+{{--                    </div>--}}
                 @endif
 
 
@@ -107,42 +107,42 @@
 
             <div class="col-md-8 col-sm-12 mt-5">
                 <div class="container-fluid ">
+
                     <div class="row">
-                        <div class=" mb-3 col-sm-12">
-                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Toolkits</h3>
-                            <a href="{{route('toolkit.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
+                        <div class="col-sm-12">
+                            <h3 class="font-weight-bold " style="display: inline-block">Subject Based Knowledge</h3>
                             <div class="mr=2">
                                 <div class="table-responsive-sm">
                                     <table class="table ">
                                         <thead>
                                         <tr>
-                                            <th style="width:10%">No.</th>
                                             <th style="width:20%">Subject</th>
-                                            <th style="width:30%">Toolkit Name</th>
-                                            <th style="width:20%">Price</th>
-                                            <th style="width:20%">Action</th>
+                                            <th style="width:40%">Toolkit</th>
+                                            <th style="width:10%">Score</th>
+                                            <th style="width:10%">Average Score</th>
+                                            <!-- <th style="width:20%">Date</th> -->
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php $n = 1?>
-                                        @foreach ($toolkits as $toolkit)
-                                            <tr>
-                                                <td>{{$n}}</td>
-                                                <td>{{$toolkit->subject->subject_name}}</td>
-                                                <td>{{$toolkit->toolkit_title}}</td>
-                                                <td>{{($toolkit->price == 0) ? 'Free' : $toolkit->price}}</td>
-                                                <td><a href="{{ url('view') }}/t/{{$toolkit->slug}}" class="btn btn-success text-white btn-sm">View</a></td>
+                                        @foreach ($subject_based_knowledges as $subject_based_knowledge)
+                                            <tr class="subject" >
+                                                <td>{{ $subject_based_knowledge->subject_name }}</td>
+                                                <td>
+                                                    {{$subject_based_knowledge->toolkit_title}}
+                                                </td>
+                                                <td>{{$subject_based_knowledge->totalPoints}}</td>
+                                                <td> {{$data[$subject_based_knowledge->subject_name]/$total[$subject_based_knowledge->subject_name]}}</td>
+
+
                                             </tr>
-                                            <?php $n++ ?>
                                         @endforeach
+
                                         </tbody>
                                     </table>
-{{--                                    @if($toolkits->count() > 5)--}}
-{{--                                        {{$toolkits->links()}}--}}
-{{--                                    @endif--}}
+                                    {{--{{ var_dump($course_knowledges) }}--}}
+                                    @if($subject_based_knowledges == null)
 
-                                    @if($toolkits->count() == 0)
-                                        <h5 class="text-center text-muted">No Toolkit to Show</h5>
+                                        <h5 class="text-center text-muted">No Subject Based Knowledge to Show</h5>
                                     @endif
                                 </div>
                             </div>

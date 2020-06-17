@@ -214,7 +214,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identicreatedfier == 101 || $user_info->identifier == 1){
             } else {
                 return abort(404);
             }

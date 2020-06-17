@@ -92,12 +92,12 @@
 
 
 
-                <h4 class="mt-3">Current Balance </h4>
-                <p>{{ round(Auth::user()->balance, 2) }}</p>
-                <div class="">
-                    <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>
-                    <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
-                </div>
+{{--                <h4 class="mt-3">Current Balance </h4>--}}
+{{--                <p>{{ round(Auth::user()->balance, 2) }}</p>--}}
+{{--                <div class="">--}}
+{{--                    <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>--}}
+{{--                    <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>--}}
+{{--                </div>--}}
 
 
 
@@ -151,6 +151,22 @@
                             <label for="date_of_birth" class="col-md-4 col-form-label text-md-right">{{ __('Date of Birth') }}</label>
                             <div class="col-md-6">
                                 <input id="date_of_birth" type="text" class="datepicker form-control border-yellow @error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ Auth::user()->date_of_birth }}" required autocomplete="date_of_birth" autofocus>
+
+                                @error('date_of_birth')
+                                <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="date_of_birth" class="col-md-4 col-form-label text-md-right">Gender</label>
+                            <div class="col-md-6">
+                                <select class="form-control border-yellow" name="gender" required>
+                                    <option value="" disabled {{Auth::user()->gender == '' ? "selected" : ""}}>-- Select Your Gender --</option>
+                                    <option value="Male" {{Auth::user()->gender == 'Male' ? "selected" : ""}} >Male</option>
+                                    <option value="Female" {{Auth::user()->gender == 'Female' ? "selected" : ""}}>Female</option>
+                                </select>
 
                                 @error('date_of_birth')
                                 <span class="invalid-feedback" role="alert">
@@ -224,7 +240,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row mb-5">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn background-yellow">
                                     {{ __('Change Password') }}

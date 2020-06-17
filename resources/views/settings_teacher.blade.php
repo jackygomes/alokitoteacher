@@ -5,7 +5,7 @@
 <div class="container-fluid">
 
     <div class="row" style="min-height: 100vh">
-      <div class="col-md-2 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
+      <div class="col-md-3 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
 
         <div style="width: 150px; height: 150px;" class="mx-auto">
         @if(Auth::user()->image == null)
@@ -103,7 +103,7 @@
 
      </div>
 
-    <div class="col-md-8 pt-5"  style="background-color: #f3f2f0;">
+    <div class="col-md-7 pt-5"  style="background-color: #f3f2f0;">
       <div class="container-fluid ">
         <h3 class="font-weight-bold" >Basic Info</h3>
         <hr>
@@ -159,6 +159,22 @@
                   @enderror
               </div>
           </div>
+            <div class="form-group row">
+                <label for="date_of_birth" class="col-md-4 col-form-label text-md-right">Gender</label>
+                <div class="col-md-6">
+                    <select class="form-control border-yellow" name="gender" required>
+                        <option value="" disabled>-- Select Your Gender --</option>
+                        <option value="Male" {{Auth::user()->gender == 'Male' ? "selected" : ""}} >Male</option>
+                        <option value="Female" {{Auth::user()->gender == 'Female' ? "selected" : ""}}>Female</option>
+                    </select>
+
+                    @error('date_of_birth')
+                    <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+                </div>
+            </div>
 
 
 

@@ -5,7 +5,7 @@
 <div class="container-fluid">
 
     <div class="row">
-      <div class="col-md-2 col-sm-12 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
+      <div class="col-md-3 col-sm-12 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
 
         <div style="width: 150px; height: 150px;" class="mx-auto">
         @if($user_info->image == null)
@@ -107,7 +107,7 @@
 
      </div>
 
-    <div class="col-md-8 col-sm-12 mt-5">
+    <div class="col-md-7 col-sm-12 mt-5">
       <div class="container-fluid ">
 
         @if(session()->has('success'))

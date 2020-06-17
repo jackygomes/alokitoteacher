@@ -11,6 +11,7 @@ app/storage/
 public/storage
 public/image/thumbnail
 public/images/thumbnail
+public/images/profile_picture
 public/hot
 storage/*.key
 .env

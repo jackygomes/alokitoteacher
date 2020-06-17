@@ -149,6 +149,21 @@
                     </div>
                   </div>
 
+                    <div class="container-fluid">
+                        <div class="form-row mt-1">
+                            <div class="col-md-12">
+                                <div class="form-group">
+{{--                                    <label>Gender:</label>--}}
+                                    <select class="form-control border-yellow" name="gender" required>
+                                        <option value="" disabled selected>-- Select Your Gender --</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                   <div class="container-fluid">
                     <div class="form-row mt-1">
                       <div class="col-md-12 mb-3">
