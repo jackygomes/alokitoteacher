@@ -5,7 +5,7 @@
     <div class="container-fluid">
 
         <div class="row" style="min-height: 100vh">
-            <div class="col-md-2 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
+            <div class="col-md-3 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
 
                 <div style="width: 150px; height: 150px;" class="mx-auto">
                     @if(Auth::user()->image == null)
@@ -88,6 +88,30 @@
                     </div>
 
                 </div>
+                <div class="row text-left ">
+                    <div class="col-3">
+                        School:
+                    </div>
+                    <div class="col-9">
+                        <p style="margin:0">@if(isset($personalInfo)){{$personalInfo->school}}@endif</p>
+                    </div>
+                </div>
+                <div class="row text-left ">
+                    <div class="col-3">
+                        CLass:
+                    </div>
+                    <div class="col-9">
+                        <p style="margin:0">@if(isset($personalInfo)){{$personalInfo->class}}@endif</p>
+                    </div>
+                </div>
+                <div class="row text-left">
+                    <div class="col-3">
+                        Address:
+                    </div>
+                    <div class="col-9">
+                        <p style="margin:0"> @if(isset($personalInfo)) {{$personalInfo->address}}@endif</p>
+                    </div>
+                </div>
 
 
 
@@ -103,7 +127,7 @@
 
             </div>
 
-            <div class="col-md-8 pt-5"  style="background-color: #f3f2f0;">
+            <div class="col-md-7 pt-5"  style="background-color: #f3f2f0;">
                 <div class="container-fluid ">
                     <h3 class="font-weight-bold" >Basic Info</h3>
                     <hr>
@@ -125,8 +149,8 @@
 
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -141,8 +165,8 @@
 
                                 @error('phone_number')
                                 <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
+                                  <strong>{{ $message }}</strong>
+                              </span>
                                 @enderror
                             </div>
                         </div>
@@ -170,9 +194,32 @@
 
                                 @error('date_of_birth')
                                 <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
+                                      <strong>{{ $message }}</strong>
+                                  </span>
                                 @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="school_name" class="col-md-4 col-form-label text-md-right">School Name</label>
+
+                            <div class="col-md-6">
+                                <input id="school_name" type="text" class="form-control border-yellow" name="school_name" value="@if(isset($personalInfo)) {{$personalInfo->school}}@endif" autofocus>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="class" class="col-md-4 col-form-label text-md-right">Class</label>
+
+                            <div class="col-md-6">
+                                <input id="class" type="number" class="form-control border-yellow" name="class" value="@if(isset($personalInfo)){{$personalInfo->class}}@endif" autofocus>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 col-form-label text-md-right">Address</label>
+
+                            <div class="col-md-6">
+                                <textarea id="address" name="address" class="form-control border-yellow" rows="3">@if(isset($personalInfo)) {{$personalInfo->address}}@endif</textarea>
                             </div>
                         </div>
 

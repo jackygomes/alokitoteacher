@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\StudentPersonalInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,8 @@ class SettingsController extends Controller
             return view ('settings_school');
 
         } elseif(Auth::user()->identifier == 4) {
-            return view ('student.settings');
+    	    $personalInfo = StudentPersonalInfo::where('user_id', Auth::user()->id)->first();
+            return view ('student.settings', compact('personalInfo'));
 
         }
 
@@ -67,6 +69,27 @@ class SettingsController extends Controller
 			$user->subject_periods = $request->subject_periods;
 		}
 		$user->save();
+
+		if($user->identifier == 4) {
+            $personalInfoExist = StudentPersonalInfo::where('user_id', '=', $user->id)->first();
+//            return $personalInfoExist;
+
+            if(!$personalInfoExist) {
+                $personalInfoData = [
+                    'user_id'   => Auth::user()->id,
+                    'school'    => $request->school_name,
+                    'class'     => $request->class,
+                    'address'   => $request->address
+                ];
+                StudentPersonalInfo::create($personalInfoData);
+            } else {
+                $personalInfoExist->school = $request->school_name;
+                $personalInfoExist->class = $request->class;
+                $personalInfoExist->address = $request->address;
+
+                $personalInfoExist->save();
+            }
+        }
 
 
 		return back()->with('successInfo', 'Info Updated Successfully');
