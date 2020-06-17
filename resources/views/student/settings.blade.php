@@ -203,7 +203,7 @@
                             <label for="school_name" class="col-md-4 col-form-label text-md-right">School Name</label>
 
                             <div class="col-md-6">
-                                <input id="school_name" type="text" class="form-control border-yellow" name="school_name" value="@if(isset($personalInfo)) {{$personalInfo->school}}@endif" autofocus>
+                                <input id="school_name" type="text" class="form-control border-yellow" name="school_name" value="@if(isset($personalInfo)) {{$personalInfo->school}}@endif" required autofocus>
                             </div>
                         </div>
 
@@ -211,7 +211,7 @@
                             <label for="class" class="col-md-4 col-form-label text-md-right">Class</label>
 
                             <div class="col-md-6">
-                                <input id="class" type="number" class="form-control border-yellow" name="class" value="@if(isset($personalInfo)){{$personalInfo->class}}@endif" autofocus>
+                                <input id="class" type="number" class="form-control border-yellow" name="class" value="@if(isset($personalInfo)){{$personalInfo->class}}@endif" required autofocus>
                             </div>
                         </div>
 
@@ -219,7 +219,7 @@
                             <label for="address" class="col-md-4 col-form-label text-md-right">Address</label>
 
                             <div class="col-md-6">
-                                <textarea id="address" name="address" class="form-control border-yellow" rows="3">@if(isset($personalInfo)) {{$personalInfo->address}}@endif</textarea>
+                                <textarea id="address" name="address" class="form-control border-yellow" rows="3" required>@if(isset($personalInfo)) {{$personalInfo->address}}@endif</textarea>
                             </div>
                         </div>
 
