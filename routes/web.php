@@ -97,7 +97,7 @@ Route::post ('updatePassword', 'SettingsController@updatePassword')->name('updat
 //Route::post ('load_question', 'ToolkitContentController@load_question'); //newly created
 
 
-Route::get ('toolkit', 'updateInfo@index')->name('allToolkit');
+Route::get ('toolkit', 'ToolkitController@index')->name('allToolkit');
 
 Route::get ('about_us', 'AboutUsController@index');
 
