@@ -351,24 +351,6 @@
           </div>
         </div>
 
-      <?php
-      /**
-       * calculate score average
-       */
-       $data = [] ;
-       $total = [] ;
-       foreach ($course_knowledges as $ck){
-           if(isset($data[$ck->subject_name])){
-                $data[$ck->subject_name] = $data[$ck->subject_name] + $ck->totalPoints ;
-                $total[$ck->subject_name] = $total[$ck->subject_name] + 1 ;
-           }else{
-              $data[$ck->subject_name] = $ck->totalPoints;
-              $total[$ck->subject_name] = 1;
-           }
-       }
-
-        ?>
-
 
       <div class="container-fluid">
         <div class="row">
@@ -376,7 +358,7 @@
             <h3 class="font-weight-bold mt-5" style="display: inline-block">Subject Based Knowledge</h3>
             <div class="mr=2">
               <div class="table-responsive-sm">
-                <table class="table ">
+                <table class="table score-table">
                   <thead>
                     <tr>
                       <th style="width:20%">Subject</th>
@@ -387,17 +369,25 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php $i = 0; $subject = '' ; ?>
                       @foreach ($course_knowledges as $course_knowledge)
-                      <tr class="subject" >
+                    <?php
+                        if($subject !== $course_knowledge->subject_name){
+                            $i++;
+                        }
+                     $class = "same_subject". $i ;
+                    ?>
+                      <tr class="subject {{$class}}" >
                         <td>{{ $course_knowledge->subject_name }}</td>
                         <td>
                          {{$course_knowledge->toolkit_title}}
                         </td>
                         <td>{{$course_knowledge->totalPoints}}</td>
-                        <td> {{$data[$course_knowledge->subject_name]/$total[$course_knowledge->subject_name]}}</td>
+                        <td> </td>
 
 
                       </tr>
+                      <?php $subject = $course_knowledge->subject_name ; ?>
                       @endforeach
 
                     </tbody>
@@ -699,6 +689,28 @@
           $('#work_end').attr("required", "required");
         }
     });
+
+
+    let totalRow =   $(".score-table>tbody>tr").length ;
+
+    for(let i = 1 ; totalRow >= i ; i++){
+
+        let subject =  $(".score-table>tbody>tr.same_subject"+i) ;
+
+        let totalPoint = 0 ;
+        let totalSubject =  subject.length;
+
+        subject.each(function(){
+            let point = $(this).find('td:nth-child(3)').text() ;
+            totalPoint += parseFloat(point) ;
+        });
+
+        let score = totalPoint/totalSubject ;
+
+        $(subject).find('td:nth-child(4)').remove() ;
+        $(subject[0]).append(`<td style="vertical-align: middle; text-align: center" rowspan="${totalSubject}">${score} </td>`) ;
+
+    }
 
     </script>
 

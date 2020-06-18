@@ -50,6 +50,7 @@ class TeacherController extends Controller
 //
 
 
+
         $course_knowledges = DB::select("
 		select tk.toolkit_title, s.subject_name, sum(th.points) as totalPoints
 		FROM toolkits as tk
@@ -58,7 +59,6 @@ class TeacherController extends Controller
 		JOIN toolkit_histories as th ON th.quiz_id = tq.id AND th.user_id = '$user_info->id'
 		GROUP BY tk.id
 		 ");
-
 
 
 		$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
