@@ -550,7 +550,7 @@
           </div>
           <div class="form-group">
             <label>Passing Year:</label>
-            <input type="text" class="datepicker form-control border-yellow" name="passing_year" placeholder="Passing Year" required>
+            <input type="text" class="yearDatepicker form-control border-yellow" name="passing_year" placeholder="Passing Year" required/>
           </div>
           <div class="form-group row">
             <!-- <div class="col-6">
@@ -645,7 +645,7 @@
           <div class="form-group row">
             <div class="col-6">
               <label>Year:</label>
-              <input type="text" class="datepicker form-control border-yellow" name="year" placeholder="Year" required>
+            <input type="text" class="yearDatepicker form-control border-yellow" name="year" placeholder="Passing Year" required/>
             </div>
             <div class="col-6">
               <label>Duration (Days):</label>
@@ -673,6 +673,11 @@
  @push('js')
 
     <script type="text/javascript">
+        $(".yearDatepicker").datepicker({
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years"
+        });
       $('#pro_pic_choose').on('click', function () {
           $("#profile_picture").click();
       });
