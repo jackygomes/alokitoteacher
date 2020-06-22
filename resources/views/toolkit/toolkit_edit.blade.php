@@ -201,6 +201,7 @@
                             <label for="thumbnail_image" class="col-sm-2 col-form-label">Choose New Image:</label>
                             <div class="col-sm-10">
                                 <input type="file" name="toolkitThumbnailImage" class="form-control-file" id="thumbnail_image">
+                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be  750px X 450px (width = 750px, height = 450px).</p>
                             </div>
                         </div>
                         <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Update</button>

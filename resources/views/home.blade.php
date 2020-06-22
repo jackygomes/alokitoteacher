@@ -180,7 +180,7 @@
         <div class="col-md-4 mt-5">
           <a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
           <div class="card">
-            <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="max-height: 262px;" class="card-img-top">
+            <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="height: 262px;" class="card-img-top">
             <div class="text-center">
               <img src="{{url('images\profile_picture')}}\{{ $v_course_info->image }}" alt="Avatar" class="avatar">
              </div>
