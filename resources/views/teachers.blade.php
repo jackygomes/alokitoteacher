@@ -330,7 +330,13 @@
 
                                     </td>--}}
                                     <td>{{$academic_info->institute}}</td>
-                                    <td>{{ date("Y", strtotime($academic_info->passing_year)) }}
+                                    <td>
+                                        @if(strlen($academic_info->passing_year) > 4)
+                                            {{ date("Y", strtotime($academic_info->passing_year)) }}
+                                        @else
+                                            {{$academic_info->passing_year}}
+                                        @endif
+                                    </td>
                                     <td>{{$academic_info->cgpa}}</td>
 {{--                                    <td>{{ date("jS F, Y", strtotime($academic_info->date)) }}</td>--}}
 
@@ -439,7 +445,13 @@
                               <td>{{$v_skill_info->institute}}</td>
                               <td>{{$v_skill_info->country}}</td>
                               <td>{{$v_skill_info->location}}</td>
-                              <td>{{ date("Y", strtotime($v_skill_info->year)) }}</td>
+                              <td>
+                                  @if(strlen($v_skill_info->year) > 4)
+                                      {{ date("Y", strtotime($v_skill_info->year)) }}
+                                  @else
+                                      {{$v_skill_info->year}}
+                                  @endif
+                              </td>
                               <td>{{$v_skill_info->duration}}</td>
 
                               @if($user_info->id == Auth::id())
