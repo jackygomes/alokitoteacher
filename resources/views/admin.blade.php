@@ -67,8 +67,15 @@
 
         </div>
 
-        <div class="col-md-9 col-sm-12 mt-5">
+        <div class="col-md-9 col-sm-12 mt-4">
             <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="{{route('user.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                            User List
+                        </a>
+                    </div>
+                </div>
                 <div class="row">
                     @if($message = Session::get('success'))
                         <div class="alert alert-success">

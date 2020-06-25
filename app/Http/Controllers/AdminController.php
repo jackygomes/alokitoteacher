@@ -45,12 +45,24 @@ class AdminController extends Controller
         }
 
         $courses = Course::all();
-
-
         $toolkits = Toolkit::with('subject')->paginate(5);
 
 //        return $user_info;
         return view ('admin',compact( 'user_info', 'courses', 'toolkits'));
+    }
+
+    public function userList() {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        $allUser = User::all();
+
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+
+        return view('admin.user-list', compact('user_info', 'allUser'));
     }
 
 

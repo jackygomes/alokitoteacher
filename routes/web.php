@@ -38,6 +38,7 @@ Route::get ('stu/{username}', 'StudentController@index');
 
 // admin routes
 Route::get ('dashboard', 'AdminController@index')->name('dashboard');
+Route::get ('admin/user-list', 'AdminController@userList')->name('user.list');
 Route::get ('admin/course/create', 'CourseController@create')->name('course.create');
 Route::post ('admin/course/store', 'CourseController@store')->name('course.store');
 Route::get ('admin/course/edit/{id}', 'CourseController@course_edit')->name('course.edit');
