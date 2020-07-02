@@ -99,7 +99,7 @@
          <h4 class="mt-3">Current Balance </h4>
          <p>{{ round($user_info->balance, 2) }}</p>
          <div class="">
-            <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>
+            <a href="{{route('deposit.form')}}" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</a>
             <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
          </div>
          @endif
@@ -107,7 +107,11 @@
 
      </div>
 
+    @if($user_info->id == Auth::id())
     <div class="col-md-7 col-sm-12 mt-5">
+    @else
+    <div class="col-md-9 col-sm-12 mt-5">
+    @endif
       <div class="container-fluid ">
 
         @if(session()->has('success'))
@@ -476,7 +480,9 @@
 
       </div> <!-- 2nd col ends here -->
 
-        @include('leaderboard')
+        @if($user_info->id == Auth::id())
+            @include('leaderboard')
+        @endif
 
 
 

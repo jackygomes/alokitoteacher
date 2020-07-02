@@ -95,7 +95,7 @@
          <h4 class="mt-3">Current Balance </h4>
          <p>{{ round(Auth::user()->balance, 2) }}</p>
          <div class="">
-            <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>
+             <a href="{{route('deposit.form')}}" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</a>
             <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
          </div>
 

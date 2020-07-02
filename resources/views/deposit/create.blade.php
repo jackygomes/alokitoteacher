@@ -43,29 +43,29 @@
                 @endfor
 
                 <div class="row text-left p-2 mt-3">
-                    <div class="col-12">
-                        Recent Status:
-                    </div>
-                    <div class="col-2">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="col-10">
-                        @if($recent_institute != null) {{ $recent_institute->institute }} @else - @endif
-                    </div>
+{{--                    <div class="col-12">--}}
+{{--                        Recent Status:--}}
+{{--                    </div>--}}
+{{--                    <div class="col-2">--}}
+{{--                        <i class="fas fa-graduation-cap"></i>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-10">--}}
+{{--                        @if($recent_institute != null) {{ $recent_institute->institute }} @else - @endif--}}
+{{--                    </div>--}}
 
-                    <div class="col-2">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div class="col-10">
-                        @if($recent_work != null) {{ $recent_work->institute }} @else - @endif
-                    </div>
+{{--                    <div class="col-2">--}}
+{{--                        <i class="fas fa-briefcase"></i>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-10">--}}
+{{--                        @if($recent_work != null) {{ $recent_work->institute }} @else - @endif--}}
+{{--                    </div>--}}
 
-                    <div class="col-2">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="col-10">
-                        @if($recent_work != null) {{ $recent_work->position }} @else - @endif
-                    </div>
+{{--                    <div class="col-2">--}}
+{{--                        <i class="fas fa-user-tie"></i>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-10">--}}
+{{--                        @if($recent_work != null) {{ $recent_work->position }} @else - @endif--}}
+{{--                    </div>--}}
 
                     <div class="col-2 mt-3">
                         <i class="fas fa-birthday-cake"></i>
@@ -97,7 +97,7 @@
                     <h4 class="mt-3">Current Balance </h4>
                     <p>{{ round($user_info->balance, 2) }}</p>
                     <div class="">
-                        <a href="{{route('deposit.form')}}" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</a>
+                        <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>
                         <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
                     </div>
                 @endif
@@ -105,55 +105,59 @@
 
             </div>
 
-            <div class="col-md-7 col-sm-12 mt-5">
+            <div class="col-md-9 col-sm-12 mt-5">
                 <div class="container-fluid ">
                     <div class="row">
                         <div class=" mt-5 mb-3 col-sm-12">
-                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Toolkits</h3>
-                            <a href="{{route('toolkit.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
-                            <div class="mr=2">
-                                <div class="table-responsive-sm">
-                                    <table class="table ">
-                                        <thead>
-                                        <tr>
-                                            <th style="width:10%">No.</th>
-                                            <th style="width:20%">Subject</th>
-                                            <th style="width:30%">Toolkit Name</th>
-                                            <th style="width:10%">Price</th>
-                                            <th style="width:10%">Status</th>
-                                            <th style="width:20%">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php $n = 1?>
-                                        @foreach ($toolkits as $toolkit)
-                                            <tr>
-                                                <td>{{$n}}</td>
-                                                <td>{{$toolkit->subject->subject_name}}</td>
-                                                <td>{{$toolkit->toolkit_title}}</td>
-                                                <td>{{($toolkit->price == 0) ? 'Free' : $toolkit->price}}</td>
-                                                <td>{{$toolkit->status}}</td>
-                                                <td><a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
-                                            </tr>
-                                            <?php $n++ ?>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                    @if($toolkits->count() > 5)
-                                    {{$toolkits->links()}}
-                                    @endif
+                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Deposit Information</h3>
+                            <form class="mt-3" method="POST" action="{{route('deposit.money')}}">
+                                @csrf
 
-                                    @if($toolkits->count() == 0)
-                                    <h5 class="text-center text-muted">No Toolkit to Show</h5>
-                                    @endif
+                                @if(session()->has('successInfo'))
+                                    <div class="alert alert-success">
+                                        {{ session()->get('successInfo') }}
+                                    </div>
+                                @endif
+
+                                <div class="form-group row">
+                                    <label for="name" class="col-md-2 col-form-label text-md-right">Name</label>
+                                    <div class="col-md-6">
+                                        <input id="name" type="text" class="form-control border-yellow" name="name" value="{{Auth::user()->name}}" readonly required autocomplete="name" autofocus>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-md-2 col-form-label text-md-right">Email</label>
+                                    <div class="col-md-6">
+                                        <input id="email" type="email" class="form-control border-yellow" name="email" value="{{Auth::user()->email}}" readonly required autocomplete="name" autofocus>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="phone" class="col-md-2 col-form-label text-md-right">Phone No.</label>
+                                    <div class="col-md-6">
+                                        <input id="phone" type="text" class="form-control border-yellow" name="phone" value="{{Auth::user()->phone_number}}" required autocomplete="name" autofocus>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="amount" class="col-md-2 col-form-label text-md-right">Amount</label>
+                                    <div class="col-md-6">
+                                        <input id="amount" type="number" class="form-control border-yellow" name="amount" required autocomplete="name" autofocus>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-2">
+                                        <button type="submit" class="btn background-yellow">
+                                            Deposit
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div> <!-- 2nd col ends here -->
 
-            @include('leaderboard')
+{{--            @include('leaderboard')--}}
 
 
 

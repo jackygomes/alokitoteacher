@@ -124,6 +124,11 @@ Route::post ('upload_picture', 'TeacherController@picture');
 
 Auth::routes();
 
+// Deposit money
+Route::get('/deposit', 'DepositController@index')->name('deposit.form');
+Route::post('/deposit/payment', 'DepositController@deposit')->name('deposit.money');
+Route::post('/deposit/complete', 'DepositController@paymentComplete')->name('deposit.complete');
+
 
 // SSLCOMMERZ Start
 Route::get('/example1', 'SslCommerzPaymentController@exampleEasyCheckout');

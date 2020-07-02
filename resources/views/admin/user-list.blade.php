@@ -75,6 +75,7 @@
                             <table id="userList" class="table table-striped table-bordered " style="width:100%">
                                 <thead>
                                 <tr>
+                                    <th>Sl.</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>User Name</th>
@@ -82,11 +83,14 @@
                                     <th>Role</th>
                                     <th>Joined At</th>
                                     <th>Balance</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <?php $i = 1; ?>
                                 @foreach($allUser as $user)
                                     <tr>
+                                        <td>{{$i++}}</td>
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->username}}</td>
@@ -104,8 +108,15 @@
                                                 Student
                                             @endif
                                         </td>
-                                        <td>{{date("d-m-Y", strtotime($user->created_at))}}</td>
+                                        <td>{{date("d-m-Y   ", strtotime($user->created_at))}}</td>
                                         <td>{{round($user->balance, 2)}}</td>
+                                        <td>
+                                            @if($user->identifier == 1)
+                                                <a href="{{ url('t')}}/{{ $user->username }}" class="btn btn-info text-white btn-sm">View</a>
+                                            @else
+                                                <a href="" class="btn btn-info text-white btn-sm">View</a>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
