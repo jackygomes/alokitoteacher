@@ -113,8 +113,8 @@
                                         <td>
                                             @if($user->identifier == 1)
                                                 <a href="{{ url('t')}}/{{ $user->username }}" class="btn btn-info text-white btn-sm">View</a>
-                                            @else
-                                                <a href="" class="btn btn-info text-white btn-sm">View</a>
+                                            @elseif($user->identifier == 4)
+                                                <a href="{{ url('stu')}}/{{ $user->username }}" class="btn btn-info text-white btn-sm">View</a>
                                             @endif
                                         </td>
                                     </tr>

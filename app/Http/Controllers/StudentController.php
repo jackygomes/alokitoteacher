@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\DB;
 
 class StudentController
 {
-    function index(){
-        $userId = Auth::id();
-        $user_info = User::where('id', '=', $userId)->first();
+    function index(Request $request){
+        $username = $request->username;
+
+        $user_info = User::where('username', '=', $username)->first();
 
         if($user_info) {
             if($user_info->identifier == 4){
