@@ -83,7 +83,7 @@ class AdminController extends Controller
 
     public function totalCountUpdate(Request $request, $id) {
         $this->validate($request, [
-            'student' => 'required',
+            'teacher' => 'required',
             'future_number' => 'required',
         ]);
         $stat = TeacherStudentCount::find($id);
