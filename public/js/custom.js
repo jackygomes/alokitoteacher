@@ -1,34 +1,45 @@
 $(document).ready(function() {
  // executes when HTML-Document is loaded and DOM is ready
 console.log("document is ready");
-  
+
 
   $( ".card" ).hover(
   function() {
-    $(this).addClass('shadow-lg').css('cursor', 'pointer'); 
+    $(this).addClass('shadow-lg').css('cursor', 'pointer');
   }, function() {
     $(this).removeClass('shadow-lg');
   }
 );
-  
-// document ready  
+
+// document ready
 });
 
  $("#postsCarousel").carousel({ interval: 2000, pause: "hover" });
 
 
 
-setInterval(function(){ $('.counter-count').each(function () {
-        $(this).prop('Counter',0).animate({
-            Counter: $(this).text()
-        }, {
-            duration: 2000,
-            easing: 'swing',
-            step: function (now) {
-                $(this).text(Math.ceil(now));
-            }
-        });
-    }); }, 3000);
+// setInterval(function(){ $('.counter-count').each(function () {
+//         $(this).prop('Counter',0).animate({
+//             Counter: $(this).text()
+//         }, {
+//             duration: 2000,
+//             easing: 'swing',
+//             step: function (now) {
+//                 $(this).text(Math.ceil(now));
+//             }
+//         });
+//     }); }, 3000);
+$('.counter-count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 3000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
 
 
 
@@ -40,7 +51,7 @@ setInterval(function(){ $('.counter-count').each(function () {
 
 $(document).ready(function() {
 
-    
+
     var readURL = function(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -48,11 +59,11 @@ $(document).ready(function() {
             reader.onload = function (e) {
                 $('.avatar').attr('src', e.target.result);
             }
-    
+
             reader.readAsDataURL(input.files[0]);
         }
     }
-    
+
 
 
     $(".file-upload").on('change', function(){
@@ -84,51 +95,51 @@ $("#menu-toggle").click(function(e) {
 
 
 /* $(document).ready(function(){
-    
+
     $('.edit-qual').click(function(){
         $(this).hide();
         $(this).prev().hide();
         $(this).next().show();
         $(this).next().select();
     });
-    
-    
-    $('input[type="text"]').blur(function() {  
-         if ($.trim(this.value) == ''){  
-             this.value = (this.defaultValue ? this.defaultValue : '');  
+
+
+    $('input[type="text"]').blur(function() {
+         if ($.trim(this.value) == ''){
+             this.value = (this.defaultValue ? this.defaultValue : '');
          }
          else{
              $(this).prev().prev().html(this.value);
          }
-         
+
          $(this).hide();
          $(this).prev().show();
          $(this).prev().prev().show();
      });
-      
+
       $('input[type="text"]').keypress(function(event) {
           if (event.keyCode == '13') {
-              if ($.trim(this.value) == ''){  
-                 this.value = (this.defaultValue ? this.defaultValue : '');  
+              if ($.trim(this.value) == ''){
+                 this.value = (this.defaultValue ? this.defaultValue : '');
              }
              else
              {
                  $(this).prev().prev().html(this.value);
              }
-             
+
              $(this).hide();
              $(this).prev().show();
              $(this).prev().prev().show();
           }
       });
-          
+
 }); */
 
 
 /*$(document).ready(function(){
   $("#qual").click(function(){
     $("#mainqual").();
-    
+
   });
 });*/
 

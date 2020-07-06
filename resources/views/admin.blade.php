@@ -74,6 +74,9 @@
                         <a href="{{route('user.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             User List
                         </a>
+                        <a href="{{route('admin.basic.info')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                            Basic Info
+                        </a>
                     </div>
                 </div>
                 <div class="row">

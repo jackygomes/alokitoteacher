@@ -92,32 +92,6 @@
                         </div>
 
                     </div>
-                    <div class="row text-left ">
-                        <div class="col-3">
-                            School:
-                        </div>
-                        <div class="col-9">
-                            <p style="margin:0">@if(isset($personalInfo)){{$personalInfo->school}}@endif</p>
-                        </div>
-                    </div>
-                    <div class="row text-left ">
-                        <div class="col-3">
-                            CLass:
-                        </div>
-                        <div class="col-9">
-                            <p style="margin:0">@if(isset($personalInfo)){{$personalInfo->class}}@endif</p>
-                        </div>
-                    </div>
-                    <div class="row text-left">
-                        <div class="col-3">
-                            Address:
-                        </div>
-                        <div class="col-9">
-                            <p style="margin:0"> @if(isset($personalInfo)) {{$personalInfo->address}}@endif</p>
-                        </div>
-                    </div>
-
-
 {{--                    <h4 class="mt-3">Current Balance </h4>--}}
 {{--                    <p>{{ round($user_info->balance, 2) }}</p>--}}
 {{--                    <div class="">--}}
@@ -125,6 +99,30 @@
 {{--                        <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>--}}
 {{--                    </div>--}}
                 @endif
+                <div class="row text-left ">
+                    <div class="col-3">
+                        School:
+                    </div>
+                    <div class="col-9">
+                        <p style="margin:0">@if(isset($personalInfo)){{$personalInfo->school}}@endif</p>
+                    </div>
+                </div>
+                <div class="row text-left ">
+                    <div class="col-3">
+                        CLass:
+                    </div>
+                    <div class="col-9">
+                        <p style="margin:0">@if(isset($personalInfo)){{$personalInfo->class}}@endif</p>
+                    </div>
+                </div>
+                <div class="row text-left">
+                    <div class="col-3">
+                        Address:
+                    </div>
+                    <div class="col-9">
+                        <p style="margin:0"> @if(isset($personalInfo)) {{$personalInfo->address}}@endif</p>
+                    </div>
+                </div>
 
 
             </div>

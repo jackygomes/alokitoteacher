@@ -142,14 +142,14 @@
               <div class="col-sm-6" >
                   <div class="single-fun-factor">
 
-                      <h1><span class="counter-count text-yellow font-weight-bold">250</span></h1>
+                      <h1><span class="counter-count text-yellow font-weight-bold">{{$stat->teacher}}</span></h1>
                       <p class="counter-name">Teachers Trained</p>
                   </div>
               </div>
               <div class="col-sm-6">
                   <div class="single-fun-factor">
 
-                      <h1><span class="counter-count text-yellow font-weight-bold">6100</span></h1>
+                      <h1><span class="counter-count text-yellow font-weight-bold">{{$stat->future_number}}</span></h1>
                       <p class="counter-name">Future Changemakers Being Developed</p>
                   </div>
               </div>

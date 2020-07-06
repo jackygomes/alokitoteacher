@@ -54,6 +54,10 @@ Route::post ('admin/course/video/update/{id}', 'CourseController@course_video_up
 Route::post ('admin/course/quiz/update/{id}', 'CourseController@course_quiz_update')->name('course.quiz.update');
 
 
+Route::get ('admin/basic-info', 'AdminController@basicInfo')->name('admin.basic.info');
+Route::post ('admin/total-count-update/{id}', 'AdminController@totalCountUpdate')->name('admin.total.count.update');
+
+
 Route::get ('toolkit/create', 'ToolkitController@create')->name('toolkit.create');
 Route::post ('toolkit/store', 'ToolkitController@store')->name('toolkit.store');
 Route::post ('toolkit/update/{id}', 'ToolkitController@toolkitDetailsUpdate')->name('toolkit.update');

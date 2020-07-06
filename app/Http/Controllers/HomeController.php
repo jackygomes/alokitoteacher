@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\TeacherStudentCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -36,9 +37,10 @@ class HomeController extends Controller
 						->get();
 
 		$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+		$stat = TeacherStudentCount::find(1);
 
 
-	    return view ('home',compact('course_info','toolkit_info', 'users'));
+	    return view ('home',compact('course_info','toolkit_info', 'users','stat'));
 	}
 
 	function email_subscribe(Request $request){

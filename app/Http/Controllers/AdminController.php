@@ -7,6 +7,7 @@ use App\CourseQuestion;
 use App\CourseQuiz;
 use App\CourseQuizOption;
 use App\CourseVideo;
+use App\TeacherStudentCount;
 use App\Toolkit;
 use App\ToolkitDocument;
 use App\ToolkitQuestion;
@@ -63,6 +64,35 @@ class AdminController extends Controller
         }
 
         return view('admin.user-list', compact('user_info', 'allUser'));
+    }
+
+    public function basicInfo() {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        $allUser = User::all();
+
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+        $teacher_student_count = TeacherStudentCount::find(1);
+
+        return view('admin.basic_info', compact('teacher_student_count','user_info'));
+    }
+
+    public function totalCountUpdate(Request $request, $id) {
+        $this->validate($request, [
+            'student' => 'required',
+            'future_number' => 'required',
+        ]);
+        $stat = TeacherStudentCount::find($id);
+        $stat->teacher = $request->teacher;
+        $stat->future_number = $request->future_number;
+
+        $stat->save();
+
+        return redirect()->back()->with('success', 'Stat Updated Successfully');
     }
 
 

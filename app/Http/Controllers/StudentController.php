@@ -38,7 +38,8 @@ class StudentController
 		JOIN toolkit_histories as th ON th.quiz_id = tq.id AND th.user_id = '$user_info->id'
 		GROUP BY tk.id
 		 ");
-        $personalInfo = StudentPersonalInfo::where('user_id', Auth::user()->id)->first();
+        $personalInfo = StudentPersonalInfo::where('user_id', $user_info->id)->first();
+//        return $personalInfo;
 
         return view ('student.profile',compact('user_info', 'subject_based_knowledges', 'personalInfo'));
     }
