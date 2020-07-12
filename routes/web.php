@@ -128,6 +128,11 @@ Route::post ('upload_picture', 'TeacherController@picture');
 
 Auth::routes();
 
+// Purchase course/toolkits
+Route::group(['prefix' => 'purchase'], function() {
+    Route::post('course/{id}', 'PurchaseController@course')->name('purchase.course');
+});
+
 // Deposit money
 Route::get('/deposit', 'DepositController@index')->name('deposit.form');
 Route::post('/deposit/payment', 'DepositController@deposit')->name('deposit.money');

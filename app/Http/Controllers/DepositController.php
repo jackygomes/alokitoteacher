@@ -172,6 +172,8 @@ class DepositController extends Controller
         # PARSE THE JSON RESPONSE
         $sslcz = json_decode($sslcommerzResponse, true );
 
+//        dd($sslcz);
+
         if(isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL']!="" ) {
 
             header("Location: ". $sslcz['GatewayPageURL']);

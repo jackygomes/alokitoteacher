@@ -178,7 +178,7 @@
 
       @foreach ($course_info as $v_course_info)
         <div class="col-md-4 mt-5">
-          <a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
+        <a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
           <div class="card">
             <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="height: 262px;" class="card-img-top">
             <div class="text-center">
@@ -200,8 +200,24 @@
               </div>
 
             </div>
-            <div class="card-footer" style="background: #51b964;">
-              <h5 class="text-white text-center">Free</h5>
+            <div class="card-footer" style="background:
+            @if($v_course_info->isBought == 1)
+                #98b59d;
+            @else
+                #51b964;
+            @endif
+            ">
+                <h5 class="text-white text-center">
+                    @if($v_course_info->isBought == 1)
+                        Owned
+                    @else
+                        @if($v_course_info->price == 0)
+                            Free
+                        @else
+                            {{ round($v_course_info->price, 2)}} BDT
+                        @endif
+                    @endif
+                </h5>
             </div>
           </div>
         </a>
@@ -265,7 +281,13 @@
                               </div>
                           </div>
                           <div class="card-footer" style="background: #51b964;">
-                            <h5 class="text-white text-center">Free</h5>
+                            <h5 class="text-white text-center">
+                                @if($toolkit->price == 0)
+                                    Free
+                                @else
+                                    {{ round($toolkit->price, 2)}} BDT
+                                @endif
+                            </h5>
                           </div>
 
 

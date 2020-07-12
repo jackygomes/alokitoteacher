@@ -31,8 +31,24 @@
                         </div>
 
                     </div>
-                    <div class="card-footer" style="background: #51b964;">
-                        <h5 class="text-white text-center">Free</h5>
+                    <div class="card-footer" style="background:
+                    @if($v_course_info->isBought == 1)
+                        #98b59d;
+                    @else
+                        #51b964;
+                    @endif
+                        ">
+                        <h5 class="text-white text-center">
+                            @if($v_course_info->isBought == 1)
+                                Owned
+                            @else
+                                @if($v_course_info->price == 0)
+                                    Free
+                                @else
+                                    {{ round($v_course_info->price, 2)}} BDT
+                                @endif
+                            @endif
+                        </h5>
                     </div>
                 </div>
             </a>

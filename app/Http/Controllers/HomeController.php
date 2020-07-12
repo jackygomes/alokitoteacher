@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\TeacherStudentCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -24,6 +25,15 @@ class HomeController extends Controller
                         ->groupBy('courses.id')
 						->inRandomOrder(4)
 						->get();
+        $userId = Auth::check() ? Auth::user()->id : 0;
+        foreach($course_info as $course){
+            $isOrdered = Order::where('status', 'paid')
+                ->where('course_or_toolkit', 'course')
+                ->where('user_id', $userId)
+                ->where('course_toolkit_id', $course->id)->count();
+
+            $course->isBought = $isOrdered ? 1 : 0;
+        }
 
 
 	    $toolkit_info = DB::table('users')

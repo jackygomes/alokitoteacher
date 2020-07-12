@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -123,6 +124,15 @@ class ContentController extends Controller
 
         if ($request->course_toolkit == 'c') {
             $info = Course::where('slug', '=', $request->slug)->first();
+
+            $userId = Auth::check() ? Auth::user()->id : 0;
+            $isOrdered = Order::where('status', 'paid')
+                ->where('course_or_toolkit', 'course')
+                ->where('user_id', $userId)
+                ->where('course_toolkit_id', $info->id)->first();
+
+            $info->isBought = $isOrdered ? 1 : 0;
+
 
             if ($info == null) {
                 return abort(404);
