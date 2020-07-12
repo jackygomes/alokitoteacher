@@ -93,6 +93,7 @@ class DepositController extends Controller
             'userId'    => Auth::id(),
         ];
         $paymentData = $this->createPayment($data);
+//        dd($paymentData);
 //        return $paymentData;
         $this->makePayment($paymentData);
     }
@@ -108,6 +109,7 @@ class DepositController extends Controller
             $post_data['store_id'] = env('LIVE_SSL_STORE_ID');
             $post_data['store_passwd'] = env('LIVE_SSL_STORE_PASSWORD');
         }
+
         $post_data['total_amount'] = $paymentData['request']->amount;
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = "ALOKITO_" . uniqid();
@@ -138,7 +140,11 @@ class DepositController extends Controller
     private function makePayment($paymentData) {
 
         # REQUEST SEND TO SSLCOMMERZ
-        $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
+        if(env('APP_ENV') == 'local') {
+            $direct_api_url = env('TEST_SSL_TRANSACTION_API');
+        } elseif(env('APP_ENV') == 'production') {
+            $direct_api_url = env('LIVE_SSL_TRANSACTION_API');
+        }
 
         $handle = curl_init();
         curl_setopt($handle, CURLOPT_URL, $direct_api_url );
@@ -147,7 +153,7 @@ class DepositController extends Controller
         curl_setopt($handle, CURLOPT_POST, 1 );
         curl_setopt($handle, CURLOPT_POSTFIELDS, $paymentData);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, FALSE); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
+        curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
 
 
         $content = curl_exec($handle );

@@ -92,12 +92,7 @@
                         </div>
 
                     </div>
-{{--                    <h4 class="mt-3">Current Balance </h4>--}}
-{{--                    <p>{{ round($user_info->balance, 2) }}</p>--}}
-{{--                    <div class="">--}}
-{{--                        <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>--}}
-{{--                        <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>--}}
-{{--                    </div>--}}
+
                 @endif
                 <div class="row text-left ">
                     <div class="col-3">
@@ -123,6 +118,15 @@
                         <p style="margin:0"> @if(isset($personalInfo)) {{$personalInfo->address}}@endif</p>
                     </div>
                 </div>
+
+                @if($user_info->id == Auth::id())
+                <h4 class="mt-3">Current Balance </h4>
+                <p>{{ round($user_info->balance, 2) }}</p>
+                <div class="">
+                    <a href="{{route('deposit.form')}}" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</a>
+                    <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
+                </div>
+                @endif
 
 
             </div>
