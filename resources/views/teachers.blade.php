@@ -157,13 +157,13 @@
             @endphp
             <div style="margin-top: 10px;">
 	            <i class="fas fa-medal fa-2x mr-2" style=" color:
-	            @if($percentage >= 85)
+                @if($percentage >= 85)
 	            #d4af37;
-	            @elseif($percentage >= 75 && $percentage <= 84)
+	            @elseif($percentage >= 70 && $percentage <= 84)
 	            #aaa9ad;
-	            @elseif($percentage >= 65 && $percentage <= 74)
+	            @elseif($percentage >= 60 && $percentage <= 69)
 	            #cd7f32;
-	            @elseif($percentage >= 50 && $percentage <= 64)
+	            @elseif($percentage >= 50 && $percentage <= 59)
 	            #00a74a;
 	            @else
 	            #ff4f4f;
@@ -171,7 +171,13 @@
 	            ">
 
 	            </i>
-	            <h5 style="display: inline-block">{{ $achievement->title }} - Average Score ({{$percentage}}%)</h5>
+	            <h5 style="display: inline-block">{{ $achievement->title }} - Average Score ({{$percentage}}%)
+{{--                    @if($percentage >= 50)--}}
+                        <a href="{{route('certificate', $achievement->id)}}" class="btn background-yellow text-right ml-2 px-4 py-2 shadow font-weight-bold text-white">
+                            Get Certificate
+                        </a>
+{{--                    @endif--}}
+                </h5>
             </div>
             @endif
             @endforeach

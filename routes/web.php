@@ -138,6 +138,10 @@ Route::get('/deposit', 'DepositController@index')->name('deposit.form');
 Route::post('/deposit/payment', 'DepositController@deposit')->name('deposit.money');
 Route::post('/deposit/complete', 'DepositController@paymentComplete')->name('deposit.complete');
 
+// Purchase Certificate
+Route::get('/certificate_purchase/{id}', 'CertificateController@certificate')->name('certificate');
+Route::post('/certificate/purchase', 'CertificateController@certificatePurchase')->name('certificate.purchase');
+
 
 // SSLCOMMERZ Start
 Route::get('/example1', 'SslCommerzPaymentController@exampleEasyCheckout');
