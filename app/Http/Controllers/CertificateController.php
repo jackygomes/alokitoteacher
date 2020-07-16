@@ -15,6 +15,11 @@ class CertificateController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * certificate purchase page with already enrolled course entry to order table
+     * @param $courseId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View|void
+     */
     public function certificate($courseId) {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
@@ -44,10 +49,15 @@ class CertificateController extends Controller
             ], 420);
         }
 
-//        return $courseItem;
         return view('certificate.certificate', compact('courseId', 'course', 'courseItem', 'user_info'));
     }
 
+    /**
+     * certificate purchase function
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|string
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function certificatePurchase(Request $request) {
         $this->validate($request, [
             'order_id'          => 'required',
