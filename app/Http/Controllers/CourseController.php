@@ -61,11 +61,12 @@ class CourseController extends Controller
             return abort(404);
         }
         $this->validate($request, [
-            'course_name'          => 'required',
-            'course_description'   => 'required',
-            'course_price'   => 'required',
-            'preview_video'   => 'required',
-            'courseThumbnailImage' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'course_name'           => 'required',
+            'course_description'    => 'required',
+            'course_price'          => 'required',
+            'certificate_price'     => 'required',
+            'preview_video'         => 'required',
+            'courseThumbnailImage'  => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         $randomText = Str::random(6);
         $slug = Str::slug($request->input('course_name'), '-');
@@ -81,6 +82,7 @@ class CourseController extends Controller
             'title'    => isset($request->course_name) ? $request->course_name : "",
             'description'    => isset($request->course_description) ? $request->course_description : "",
             'price'    => isset($request->course_price) ? $request->course_price : "",
+            'certificate_price'    => isset($request->certificate_price) ? $request->certificate_price : "",
             'slug'    => $slug,
             'thumbnail'    => $image_name,
         ];
@@ -189,6 +191,7 @@ class CourseController extends Controller
             'course_name'          => 'required',
             'course_description'   => 'required',
             'course_price'         => 'required',
+            'certificate_price'         => 'required',
             'preview_video'         => 'required',
         ]);
         $randomText = Str::random(10);
@@ -209,6 +212,7 @@ class CourseController extends Controller
         $course->title = $request->input('course_name');
         $course->description = $request->input('course_description');
         $course->price = $request->input('course_price');
+        $course->certificate_price = $request->input('certificate_price');
         $course->status = isset($request->status) ? $request->input('status') : "Pending";
         $course->slug = $slug;
 

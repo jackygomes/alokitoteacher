@@ -22,8 +22,27 @@ class CertificateController extends Controller
 
             return abort(404);
         }
-        $course = Course::find($courseId);
-        $courseItem = Order::where('user_id', $userId)->where('course_toolkit_id', $courseId)->first();
+        try{
+            $course = Course::find($courseId);
+            $courseItem = Order::where('user_id', $userId)->where('course_toolkit_id', $courseId)->first();
+            if(!$courseItem) {
+                $orderData = [
+                    'user_id'           => Auth::id(),
+                    'course_or_toolkit' => 'course',
+                    'course_toolkit_id' => $course->id,
+                    'amount'            => $course->price,
+                    'status'            => 'paid',
+                    'transaction_id'    => "ALOKITO_" . uniqid(),
+                    'currency'          => 'BDT'
+                ];
+                $courseItem = Order::create($orderData);
+            }
+        }catch(\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
 
 //        return $courseItem;
         return view('certificate.certificate', compact('courseId', 'course', 'courseItem', 'user_info'));

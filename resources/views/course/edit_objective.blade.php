@@ -74,6 +74,13 @@
                                 <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the Course is free.</p>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="certificatePrice" class="col-sm-2 col-form-label">Certificate Price:</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="certificate_price" class="form-control" value="{{$info->certificate_price}}" id="certificatePrice" placeholder="Course Price">
+                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the Course is free.</p>
+                            </div>
+                        </div>
                         @php $statusOptions = ['Pending', 'Approved']; @endphp
                         <div class="form-group row">
                             <label for="subjects" class="col-sm-2 col-form-label">Status:</label>
