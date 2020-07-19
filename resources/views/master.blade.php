@@ -134,7 +134,8 @@
                     <ul class="list-unstyled">
                         <li> <a class="font-weight-bold text-orange custom-hover" href="{{ url('about_us') }}">About us</a></li>
                         <li> <a class="font-weight-bold text-orange custom-hover" href="{{ url('/') }}">Alokito Journey</a></li>
-                        <li> <a class="font-weight-bold text-orange custom-hover" href="{{ url('/book_workshop') }}">Book a workshop</a></li>
+                        <!-- commented -->
+                        <!-- <li> <a class="font-weight-bold text-orange custom-hover" href="{{ url('/book_workshop') }}">Book a workshop</a></li> -->
                         <li> <a class="font-weight-bold text-orange custom-hover" href="{{ url('toolkit') }}">Toolkits</a></li>
                         <li> <a class="font-weight-bold text-orange custom-hover" href="{{ url('course') }}">Courses</a></li>
                         <li> <a class="font-weight-bold text-orange custom-hover" href="{{ url('contact_us') }}">Contact Us</a></li>
