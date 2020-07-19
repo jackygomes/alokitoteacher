@@ -526,11 +526,11 @@
           <div class="form-group row">
             <div class="col-6">
               <label>From</label>
-              <input type="text" class="datepicker form-control border-yellow" name="from" placeholder="Starting Date" required>
+              <input type="text" class="newdate form-control border-yellow" name="from" placeholder="Starting Date" required>
             </div>
             <div class="col-6">
               <label>To</label>
-              <input type="text" class="datepicker form-control border-yellow" id="work_end" name="to" placeholder="Ending Date" required>
+              <input type="text" class="newdate form-control border-yellow" id="work_end" name="to" placeholder="Ending Date" required>
               <small>
                   <div class="form-check">
                   <input type="checkbox" class="form-check-input" name="current_check" id="currently_working">
@@ -700,8 +700,17 @@
         $(".yearDatepicker").datepicker({
             format: "yyyy",
             viewMode: "years",
-            minViewMode: "years"
+            minViewMode: "years",
+            startDate: '-30y',
+            endDate: '+30y'
         });
+
+        $(".newdate").datepicker({  
+          format: "dd-mm-yyyy",
+          startDate: '-15y',
+          endDate: '+1d'
+        });
+
       $('#pro_pic_choose').on('click', function () {
           $("#profile_picture").click();
       });
