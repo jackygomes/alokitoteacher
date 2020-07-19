@@ -365,7 +365,7 @@
 <!--end of Toolkits Area-->
 
 <!--Leaderboard Area-->
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
       <div class="teachers-toolkits">
@@ -483,7 +483,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <!-- Leaderboar area ends -->
 
 
