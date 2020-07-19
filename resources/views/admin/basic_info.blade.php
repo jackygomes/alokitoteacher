@@ -4,6 +4,8 @@
 
     <div class="container-fluid">
 
+    <!-- basic info starts -->
+
         <div class="row">
             <div class="col-md-3 col-sm-12 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
 
