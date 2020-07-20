@@ -324,7 +324,7 @@
                     const imgProps= pdf.getImageProperties(imgData);
                     const pdfWidth = pdf.internal.pageSize.getWidth();
                     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                    pdf.addImage(imgData, 'PNG', 40, -100, pdfWidth, pdfHeight,'','Slow', -90);
                     pdf.save(filename);
                 });
             };
