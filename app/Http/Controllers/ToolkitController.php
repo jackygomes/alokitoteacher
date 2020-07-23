@@ -143,14 +143,14 @@ class ToolkitController extends Controller
             return abort(404);
         }
 
-        $this->validate($request, [
-            'subject'               => 'required',
-            'toolkit_name'          => 'required',
-            'toolkit_description'   => 'required',
-            'toolkit_type'          => 'required',
-            'toolkit_price'         => 'required',
-            'thumbnailImage'        => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+            $this->validate($request, [
+                'subject'               => 'required',
+                'toolkit_name'          => 'required',
+                'toolkit_description'   => 'required',
+                'toolkit_type'          => 'required',
+                'toolkit_price'         => 'required',
+                'thumbnailImage'        => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
 
         $randomText = Str::random(10);
         $slug = Str::slug($request->input('toolkit_name'), '-');

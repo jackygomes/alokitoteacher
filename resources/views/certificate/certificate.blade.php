@@ -3,7 +3,7 @@
     <style>
         #certificate-wrap-1, #certificate-wrap-2 {
             background-image: url("{{asset('images/certificate/border1.png')}}");
-            height: 560px;
+            height: 640px;
             width: 900px;
             background-size: 100% 100%;
             margin: 40px auto;
@@ -26,6 +26,9 @@
             padding: 0;
             margin: 0;
         }
+        .top-right.other-certificate ul li {
+            width: 22%;
+        }
         .top-left ul li, .top-right ul li {
             display: inline-block;
             width: 28%;
@@ -35,7 +38,7 @@
             width: 100%;
         }
         .middle-section {
-            margin-top: 0;
+            margin-top: 35px;
             text-align: center;
         }
         .middle-section .info p {
@@ -68,8 +71,8 @@
             float: left;
         }
         .bottom-right {float:right}
-        .bottom-section img { width: 100px; margin-bottom: 3px; }
-        .bottom-section .azwa {width:38px;}
+        .bottom-section img { width: 223px; margin-bottom: 3px; }
+        .bottom-section .azwa {width:78px;}
         .bottom-section .top-border { margin-top: 0; margin-bottom: 4px;}
         .designation { font-size: 11px;}
     </style>
@@ -270,7 +273,7 @@
                                                 <li><img src="{{asset('images/certificate/alokito_hridoy.png')}}" alt=""></li>
                                             </ul>
                                         </div>
-                                        <div class="top-right">
+                                        <div class="top-right other-certificate">
                                             <ul>
                                                 <li><img src="{{asset('images/certificate/mutho_path.png')}}" alt=""></li>
                                                 <li><img src="{{asset('images/certificate/a2i.png')}}" alt=""></li>
@@ -281,9 +284,9 @@
                                         <h2>CERTIFICATE <br>OF PARTICIPATION</h2>
                                         <p>This is to certify that</p>
                                         <div class="info">
-                                            <p class="person-name">Joseph Jacky Gomes</p>
+                                            <p class="person-name">{{$user_info->name}}</p>
                                             <p class="top-border">has successfully completed the online course on</p>
-                                            <p class="course-name">Problem-Based Learning</p>
+                                            <p class="course-name">{{$course->title}}</p>
                                         </div>
                                     </div>
                                     <div class="bottom-section">
@@ -312,22 +315,50 @@
     @push('js')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
         <script type="application/javascript">
-            function downloadPdf(id){
-                // Initiate PDF create and Download
-                const filename  = 'certificate.pdf';
-                html2canvas(document.querySelector('#certificate-wrap-'+id ),
-                    {scale: 1}
-                ).then(canvas => {
-                    const imgData = canvas.toDataURL('image/png');
-                    const pdf = new jsPDF();
-                    const imgProps= pdf.getImageProperties(imgData);
-                    const pdfWidth = pdf.internal.pageSize.getWidth();
+            // function downloadPdf(id){
+            //     // Initiate PDF create and Download
+            //     const filename  = 'certificate.pdf';
+            //     html2canvas(document.querySelector('#certificate-wrap-'+id ),
+            //         {scale: 2, dpi:144}
+            //     ).then(canvas => {
+            //         const imgData = canvas.toDataURL('image/png');
+            //         const pdf = new jsPDF({
+            //             orientation: 'Landscape',
+            //             quality:4
+            //         });
+            //         const imgProps= pdf.getImageProperties(imgData);
+            //         const pdfWidth = pdf.internal.pageSize.getWidth();
+            //         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            //         // pdf.addImage(imgData, 'PNG', 40, -100, pdfWidth, pdfHeight,'','Slow', -90);
+            //         pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+            //         pdf.internal.scaleFactor = 1.55
+            //         pdf.save(filename);
+            //     });
+            // };
+            function downloadPdf(id) {
+                var node = document.querySelector('#certificate-wrap-'+id);
+                var options = {
+                    quality: 1,
+                    bgcolor: '#FFFFFF',
+                    style: {
+                        margin: 0,
+                    }
+                };
+
+                domtoimage.toJpeg(node, options).then(function (dataUrl)
+                {
+                    var doc = new jsPDF({
+                        orientation: 'Landscape',
+                    });
+                    const imgProps= doc.getImageProperties(dataUrl);
+                    const pdfWidth = doc.internal.pageSize.getWidth();
                     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                    pdf.addImage(imgData, 'PNG', 40, -100, pdfWidth, pdfHeight,'','Slow', -90);
-                    pdf.save(filename);
-                });
-            };
+                    doc.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                    doc.save('certificate.pdf');
+                })
+            }
         </script>
     @endpush
 @endsection
