@@ -1,13 +1,37 @@
 @extends('master')
 @section('content')
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato');
+        /* latin-ext */
+        @font-face {
+            font-family: 'Lato';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjxAwXjeu.woff2) format('woff2');
+            unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        /* latin */
+        @font-face {
+            font-family: 'Lato';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wXg.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
         #certificate-wrap-1, #certificate-wrap-2 {
+            font-family: 'lato';
             background-image: url("{{asset('images/certificate/border1.png')}}");
             height: 640px;
             width: 900px;
             background-size: 100% 100%;
             margin: 40px auto;
             padding: 14px 9px;
+            color: #58595b;
+        }
+        .inner-wrap {
+            background-color: #fffcf6;
+            margin: 5px 5px 0px 6px;
+            height: 99%;
         }
         .top-section {
             padding: 10px;
@@ -38,14 +62,27 @@
             width: 100%;
         }
         .middle-section {
-            margin-top: 35px;
+            /*margin-top: 35px;*/
             text-align: center;
+        }
+        .middle-section h2 {
+            font-size: 46px;
+            margin: 0;
+        }
+        .bold {font-weight: bold;}
+        .certificate-heading p {
+            font-size: 24px;
+            margin: 0;
+            letter-spacing: 5px;
+        }
+        .gold-badge img {
+            width: 20px;
         }
         .middle-section .info p {
             margin-bottom: 0;
         }
         .middle-section .info .person-name {
-            font-size: 24px;
+            font-size: 28px;
         }
         .middle-section .info {
             width: 80%;
@@ -56,7 +93,7 @@
             margin-top: 8px;
         }
         .middle-section .info .course-name {
-            font-size: 20px;
+            font-size: 30px;
         }
         .bottom-section {
             width: 100%;
@@ -71,8 +108,10 @@
             float: left;
         }
         .bottom-right {float:right}
-        .bottom-section img { width: 223px; margin-bottom: 3px; }
-        .bottom-section .azwa {width:78px;}
+        .bottom-section .bottom-right img { width: 223px; }
+        .bottom-section .bottom-right .brig { margin: 16px 0; }
+        .bottom-section .bottom-right .mannan { margin: 13px 0; }
+        .bottom-section .azwa {width:110px; margin-bottom: 3px;}
         .bottom-section .top-border { margin-top: 0; margin-bottom: 4px;}
         .designation { font-size: 11px;}
     </style>
@@ -224,6 +263,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="certificate-wrap-1">
+                                    <div class="inner-wrap">
                                     <div class="top-section">
                                         <div class="top-left">
                                             <ul>
@@ -237,12 +277,19 @@
                                         </div>
                                     </div>
                                     <div class="middle-section">
-                                        <h2>CERTIFICATE <br>OF PARTICIPATION</h2>
+                                        <div class="certificate-heading">
+                                            <h2><span class="bold">CERTIFICATE</span></h2>
+                                            <p>OF PARTICIPATION</p>
+                                        </div>
                                         <p>This is to certify that</p>
                                         <div class="info">
                                             <p class="person-name">{{$user_info->name}}</p>
-                                            <p class="top-border">has successfully completed the online course on</p>
-                                            <p class="course-name">{{$course->title}}</p>
+                                            <p class="top-border">has successfully completed
+                                                @if($courseScore >= 85)
+                                                <span class="gold-badge">with a gold badge<img src="{{asset('images/certificate/gold-badge.png')}}" alt=""></span>
+                                                @endif
+                                                the online course on</p>
+                                            <p class="course-name bold">{{$course->title}}</p>
                                         </div>
                                     </div>
                                     <div class="bottom-section">
@@ -252,11 +299,12 @@
                                             <p class="designation">Chairperson <br>Alokito Hridoy Foundation</p>
                                         </div>
                                         <div class="bottom-right">
-                                            <img src="{{asset('images/certificate/abu_nayeem.png')}}" alt="">
+                                            <img class="brig" src="{{asset('images/certificate/abu_nayeem.png')}}" alt="">
                                             <p class="top-border">Brig. Gen. Abu Nayeem Md. Shahidullah(Retd.)</p>
                                             <p class="designation">Vice Chairman <br>Alokito Hridoy Foundation</p>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -266,6 +314,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="certificate-wrap-2">
+                                    <div class="inner-wrap">
                                     <div class="top-section">
                                         <div class="top-left">
                                             <ul>
@@ -281,12 +330,19 @@
                                         </div>
                                     </div>
                                     <div class="middle-section">
-                                        <h2>CERTIFICATE <br>OF PARTICIPATION</h2>
+                                        <div class="certificate-heading">
+                                            <h2><span class="bold">CERTIFICATE</span></h2>
+                                            <p>OF PARTICIPATION</p>
+                                        </div>
                                         <p>This is to certify that</p>
                                         <div class="info">
                                             <p class="person-name">{{$user_info->name}}</p>
-                                            <p class="top-border">has successfully completed the online course on</p>
-                                            <p class="course-name">{{$course->title}}</p>
+                                            <p class="top-border">has successfully completed
+                                                @if($courseScore >= 85)
+                                                    <span class="gold-badge">with gold badge<img src="{{asset('images/certificate/gold-badge.png')}}" alt=""></span>
+                                                @endif
+                                                   the online course on</p>
+                                            <p class="course-name bold">{{$course->title}}</p>
                                         </div>
                                     </div>
                                     <div class="bottom-section">
@@ -296,11 +352,12 @@
                                             <p class="designation">Chairperson <br>Alokito Hridoy Foundation</p>
                                         </div>
                                         <div class="bottom-right">
-                                            <img src="{{asset('images/certificate/abdul_mannan.png')}}" alt="">
+                                            <img class="mannan" src="{{asset('images/certificate/abdul_mannan.png')}}" alt="">
                                             <p class="top-border">Dr. Md Abdul Mannan(PAA)</p>
                                             <p class="designation">Joint Secretary and Project Director Access to Information(a2i) Programme ICT Division</p>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>

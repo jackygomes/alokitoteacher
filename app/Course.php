@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
 {
@@ -15,7 +16,14 @@ class Course extends Model
         return $this->hasMany(CourseVideo::class, 'course_id', 'id');
     }
 
-    public function questions() {
-        return $this->hasMany(CourseVideo::class, 'course_id', 'id');
+    public function quizzes() {
+        return $this->hasMany(CourseQuiz::class, 'course_id', 'id');
     }
+
+//    public function completedQuizzes() {
+////        $userId = Auth::user()->id;
+//        return $this->hasMany(CourseHistory::class,'user_id', $userId);
+//    }
+
+
 }
