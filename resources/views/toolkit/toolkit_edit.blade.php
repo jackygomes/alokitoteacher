@@ -56,25 +56,6 @@
 
                             @endif
                         @endforeach
-{{--                        @if(count($contents) == 1)--}}
-
-{{--                            <div class="list-group-item list-group-item-action bg-light ItemButton">--}}
-
-{{--                                    @if($contents[0]->type == 1)--}}
-{{--                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>--}}
-{{--                                    @elseif($contents[0]->type == 3)--}}
-{{--                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>--}}
-{{--                                    @else--}}
-{{--                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>--}}
-{{--                                        <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>--}}
-{{--                                    @endif--}}
-{{--                            </div>--}}
-{{--                        @elseif(count($contents) <= 0)--}}
-{{--                            <div class="list-group-item list-group-item-action bg-light ItemButton">--}}
-{{--                                <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>--}}
-{{--                                <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>--}}
-{{--                            </div>--}}
-{{--                        @endif--}}
 
                     </div>
                 </div>

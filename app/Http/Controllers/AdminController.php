@@ -7,6 +7,7 @@ use App\CourseQuestion;
 use App\CourseQuiz;
 use App\CourseQuizOption;
 use App\CourseVideo;
+use App\Resource;
 use App\TeacherStudentCount;
 use App\Toolkit;
 use App\ToolkitDocument;
@@ -45,11 +46,11 @@ class AdminController extends Controller
             return abort(404);
         }
 
-        $courses = Course::all();
-        $toolkits = Toolkit::with('subject')->paginate(5);
-
+        $courses = Course::paginate(10);
+        $toolkits = Toolkit::with('subject')->paginate(10);
+        $resources = Resource::paginate(10);
 //        return $user_info;
-        return view ('admin',compact( 'user_info', 'courses', 'toolkits'));
+        return view ('admin',compact( 'user_info', 'courses', 'toolkits', 'resources'));
     }
 
     public function userList() {

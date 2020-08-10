@@ -60,7 +60,7 @@
 
     <div class="justify-content-right">
         <div class="row  ">
-            <div class="col-md-12">
+            <div class="col-md-12 text-center">
                 <a href="{{url('course') }}" class="btn shadow  px-5 py-3 mt-5 mb-5 font-weight-bold background-yellow text-white">View More Courses</a>
             </div>
 
@@ -115,13 +115,72 @@
     @if(count($toolkit_info) > 0)
     <div class="justify-content-right">
         <div class="row  ">
-            <div class="col-md-12">
+            <div class="col-md-12 text-center">
                 <a href="{{url('toolkit') }}" class="btn shadow  px-5 py-3 mt-5 mb-5 font-weight-bold background-yellow text-white">View More Toolkits</a>
             </div>
         </div>
     </div>
     @else
     <h4 class="text-center text-muted mb-4">No Toolkit Available</h4>
+    @endif
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="mt-3 text-center font-weight-bold">Resources</h2>
+        </div>
+
+
+        @foreach ($resource_info as $resource)
+            <div class="col-md-3 mt-3">
+                <a href="{{ url('overview') }}/r/{{$resource->slug}}">
+                    <div class="card" style="min-height: 22.5vh">
+                        <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" class="card-img-top">
+                        <div class="text-center">
+                            <img src="{{url('images\profile_picture')}}\{{ $resource->user->image }}" alt="Avatar" class="avatar">
+                        </div>
+                        <div class="card-body">
+
+                            <p class="card-title text-dark font-weight-bold">{{ str_limit(strip_tags($resource->resource_title), 30) }}</p>
+                            <p class="card-text text-yellow font-weight-bold"><small>Posted By</small>
+                                <br> {{ str_limit(strip_tags($resource->user->name), 20) }}</p>
+
+                            <div class="text-dark">
+                                    <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
+                                    <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
+                                    <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="card-footer" style="background: #51b964;">
+                            <h5 class="text-white text-center">
+                                @if($resource->price == 0)
+                                    Free
+                                @else
+                                    {{ round($resource->price, 2)}} BDT
+                                @endif
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        @endforeach
+    </div>
+
+
+
+
+    @if(count($resource_info) > 0)
+        <div class="justify-content-right">
+            <div class="row  ">
+                <div class="col-md-12 text-center">
+                    <a href="{{url('allResource') }}" class="btn shadow  px-5 py-3 mt-5 mb-5 font-weight-bold background-yellow text-white">View More Resources</a>
+                </div>
+            </div>
+        </div>
+    @else
+        <h4 class="text-center text-muted mb-5">No Resource Available</h4>
     @endif
 
 

@@ -54,7 +54,7 @@
             <div class="col-md-9 col-sm-12 mt-3">
                 <div class="container-fluid">
                     <div class="row">
-                        <h3>Create Toolkit:</h3>
+                        <h3>Create Resource:</h3>
                     </div>
                     <div class="row">
                         @if($errors->any())
@@ -64,49 +64,28 @@
                                 @endforeach
                             </div>
                         @endif
-                        <form action="{{ route('toolkit.store') }}" method="post" enctype="multipart/form-data" style="width: 100%;">
+                        <form action="{{ route('resource.store') }}" method="post" enctype="multipart/form-data" style="width: 100%;">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             <div class="form-group row">
-                                <label for="toolkitName" class="col-sm-2 col-form-label">Name:</label>
+                                <label for="resourceName" class="col-sm-2 col-form-label">Name:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="toolkit_name" class="form-control" id="toolkitName" placeholder="Toolkit Name">
+                                    <input type="text" name="resource_name" class="form-control" id="resourceName" placeholder="Resource Name">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="toolkitDescription" class="col-sm-2 col-form-label">Description:</label>
+                                <label for="resourceDescription" class="col-sm-2 col-form-label">Description:</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" name="toolkit_description" placeholder="Description" id="toolkitDescription" rows="3"></textarea>
+                                    <textarea class="form-control" name="resource_description" placeholder="Description" id="resourceDescription" rows="3"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="toolkitPrice" class="col-sm-2 col-form-label">Price:</label>
+                                <label for="Price" class="col-sm-2 col-form-label">Price:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="toolkit_price" class="form-control" id="toolkitPrice" placeholder="Toolkit Price">
-                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the toolkit is free.</p>
+                                    <input type="text" name="resource_price" class="form-control" id="Price" placeholder="Resource Price">
+                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the resource is free.</p>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="subjects" class="col-sm-2 col-form-label">Subject:</label>
-                                <div class="col-sm-10">
-                                    <select class="custom-select mr-sm-2" name="subject" id="subjects">
-                                        <option selected>Choose Subject...</option>
-                                        @foreach($subjects as $subject)
-                                            <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="subjects" class="col-sm-2 col-form-label">Type:</label>
-                                <div class="col-sm-10">
-                                    <select class="custom-select mr-sm-2" name="toolkit_type" id="type">
-                                        <option selected>Choose Type...</option>
-                                        <option value="Teacher">Teacher</option>
-                                        <option value="Student">Student</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <label for="thumbnail_image" class="col-sm-2 col-form-label">Thumbnail Image:</label>
                                 <div class="col-sm-10">
@@ -122,22 +101,22 @@
         </div>
     </div>
 
-@push('js')
+    @push('js')
 
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#toolkitPrice").keydown(function (event) {
-                // Allow Only: keyboard 0-9, numpad 0-9, backspace, tab, left arrow, right arrow, delete
-                if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46) {
-                    // Allow normal operation
-                } else {
-                    // Prevent the rest
-                    event.preventDefault();
-                }
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#Price").keydown(function (event) {
+                    // Allow Only: keyboard 0-9, numpad 0-9, backspace, tab, left arrow, right arrow, delete
+                    if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46) {
+                        // Allow normal operation
+                    } else {
+                        // Prevent the rest
+                        event.preventDefault();
+                    }
+                });
             });
-        });
 
-    </script>
+        </script>
 
-@endpush
+    @endpush
 @endsection

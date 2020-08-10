@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -77,6 +78,7 @@ class AllController extends Controller
                  ->limit(4)
                  ->get();
          }
+         $resource_info = Resource::with('user')->where('status', 'Approved')->get();
 
          $userId = Auth::check() ? Auth::user()->id : 0;
          foreach($course_info as $course){
@@ -88,7 +90,7 @@ class AllController extends Controller
              $course->isBought = $isOrdered ? 1 : 0;
          }
 
-         return view ('course_and_toolkit',compact('user_info','course_info','toolkit_info'));
+         return view ('course_and_toolkit',compact('user_info','course_info','toolkit_info', 'resource_info'));
 
 	}
 }

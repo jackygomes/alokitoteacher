@@ -74,6 +74,27 @@ Route::post ('admin/load_content', 'AdminController@load_content');
 Route::post ('admin/load_question', 'AdminController@load_question');
 // admin routes ends
 
+// Resource
+Route::get ('overview/r/{slug}', 'ResourceController@resourceOverview');
+Route::get ('view/r/{slug}', 'ResourceController@resourceView');
+Route::group(['prefix' => 'resource'], function() {
+    Route::get('/', 'ResourceController@index')->name('allResource');
+    Route::get('create', 'ResourceController@create')->name('resource.create');
+    Route::post('store', 'ResourceController@store')->name('resource.store');
+
+    Route::get('edit/{id}', 'ResourceController@edit')->name('resource.edit');
+    Route::post('update/{id}', 'ResourceController@update')->name('resource.update');
+    Route::post('video/create/{id}', 'ResourceController@videoCreate')->name('resource.video.create');
+    Route::post('video/update/{id}', 'ResourceController@videoUpdate')->name('resource.video.update');
+    Route::post('document/create/{id}', 'ResourceController@documentCreate')->name('resource.document.create');
+    Route::post('document/update/{id}', 'ResourceController@documentUpdate')->name('resource.document.update');
+
+
+    Route::post ('load_content', 'ResourceController@load_content');
+
+
+});
+
 
 Route::get ('all', 'AllController@index');
 

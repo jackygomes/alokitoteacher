@@ -24,7 +24,8 @@
             height: 640px;
             width: 900px;
             background-size: 100% 100%;
-            margin: 40px auto;
+            /*margin: 40px auto;*/
+            margin-bottom: 50px;
             padding: 14px 9px;
             color: #58595b;
         }
