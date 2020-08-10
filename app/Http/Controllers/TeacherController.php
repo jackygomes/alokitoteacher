@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Resource;
 use App\Toolkit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -80,10 +81,11 @@ class TeacherController extends Controller
         $recent_work = WorkExperience::where('user_id', '=', $user_info->id)->where('to_date', '=', '0000-00-00')->first();
         $recent_institute = Academic::where('user_id', '=', $user_info->id)->orderBy('passing_year', 'DESC')->first();
         $toolkits = Toolkit::with('subject')->where('user_id', '=', $userId)->paginate(5);
+        $resources = Resource::where('user_id',$userId)->paginate(10);
 
 //        return $toolkits;
 
-        return view('teacher.dashboard', compact('toolkits', 'user_info','recent_work', 'users', 'recent_institute'));
+        return view('teacher.dashboard', compact('resources','toolkits', 'user_info','recent_work', 'users', 'recent_institute'));
     }
 
 	 function picture(Request $request){
