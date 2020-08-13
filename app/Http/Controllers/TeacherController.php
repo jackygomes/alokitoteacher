@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Resource;
 use App\Toolkit;
+use App\ToolkitRating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -65,6 +66,19 @@ class TeacherController extends Controller
 
 		$recent_work = WorkExperience::where('user_id', '=', $user_info->id)->where('to_date', '=', '0000-00-00')->first();
 		$recent_institute = Academic::where('user_id', '=', $user_info->id)->orderBy('passing_year', 'DESC')->first();
+
+		$toolkit = DB::table('toolkit_ratings')
+            ->select('toolkit_ratings.*','toolkits.user_id as teacherId')
+            ->join('toolkits','toolkits.id','=','toolkit_ratings.toolkit_id')
+            ->where('toolkits.user_id','=',$user_info->id)
+            ->get();
+
+
+		$teacherRating = round($toolkit->sum('rating') / $toolkit->count(), 2);
+
+        $user = User::find($user_info->id);
+        $user->rating = $teacherRating;
+        $user->save();
 
 	    return view ('teachers', compact('user_info','work_info','academic_info','skill_info', 'progresses', 'achievements', 'course_knowledges', 'users', 'recent_work', 'recent_institute'));
 

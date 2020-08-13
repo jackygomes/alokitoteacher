@@ -499,6 +499,9 @@ class ContentController extends Controller
 
     function rate_a_course(Request $request)
     {
+        $ratingTotal = $request->comprehensibilityRating + $request->creativityRating;
+        $aveRating = $ratingTotal / 2;
+
         $slug = $request->slug;
         $course_toolkit = $request->course_toolkit;
         if ($course_toolkit == 'c') {
@@ -515,7 +518,7 @@ class ContentController extends Controller
                 $rating->course_id = $course->id;
             }
 
-            $rating->rating = $request->rating;
+            $rating->rating = $aveRating;
             $rating->save();
 
             $this->update_rating_of_user_table($course->user_id);
@@ -533,7 +536,7 @@ class ContentController extends Controller
                     $rating->user_id = Auth::id();
                     $rating->toolkit_id = $toolkit->id;
                 }
-                $rating->rating = $request->rating;
+                $rating->rating = $aveRating;
                 $rating->save();
 
                 $this->update_rating_of_user_table($toolkit->user_id);
@@ -608,8 +611,18 @@ class ContentController extends Controller
         }
         $rating = round(($total_points + $rating) / 2);
 
+
+        $toolkit = DB::table('toolkit_ratings')
+            ->select('toolkit_ratings.*','toolkits.user_id as teacherId')
+            ->join('toolkits','toolkits.id','=','toolkit_ratings.toolkit_id')
+            ->where('toolkits.user_id','=', $id)
+            ->get();
+
+
+		$teacherRating = round($toolkit->sum('rating') / $toolkit->count(), 2);
+
         $user = User::find($id);
-        $user->rating = $rating;
+        $user->rating = $teacherRating;
         $user->save();
 
         return 0;

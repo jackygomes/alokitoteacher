@@ -75,22 +75,42 @@
             <input type="hidden" name="course_toolkit" value="{{ Request::segment(2) }}">
             <input type="hidden" name="slug" value="{{ Request::segment(3) }}">
 
-            <div class="rating my-5">
+            <label for="">comprehensibility</label>
+            <div class="rating comprehensibility mb-3">
               <label>
-                <input type="radio" name="rating" class="d-none" value="5" title="5 stars" required>
+                <input type="radio" name="comprehensibilityRating" class="d-none" value="5" title="5 stars" required>
               </label>
               <label>
-                <input type="radio" name="rating" class="d-none" value="4" title="4 stars">
+                <input type="radio" name="comprehensibilityRating" class="d-none" value="4" title="4 stars">
               </label>
               <label>
-                <input type="radio" name="rating" class="d-none" value="3" title="3 stars">
+                <input type="radio" name="comprehensibilityRating" class="d-none" value="3" title="3 stars">
               </label>
               <label>
-                <input type="radio" name="rating" class="d-none" value="2" title="2 stars">
+                <input type="radio" name="comprehensibilityRating" class="d-none" value="2" title="2 stars">
               </label>
               <label>
-                <input type="radio" name="rating" class="d-none" value="1" title="1 star">
+                <input type="radio" name="comprehensibilityRating" class="d-none" value="1" title="1 star">
               </label>
+            </div>
+
+            <label for="">creativity</label>
+            <div class="rating creativity mb-3">
+                <label>
+                    <input type="radio" name="creativityRating" class="d-none" value="5" title="5 stars" required>
+                </label>
+                <label>
+                    <input type="radio" name="creativityRating" class="d-none" value="4" title="4 stars">
+                </label>
+                <label>
+                    <input type="radio" name="creativityRating" class="d-none" value="3" title="3 stars">
+                </label>
+                <label>
+                    <input type="radio" name="creativityRating" class="d-none" value="2" title="2 stars">
+                </label>
+                <label>
+                    <input type="radio" name="creativityRating" class="d-none" value="1" title="1 star">
+                </label>
             </div>
 
             <button type="submit" class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white">Submit</button>
@@ -472,10 +492,15 @@ console.log(result);
 
             // }
 
-            $('.rating input').change(function () {
+            $('.rating.comprehensibility input').change(function () {
               var $radio = $(this);
-              $('.rating .selected').removeClass('selected');
+              $('.rating.comprehensibility .selected').removeClass('selected');
               $radio.closest('label').addClass('selected');
+            });
+            $('.rating.creativity input').change(function () {
+                var $radio = $(this);
+                $('.rating.creativity .selected').removeClass('selected');
+                $radio.closest('label').addClass('selected');
             });
 
             $(document).on("click", '#retakeConfirm', function(event) {
