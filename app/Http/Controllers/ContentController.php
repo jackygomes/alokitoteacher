@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Utilities\LeaderBoard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -624,6 +625,8 @@ class ContentController extends Controller
         $user = User::find($id);
         $user->rating = $teacherRating;
         $user->save();
+
+        LeaderBoard::updateLeaderboardOnRatingChange($id, $teacherRating);
 
         return 0;
     }

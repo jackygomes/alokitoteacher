@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Resource;
 use App\Toolkit;
+use App\ToolkitHistory;
+use App\ToolkitQuiz;
 use App\ToolkitRating;
+use App\Utilities\LeaderBoard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -60,9 +63,11 @@ class TeacherController extends Controller
 		JOIN toolkit_histories as th ON th.quiz_id = tq.id AND th.user_id = '$user_info->id'
 		GROUP BY tk.id
 		 ");
+        foreach($course_knowledges as $course_knowledge){
 
+        }
 
-		$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+        $leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
 
 		$recent_work = WorkExperience::where('user_id', '=', $user_info->id)->where('to_date', '=', '0000-00-00')->first();
 		$recent_institute = Academic::where('user_id', '=', $user_info->id)->orderBy('passing_year', 'DESC')->first();
@@ -74,13 +79,16 @@ class TeacherController extends Controller
             ->get();
 
 
-		$teacherRating = round($toolkit->sum('rating') / $toolkit->count(), 2);
+        if($toolkit->count() > 0) {
+            $teacherRating = round($toolkit->sum('rating') / $toolkit->count(), 2);
 
-        $user = User::find($user_info->id);
-        $user->rating = $teacherRating;
-        $user->save();
+            $user = User::find($user_info->id);
+            $user->rating = $teacherRating;
+            $user->save();
+        }
 
-	    return view ('teachers', compact('user_info','work_info','academic_info','skill_info', 'progresses', 'achievements', 'course_knowledges', 'users', 'recent_work', 'recent_institute'));
+
+	    return view ('teachers', compact('user_info','work_info','academic_info','skill_info', 'progresses', 'achievements', 'course_knowledges', 'leaderBoard', 'recent_work', 'recent_institute'));
 
 	}
 
