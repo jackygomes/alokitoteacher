@@ -60,7 +60,7 @@ class LeaderBoardUpdateCommand extends Command
         //Rating calculation...
         $users = User::where('identifier', '=','1')->get();
         foreach ($users as $user) {
-            $average_points = 0;
+
             // teacher rating making out of hundred
             $teacherRating = $user->rating * 20;
 
