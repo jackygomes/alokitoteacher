@@ -99,7 +99,8 @@ class TeacherController extends Controller
 
             return abort(404);
         }
-        $users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+//        $users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+        $leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
         $recent_work = WorkExperience::where('user_id', '=', $user_info->id)->where('to_date', '=', '0000-00-00')->first();
         $recent_institute = Academic::where('user_id', '=', $user_info->id)->orderBy('passing_year', 'DESC')->first();
         $toolkits = Toolkit::with('subject')->where('user_id', '=', $userId)->paginate(5);
@@ -107,7 +108,7 @@ class TeacherController extends Controller
 
 //        return $toolkits;
 
-        return view('teacher.dashboard', compact('resources','toolkits', 'user_info','recent_work', 'users', 'recent_institute'));
+        return view('teacher.dashboard', compact('resources','toolkits', 'user_info','recent_work', 'leaderBoard', 'recent_institute'));
     }
 
 	 function picture(Request $request){

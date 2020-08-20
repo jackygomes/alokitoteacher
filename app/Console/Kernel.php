@@ -26,9 +26,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+//         $schedule->command('leaderboard:update')
+//             ->dailyAt('00:00')
+//             ->timezone('Asia/Dhaka');
          $schedule->command('leaderboard:update')
-             ->dailyAt('00:00')
-             ->timezone('Asia/Dhaka');
+             ->everyMinute();
     }
 
     /**
