@@ -149,9 +149,10 @@ Route::post ('upload_picture', 'TeacherController@picture');
 
 Auth::routes();
 
-// Purchase course/toolkits
+// Purchase course/toolkit/resource
 Route::group(['prefix' => 'purchase'], function() {
     Route::post('course/{id}', 'PurchaseController@course')->name('purchase.course');
+    Route::post('resource/{id}', 'PurchaseController@resource')->name('purchase.resource');
 });
 
 // Deposit money

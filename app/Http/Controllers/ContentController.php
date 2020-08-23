@@ -128,9 +128,9 @@ class ContentController extends Controller
 
             $userId = Auth::check() ? Auth::user()->id : 0;
             $isOrdered = Order::where('status', 'paid')
-                ->where('course_or_toolkit', 'course')
+                ->where('product_type', 'course')
                 ->where('user_id', $userId)
-                ->where('course_toolkit_id', $info->id)->first();
+                ->where('product_id', $info->id)->first();
 
             $info->isBought = $isOrdered ? 1 : 0;
 

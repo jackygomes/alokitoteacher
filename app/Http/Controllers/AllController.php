@@ -83,9 +83,9 @@ class AllController extends Controller
          $userId = Auth::check() ? Auth::user()->id : 0;
          foreach($course_info as $course){
              $isOrdered = Order::where('status', 'paid')
-                 ->where('course_or_toolkit', 'course')
+                 ->where('product_type', 'course')
                  ->where('user_id', $userId)
-                 ->where('course_toolkit_id', $course->id)->count();
+                 ->where('product_id', $course->id)->count();
 
              $course->isBought = $isOrdered ? 1 : 0;
          }

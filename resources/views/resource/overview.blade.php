@@ -17,7 +17,11 @@
 
             </div>
             <div class="col-md-4 background-yellow text-center p-5">
-
+                @if($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        {{$message}}
+                    </div>
+                @endif
                 <div style="width: 150px; height: 150px;" class="mx-auto">
                     @if($creator->image == null)
                         <i class="fas fa-user-circle fa-10x text-white"></i>
@@ -47,24 +51,32 @@
                 <br>
                 <br>
                 <span>
-            @if(Request::segment(2) == 't')
-                        Toolkit Price:
-                    @elseif(Request::segment(2) == 'c')
-                        Course Price:
+                Resource Price:
+                <span class="h3">
+                    @if($info->price == 0)
+                        Free
+                    @else
+                        {{ round($info->price, 2)}} BDT
                     @endif
-        <span class="h3">
-            @if($info->price == 0)
-                Free
-            @else
-                {{ round($info->price, 2)}} BDT
-            @endif
-        </span></span>
+                </span></span>
                 <br>
-            <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
-                @if(Request::segment(2) == 'r')
+                @if($info->isBought == 1 && Auth::check())
+                <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
                     View Resource
+                </a>
+                @elseif(Auth::check())
+                    @if($info->price > Auth::user()->balance)
+                        <form onclick="return confirm('Insufficiant Balance. Deposit your balance first.')">
+                            @csrf
+                            <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                        </form>
+                    @else
+                        <form action="{{route('purchase.resource', $info->id)}}" onclick="return confirm('Are you sure to purchase this resource? if yes then click ok.')" method="post">
+                            @csrf
+                            <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                        </form>
+                    @endif
                 @endif
-            </a>
 
             </div>
 

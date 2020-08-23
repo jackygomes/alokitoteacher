@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Order;
+use App\Resource;
 use App\TrackHistory;
 use App\User;
 use Illuminate\Http\Request;
@@ -82,6 +83,11 @@ class PurchaseController extends Controller
         //
     }
 
+    /**
+     * course purchase function with courseId
+     * @param $courseId
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|void
+     */
     public function course($courseId) {
         $info = Course::find($courseId);
 
@@ -89,13 +95,15 @@ class PurchaseController extends Controller
             return abort(404);
         }
         try{
-            $courseExist = Order::where('course_toolkit_id', $info->id)
-                            ->where('user_id', Auth::id())->first();
+            $courseExist = Order::where('product_id', $info->id)
+                ->where('user_id', Auth::id())
+                ->where('product_type', 'course')
+                ->first();
             if($courseExist == null){
                 $orderData = [
                     'user_id'           => Auth::id(),
-                    'course_or_toolkit' => 'course',
-                    'course_toolkit_id' => $info->id,
+                    'product_type'      => 'course',
+                    'product_id'        => $info->id,
                     'amount'            => $info->price,
                     'status'            => 'paid',
                     'transaction_id'    => "ALOKITO_" . uniqid(),
@@ -105,16 +113,59 @@ class PurchaseController extends Controller
                 Order::create($orderData);
 
                 $userId = Auth::id();
-//                return $userId;
                 $user_info = User::where('id', '=', $userId)->first();
                 $user_info->balance = $user_info->balance - $info->price;
                 $user_info->save();
 
-                // redirect to course enroll page
-
                 return redirect()->back()->with('success','Your purchase to this course is successful');
             }
         } catch(\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
+    }
+
+    /**
+     * resource purchase function with resourceId
+     * @param $resourceId
+     */
+    public function resource($resourceId) {
+        $resource = Resource::find($resourceId);
+
+        if ($resource == null) {
+            return abort(404);
+        }
+        try{
+
+            $resourceExist = Order::where('product_id', $resource->id)
+                ->where('user_id', Auth::id())
+                ->where('product_type', 'resource')
+                ->first();
+
+            if($resourceExist == null){
+                $orderData = [
+                    'user_id'           => Auth::id(),
+                    'product_type'      => 'resource',
+                    'product_id'        => $resource->id,
+                    'amount'            => $resource->price,
+                    'status'            => 'paid',
+                    'transaction_id'    => "ALOKITO_" . uniqid(),
+                    'currency'          => 'BDT'
+                ];
+
+                Order::create($orderData);
+
+                $userId = Auth::id();
+                $user_info = User::where('id', '=', $userId)->first();
+                $user_info->balance = $user_info->balance - $resource->price;
+                $user_info->save();
+
+                return redirect()->back()->with('success','Your purchase to this resource is successful');
+            }
+
+        } catch (\Exception $e){
             return response()->json([
                 'status'    => 'error',
                 'message'   => $e->getMessage(),

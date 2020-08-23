@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\Resource;
 use App\ResourceDocument;
 use App\ResourceVideo;
@@ -364,6 +365,14 @@ class ResourceController extends Controller
 
     public function resourceOverview(Request $request) {
         $info = Resource::where('slug', '=', $request->slug)->first();
+
+        $userId = Auth::check() ? Auth::user()->id : 0;
+        $isOrdered = Order::where('status', 'paid')
+            ->where('product_type', 'resource')
+            ->where('user_id', $userId)
+            ->where('product_id', $info->id)->first();
+
+        $info->isBought = $isOrdered ? 1 : 0;
 
         if ($info == null) {
             return abort(404);
