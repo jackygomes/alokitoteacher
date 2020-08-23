@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Order;
 use App\Resource;
+use App\Toolkit;
 use App\TrackHistory;
 use App\User;
 use Illuminate\Http\Request;
@@ -88,21 +89,28 @@ class PurchaseController extends Controller
      * @param $courseId
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|void
      */
-    public function course($courseId) {
-        $info = Course::find($courseId);
+    public function purchaseCourseToolkitResource(Request $request, $productId)
+    {
+        if($request->type == 'course') {
+            $info = Course::find($productId);
+        } elseif ($request->type == 'resource') {
+            $info = Resource::find($productId);
+        } elseif($request->type == 'toolkit'){
+            $info = Toolkit::find($productId);
+        }
 
         if ($info == null) {
             return abort(404);
         }
         try{
-            $courseExist = Order::where('product_id', $info->id)
+            $productExist = Order::where('product_id', $info->id)
                 ->where('user_id', Auth::id())
-                ->where('product_type', 'course')
+                ->where('product_type', $request->type)
                 ->first();
-            if($courseExist == null){
+            if($productExist == null){
                 $orderData = [
                     'user_id'           => Auth::id(),
-                    'product_type'      => 'course',
+                    'product_type'      => $request->type,
                     'product_id'        => $info->id,
                     'amount'            => $info->price,
                     'status'            => 'paid',
@@ -117,7 +125,13 @@ class PurchaseController extends Controller
                 $user_info->balance = $user_info->balance - $info->price;
                 $user_info->save();
 
-                return redirect()->back()->with('success','Your purchase to this course is successful');
+                if($request->type == 'course') {
+                    return redirect()->back()->with('success','Your purchase to this course is successful');
+                } elseif ($request->type == 'resource') {
+                    return redirect()->back()->with('success','Your purchase to this resource is successful');
+                } elseif($request->type == 'toolkit'){
+                    return redirect()->back()->with('success','Your purchase to this toolkit is successful');
+                }
             }
         } catch(\Exception $e) {
             return response()->json([
@@ -127,51 +141,6 @@ class PurchaseController extends Controller
         }
     }
 
-    /**
-     * resource purchase function with resourceId
-     * @param $resourceId
-     */
-    public function resource($resourceId) {
-        $resource = Resource::find($resourceId);
-
-        if ($resource == null) {
-            return abort(404);
-        }
-        try{
-
-            $resourceExist = Order::where('product_id', $resource->id)
-                ->where('user_id', Auth::id())
-                ->where('product_type', 'resource')
-                ->first();
-
-            if($resourceExist == null){
-                $orderData = [
-                    'user_id'           => Auth::id(),
-                    'product_type'      => 'resource',
-                    'product_id'        => $resource->id,
-                    'amount'            => $resource->price,
-                    'status'            => 'paid',
-                    'transaction_id'    => "ALOKITO_" . uniqid(),
-                    'currency'          => 'BDT'
-                ];
-
-                Order::create($orderData);
-
-                $userId = Auth::id();
-                $user_info = User::where('id', '=', $userId)->first();
-                $user_info->balance = $user_info->balance - $resource->price;
-                $user_info->save();
-
-                return redirect()->back()->with('success','Your purchase to this resource is successful');
-            }
-
-        } catch (\Exception $e){
-            return response()->json([
-                'status'    => 'error',
-                'message'   => $e->getMessage(),
-            ], 420);
-        }
-    }
 
     /**
      * Remove the specified resource from storage.

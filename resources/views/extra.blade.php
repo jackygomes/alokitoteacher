@@ -75,7 +75,7 @@
             <input type="hidden" name="course_toolkit" value="{{ Request::segment(2) }}">
             <input type="hidden" name="slug" value="{{ Request::segment(3) }}">
 
-            <label for="">comprehensibility</label>
+            <label for="">Comprehensibility</label>
             <div class="rating comprehensibility mb-3">
               <label>
                 <input type="radio" name="comprehensibilityRating" class="d-none" value="5" title="5 stars" required>
@@ -94,7 +94,7 @@
               </label>
             </div>
 
-            <label for="">creativity</label>
+            <label for="">Creativity</label>
             <div class="rating creativity mb-3">
                 <label>
                     <input type="radio" name="creativityRating" class="d-none" value="5" title="5 stars" required>

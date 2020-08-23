@@ -28,9 +28,9 @@ class HomeController extends Controller
         $userId = Auth::check() ? Auth::user()->id : 0;
         foreach($course_info as $course){
             $isOrdered = Order::where('status', 'paid')
-                ->where('course_or_toolkit', 'course')
+                ->where('product_type', 'course')
                 ->where('user_id', $userId)
-                ->where('course_toolkit_id', $course->id)->count();
+                ->where('product_id', $course->id)->count();
 
             $course->isBought = $isOrdered ? 1 : 0;
         }
@@ -40,11 +40,20 @@ class HomeController extends Controller
 						->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
 						->join('subjects', 'toolkits.subject_id', '=','subjects.id')
 						->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
-						->select('users.id','users.name', 'users.image','users.email','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.thumbnail','toolkits.price','subjects.subject_name','subjects.id','toolkits.slug', DB::raw('avg(toolkit_ratings.rating) as rating'))
+						->select('users.id as user_id','users.name', 'users.image','users.email','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.thumbnail','toolkits.price','subjects.subject_name','subjects.id','toolkits.slug', DB::raw('avg(toolkit_ratings.rating) as rating'))
                         ->where('toolkits.status', '=', 'Approved')
                         ->groupBy('toolkits.id')
 						->inRandomOrder(12)
 						->get();
+
+        foreach($toolkit_info as $toolkit){
+            $isOrdered = Order::where('status', 'paid')
+                ->where('product_type', 'toolkit')
+                ->where('user_id', $userId)
+                ->where('product_id', $toolkit->toolkit_id)->count();
+
+            $toolkit->isBought = $isOrdered ? 1 : 0;
+        }
 
 		$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
 		$stat = TeacherStudentCount::find(1);

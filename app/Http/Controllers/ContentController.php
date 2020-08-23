@@ -161,6 +161,14 @@ class ContentController extends Controller
 
                 $info = Toolkit::where('slug', '=', $request->slug)->first();
 
+                $userId = Auth::check() ? Auth::user()->id : 0;
+                $isOrdered = Order::where('status', 'paid')
+                    ->where('product_type', 'toolkit')
+                    ->where('user_id', $userId)
+                    ->where('product_id', $info->id)->first();
+
+                $info->isBought = $isOrdered ? 1 : 0;
+
                 if ($info == null) {
                     return abort(404);
                 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\Question;
 use App\Subject;
 use App\ToolkitQuestion;
@@ -42,7 +43,7 @@ class ToolkitController extends Controller
                     ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
                     ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
-                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
                     ->where('toolkits.subject_id', '=', $subject->id)
                     ->where('toolkits.type', '=', 'Student')
@@ -54,7 +55,7 @@ class ToolkitController extends Controller
                     ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
                     ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
-                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
                     ->where('toolkits.subject_id', '=', $subject->id)
                     ->where('toolkits.type', '=', 'Teacher')
@@ -66,7 +67,7 @@ class ToolkitController extends Controller
                     ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
                     ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
-                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
                     ->where('toolkits.subject_id', '=', $subject->id)
                     ->groupBy('toolkits.id')
@@ -79,7 +80,7 @@ class ToolkitController extends Controller
                     ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
                     ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
-                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
                     ->where('toolkits.type', '=', 'Student')
                     ->groupBy('toolkits.id')
@@ -90,7 +91,7 @@ class ToolkitController extends Controller
                     ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
                     ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
-                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
                     ->where('toolkits.type', '=', 'Teacher')
                     ->groupBy('toolkits.id')
@@ -101,14 +102,21 @@ class ToolkitController extends Controller
                     ->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')
                     ->join('subjects', 'toolkits.subject_id', '=','subjects.id')
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
-                    ->select('users.id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
+                    ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
                     ->groupBy('toolkits.id')
                     ->orderby('toolkits.subject_id','asc')
                     ->paginate(12);
             }
         }
+        foreach($toolkit_info as $toolkit){
+            $isOrdered = Order::where('status', 'paid')
+                ->where('product_type', 'toolkit')
+                ->where('user_id', $userId)
+                ->where('product_id', $toolkit->toolkit_id)->count();
 
+            $toolkit->isBought = $isOrdered ? 1 : 0;
+        }
 
 	    return view ('toolkits',compact('toolkit_info', 'subjects'));
     }

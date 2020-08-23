@@ -99,8 +99,24 @@
                                 <i class="far fa-star"></i> @endif @endfor
                         </div>
                     </div>
-                    <div class="card-footer" style="background: #51b964;">
-                        <h5 class="text-white text-center">Free</h5>
+                    <div class="card-footer" style="background:
+                    @if($toolkit->isBought == 1)
+                        #98b59d;
+                    @else
+                        #51b964;
+                    @endif
+                        ">
+                        <h5 class="text-white text-center">
+                            @if($toolkit->isBought == 1)
+                                Owned
+                            @else
+                                @if($toolkit->price == 0)
+                                    Free
+                                @else
+                                    {{ round($toolkit->price, 2)}} BDT
+                                @endif
+                            @endif
+                        </h5>
                     </div>
                 </div>
             </a>
@@ -152,12 +168,23 @@
                                     <i class="far fa-star"></i>
                             </div>
                         </div>
-                        <div class="card-footer" style="background: #51b964;">
+
+                        <div class="card-footer" style="background:
+                        @if($resource->isBought == 1)
+                            #98b59d;
+                        @else
+                            #51b964;
+                        @endif
+                            ">
                             <h5 class="text-white text-center">
-                                @if($resource->price == 0)
-                                    Free
+                                @if($resource->isBought == 1)
+                                    Owned
                                 @else
-                                    {{ round($resource->price, 2)}} BDT
+                                    @if($resource->price == 0)
+                                        Free
+                                    @else
+                                        {{ round($resource->price, 2)}} BDT
+                                    @endif
                                 @endif
                             </h5>
                         </div>

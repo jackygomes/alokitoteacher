@@ -280,15 +280,25 @@
                               @endfor
                               </div>
                           </div>
-                          <div class="card-footer" style="background: #51b964;">
-                            <h5 class="text-white text-center">
-                                @if($toolkit->price == 0)
-                                    Free
-                                @else
-                                    {{ round($toolkit->price, 2)}} BDT
-                                @endif
-                            </h5>
-                          </div>
+                            <div class="card-footer" style="background:
+                            @if($toolkit->isBought == 1)
+                                #98b59d;
+                            @else
+                                #51b964;
+                            @endif
+                                ">
+                                <h5 class="text-white text-center">
+                                    @if($toolkit->isBought == 1)
+                                        Owned
+                                    @else
+                                        @if($toolkit->price == 0)
+                                            Free
+                                        @else
+                                            {{ round($toolkit->price, 2)}} BDT
+                                        @endif
+                                    @endif
+                                </h5>
+                            </div>
 
 
                         </div>

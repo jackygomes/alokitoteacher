@@ -17,7 +17,11 @@
 
       </div>
       <div class="col-md-4 background-yellow text-center p-5">
-
+      @if($message = Session::get('success'))
+          <div class="alert alert-success">
+              {{$message}}
+          </div>
+      @endif
         <div style="width: 150px; height: 150px;" class="mx-auto">
         @if($creator->image == null)
           <i class="fas fa-user-circle fa-10x text-white"></i>
@@ -94,41 +98,58 @@
                         <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
                     </form>
                   @else
-                    <form action="{{route('purchase.course', $info->id)}}" onclick="return confirm('Are you sure to purchase this course? if yes then click ok.')" method="post">
+                    <form action="{{route('purchase.product', $info->id)}}" onclick="return confirm('Are you sure to purchase this course? if yes then click ok.')" method="post">
                         @csrf
+                        <input type="hidden" name="type" value="course">
                         <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
                     </form>
                   @endif
             @else
-                <form action="{{route('purchase.course', $info->id)}}" method="post">
+                <form action="{{route('purchase.product', $info->id)}}" method="post">
                     @csrf
+                    <input type="hidden" name="type" value="course">
                     <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
                 </form>
             @endif
           @elseif(Request::segment(2) == 't')
-              @if($trackHistory == null)
-                  <form method="POST" action="{{ url('enroll_into_course') }}">
-                      {{ csrf_field() }}
-                      <input type="hidden" name="slug" value="{{ Request::segment(3) }}">
-                      <input type="hidden" name="course_toolkit" value="{{ Request::segment(2) }}">
+              @if($info->isBought == 1 && Auth::check())
+                  @if($trackHistory == null)
+                      <form method="POST" action="{{ url('enroll_into_course') }}">
+                          {{ csrf_field() }}
+                          <input type="hidden" name="slug" value="{{ Request::segment(3) }}">
+                          <input type="hidden" name="course_toolkit" value="{{ Request::segment(2) }}">
 
-                      <button type="submit" class="mt-4 btn btn-success btn-lg">Enroll</button>
+                          <button type="submit" class="mt-4 btn btn-success btn-lg">Enroll</button>
 
-                  </form>
+                      </form>
+                  @else
+                      <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
+                          @if(Request::segment(2) == 't')
+                              View Toolkit
+                          @endif
+                      </a>
+                      </form>
+                  @endif
+              @elseif(Auth::check())
+                  @if($info->price > Auth::user()->balance)
+                      <form onclick="return confirm('Insufficiant Balance. Deposit your balance first.')">
+                          @csrf
+                          <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                      </form>
+                  @else
+                      <form action="{{route('purchase.product', $info->id)}}" onclick="return confirm('Are you sure to purchase this toolkit? if yes then click ok.')" method="post">
+                          @csrf
+                          <input type="hidden" name="type" value="toolkit">
+                          <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                      </form>
+                  @endif
               @else
-                  <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
-                      @if(Request::segment(2) == 't')
-                          View Toolkit
-                      @endif
-                  </a>
+                  <form action="{{route('purchase.product', $info->id)}}" method="post">
+                      @csrf
+                      <input type="hidden" name="type" value="toolkit">
+                      <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
                   </form>
               @endif
-{{--          @elseif(Request::segment(2) == 'r')--}}
-{{--              <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">--}}
-{{--                  @if(Request::segment(2) == 'r')--}}
-{{--                      View Resource--}}
-{{--                  @endif--}}
-{{--              </a>--}}
           @endif
 
         @if(Request::segment(2) == 't')

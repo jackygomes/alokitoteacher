@@ -71,8 +71,9 @@
                             <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
                         </form>
                     @else
-                        <form action="{{route('purchase.resource', $info->id)}}" onclick="return confirm('Are you sure to purchase this resource? if yes then click ok.')" method="post">
+                        <form action="{{route('purchase.product', $info->id)}}" onclick="return confirm('Are you sure to purchase this resource? if yes then click ok.')" method="post">
                             @csrf
+                            <input type="hidden" name="type" value="resource">
                             <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
                         </form>
                     @endif

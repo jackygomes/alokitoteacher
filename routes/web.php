@@ -151,8 +151,7 @@ Auth::routes();
 
 // Purchase course/toolkit/resource
 Route::group(['prefix' => 'purchase'], function() {
-    Route::post('course/{id}', 'PurchaseController@course')->name('purchase.course');
-    Route::post('resource/{id}', 'PurchaseController@resource')->name('purchase.resource');
+    Route::post('course/{id}', 'PurchaseController@purchaseCourseToolkitResource')->name('purchase.product');
 });
 
 // Deposit money
