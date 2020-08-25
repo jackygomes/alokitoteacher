@@ -12,6 +12,7 @@ public/storage
 public/image/thumbnail
 public/images/thumbnail
 public/images/profile_picture
+public/documents
 public/hot
 storage/*.key
 .env

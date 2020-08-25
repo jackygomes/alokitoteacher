@@ -293,7 +293,8 @@ class ResourceController extends Controller
         $fileName = '';
         if($file) {
             $fileNameOriginal = explode('.', $file->getClientOriginalName());
-            $fileName = $fileNameOriginal[0].'-'.time().'.'.$file->getClientOriginalExtension();
+            $newNameOriginal = Str::slug($fileNameOriginal[0],'-');
+            $fileName = $newNameOriginal.'-'.time().'.'.$file->getClientOriginalExtension();
             $file->move(public_path("documents"), $fileName);
         }
 
@@ -332,7 +333,8 @@ class ResourceController extends Controller
             if($file) {
                 $fileName = '';
                 $fileNameOriginal = explode('.', $file->getClientOriginalName());
-                $fileName = $fileNameOriginal[0].'-'.time().'.'.$file->getClientOriginalExtension();
+                $newNameOriginal = Str::slug($fileNameOriginal[0],'-');
+                $fileName = $newNameOriginal.'-'.time().'.'.$file->getClientOriginalExtension();
                 $file->move(public_path("documents"), $fileName);
 
                 $document->file = $fileName ? $fileName : null;
