@@ -302,6 +302,8 @@
                                 "<div class='form-group'><label>Title</label><input name='title' class='form-control' value='"+result.doc_title+"'/></div>" +
                                 "<div class='form-group'><label>Description</label><textarea name='description' class='form-control' rows=\"3\">"+result.description+"</textarea></div>" +
                                 "<div class='form-group'><label>File</label><p style=\"margin: 5px 0 0; font-size: 14px; color: #721c24\">"+result.file+"</p></div>" +
+                                "<div class='form-group'><label>Download and check file before approve</label></div>" +
+                                "<a href=/documents/"+result.file+" class='btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white' download>Download</a></div>"+
                                 "<div class='form-group'><label>Select New File To Replace Old File</label><input type='file' name='doc_file' class='form-control-file' id='doc_file'></div>" +
                                 "<input type='hidden' name='resource_id' class='form-control' value='"+result.resource_id+"'/>"+
                                 "<input type='hidden' name='id' class='form-control' value='"+result.id+"'/>"+
