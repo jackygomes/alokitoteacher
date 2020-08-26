@@ -52,12 +52,12 @@ class CertificateController extends Controller
             $courseScore = round((($achievement->gained_points / ($achievement->total_questions * 2)) * 100), 1);
 
             $course = Course::find($courseId);
-            $courseItem = Order::where('user_id', $userId)->where('course_toolkit_id', $courseId)->first();
+            $courseItem = Order::where('user_id', $userId)->where('product_id', $courseId)->first();
             if (!$courseItem) {
                 $orderData = [
                     'user_id' => Auth::id(),
-                    'course_or_toolkit' => 'course',
-                    'course_toolkit_id' => $course->id,
+                    'product_type' => 'course',
+                    'product_id' => $course->id,
                     'amount' => $course->price,
                     'status' => 'paid',
                     'transaction_id' => "ALOKITO_" . uniqid(),
