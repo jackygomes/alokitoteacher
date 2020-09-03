@@ -627,14 +627,18 @@ class ContentController extends Controller
             ->where('toolkits.user_id','=', $id)
             ->get();
 
-
-		$teacherRating = round($toolkit->sum('rating') / $toolkit->count(), 2);
-
         $user = User::find($id);
+        $teacherRating = $user->rating;
+
+        if($toolkit->count() > 0){
+            $teacherRating = round($toolkit->sum('rating') / $toolkit->count(), 2);
+
+        }
+
         $user->rating = $teacherRating;
         $user->save();
 
-        LeaderBoard::updateLeaderboardOnRatingChange($id, $teacherRating);
+//        LeaderBoard::updateLeaderboardOnRatingChange($id, $teacherRating);
 
         return 0;
     }
