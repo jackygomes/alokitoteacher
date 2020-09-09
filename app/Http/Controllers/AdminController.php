@@ -7,6 +7,7 @@ use App\CourseQuestion;
 use App\CourseQuiz;
 use App\CourseQuizOption;
 use App\CourseVideo;
+use App\LeaderBoard;
 use App\Resource;
 use App\TeacherStudentCount;
 use App\Toolkit;
@@ -80,6 +81,19 @@ class AdminController extends Controller
         $teacher_student_count = TeacherStudentCount::find(1);
 
         return view('admin.basic_info', compact('teacher_student_count','user_info'));
+    }
+
+    public function leaderBoard() {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+        $leaderboardUsers = LeaderBoard::with('user')->orderBy('position', 'asc')->limit(10)->get();
+
+        return view('admin.leader_board', compact('leaderboardUsers', 'user_info'));
     }
 
     public function totalCountUpdate(Request $request, $id) {

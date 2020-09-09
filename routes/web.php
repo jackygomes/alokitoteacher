@@ -55,6 +55,7 @@ Route::post ('admin/course/quiz/update/{id}', 'CourseController@course_quiz_upda
 
 
 Route::get ('admin/basic-info', 'AdminController@basicInfo')->name('admin.basic.info');
+Route::get ('admin/leader-board', 'AdminController@leaderBoard')->name('admin.leader.board');
 Route::post ('admin/total-count-update/{id}', 'AdminController@totalCountUpdate')->name('admin.total.count.update');
 
 

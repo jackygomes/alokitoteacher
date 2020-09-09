@@ -43,18 +43,18 @@ class LeaderBoardUpdateCommand extends Command
     public function handle()
     {
         //script for toolkit point percentage just for one time
-//        $toolkitHistories = ToolkitHistory::get();
-//        foreach($toolkitHistories as $toolkitHistory){
-//            $quiz = ToolkitQuiz::find($toolkitHistory->quiz_id);
-//            if($quiz->question_count > 0){
-//                $totalPoint = 2 * $quiz->question_count;
-//                $percentage = ($toolkitHistory->points * 100 ) / $totalPoint;
-//
-//                $history = ToolkitHistory::find($toolkitHistory->id);
-//                $history->point_percentage = $percentage;
-//                $history->save();
-//            }
-//        }
+        $toolkitHistories = ToolkitHistory::get();
+        foreach($toolkitHistories as $toolkitHistory){
+            $quiz = ToolkitQuiz::find($toolkitHistory->quiz_id);
+            if($quiz->question_count > 0){
+                $totalPoint = 2 * $quiz->question_count;
+                $percentage = ($toolkitHistory->points * 100 ) / $totalPoint;
+
+                $history = ToolkitHistory::find($toolkitHistory->id);
+                $history->point_percentage = $percentage;
+                $history->save();
+            }
+        }
         // script end
 
         //Rating calculation...
@@ -104,7 +104,7 @@ class LeaderBoardUpdateCommand extends Command
             //toolkit percentage ends
 
             //Final percentage calculation
-            $totalAveragePoints = ($teacherRating + $coursePercentage + $toolkitPercentage) / 3;
+            $totalAveragePoints = (($teacherRating + $coursePercentage + $toolkitPercentage) * 3 ) / 10;
 
             $leaderboard = LeaderBoard::where('user_id', $user->id)->first();
             if($leaderboard) {
@@ -114,8 +114,8 @@ class LeaderBoardUpdateCommand extends Command
                 $leaderboardData = [
                     'user_id'   => $user->id,
                     'score'     => $totalAveragePoints,
-                    'position'  => 99999,
-                    'streak'    => 0,
+                    'position'  => 9999,
+                    'streak'    => 1,
 
                 ];
                 LeaderBoard::create($leaderboardData);
@@ -123,11 +123,22 @@ class LeaderBoardUpdateCommand extends Command
         }
         $leaderboardUsers = LeaderBoard::orderBy('score', 'desc')->get();
         $i = 0;
+        $factor = 1;
         foreach($leaderboardUsers as $leaderboardUser){
             $i++;
+            if($i==1) {
+                $factor = 10 / $leaderboardUser->score;
+            }
+            if($leaderboardUser->position < 11) $leaderboardUser->streak +=1;
+            else $leaderboardUser->streak = 0;
             $leaderboardUser->position = $i;
+            if($i<11) $leaderboardUser->streak_point += (11- $i) * .1;
+
+            $leaderboardUser->score += $leaderboardUser->streak_point * $factor;
             $leaderboardUser->save();
         }
+
+
 
 
         //Only rating in leaderboards table..
