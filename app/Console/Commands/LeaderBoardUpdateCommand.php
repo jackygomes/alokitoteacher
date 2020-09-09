@@ -115,7 +115,7 @@ class LeaderBoardUpdateCommand extends Command
                     'user_id'   => $user->id,
                     'score'     => $totalAveragePoints,
                     'position'  => 9999,
-                    'streak'    => 1,
+                    'streak'    => 0,
 
                 ];
                 LeaderBoard::create($leaderboardData);
