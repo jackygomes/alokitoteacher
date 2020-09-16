@@ -172,10 +172,12 @@
 
 	            </i>
 	            <h5 style="display: inline-block">{{ $achievement->title }} - Average Score ({{$percentage}}%)
-                    @if($percentage >= 50)
-                        <a href="{{route('certificate', $achievement->id)}}" class="btn background-yellow text-right ml-2 px-4 py-2 shadow font-weight-bold text-white">
-                            Get Certificate
-                        </a>
+                    @if($user_info->id == Auth::id())
+                        @if($percentage >= 50)
+                            <a href="{{route('certificate', $achievement->id)}}" class="btn background-yellow text-right ml-2 px-4 py-2 shadow font-weight-bold text-white">
+                                Get Certificate
+                            </a>
+                        @endif
                     @endif
                 </h5>
             </div>

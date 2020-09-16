@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\LeaderBoard;
 use App\Order;
 use App\TeacherStudentCount;
 use Illuminate\Http\Request;
@@ -58,8 +59,10 @@ class HomeController extends Controller
 		$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
 		$stat = TeacherStudentCount::find(1);
 
+        $leaderBoard = LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
 
-	    return view ('home',compact('course_info','toolkit_info', 'users','stat'));
+//        return $leaderBoard;
+	    return view ('home',compact('course_info','toolkit_info', 'users','stat','leaderBoard'));
 	}
 
 	function email_subscribe(Request $request){

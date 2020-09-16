@@ -375,118 +375,139 @@
 <!--end of Toolkits Area-->
 
 <!--Leaderboard Area-->
-<div class="container-fluid">
+<div class="container-fluid background-yellow pb-5">
   <div class="row">
     <div class="col-md-12">
       <div class="teachers-toolkits">
-        <h2 class="font-weight-bold text-center mt-5 mb-5 text-yellow">Leaderboard</h2>
+        <h2 class="font-weight-bold text-center mt-5 mb-5 text-white">Leaderboard</h2>
 
+          <div class="d-flex justify-content-center">
+              <div class="col-md-4">
+                  @foreach ($leaderBoard as $key =>$leader)
+                      <a class="card p-2 mb-2 border-yellow" href="{{ url('t')}}/{{ $leader['user']->username }}">
+                          <div class="row">
+                              <div class="col-4 my-auto">
+                                  @if($leader['user']->image == null)
+                                      <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                  @else
+                                      <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/{{ $leader['user']->image }}">
+                                  @endif
+                              </div>
+                              <div class="col-6 text-yellow font-weight-bold my-auto" >{{ $leader['user']->name }}</div>
 
-        <section class="carousel slide mt-5 d-none d-md-block" data-ride="carousel" id="leadLargeCarousel">
-          <div class="container-fluid">
-              <div class="row float-right mr-5 mb-3">
-                <div class="col-md-12">
-                  <a class="carousel-control-prev" href="#leadLargeCarousel" data-slide="prev"><i class="mb-5 far fa-caret-square-left fa-3x mr-4 custom-hover2 text-yellow"></i></a>
-                  <a class="carousel-control-next" href="#leadLargeCarousel"  data-slide="next"><i class="mb-5 far fa-caret-square-right fa-3x ml-4 custom-hover2 text-yellow"></i></a>
-                </div>
+                              <div class="col-2 my-auto" style="padding-right: 0px !important; padding-left: 0px !important;">@if($key <= 2) <i class="fas fa-trophy" style="color: @if($key == 0) #d4af37 @elseif($key == 1) #aaa9ad @elseif($key == 2) #cd7f32 @else #fff @endif"></i>@endif</div>
+
+                          </div>
+                      </a>
+                  @endforeach
               </div>
           </div>
 
-          <div class="container-fluid carousel-inner">
-            @foreach($users as $key=> $user)
-              @if(($key+1) % 4 == 1)
-              <div class="row carousel-item {{ $key == 0? 'active' : '' }} ">
-                <div class="card-deck text-center">
-              @endif
-                  <div class="col-md-3">
-                    <a href="{{ url('t') }}/{{$user->username}}">
-                      <div class="card">
-                        <div class="py-3 bg-secondary">
-                        @if($user->image == null)
-                          <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
-                        @else
-                          <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/{{ $user->image }}">
-                        @endif
-                        </div>
-                        <div class="card-body">
+{{--        <section class="carousel slide mt-5 d-none d-md-block" data-ride="carousel" id="leadLargeCarousel">--}}
+{{--          <div class="container-fluid">--}}
+{{--              <div class="row float-right mr-5 mb-3">--}}
+{{--                <div class="col-md-12">--}}
+{{--                  <a class="carousel-control-prev" href="#leadLargeCarousel" data-slide="prev"><i class="mb-5 far fa-caret-square-left fa-3x mr-4 custom-hover2 text-yellow"></i></a>--}}
+{{--                  <a class="carousel-control-next" href="#leadLargeCarousel"  data-slide="next"><i class="mb-5 far fa-caret-square-right fa-3x ml-4 custom-hover2 text-yellow"></i></a>--}}
+{{--                </div>--}}
+{{--              </div>--}}
+{{--          </div>--}}
 
-                          <h4 class="card-title text-yellow  font-weight-bold">
-                            @if($key < 3) <i class="fas fa-trophy" style="color: @if($key == 0) #d4af37 @elseif($key == 1) #aaa9ad @elseif($key == 2) #cd7f32 @else #fff @endif"></i>@endif
-                            {{ $user->name }}
-                          </h4>
+{{--          <div class="container-fluid carousel-inner">--}}
+{{--            @foreach($users as $key=> $user)--}}
+{{--              @if(($key+1) % 4 == 1)--}}
+{{--              <div class="row carousel-item {{ $key == 0? 'active' : '' }} ">--}}
+{{--                <div class="card-deck text-center">--}}
+{{--              @endif--}}
+{{--                  <div class="col-md-3">--}}
+{{--                    <a href="{{ url('t') }}/{{$user->username}}">--}}
+{{--                      <div class="card">--}}
+{{--                        <div class="py-3 bg-secondary">--}}
+{{--                        @if($user->image == null)--}}
+{{--                          <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">--}}
+{{--                        @else--}}
+{{--                          <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/{{ $user->image }}">--}}
+{{--                        @endif--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body">--}}
 
-
-                          <div class="text-dark">
-                          @for($i = 1; $i <= 5; $i++)
-                            @if($user->rating - $i >= 0)
-                              <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                            @else
-                              <i class="far fa-star"></i>
-                            @endif
-                          @endfor
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-
-                </div>
-              @if(($key+1) % 4 == 0)
-                </div>
-              </div>
-              @endif
-            @endforeach
-            </div>
-          </section>
+{{--                          <h4 class="card-title text-yellow  font-weight-bold">--}}
+{{--                            @if($key < 3) <i class="fas fa-trophy" style="color: @if($key == 0) #d4af37 @elseif($key == 1) #aaa9ad @elseif($key == 2) #cd7f32 @else #fff @endif"></i>@endif--}}
+{{--                            {{ $user->name }}--}}
+{{--                          </h4>--}}
 
 
-          <section class="carousel slide mt-5 d-sm-none" data-ride="carousel" id="leadSmallCarousel">
-            <div class="container-fluid">
-                <div class="row float-right mr-5 mb-3">
-                  <div class="col-md-12">
-                    <a class="carousel-control-prev" href="#leadSmallCarousel" data-slide="prev"><i class="mb-5 far fa-caret-square-left fa-3x mr-4 custom-hover2 text-yellow"></i></a>
-                    <a class="carousel-control-next" href="#leadSmallCarousel"  data-slide="next"><i class="mb-5 far fa-caret-square-right fa-3x ml-4 custom-hover2 text-yellow"></i></a>
-                  </div>
-                </div>
-            </div>
+{{--                          <div class="text-dark">--}}
+{{--                          @for($i = 1; $i <= 5; $i++)--}}
+{{--                            @if($user->rating - $i >= 0)--}}
+{{--                              <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
+{{--                            @else--}}
+{{--                              <i class="far fa-star"></i>--}}
+{{--                            @endif--}}
+{{--                          @endfor--}}
+{{--                          </div>--}}
+{{--                        </div>--}}
+{{--                      </div>--}}
+{{--                    </a>--}}
 
-            <div class="container-fluid carousel-inner">
-              @foreach($users as $key=> $user)
-                <div class="carousel-item {{ $key == 0? 'active' : '' }} ">
-                  <div class="card-deck text-center">
-                      <a href="{{ url('t') }}/{{$user->username}}">
-                        <div class="card">
-                          <div class="py-3 bg-secondary">
-                          @if($user->image == null)
-                            <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
-                          @else
-                            <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/{{ $user->image }}">
-                          @endif
-                          </div>
-                          <div class="card-body">
-
-                            <h4 class="card-title text-yellow  font-weight-bold">
-                              @if($key < 3) <i class="fas fa-trophy" style="color: @if($key == 0) #d4af37 @elseif($key == 1) #aaa9ad @elseif($key == 2) #cd7f32 @else #fff @endif"></i>@endif
-                              {{ $user->name }}
-                            </h4>
+{{--                </div>--}}
+{{--              @if(($key+1) % 4 == 0)--}}
+{{--                </div>--}}
+{{--              </div>--}}
+{{--              @endif--}}
+{{--            @endforeach--}}
+{{--            </div>--}}
+{{--          </section>--}}
 
 
-                            <div class="text-dark">
-                            @for($i = 1; $i <= 5; $i++)
-                              @if($user->rating - $i >= 0)
-                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                              @else
-                                <i class="far fa-star"></i>
-                              @endif
-                            @endfor
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                  </div>
-                </div>
-              @endforeach
-              </div>
-          </section>
+{{--          <section class="carousel slide mt-5 d-sm-none" data-ride="carousel" id="leadSmallCarousel">--}}
+{{--            <div class="container-fluid">--}}
+{{--                <div class="row float-right mr-5 mb-3">--}}
+{{--                  <div class="col-md-12">--}}
+{{--                    <a class="carousel-control-prev" href="#leadSmallCarousel" data-slide="prev"><i class="mb-5 far fa-caret-square-left fa-3x mr-4 custom-hover2 text-yellow"></i></a>--}}
+{{--                    <a class="carousel-control-next" href="#leadSmallCarousel"  data-slide="next"><i class="mb-5 far fa-caret-square-right fa-3x ml-4 custom-hover2 text-yellow"></i></a>--}}
+{{--                  </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
+{{--            <div class="container-fluid carousel-inner">--}}
+{{--              @foreach($users as $key=> $user)--}}
+{{--                <div class="carousel-item {{ $key == 0? 'active' : '' }} ">--}}
+{{--                  <div class="card-deck text-center">--}}
+{{--                      <a href="{{ url('t') }}/{{$user->username}}">--}}
+{{--                        <div class="card">--}}
+{{--                          <div class="py-3 bg-secondary">--}}
+{{--                          @if($user->image == null)--}}
+{{--                            <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">--}}
+{{--                          @else--}}
+{{--                            <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/{{ $user->image }}">--}}
+{{--                          @endif--}}
+{{--                          </div>--}}
+{{--                          <div class="card-body">--}}
+
+{{--                            <h4 class="card-title text-yellow  font-weight-bold">--}}
+{{--                              @if($key < 3) <i class="fas fa-trophy" style="color: @if($key == 0) #d4af37 @elseif($key == 1) #aaa9ad @elseif($key == 2) #cd7f32 @else #fff @endif"></i>@endif--}}
+{{--                              {{ $user->name }}--}}
+{{--                            </h4>--}}
+
+
+{{--                            <div class="text-dark">--}}
+{{--                            @for($i = 1; $i <= 5; $i++)--}}
+{{--                              @if($user->rating - $i >= 0)--}}
+{{--                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
+{{--                              @else--}}
+{{--                                <i class="far fa-star"></i>--}}
+{{--                              @endif--}}
+{{--                            @endfor--}}
+{{--                            </div>--}}
+{{--                          </div>--}}
+{{--                        </div>--}}
+{{--                      </a>--}}
+{{--                  </div>--}}
+{{--                </div>--}}
+{{--              @endforeach--}}
+{{--              </div>--}}
+{{--          </section>--}}
 
 
 
