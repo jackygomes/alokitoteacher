@@ -475,7 +475,7 @@
                 </div>
             </div> <!-- 2nd col ends here -->
 
-            @include('leaderboard')
+{{--            @include('leaderboard')--}}
 
         </div><!-- row ends here -->
 
