@@ -60,46 +60,48 @@
                     @endif
                 </span></span>
                 <br>
-                @if($info->price == 0)
-                    <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
-                        View Resource
-                    </a>
-                @else
-                    @if($info->isBought == 1 && Auth::check())
-                    <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
-                        View Resource
-                    </a>
-                    @elseif(Auth::check())
-                        @if($info->price > Auth::user()->balance)
-                            <form onclick="return confirm('Insufficiant Balance. Deposit your balance first.')">
-                                @csrf
-                                <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
-                            </form>
-                        @else
-                            <form action="{{route('purchase.product', $info->id)}}" onclick="return confirm('Are you sure to purchase this resource? if yes then click ok.')" method="post">
-                                @csrf
-                                <input type="hidden" name="type" value="resource">
-                                <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
-                            </form>
+                @if(Auth::user()->identifier != 2)
+                    @if($info->price == 0)
+                        <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
+                            View Resource
+                        </a>
+                    @else
+                        @if($info->isBought == 1 && Auth::check())
+                        <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
+                            View Resource
+                        </a>
+                        @elseif(Auth::check())
+                            @if($info->price > Auth::user()->balance)
+                                <form onclick="return confirm('Insufficiant Balance. Deposit your balance first.')">
+                                    @csrf
+                                    <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                                </form>
+                            @else
+                                <form action="{{route('purchase.product', $info->id)}}" onclick="return confirm('Are you sure to purchase this resource? if yes then click ok.')" method="post">
+                                    @csrf
+                                    <input type="hidden" name="type" value="resource">
+                                    <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                                </form>
+                            @endif
                         @endif
                     @endif
                 @endif
 
             </div>
 
-            @if($info->title != null)
+{{--            @if($info->title != null)--}}
 
-                <div class="col-md-12 text-center mt-5">
-                    <h3 class="font-weight-bold"> Certification</h3>
-                </div>
+{{--                <div class="col-md-12 text-center mt-5">--}}
+{{--                    <h3 class="font-weight-bold"> Certification</h3>--}}
+{{--                </div>--}}
 
-                <div class="col-md-12 text-center mb-5 border-yellow-image" style="position: relative;">
-                    <img  class="img-fluid my-3" src="{{ url('images/certificate.png') }}">
-                    <h3 class="font-weight-bold" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">{{ $info->title }}</h3>
-                    <h3 class="font-weight-bold" style="position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%);">{{ Auth::user()->name }}</h3>
-                </div>
+{{--                <div class="col-md-12 text-center mb-5 border-yellow-image" style="position: relative;">--}}
+{{--                    <img  class="img-fluid my-3" src="{{ url('images/certificate.png') }}">--}}
+{{--                    <h3 class="font-weight-bold" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">{{ $info->title }}</h3>--}}
+{{--                    <h3 class="font-weight-bold" style="position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%);">{{ Auth::user()->name }}</h3>--}}
+{{--                </div>--}}
 
-            @endif
+{{--            @endif--}}
 
 
 

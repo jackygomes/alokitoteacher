@@ -40,7 +40,7 @@ class ResourceController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -62,7 +62,7 @@ class ResourceController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -104,6 +104,8 @@ class ResourceController extends Controller
 
         if($user_info->identifier == 1){
             return redirect()->route('teacher.dashboard')->with('success', 'Resource created successfully');
+        }elseif($user_info->identifier == 2) {
+            return redirect()->route('school.dashboard')->with('success', 'Resource created successfully');
         }else {
             return redirect()->route('dashboard')->with('success', 'Resource created successfully');
         }
@@ -131,7 +133,7 @@ class ResourceController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -167,7 +169,7 @@ class ResourceController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -219,7 +221,7 @@ class ResourceController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -276,7 +278,7 @@ class ResourceController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }

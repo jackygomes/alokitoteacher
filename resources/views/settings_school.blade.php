@@ -6,7 +6,7 @@
 
     <div class="row" style="min-height: 100vh">
       <div class="col-md-2 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
-              
+
         <div style="width: 150px; height: 150px;" class="mx-auto">
         @if(Auth::user()->image == null)
           <i class="fas fa-user-circle fa-10x text-white"></i>
@@ -14,8 +14,8 @@
           <img class="img-fluid rounded-circle h-100 w-100" src="{{ url('images/profile_picture') }}/{{ Auth::user()->image }}">
         @endif
         </div>
-         
-     
+
+
         <form method="post" id="pro_pic_upload_form" action="{{ url('upload_picture') }}" enctype="multipart/form-data">
           {{csrf_field()}}
           <!-- <div class="form-group mt-3">
@@ -24,9 +24,9 @@
           </div> -->
           <input type="file" name="image" id="profile_picture" class="d-none">
           <button type="button" id="pro_pic_choose" class="btn bg-white mt-2 mb-3">Upload</button>
-        </form> 
+        </form>
 
-       
+
 
         <h3 class="mt-3 font-weight-bold text-white">{{Auth::user()->name}}</h3>
 
@@ -55,7 +55,7 @@
 
           </div>
 
-       
+
 
           <div class="row text-left p-2 mt-3">
             <div class="col-2">
@@ -70,21 +70,21 @@
             <div class="col-10">
               {{ Auth::user()->phone_number }}
             </div>
-            
+
           </div>
 
 
-       
+
 
          <h4 class="mt-3">Current Balance </h4>
          <p>৳{{ round(Auth::user()->balance, 2) }}</p>
          <div class="">
-            <button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>
+             <a href="{{route('deposit.form')}}" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</a>
             <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
          </div>
 
 
-         
+
      </div>
 
     <div class="col-md-8 pt-5"  style="background-color: #f3f2f0;">
@@ -121,7 +121,7 @@
               <div class="col-md-6">
                   <input id="phone_number" type="tel" class="form-control border-yellow @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ Auth::user()->phone_number }}" placeholder="Phone Ex: 01XXXXXXXXX" pattern="[0-9]{11}" required autocomplete="phone_number" autofocus>
 
-                  
+
 
                   @error('phone_number')
                       <span class="invalid-feedback" role="alert">
@@ -203,7 +203,7 @@
               </div>
           </div>
 
-         
+
 
           <div class="form-group row">
               <label for="no_of_student" class="col-md-4 col-form-label text-md-right">{{ __('Number of Students') }}</label>
@@ -344,10 +344,10 @@
 
           @endif
 
-         
 
 
-          
+
+
 
           <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4">
@@ -422,12 +422,12 @@
 
 
 
-        
+
       </div>
 
 
 
-      
+
 
 
       </div> <!-- 2nd col ends here -->
@@ -442,7 +442,7 @@
    </div><!-- row ends here -->
 
 
-  
+
 
 </div>
 
@@ -459,5 +459,5 @@
 
 @endpush
 
-  
+
 @endsection

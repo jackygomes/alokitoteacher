@@ -19,7 +19,7 @@ class AllJobsController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
    	function index(Request $request){
    		if(Auth::user()->identifier == 2){
 
@@ -112,10 +112,10 @@ class AllJobsController extends Controller
 		if(strlen(trim($request->school)) != 0){
 			$job_info = $job_info->where('users.id', '=', $request->school);
 		}
-		
+
 		$job_info = $job_info->orderBy('jobs.created_at', 'asc')->paginate(10);
 
-		
+
 
 	    return view ('all-jobs-search',compact('job_info'));
 
@@ -139,7 +139,7 @@ class AllJobsController extends Controller
 			$saved_job->job_id = $request->job_id;
 			$saved_job->save();
 		}
-		
+
 		return 'success';
 	}
 
@@ -219,7 +219,7 @@ class AllJobsController extends Controller
 
 		if($job->user_id == Auth::id()){
 
-			Mail::send('emails.job_confirmation', ['job' => $job, 'applicant' => $applicant], function ($message)use($applicant, $job) 
+			Mail::send('emails.job_confirmation', ['job' => $job, 'applicant' => $applicant], function ($message)use($applicant, $job)
 		        {
 
 		            $message->to($applicant->email)->subject('Interview for the position '.$job->job_title);

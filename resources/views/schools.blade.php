@@ -14,7 +14,7 @@
 	          <img class="img-fluid rounded-circle h-100 w-100" src="{{ url('images/profile_picture') }}/{{ $user_info->image }}">
 	        @endif
 	        </div>
-		     
+
 		    @if($user_info->id == Auth::id())
 	        <form method="post" id="pro_pic_upload_form" action="{{ url('upload_picture') }}" enctype="multipart/form-data">
 	          {{csrf_field()}}
@@ -24,7 +24,7 @@
 	          </div> -->
 	          <input type="file" name="image" id="profile_picture" class="d-none">
 	          <button type="button" id="pro_pic_choose" class="btn bg-white mt-2 mb-3">Upload</button>
-	        </form> 
+	        </form>
 	        @endif
 
 			<h3 class="mt-3 font-weight-bold text-white">{{$user_info->name}}</h3>
@@ -68,15 +68,15 @@
 				<div class="col-10">
 					{{$user_info->phone_number}}
 				</div>
-				
+
 			</div>
 
 			<h4>Current Balance </h4>
 			<p>৳{{ round($user_info->balance, 2) }}</p>
-			<button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>
+                <a href="{{route('deposit.form')}}" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</a>
 			<button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
-			@endif 
-			
+			@endif
+
 		</div>
 
 
@@ -88,13 +88,13 @@
       			@if($user_info->id == Auth::id())
 					<a href="{{ url('settings') }}"><i class="ml-2 fas fa-pen"></i> Edit</a>
 				@endif
-				
+
 
       		</div>
       	</div>
       </div>
 
-				
+
       <div class="container-fluid">
       	<div class="row">
       		<div class="card p-3 col-sm-12">
@@ -171,13 +171,13 @@
 
 								        		<span class="font-weight-bold">Vacancy:</span><span> {{ $job->vacancy }}</span><br>
 
-								        		<span class="font-weight-bold" >Description:</span> 
-								        		
+								        		<span class="font-weight-bold" >Description:</span>
+
 								        		{{ str_limit(strip_tags($job->description), 150) }}
-									            
+
 									              <a href="{{ url('job_detail') }}/{{ $job->id }}" class="text-yellow">Read More</a>
-									            
-									            
+
+
 						        			</div>
 
 						        			<div class="col-md-3">
@@ -187,7 +187,7 @@
 						        				<small class="text-danger">
 						        				Deadline: {{ date("jS F, Y", strtotime($job->deadline)) }}</small>
 						        				<br>
-						        				
+
 						        				@if($user_info->id == Auth::id())
 						        				<a class="btn btn-success text-white btn-sm">Edit</a>
 						        				<a href="{{ url('remove_job') }}/{{ $job->id }}" class="btn btn-danger btn-sm">Remove</a>
@@ -197,11 +197,11 @@
 						        				@endif
 						        			</div>
 					        			</div>
-					        		</div> 
+					        		</div>
 					        	 </td>
 					      	</tr>
 
-						
+
 						<!-- 	<tr>
 
 								<td class="w-25 text-center">
@@ -212,14 +212,14 @@
 							        @endif
 									<p class="mt-3">{{$user_info->name}}</p>
 								</td>
-								 
+
 								<td class="w-55">
 									<p><span class="font-weight-bold">Job Position:</span> {{$job->job_title}}</p>
 									<p><span class="font-weight-bold">Salary Range:</span> {{$job->expected_salary_range}}</p>
 									<p><span class="font-weight-bold">Job Description:</span> {{ str_limit(strip_tags($job->description), 150) }}
-										           
+
 										              <a href="{{ url('job_detail') }}/{{ $job->id }}" class="text-yellow">Read More</a>
-										           
+
 										        </p>
 								</td>
 
@@ -231,28 +231,28 @@
 										<i class="far fa-circle fa-clickable"></i>
 										<br>
 										<i class="fas fa-times-circle fa-clickable text-danger"></i>
-									</div> 	
+									</div>
 
 								</td>
 								@endif
-						
+
 
 							</tr> -->
 							@endforeach
-						
+
 
 						</tbody>
-					</table> 
+					</table>
 				</div>
 			</div>
-		</div>	
+		</div>
 
-				
-		<!-- this section is for card which is the current teacher at the school , not needed now , according to Niaz bhaiya			
+
+		<!-- this section is for card which is the current teacher at the school , not needed now , according to Niaz bhaiya
 		<div class="container-fluid">
 		   <div class="row">
 			<div class="col-sm-2">
-						
+
 						<div class="card-deck mb-5" style="width: 700px;">
 					<div class="card">
 						<img src="{{asset('images\logo\dummy.jpg')}}" class="card-img-top" alt="...">
@@ -294,17 +294,17 @@
 						</div>
 					</div>
 				</div>
-					
+
 				</div>
 			</div>
 		</div> -->
 
-			
-				
-			
+
+
+
  </div> <!-- 2nd col ends here -->
 
-		@include('leaderboard')
+{{--		@include('leaderboard')--}}
 
 
     </div><!-- row ends here -->
@@ -326,24 +326,24 @@
       	<div class="modal-body" id="modalBody">
 
       		<form action="{{ route('add_job') }}" method="POST" class="mb-5">
-                
-              
+
+
                 <div class="form-row mb-4">
                   <div class="col-md-12">
                   	<label>Job Title <span class="text-danger font-weight-bold"> *</span>:</label>
                      <input id="title" type="text" class="form-control border-yellow" name="job_title" required placeholder="Job Title">
                   </div>
-                  
+
                 </div>
-            
-          	
+
+
             	<div class="form-row mt-1">
 					<div class="col-md-12 mb-5">
 						<label>Location <span class="text-danger font-weight-bold"> *</span>:</label>
 						<input id="location" type="text" class="form-control border-yellow" name="location" required placeholder="Job Location">
 
 					</div>
-              
+
             	</div>
 
             	<div class="form-row mt-1">
@@ -352,7 +352,7 @@
 						<input id="salary" type="text" class="form-control border-yellow" name="expected_salary_range" required placeholder="Salary Range (10,000 - 15,000/ Negotiable)">
 
 					</div>
-              
+
             	</div>
 
             	<div class="form-row mt-1">
@@ -361,7 +361,7 @@
 						<textarea class="form-control border-yellow" rows="5" name="minimum_requirement" placeholder="Minimum Requirements"></textarea>
 
 					</div>
-              
+
             	</div>
 
             	<div class="form-row mt-1">
@@ -370,7 +370,7 @@
 						<textarea class="form-control border-yellow" rows="5" name="educational_requirement" placeholder="Additional Requirements"></textarea>
 
 					</div>
-              
+
             	</div>
 
             	<div class="form-row mt-1">
@@ -379,7 +379,7 @@
 						<textarea class="form-control border-yellow" rows="5" name="description" placeholder="Job Description"></textarea>
 
 					</div>
-              
+
             	</div>
 
             	<div class="form-row mt-1">
@@ -393,9 +393,9 @@
 						<input type="text" class="form-control border-yellow" name="age_limit" required placeholder="Age Limit (25-35)years">
 
 					</div>
-              
+
             	</div>
-            	
+
             	<div class="form-row mt-1">
 					<div class="col-md-6 mb-5">
 						<label>Deadline <span class="text-danger font-weight-bold"> *</span>:</label>
@@ -412,22 +412,23 @@
 			            </select>
 
 					</div>
-              
+
             	</div>
 
 
-              
-				
 
-              	<button type="button" class="btn background-yellow float-right">Add Job</button>  	
+
+
+              	<button type="button" class="btn background-yellow float-right">Add Job</button>
 
             </form>
 
-  		
-		
+
+
 
       </div>
-    
+{{--        // job container ends here--}}
+
     </div>
   </div>
 </div>
@@ -445,5 +446,5 @@
     </script>
 
 @endpush
-  
+
 @endsection

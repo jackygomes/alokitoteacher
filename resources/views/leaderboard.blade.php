@@ -13,7 +13,7 @@
 		    </div>
 		    <div class="col-6 text-yellow font-weight-bold my-auto" >{{ $leader['user']->name }}</div>
 
-		    <div class="col-2 my-auto" style="padding-right: 0px !important; padding-left: 0px !important;">@if($key <= 2) <i class="fas fa-trophy" style="color: @if($key == 0) #d4af37 @elseif($key == 1) #aaa9ad @elseif($key == 2) #cd7f32 @else #fff @endif"></i>@endif</div>
+{{--		    <div class="col-2 my-auto" style="padding-right: 0px !important; padding-left: 0px !important;">@if($key <= 2) <i class="fas fa-trophy" style="color: @if($key == 0) #d4af37 @elseif($key == 1) #aaa9ad @elseif($key == 2) #cd7f32 @else #fff @endif"></i>@endif</div>--}}
 
 		</div>
 	</a>

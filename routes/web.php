@@ -24,6 +24,8 @@ Route::post ('email_subscribe', 'HomeController@email_subscribe');
 
 Route::get ('t/dashboard', 'TeacherController@dashboard')->name('teacher.dashboard');
 
+Route::get ('s/dashboard', 'SchoolController@dashboard')->name('school.dashboard');
+
 
 Route::get ('t/{username}', 'TeacherController@index');
 Route::post ('add_work_experience', 'TeacherController@add_work_experience');

@@ -126,7 +126,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -143,7 +143,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -183,6 +183,8 @@ class ToolkitController extends Controller
 
         if($user_info->identifier == 1){
             return redirect()->route('teacher.dashboard')->with('success', 'Toolkit created successfully');
+        }elseif($user_info->identifier == 2) {
+            return redirect()->route('school.dashboard')->with('success', 'Toolkit created successfully');
         }else {
             return redirect()->route('dashboard')->with('success', 'Toolkit created successfully');
         }
@@ -193,7 +195,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -222,7 +224,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identicreatedfier == 101 || $user_info->identifier == 1){
+            if($user_info->identicreatedfier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -252,7 +254,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -338,7 +340,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }
@@ -394,7 +396,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
             } else {
                 return abort(404);
             }

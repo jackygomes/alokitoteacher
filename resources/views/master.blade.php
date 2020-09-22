@@ -101,6 +101,8 @@
                         @else
                             @if(Auth::user()->identifier == 1)
                                 <a class="dropdown-item" href="{{url('t/dashboard')}}">Dashboard</a>
+                            @elseif(Auth::user()->identifier == 2)
+                                <a class="dropdown-item" href="{{url('s/dashboard')}}">Dashboard</a>
                             @endif
                         <a class="dropdown-item" href="@if(Auth::user()->identifier == 1){{ url('t') }}@elseif(Auth::user()->identifier == 2) {{ url('s') }}@elseif(Auth::user()->identifier == 4) {{ url('stu') }}@endif/{{ Auth::user()->username }}">Profile</a>
                         @endif

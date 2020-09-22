@@ -182,9 +182,9 @@
                                         </tbody>
                                     </table>
                                     {{$resources->links()}}
-                                    {{--@if($toolkits->count() == 0)--}}
-                                    {{--<h5 class="text-center text-muted">No Toolkit to Show</h5>--}}
-                                    {{--@endif--}}
+                                    @if($resources->count() == 0)
+                                    <h5 class="text-center text-muted">No Resource to Show</h5>
+                                    @endif
                                 </div>
                             </div>
                         </div>
