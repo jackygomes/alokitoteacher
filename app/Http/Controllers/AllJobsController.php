@@ -164,8 +164,9 @@ class AllJobsController extends Controller
 		$job_info = Job::find($request->job_id);
 		$user_info = User::find($job_info->user_id);
 		$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+        $leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
 
-		return view('job_details',compact('user_info', 'job_info', 'users'));
+		return view('job_details',compact('user_info', 'job_info', 'users','leaderBoard'));
 	}
 
 	function show_offer_letter(Request $request){
