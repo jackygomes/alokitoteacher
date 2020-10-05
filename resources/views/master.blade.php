@@ -190,6 +190,13 @@
                 </div>
 
             </div>
+            <div class="row">
+                <div class="col-md-12 border-top border-light mt-2 mb-2 text-center d-flex justify-content-center">
+                    <div class="col-md-8">
+                        <img class="img-fluid ssl-banner" src="/images/ssl.png">
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
     <!-- End of Footer area -->
@@ -210,6 +217,7 @@
 
     <script src="{{URL::asset('js/app.js')}}"></script>
     <script src="{{URL::asset('js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{URL::asset('js/custom.js')}}"></script>
 
     <script type="text/javascript">

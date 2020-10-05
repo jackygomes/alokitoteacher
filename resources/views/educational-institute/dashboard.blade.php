@@ -213,7 +213,7 @@
                                                 <div class="col-md-7">
                                                     <span class="font-weight-bold">Job Positon: {{ $job->job_title }}</span><br>
 
-                                                    <span class="font-weight-bold">Salary Range: {{ $job->expected_salary_range }}</span><br>
+                                                    <span class="font-weight-bold">Status: {{ $job->admin_status }}</span><br>
 
                                                     <span class="font-weight-bold">Type:</span><span>@if($job->nature == 1) Permanent @elseif($job->nature == 2) Part-Time  @elseif($job->nature == 3) Contractual @else - @endif</span><br>
 
@@ -223,7 +223,7 @@
 
                                                     {{ str_limit(strip_tags($job->description), 150) }}
 
-                                                    <a href="{{ url('job_detail') }}/{{ $job->id }}" class="text-yellow">Read More</a>
+                                                    <a href="{{ url('job_detail') }}/{{ $job->id }}" style="display:block" class="text-yellow">Read More</a>
 
 
                                                 </div>
@@ -371,7 +371,7 @@
 
                 <div class="modal-body" id="modalBody">
 
-                    <form action="{{ route('add_job') }}" method="POST" class="mb-5">
+                    <form id="jobPost" action="{{ route('add_job') }}" method="POST" class="mb-5">
 
                         @csrf
                         <div class="form-row mb-4">
@@ -403,8 +403,17 @@
 
                         <div class="form-row mt-1">
                             <div class="col-md-12 mb-5">
-                                <label>Minimum Requirements <span class="text-danger font-weight-bold"> *</span>:</label>
-                                <textarea class="form-control border-yellow" rows="5" name="minimum_requirement" placeholder="Minimum Requirements"></textarea>
+                                <label>Job Description <span class="text-danger font-weight-bold"> *</span>:</label>
+                                <textarea class="form-control border-yellow" rows="5" name="description" placeholder="Job Description"></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-row mt-1">
+                            <div class="col-md-12 mb-5">
+                                <label>Job Responsibilities <span class="text-danger font-weight-bold"> *</span>:</label>
+                                <textarea class="form-control border-yellow" rows="5" name="job_responsibilities" placeholder="Job Responsibilities"></textarea>
 
                             </div>
 
@@ -413,7 +422,7 @@
                         <div class="form-row mt-1">
                             <div class="col-md-12 mb-5">
                                 <label>Educational Requirement <span class="text-danger font-weight-bold"> *</span>:</label>
-                                <textarea class="form-control border-yellow" rows="5" name="educational_requirement" placeholder="Additional Requirements"></textarea>
+                                <textarea class="form-control border-yellow" rows="5" name="educational_requirement" placeholder="Educational Requirements"></textarea>
 
                             </div>
 
@@ -421,12 +430,31 @@
 
                         <div class="form-row mt-1">
                             <div class="col-md-12 mb-5">
-                                <label>Job Description <span class="text-danger font-weight-bold"> *</span>:</label>
-                                <textarea class="form-control border-yellow" rows="5" name="description" placeholder="Job Description"></textarea>
+                                <label>Experience Requirements<span class="text-danger font-weight-bold"> *</span>:</label>
+                                <textarea class="form-control border-yellow" rows="5" name="experience_requirements" placeholder="Experience Requirements "></textarea>
 
                             </div>
 
                         </div>
+
+                        <div class="form-row mt-1">
+                            <div class="col-md-12 mb-5">
+                                <label>Additional Requirements<span class="text-danger font-weight-bold"> *</span>:</label>
+                                <textarea class="form-control border-yellow" rows="5" name="additional_requirements" placeholder="Additional Requirements"></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-row mt-1">
+                            <div class="col-md-12 mb-5">
+                                <label>Compensation & Other Benefits<span class="text-danger font-weight-bold"> *</span>:</label>
+                                <textarea class="form-control border-yellow" rows="5" name="compensation_other_benefits" placeholder="Compensation & Other Benefits"></textarea>
+
+                            </div>
+
+                        </div>
+
 
                         <div class="form-row mt-1">
                             <div class="col-md-6 mb-5">
@@ -461,11 +489,12 @@
 
                         </div>
 
-
-
-
-
-                        <button type="submit" class="btn background-yellow float-right">Add Job</button>
+                        @if($user_info->balance >= $jobPrice->price)
+                        <button type="button" Onclick="formSubmitPopupMessage({{$jobPrice->price}});" class="btn background-yellow float-right">Add Job</button>
+                        <button type="submit" style="display: none" class="btn background-yellow float-right">Add Job</button>
+                        @else
+                        <button type="button" Onclick="popupAlertInsufficientBalance({{$jobPrice->price}});" class="btn background-yellow float-right">Add Job</button>
+                        @endif
 
                     </form>
 
@@ -508,6 +537,31 @@
                     $('#work_end').attr("required", "required");
                 }
             });
+
+            function formSubmitPopupMessage(price) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Job price is '+price+' BDT',
+                    text: 'Are you sure to spend for posting a job?',
+                    confirmButtonColor: '#f5b82f',
+                    confirmButtonText: "Yes",
+                    showCancelButton: true,
+                    cancelButtonText:'Cancel',
+                    cancelButtonColor: '#d33'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#jobPost").find('[type="submit"]').trigger('click');
+                    }
+                })
+            }
+            function popupAlertInsufficientBalance(price) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops! Job price is '+price+' BDT',
+                    text: 'Insufficient Balance!',
+                    confirmButtonColor: '#f5b82f',
+                })
+            }
 
         </script>
 

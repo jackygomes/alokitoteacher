@@ -7,6 +7,7 @@ use App\CourseQuestion;
 use App\CourseQuiz;
 use App\CourseQuizOption;
 use App\CourseVideo;
+use App\JobPrice;
 use App\LeaderBoard;
 use App\Resource;
 use App\TeacherStudentCount;
@@ -79,8 +80,9 @@ class AdminController extends Controller
             return abort(404);
         }
         $teacher_student_count = TeacherStudentCount::find(1);
+        $jobPrice = JobPrice::find(1);
 
-        return view('admin.basic_info', compact('teacher_student_count','user_info'));
+        return view('admin.basic_info', compact('teacher_student_count','user_info','jobPrice'));
     }
 
     public function leaderBoard() {
@@ -108,6 +110,17 @@ class AdminController extends Controller
         $stat->save();
 
         return redirect()->back()->with('success', 'Stat Updated Successfully');
+    }
+
+    public function jobPriceUpdate(Request $request, $id) {
+        $this->validate($request, [
+            'job_price' => 'required',
+        ]);
+        $jobPrice = JobPrice::find($id);
+        $jobPrice->price = $request->job_price;
+
+        $jobPrice->save();
+        return redirect()->back()->with('jobSuccess', 'Job Price Updated Successfully ');
     }
 
 

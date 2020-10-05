@@ -58,7 +58,9 @@ Route::post ('admin/course/quiz/update/{id}', 'CourseController@course_quiz_upda
 
 Route::get ('admin/basic-info', 'AdminController@basicInfo')->name('admin.basic.info');
 Route::get ('admin/leader-board', 'AdminController@leaderBoard')->name('admin.leader.board');
+Route::get ('admin/job-list', 'AllJobsController@adminJobList')->name('admin.job.list');
 Route::post ('admin/total-count-update/{id}', 'AdminController@totalCountUpdate')->name('admin.total.count.update');
+Route::post ('admin/job-price-update/{id}', 'AdminController@jobPriceUpdate')->name('admin.job.price.update');
 
 
 Route::get ('toolkit/create', 'ToolkitController@create')->name('toolkit.create');
@@ -147,6 +149,9 @@ Route::get ('remove_job/{id}', 'AllJobsController@remove_job');
 Route::get ('shortlisted/{id}', 'AllJobsController@shortlisted');
 Route::get ('confirm_interview/{id}', 'AllJobsController@confirm_interview');
 
+
+Route::get ('admin/job/edit/{id}', 'AllJobsController@adminEdit')->name('admin.job.edit');
+Route::post ('admin/job/update/{id}', 'AllJobsController@adminUpdate')->name('admin.job.update');
 
 Route::post ('upload_picture', 'TeacherController@picture');
 

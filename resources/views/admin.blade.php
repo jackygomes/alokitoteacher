@@ -80,6 +80,9 @@
                         <a href="{{route('admin.leader.board')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             Leader Board
                         </a>
+                        <a href="{{route('admin.job.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                            Job List
+                        </a>
                     </div>
                 </div>
                 <div class="row">

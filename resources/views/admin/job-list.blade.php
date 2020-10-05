@@ -71,69 +71,50 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-12 mb-5">
-                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Teacher Student Count</h3>
-                            <hr>
-                            @if($message = Session::get('success'))
-                                <div class="alert alert-success">
-                                    {{$message}}
-                                </div>
-                            @endif
-
-                            <form class="mt-3" method="POST" action="{{ route('admin.total.count.update', $teacher_student_count->id) }}">
-                                @csrf
-
-                                <div class="form-group row">
-                                    <label for="teacher" class="col-md-2 col-form-label text-md-right">Teacher Trained</label>
-
-                                    <div class="col-md-6">
-                                        <input id="teacher" type="number" class="form-control border-yellow" name="teacher" value="{{$teacher_student_count->teacher}}" required>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="student" class="col-md-2 col-form-label text-md-right">Future Number</label>
-
-                                    <div class="col-md-6">
-                                        <input id="student" type="number" class="form-control border-yellow" name="future_number" value="{{$teacher_student_count->future_number}}" required>
-                                    </div>
-                                </div>
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-6 offset-md-2">
-                                        <button type="submit" class="btn background-yellow">
-                                            Update
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 mb-5">
-                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Job Price</h3>
-                            <hr>
-                            @if($message = Session::get('jobSuccess'))
-                                <div class="alert alert-success">
-                                    {{$message}}
-                                </div>
-                            @endif
-
-                            <form class="mt-3" method="POST" action="{{ route('admin.job.price.update', $jobPrice->id) }}">
-                                @csrf
-
-                                <div class="form-group row">
-                                    <label class="col-md-2 col-form-label text-md-right">Price</label>
-
-                                    <div class="col-md-6">
-                                        <input type="number" class="form-control border-yellow" name="job_price" value="{{$jobPrice->price}}" required>
-                                    </div>
-                                </div>
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-6 offset-md-2">
-                                        <button type="submit" class="btn background-yellow">
-                                            Update
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Users</h3>
+                            <table id="userList" class="table table-striped table-bordered " style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>Sl.</th>
+                                    <th>Job Title</th>
+                                    <th>Job Creator</th>
+                                    <th>Job Location</th>
+                                    <th>Job Nature</th>
+                                    <th>Vacancy</th>
+                                    <th>Dead Line</th>
+                                    <th>Poster Status</th>
+                                    <th>Admin Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $i = 1; ?>
+                                @foreach($jobs as $job)
+                                    <tr>
+                                        <td>{{$i++}}</td>
+                                        <td>{{$job->job_title }}</td>
+                                        <td>{{$job->user->name }}</td>
+                                        <td>{{$job->location}}</td>
+                                        <td>
+                                            @if($job->nature == 1)
+                                                Permanent
+                                            @elseif($job->nature == 2)
+                                                Part-time
+                                            @elseif($job->nature == 3)
+                                                Contractual
+                                            @endif
+                                        </td>
+                                        <td>{{$job->vacancy}}</td>
+                                        <td>{{$job->deadline}}</td>
+                                        <td>{{$job->poster_status}}</td>
+                                        <td>{{$job->admin_status}}</td>
+                                        <td>
+                                            <a href="{{route('admin.job.edit', $job->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

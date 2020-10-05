@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\JobPrice;
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +38,7 @@ class AllJobsController extends Controller
    				$job_info = DB::table('users')
 						    ->rightJoin('jobs', 'users.id', '=','jobs.user_id')
 						    ->join('saved_jobs', 'saved_jobs.job_id', '=', 'jobs.id')
-						    ->select('users.id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.id as job_id','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.minimum_requirement','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline')
+						    ->select('users.id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.id as job_id','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline')
 						    ->where('saved_jobs.user_id', '=', Auth::id())
 						    ->orderBy('jobs.created_at', 'asc')
 						    ->paginate(10);
@@ -44,7 +46,7 @@ class AllJobsController extends Controller
    			}else{
 				$job_info = DB::table('users')
 						    ->rightJoin('jobs', 'users.id', '=','jobs.user_id')
-						    ->select('users.id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.id as job_id','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.minimum_requirement','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline')
+						    ->select('users.id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.id as job_id','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline')
 						    ->where('jobs.deadline', '>=', date("Y-m-d"))
 						    ->orderBy('jobs.created_at', 'asc')
 						    ->paginate(10);
@@ -95,7 +97,7 @@ class AllJobsController extends Controller
 
 		$job_info = DB::table('users')
 				    ->rightJoin('jobs', 'users.id', '=','jobs.user_id')
-				    ->select('users.id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.id as job_id','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.minimum_requirement','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline');
+				    ->select('users.id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.id as job_id','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline');
 
 		if(strlen(trim($request->search)) != 0){
 			$job_info = $job_info->where('users.name', 'like', '%' . $request->search . '%')
@@ -180,21 +182,49 @@ class AllJobsController extends Controller
 	}
 
 	function add_job(Request $request){
-		$job = new Job;
-		$job->user_id = Auth::id();
-		$job->job_title = $request->job_title;
-		$job->location = $request->location;
-		$job->expected_salary_range = $request->expected_salary_range;
-		$job->minimum_requirement = $request->minimum_requirement;
-		$job->educational_requirement = $request->educational_requirement;
-		$job->description = $request->description;
-		$job->vacancy = $request->vacancy;
-		$job->age_limit = $request->age_limit;
-		$job->deadline = $request->deadline;
-		$job->nature = $request->nature;
-		$job->save();
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
 
-		return back()->with('success', 'Job Added Successfully');
+        $jobPrice = JobPrice::find(1);
+        if($user_info->balance >= $jobPrice->price){
+            $job = new Job;
+            $job->user_id = Auth::id();
+            $job->job_title = $request->job_title;
+            $job->location = $request->location;
+            $job->expected_salary_range = $request->expected_salary_range;
+            $job->job_responsibilities = $request->job_responsibilities;
+            $job->educational_requirements = $request->educational_requirement;
+            $job->experience_requirements = $request->experience_requirements;
+            $job->additional_requirements  = $request->additional_requirements;
+            $job->compensation_other_benefits = $request->compensation_other_benefits;
+            $job->description = $request->description;
+            $job->vacancy = $request->vacancy;
+            $job->age_limit = $request->age_limit;
+            $job->deadline = $request->deadline;
+            $job->nature = $request->nature;
+            $job->save();
+
+            $orderData = [
+                'user_id'           => Auth::id(),
+                'product_type'      => 'Job',
+                'product_id'        => $job->id,
+                'amount'            => $jobPrice->price,
+                'status'            => 'paid',
+                'transaction_id'    => "ALOKITO_" . uniqid(),
+                'currency'          => 'BDT'
+            ];
+
+            Order::create($orderData);
+
+            $user_info->balance = $user_info->balance - $jobPrice->price;
+            $user_info->save();
+
+
+            return back()->with('success', 'Job Added Successfully');
+        } else {
+            return back()->with('danger', 'Insufficient Balance');
+        }
+
 	}
 
 	function remove_job(Request $request){
@@ -236,4 +266,65 @@ class AllJobsController extends Controller
 
 
 	}
+
+    /**
+     * view all jobs for admin
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     */
+    public function adminJobList() {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+        $jobs = Job::orderBy('id', 'desc')->get();
+        return view('admin.job-list', compact('jobs', 'user_info'));
+    }
+
+    /**
+     * View single job for approve disapprove
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     */
+    public function adminEdit($id) {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+
+        $job = Job::find($id);
+        return view('admin.job-edit', compact('user_info', 'job'));
+    }
+
+    /**
+     * admin view job approval edit
+     *
+     * @param Request $request
+     * @param $id
+     */
+    public function adminUpdate(Request $request, $id) {
+
+//        return $request->all();
+        $job = Job::find($id);
+        $job->admin_status = $request->admin_status;
+
+        if($request->admin_status == 'Disapprove'){
+            $this->validate($request, [
+                'comment' => 'required',
+            ]);
+            $job->admin_comment = $request->comment;
+        }elseif($request->admin_status == 'Approved'){
+            $job->admin_comment = null;
+        }
+
+        $job->save();
+        return back()->with('success', 'Job Status Updated Successfully.');
+    }
 }

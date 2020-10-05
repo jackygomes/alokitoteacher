@@ -43,29 +43,7 @@
                 @endfor
 
                 <div class="row text-left p-2 mt-3">
-{{--                    <div class="col-12">--}}
-{{--                        Recent Status:--}}
-{{--                    </div>--}}
-{{--                    <div class="col-2">--}}
-{{--                        <i class="fas fa-graduation-cap"></i>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-10">--}}
-{{--                        @if($recent_institute != null) {{ $recent_institute->institute }} @else - @endif--}}
-{{--                    </div>--}}
 
-{{--                    <div class="col-2">--}}
-{{--                        <i class="fas fa-briefcase"></i>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-10">--}}
-{{--                        @if($recent_work != null) {{ $recent_work->institute }} @else - @endif--}}
-{{--                    </div>--}}
-
-{{--                    <div class="col-2">--}}
-{{--                        <i class="fas fa-user-tie"></i>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-10">--}}
-{{--                        @if($recent_work != null) {{ $recent_work->position }} @else - @endif--}}
-{{--                    </div>--}}
 
                     <div class="col-2 mt-3">
                         <i class="fas fa-birthday-cake"></i>
@@ -152,6 +130,13 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 border-top mt-2 mb-2 text-center d-flex justify-content-center" style="background-color: #343a40;">
+                            <div class="col-md-8">
+                                <img class="img-fluid ssl-banner" src="/images/ssl.png">
+                            </div>
                         </div>
                     </div>
                 </div>

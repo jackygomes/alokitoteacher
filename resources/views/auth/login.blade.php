@@ -136,7 +136,7 @@
                     <div class="form-row mt-1">
                       <div class="col-md-12 mb-3">
 
-                        <input id="phone_number" type="tel" class="form-control border-yellow @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" autocomplete="phone_number" placeholder="Phone Ex: 01XXXXXXXXX"  pattern="[0-9]{11}" autofocus>
+                        <input id="phone_number" type="tel" class="form-control border-yellow @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" autocomplete="phone_number" placeholder="Phone Ex: 01XXXXXXXXX"  pattern="[0-9]{11}" autofocus required>
 
                         @error('phone_number')
                             <span class="invalid-feedback" role="alert">

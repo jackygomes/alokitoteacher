@@ -14,9 +14,9 @@
 	          <img class="img-fluid rounded-circle h-100 w-100" src="{{ url('images/profile_picture') }}/{{ $user_info->image }}">
 	        @endif
 	        </div>
-		     
+
 		    @if($user_info->id == Auth::id())
-     
+
 	        <form method="post" id="pro_pic_upload_form" action="{{ url('upload_picture') }}" enctype="multipart/form-data">
 	          {{csrf_field()}}
 	          <!-- <div class="form-group mt-3">
@@ -25,7 +25,7 @@
 	          </div> -->
 	          <input type="file" name="image" id="profile_picture" class="d-none">
 	          <button type="button" id="pro_pic_choose" class="btn bg-white mt-2 mb-3">Upload</button>
-	        </form> 
+	        </form>
 
 	        @endif
 
@@ -64,15 +64,15 @@
 				<div class="col-8">
 					{{$user_info->phone_number}}
 				</div>
-				
+
 			</div>
 
 			<h4>Current Balance </h4>
 			<p>${{ round($user_info->balance, 2) }}</p>
 			<button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>
 			<button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
-			@endif 
-			
+			@endif
+
 
 			<!-- <h3 class="mt-3 font-weight-bold text-white">{{$user_info->name}}</h3>
 
@@ -87,7 +87,7 @@
 			<button type="button" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</button>
 			<button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
 			@endif  -->
-			
+
 		</div>
 
 
@@ -105,57 +105,60 @@
 
 					<p><span class="font-weight-bold">Salary Range:</span> {{$job_info->expected_salary_range}}</p>
 
-					<p><span class="font-weight-bold">Type:</span>@if($job_info->nature == 1) Permanent @elseif($job_info->nature == 2) Part-Time  @elseif($job_info->nature == 3) Contractual @else - @endif</p> 
+					<p><span class="font-weight-bold">Type:</span>@if($job_info->nature == 1) Permanent @elseif($job_info->nature == 2) Part-Time  @elseif($job_info->nature == 3) Contractual @else - @endif</p>
 
 
 					<p><span class="font-weight-bold">Location:</span> {{$job_info->location}}</p>
 
 					<p><span class="font-weight-bold">Educational Requirement:</span> {{$job_info->educational_requirement}}</p>
 
-					<p><span class="font-weight-bold">Minimum Requirement:</span> {{$job_info->minimum_requirement}}</p>
+					<p><span class="font-weight-bold">Minimum Requirement:</span> {{$job_info->job_responsibilities}}</p>
 
 					<p><span class="font-weight-bold">Job Description:</span> {{ $job_info->description }}</p>
+                    @if(isset($job_info->admin_comment))
+					<p><span style="color: #f40c0c;" class="font-weight-bold">Admin Comment:</span> {{ $job_info->admin_comment }}</p>
+                    @endif
 				</div>
 
 				<div class="col-md-3 card pt-3">
 
 					<span>
     				Published: {{ date("jS F, Y", strtotime($job_info->created_at)) }}</span>
-    				
+
     				<span class="text-danger">
     				Deadline: {{ date("jS F, Y", strtotime($job_info->deadline)) }}</span>
     				<br>
 
     				@if($user_info->id == Auth::id())
-					
+
 					<a class="btn btn-success text-white btn-sm mb-3">Edit</a>
 					<a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
-									
+
 					@endif
-	
+
 				</div>
-					
-					
+
+
 			</div>
 			@if(Auth::user()->identifier == 1)
-			
+
 			<div class="row justify-content-center mt-3">
 
 				<button type="button" value="{{ $job_info->id }}" class="btn btn-success mr-3 applyButton" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
 				<button type="button" value="{{ $job_info->id }}" class="btn border-yellow saveButton">Save</button>
 			</div>
 
-			
+
 			@endif
-					
-					
+
+
 
 		</div>
-	
 
-		
-				
-			
+
+
+
+
  </div> <!-- 2nd col ends here -->
 
 		@include('leaderboard')
@@ -181,23 +184,23 @@
   		<div class="form-group">
 		  <textarea class="form-control" rows="10" id="coverLetterText" placeholder="Write Cover Letter Here"></textarea>
 		</div>
-		<button type="button" id="coverLetterSubmitButton" class="btn background-yellow float-right">Submit</button>  	
+		<button type="button" id="coverLetterSubmitButton" class="btn background-yellow float-right">Submit</button>
 
       </div>
-    
+
     </div>
   </div>
 </div>
 
-<div class="toast toast-mod" role="alert" id="toast" data-autohide="true" data-animation="true" data-delay="3000">  
-      
-    <div class="toast-body"> 
-        Job is saved. 
-        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"> 
-            <span aria-hidden="true">×</span> 
-        </button> 
-    </div> 
-</div> 
+<div class="toast toast-mod" role="alert" id="toast" data-autohide="true" data-animation="true" data-delay="3000">
+
+    <div class="toast-body">
+        Job is saved.
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+</div>
 
 
 
@@ -246,12 +249,12 @@
                 success: function(result){
                 	if(result == 'success'){
                 		jQuery('#modalLongTitle').text('Error');
-                		jQuery('#modalBody').html('<h3 class="text-center text-danger">Already Applied for this Job</h3>');	
+                		jQuery('#modalBody').html('<h3 class="text-center text-danger">Already Applied for this Job</h3>');
                 	}else{
                 		jQuery('#modalLongTitle').text('Your Profile will be shared with the school as your CV. Would you like to add a cover letter to increase your chances of being selected ?');
                 		jQuery('#modalBody').html('<div class="form-group"><textarea class="form-control" rows="10" id="comment" placeholder="Write Cover Letter Here"></textarea></div><button type="button" id="coverLetterSubmitButton" class="btn background-yellow float-right">Submit</button>');
                 	}
-                    
+
                 }
             });
         }
@@ -261,7 +264,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            });	
+            });
           	jQuery.ajax({
                 url: "{{ url('/submit_cover_letter') }}",
                 method: 'POST',
@@ -282,7 +285,7 @@
 	            			jQuery('#modalBody').html('<div class="form-group"><textarea class="form-control" rows="5" id="comment"></textarea></div><button type="button" id="coverLetterSubmitButton" class="btn background-yellow float-right">Submit</button>');
 						}, 3500);
 	            	}
-	                
+
 	            }
 
         	});
@@ -304,12 +307,12 @@
                 	if(result == 'success'){
                 		$('.toast').toast('show');
                 	}
-                    
+
                 }
             });
           }
     </script>
 
 @endpush
-  
+
 @endsection
