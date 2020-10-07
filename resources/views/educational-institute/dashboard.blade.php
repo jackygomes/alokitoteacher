@@ -441,7 +441,7 @@
 
                         <div class="form-row mt-1">
                             <div class="col-md-12 mb-5">
-                                <label>Salary Range:</label>
+                                <label>Salary Range <span class="text-danger font-weight-bold"> *</span>:</label>
                                 <input id="salary" type="text" class="form-control border-yellow" name="expected_salary_range" required placeholder="Salary Range (10,000 - 15,000/ Negotiable)">
 
                             </div>
