@@ -97,26 +97,105 @@
 			<h3>Job Details</h3>
 			<div class="row mt-3">
 				<div class="col-md-9 card p-3">
-					<p><span class="font-weight-bold">Job Position:</span> {{$job_info->job_title}}</p>
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Job Position:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{{$job_info->job_title}}</p>
+                        </div>
+                    </div>
 
-					<p><span class="font-weight-bold">Vacancy:</span> {{ $job_info->vacancy }}</p>
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Vacancy:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{{$job_info->vacancy}}</p>
+                        </div>
+                    </div>
 
-					<p><span class="font-weight-bold">Age Limit:</span> {{ $job_info->age_limit }}</p>
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Age Limit:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{{$job_info->age_limit}}</p>
+                        </div>
+                    </div>
 
-					<p><span class="font-weight-bold">Salary Range:</span> {{$job_info->expected_salary_range}}</p>
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Gender Preference:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{{$job_info->gender}}</p>
+                        </div>
+                    </div>
 
-					<p><span class="font-weight-bold">Type:</span>@if($job_info->nature == 1) Permanent @elseif($job_info->nature == 2) Part-Time  @elseif($job_info->nature == 3) Contractual @else - @endif</p>
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Salary Range:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{{$job_info->expected_salary_range}}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Type:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">@if($job_info->nature == 1) Permanent @elseif($job_info->nature == 2) Part-Time  @elseif($job_info->nature == 3) Contractual @else - @endif</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Location:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{{$job_info->location}}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Description:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{!! nl2br(e($job_info->description)) !!}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Job Responsibilities:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{!! nl2br(e($job_info->job_responsibilities)) !!}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Educational Requirement:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{!! nl2br(e($job_info->educational_requirement)) !!}</p>
+                        </div>
+                    </div>
 
 
-					<p><span class="font-weight-bold">Location:</span> {{$job_info->location}}</p>
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Experience Requirements:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{!! nl2br(e($job_info->experience_requirements)) !!}</p>
+                        </div>
+                    </div>
 
-					<p><span class="font-weight-bold">Educational Requirement:</span> {{$job_info->educational_requirement}}</p>
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Additional Requirements:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{!! nl2br(e($job_info->additional_requirements)) !!}</p>
+                        </div>
+                    </div>
 
-					<p><span class="font-weight-bold">Minimum Requirement:</span> {{$job_info->job_responsibilities}}</p>
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Compensation & Other Benefits:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{!! nl2br(e($job_info->compensation_other_benefits)) !!}</p>
+                        </div>
+                    </div>
 
-					<p><span class="font-weight-bold">Job Description:</span> {{ $job_info->description }}</p>
                     @if(isset($job_info->admin_comment))
-					<p><span style="color: #f40c0c;" class="font-weight-bold">Admin Comment:</span> {{ $job_info->admin_comment }}</p>
+                        <div class="form-group row mb-0">
+                            <label class="col-sm-3 col-form-label font-weight-bold" style="color: #f40c0c;">Admin Comment:</label>
+                            <div class="col-sm-9">
+                                <p style="margin: 6px 0 0">{!! nl2br(e($job_info->admin_comment)) !!}</p>
+                            </div>
+                        </div>
                     @endif
 				</div>
 
@@ -131,9 +210,12 @@
 
     				@if($user_info->id == Auth::id())
 
-					<a class="btn btn-success text-white btn-sm mb-3">Edit</a>
-					<a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
-
+                        @if($job_info->admin_status != 'Approved')
+					    <a href="{{route('job.edit',$job_info->id)}}" class="btn btn-success text-white btn-sm mb-3">Edit</a>
+                        @endif
+                        @if($job_info->removed == 0)
+					    <a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
+                        @endif
 					@endif
 
 				</div>

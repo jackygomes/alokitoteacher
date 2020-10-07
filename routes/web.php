@@ -149,6 +149,9 @@ Route::get ('remove_job/{id}', 'AllJobsController@remove_job');
 Route::get ('shortlisted/{id}', 'AllJobsController@shortlisted');
 Route::get ('confirm_interview/{id}', 'AllJobsController@confirm_interview');
 
+Route::get('job/edit/{id}', 'AllJobsController@jobEdit')->name('job.edit');
+Route::post('job/update/{id}', 'AllJobsController@jobUpdate')->name('job.update');
+
 
 Route::get ('admin/job/edit/{id}', 'AllJobsController@adminEdit')->name('admin.job.edit');
 Route::post ('admin/job/update/{id}', 'AllJobsController@adminUpdate')->name('admin.job.update');

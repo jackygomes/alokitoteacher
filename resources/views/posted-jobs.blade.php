@@ -28,7 +28,7 @@
 				        {{ session()->get('danger') }}
 				    </div>
 				@endif
-				
+
 
 				@if($posted_jobs->count() == 0)
 				<h5 class="text-center text-muted">No Posted Job to Show!</h5>
@@ -45,16 +45,16 @@
 						<a href="{{ url('remove_job') }}/{{ $job->id }}" class="btn btn-danger btn-sm">Remove</a>
 					</div>
 				</div>
-				
-				
-				@endforeach
-					
-				{{ $posted_jobs->links() }}
-			
-			</div>
-		</div>	
 
-		@include('leaderboard')
+
+				@endforeach
+
+				{{ $posted_jobs->links() }}
+
+			</div>
+		</div>
+
+{{--		@include('leaderboard')--}}
 
 
     </div><!-- row ends here -->
@@ -77,24 +77,24 @@
       	<div class="modal-body" id="modalBody">
 
       		<form action="{{ route('add_job') }}" method="POST" class="mb-5">
-                
-              
+
+
                 <div class="form-row mb-4">
                   <div class="col-md-12">
                   	<label>Job Title <span class="text-danger font-weight-bold"> *</span>:</label>
                      <input id="title" type="text" class="form-control border-yellow" name="job_title" required placeholder="Job Title">
                   </div>
-                  
+
                 </div>
-            
-          	
+
+
             	<div class="form-row mt-1">
 					<div class="col-md-12 mb-5">
 						<label>Location <span class="text-danger font-weight-bold"> *</span>:</label>
 						<input id="location" type="text" class="form-control border-yellow" name="location" required placeholder="Job Location">
 
 					</div>
-              
+
             	</div>
 
             	<div class="form-row mt-1">
@@ -103,7 +103,7 @@
 						<input id="salary" type="text" class="form-control border-yellow" name="expected_salary_range" required placeholder="Salary Range (10,000 - 15,000/ Negotiable)">
 
 					</div>
-              
+
             	</div>
 
             	<div class="form-row mt-1">
@@ -112,7 +112,7 @@
 						<textarea class="form-control border-yellow" rows="5" name="minimum_requirement" placeholder="Minimum Requirements"></textarea>
 
 					</div>
-              
+
             	</div>
 
             	<div class="form-row mt-1">
@@ -121,7 +121,7 @@
 						<textarea class="form-control border-yellow" rows="5" name="educational_requirement" placeholder="Additional Requirements"></textarea>
 
 					</div>
-              
+
             	</div>
 
             	<div class="form-row mt-1">
@@ -130,7 +130,7 @@
 						<textarea class="form-control border-yellow" rows="5" name="description" placeholder="Job Description"></textarea>
 
 					</div>
-              
+
             	</div>
 
             	<div class="form-row mt-1">
@@ -144,9 +144,9 @@
 						<input type="text" class="form-control border-yellow" name="age_limit" required placeholder="Age Limit (25-35)years">
 
 					</div>
-              
+
             	</div>
-            	
+
             	<div class="form-row mt-1">
 					<div class="col-md-6 mb-5">
 						<label>Deadline <span class="text-danger font-weight-bold"> *</span>:</label>
@@ -163,22 +163,22 @@
 			            </select>
 
 					</div>
-              
+
             	</div>
 
 
-              
-				
 
-              	<button type="button" class="btn background-yellow float-right">Add Job</button>  	
+
+
+              	<button type="button" class="btn background-yellow float-right">Add Job</button>
 
             </form>
 
-  		
-		
+
+
 
       </div>
-    
+
     </div>
   </div>
 </div>
@@ -188,10 +188,10 @@
 @push('js')
 
     <script type="text/javascript">
-	
-      	
+
+
     </script>
 
 @endpush
-  
+
 @endsection

@@ -200,6 +200,7 @@ class AllJobsController extends Controller
             $job->description = $request->description;
             $job->vacancy = $request->vacancy;
             $job->age_limit = $request->age_limit;
+            $job->gender = $request->gender;
             $job->deadline = $request->deadline;
             $job->nature = $request->nature;
             $job->save();
@@ -272,7 +273,8 @@ class AllJobsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
      */
-    public function adminJobList() {
+    public function adminJobList()
+    {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
@@ -290,7 +292,8 @@ class AllJobsController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
      */
-    public function adminEdit($id) {
+    public function adminEdit($id)
+    {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
@@ -309,7 +312,8 @@ class AllJobsController extends Controller
      * @param Request $request
      * @param $id
      */
-    public function adminUpdate(Request $request, $id) {
+    public function adminUpdate(Request $request, $id)
+    {
 
 //        return $request->all();
         $job = Job::find($id);
@@ -326,5 +330,78 @@ class AllJobsController extends Controller
 
         $job->save();
         return back()->with('success', 'Job Status Updated Successfully.');
+    }
+
+    public function jobEdit($id)
+    {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        if(isset($user_info) && $user_info->identifier != 2){
+
+            return abort(404);
+        }
+        $job = Job::find($id);
+        return view('job_edit', compact('user_info', 'job'));
+    }
+
+    public function jobUpdate(Request $request, $id)
+    {
+        return $request->description;
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if($user_info) {
+            if($user_info->identifier == 2){
+            } else {
+                return abort(404);
+            }
+        }else {
+            return abort(404);
+        }
+
+        try{
+
+            $job = Job::find($id);
+            if ($job == null) {
+                return abort(404);
+            }
+            $this->validate($request, [
+                'job_title'                 => 'required',
+                'job_location'              => 'required',
+                'description'               => 'required',
+                'job_responsibilities'      => 'required',
+                'educational_requirements'  => 'required',
+                'experience_requirements'   => 'required',
+                'salary'                    => 'required',
+                'age_limit'                 => 'required',
+                'gender'                    => 'required',
+                'nature'                    => 'required',
+                'vacancy'                   => 'required',
+                'deadline'                  => 'required',
+            ]);
+
+
+            $job->job_title = $request->job_title;
+            $job->location = $request->job_location;
+            $job->expected_salary_range = $request->salary;
+            $job->job_responsibilities = $request->job_responsibilities;
+            $job->educational_requirements = $request->educational_requirements;
+            $job->experience_requirements = $request->experience_requirements;
+            $job->additional_requirements  = $request->additional_requirements;
+            $job->compensation_other_benefits = $request->compensation_other_benefits;
+            $job->description = $request->description;
+            $job->vacancy = $request->vacancy;
+            $job->age_limit = $request->age_limit;
+            $job->gender = $request->gender;
+            $job->deadline = $request->deadline;
+            $job->nature = $request->nature;
+            $job->save();
+
+            return back()->with('success', 'Job Edited Successfully.');
+
+        } catch(\Exception $e) {
+            return "Quiz insertion error: " . $e->getMessage();
+        }
+
     }
 }

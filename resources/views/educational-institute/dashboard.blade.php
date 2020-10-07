@@ -223,7 +223,7 @@
 
                                                     {{ str_limit(strip_tags($job->description), 150) }}
 
-                                                    <a href="{{ url('job_detail') }}/{{ $job->id }}" style="display:block" class="text-yellow">Read More</a>
+{{--                                                    <a href="{{ url('job_detail') }}/{{ $job->id }}" style="display:block" class="text-yellow">Read More</a>--}}
 
 
                                                 </div>
@@ -237,8 +237,10 @@
                                                     <br>
 
                                                     @if($user_info->id == Auth::id())
-                                                        <a class="btn btn-success text-white btn-sm">Edit</a>
-                                                        <a href="{{ url('remove_job') }}/{{ $job->id }}" class="btn btn-danger btn-sm">Remove</a>
+                                                        <a href="{{ url('job_detail') }}/{{ $job->id }}" class="btn btn-success text-white btn-sm">View</a>
+                                                        @if($job->removed == 0)
+                                                            <a href="{{ url('remove_job') }}/{{ $job->id }}" class="btn btn-danger btn-sm">Remove</a>
+                                                        @endif
                                                     @else
                                                         <button type="button" value="{{ $job->job_id }}" class="btn btn-success applyButton" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
                                                         <button type="button" value="{{ $job->job_id }}" class="btn border-yellow saveButton">Save</button>
@@ -394,6 +396,51 @@
 
                         <div class="form-row mt-1">
                             <div class="col-md-12 mb-5">
+                                <label>Job Description <span class="text-danger font-weight-bold"> *</span>:</label>
+                                <textarea class="form-control border-yellow" rows="5" name="description" placeholder="Job Description" required></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-row mt-1">
+                            <div class="col-md-12 mb-5">
+                                <label>Job Responsibilities <span class="text-danger font-weight-bold"> *</span>:</label>
+                                <textarea class="form-control border-yellow" rows="5" name="job_responsibilities" placeholder="Job Responsibilities" required></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-row mt-1">
+                            <div class="col-md-12 mb-5">
+                                <label>Educational Requirement <span class="text-danger font-weight-bold"> *</span>:</label>
+                                <textarea class="form-control border-yellow" rows="5" name="educational_requirement" placeholder="Educational Requirements" required></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-row mt-1">
+                            <div class="col-md-12 mb-5">
+                                <label>Experience Requirements<span class="text-danger font-weight-bold"> *</span>:</label>
+                                <textarea class="form-control border-yellow" rows="5" name="experience_requirements" placeholder="Experience Requirements" required></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-row mt-1">
+                            <div class="col-md-12 mb-5">
+                                <label>Additional Requirements:</label>
+                                <textarea class="form-control border-yellow" rows="5" name="additional_requirements" placeholder="Additional Requirements"></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-row mt-1">
+                            <div class="col-md-12 mb-5">
                                 <label>Salary Range:</label>
                                 <input id="salary" type="text" class="form-control border-yellow" name="expected_salary_range" required placeholder="Salary Range (10,000 - 15,000/ Negotiable)">
 
@@ -403,53 +450,17 @@
 
                         <div class="form-row mt-1">
                             <div class="col-md-12 mb-5">
-                                <label>Job Description <span class="text-danger font-weight-bold"> *</span>:</label>
-                                <textarea class="form-control border-yellow" rows="5" name="description" placeholder="Job Description"></textarea>
-
-                            </div>
-
-                        </div>
-
-                        <div class="form-row mt-1">
-                            <div class="col-md-12 mb-5">
-                                <label>Job Responsibilities <span class="text-danger font-weight-bold"> *</span>:</label>
-                                <textarea class="form-control border-yellow" rows="5" name="job_responsibilities" placeholder="Job Responsibilities"></textarea>
-
-                            </div>
-
-                        </div>
-
-                        <div class="form-row mt-1">
-                            <div class="col-md-12 mb-5">
-                                <label>Educational Requirement <span class="text-danger font-weight-bold"> *</span>:</label>
-                                <textarea class="form-control border-yellow" rows="5" name="educational_requirement" placeholder="Educational Requirements"></textarea>
-
-                            </div>
-
-                        </div>
-
-                        <div class="form-row mt-1">
-                            <div class="col-md-12 mb-5">
-                                <label>Experience Requirements<span class="text-danger font-weight-bold"> *</span>:</label>
-                                <textarea class="form-control border-yellow" rows="5" name="experience_requirements" placeholder="Experience Requirements "></textarea>
-
-                            </div>
-
-                        </div>
-
-                        <div class="form-row mt-1">
-                            <div class="col-md-12 mb-5">
-                                <label>Additional Requirements<span class="text-danger font-weight-bold"> *</span>:</label>
-                                <textarea class="form-control border-yellow" rows="5" name="additional_requirements" placeholder="Additional Requirements"></textarea>
-
-                            </div>
-
-                        </div>
-
-                        <div class="form-row mt-1">
-                            <div class="col-md-12 mb-5">
-                                <label>Compensation & Other Benefits<span class="text-danger font-weight-bold"> *</span>:</label>
+                                <label>Compensation & Other Benefits:</label>
                                 <textarea class="form-control border-yellow" rows="5" name="compensation_other_benefits" placeholder="Compensation & Other Benefits"></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-row mt-1">
+                            <div class="col-md-6 mb-5">
+                                <label>Gender Preference:</label>
+                                <input type="text" class="form-control border-yellow" name="gender" required placeholder="Male/Female or both">
 
                             </div>
 
@@ -473,14 +484,14 @@
                         <div class="form-row mt-1">
                             <div class="col-md-6 mb-5">
                                 <label>Deadline <span class="text-danger font-weight-bold"> *</span>:</label>
-                                <input  type="date" class="form-control border-yellow" name="deadline" required placeholder="Deadline of job">
+                                <input min="<?php echo date("Y-m-d"); ?>" type="date" class="form-control border-yellow" name="deadline" required placeholder="Deadline of job">
                             </div>
 
                             <div class="col-md-6 mb-5">
                                 <label>Job Type <span class="text-danger font-weight-bold"> *</span>:</label>
                                 <select class="form-control border-yellow" name="nature" required>
                                     <option value="" disabled selected>-- Select Job Type --</option>
-                                    <option value="1">Parmanent</option>
+                                    <option value="1">Permanent</option>
                                     <option value="2">Part-time</option>
                                     <option value="3">Contractual</option>
                                 </select>
