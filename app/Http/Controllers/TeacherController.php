@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\JobApplication;
 use App\Resource;
 use App\Toolkit;
 use App\ToolkitHistory;
@@ -219,6 +220,31 @@ class TeacherController extends Controller
 
 	// }
 
+    public function jobList()
+    {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if($user_info) {
+            if($user_info->identifier == 1){
+            } else {
+                return abort(404);
+            }
+        }else {
+            return abort(404);
+        }
+        $recent_work = WorkExperience::where('user_id', '=', $user_info->id)->where('to_date', '=', '0000-00-00')->first();
+        $recent_institute = Academic::where('user_id', '=', $user_info->id)->orderBy('passing_year', 'DESC')->first();
+        $leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
 
+        $jobApplications = JobApplication::where('user_id', $userId)->get();
+
+        $n = 0;
+        foreach ($jobApplications as $jobApplication) {
+            $n++;
+            $jobApplication->no = $n;
+        }
+
+        return view('teacher.job-list', compact('leaderBoard','recent_institute','recent_work', 'jobApplications' ,'user_info'));
+    }
 }
 

@@ -151,6 +151,12 @@ Route::get ('confirm_interview/{id}', 'AllJobsController@confirm_interview');
 
 Route::get('job/edit/{id}', 'AllJobsController@jobEdit')->name('job.edit');
 Route::post('job/update/{id}', 'AllJobsController@jobUpdate')->name('job.update');
+Route::post('job/school/status/update/{id}', 'AllJobsController@schoolJobStatusUpdate')->name('school.job.status.update');
+
+// teacher view
+Route::get('job/List', 'TeacherController@jobList')->name('teacher.job.list');
+
+
 
 
 Route::get ('admin/job/edit/{id}', 'AllJobsController@adminEdit')->name('admin.job.edit');

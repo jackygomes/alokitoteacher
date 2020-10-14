@@ -154,7 +154,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
 {{--                                    <label>Gender:</label>--}}
-                                    <select class="form-control border-yellow" name="gender" required>
+                                    <select class="form-control border-yellow" name="gender">
                                         <option value="" disabled selected>-- Select Your Gender --</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>

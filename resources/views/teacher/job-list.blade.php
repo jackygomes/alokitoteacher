@@ -1,6 +1,6 @@
 @extends('master')
 @section('content')
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
     <div class="container-fluid">
 
@@ -107,92 +107,46 @@
 
             <div class="col-md-7 col-sm-12 mt-5">
                 <div class="container-fluid ">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="{{route('teacher.job.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
-                                Job Application
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class=" mt-5 mb-3 col-sm-12">
-                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Toolkits</h3>
-                            <a href="{{route('toolkit.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
-                            <div class="mr=2">
-                                <div class="table-responsive-sm">
-                                    <table class="table ">
-                                        <thead>
-                                        <tr>
-                                            <th style="width:10%">No.</th>
-                                            <th style="width:20%">Subject</th>
-                                            <th style="width:30%">Toolkit Name</th>
-                                            <th style="width:10%">Price</th>
-                                            <th style="width:10%">Status</th>
-                                            <th style="width:20%">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php $n = 1?>
-                                        @foreach ($toolkits as $toolkit)
-                                            <tr>
-                                                <td>{{$n}}</td>
-                                                <td>{{$toolkit->subject->subject_name}}</td>
-                                                <td>{{$toolkit->toolkit_title}}</td>
-                                                <td>{{($toolkit->price == 0) ? 'Free' : $toolkit->price}}</td>
-                                                <td>{{$toolkit->status}}</td>
-                                                <td><a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
-                                            </tr>
-                                            <?php $n++ ?>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                    @if($toolkits->count() > 5)
-                                    {{$toolkits->links()}}
-                                    @endif
-
-                                    @if($toolkits->count() == 0)
-                                    <h5 class="text-center text-muted">No Toolkit to Show</h5>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-12">--}}
+{{--                            <a href="{{route('teacher.job.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">--}}
+{{--                                back--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <div class="row">
                         <div class=" mt-5 mb-3 col-sm-12">
-                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Resource</h3>
-                            <a href="{{route('resource.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
+                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Job Application List</h3>
                             <div class="mr=2">
-                                <div class="table-responsive-sm">
-                                    <table class="table ">
-                                        <thead>
+                                <table id="jobTable" class="table table-bordered " style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Job Name</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($jobApplications as $jobApplication)
                                         <tr>
-                                            <th style="width:10%">No.</th>
-                                            <th style="width:30%">Toolkit Name</th>
-                                            <th style="width:10%">Price</th>
-                                            <th style="width:10%">Status</th>
-                                            <th style="width:20%">Action</th>
+                                            <td>{{$jobApplication->no}}</td>
+                                            <td>
+                                                <a class="" href="#">
+                                                    {{$jobApplication->job->job_title}}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @if($jobApplication->status == "New")
+                                                    In Review
+                                                @else
+                                                    {{$jobApplication->status}}
+                                                @endif
+                                            </td>
                                         </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php $n = 1?>
-                                        @foreach ($resources as $resource)
-                                            <tr>
-                                                <td>{{$n}}</td>
-                                                <td>{{$resource->resource_title}}</td>
-                                                <td>{{($resource->price == 0) ? 'Free' : $resource->price}}</td>
-                                                <td>{{$resource->status}}</td>
-                                                <td><a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
-                                            </tr>
-                                            <?php $n++ ?>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                    {{$resources->links()}}
-                                    @if($resources->count() == 0)
-                                    <h5 class="text-center text-muted">No Resource to Show</h5>
-                                    @endif
-                                </div>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -221,8 +175,11 @@
 
 
     @push('js')
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
         <script type="text/javascript">
+            $('#jobTable').DataTable();
             $('#pro_pic_choose').on('click', function () {
                 $("#profile_picture").click();
             });

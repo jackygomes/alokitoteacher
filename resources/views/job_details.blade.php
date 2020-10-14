@@ -1,6 +1,7 @@
 
 @extends('master')
 @section('content')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
 <div class="container-fluid">
 	<div class="row" style="min-height: 90vh">
@@ -235,13 +236,58 @@
 
 
 
-		</div>
+        </div>
+        <div class="row">
+            <div class=" mt-5 mb-3 col-sm-12">
+                <h3 class="font-weight-bold mr-3" style="display: inline-block">Applicants List</h3>
+                @if(session()->has('job-status-success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('job-status-success') }}
+                    </div>
+                @endif
+                <div class="mr=2">
+                    <table id="jobTable" class="table table-bordered " style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Applicant Name</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($applicants as $applicant)
+                            <tr>
+                                <td>{{$applicant->no}}</td>
+                                <td>
+                                    <a class="" href="{{ url('t')}}/{{ $applicant->user->username }}">
+                                        {{$applicant->user->name}}
+                                    </a>
+                                </td>
+                                <td>
+                                    <form class="statusForm" action="{{ route('school.job.status.update', $applicant->id) }}" method="post" style="width: 100%;">
+                                        @csrf
+                                        <select class="applicantStatus custom-select mr-sm-2" name="admin_status">
+                                            <option value="Accepted" {{$applicant->status == 'Accepted' ? 'selected' : ''}}>Accepted</option>
+                                            <option value="Rejected" {{$applicant->status == 'Rejected' ? 'selected' : ''}}>Rejected</option>
+                                            <option value="Shortlisted" {{$applicant->status == 'Shortlisted' ? 'selected' : ''}}>Shortlisted</option>
+                                            <option value="New" {{$applicant->status == 'New' ? 'selected' : ''}}>New</option>
+                                        </select>
+                                        <button type="submit" style="display: none" class="btn background-yellow float-right">Update</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
 
 
 
 
- </div> <!-- 2nd col ends here -->
+    </div> <!-- 2nd col ends here -->
 
 		@include('leaderboard')
 
@@ -290,8 +336,27 @@
 
 
 @push('js')
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
     <script type="text/javascript">
+        $( ".applicantStatus" ).change(function() {
+            Swal.fire({
+                icon: 'warning',
+                text: 'Are you sure to change status?',
+                confirmButtonColor: '#f5b82f',
+                confirmButtonText: "Yes",
+                showCancelButton: true,
+                cancelButtonText:'Cancel',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(this).parents('form:first').find('[type="submit"]').trigger('click');
+                }
+            })
+        });
+        $('#jobTable').DataTable();
+
 		$('#pro_pic_choose').on('click', function () {
 		  $("#profile_picture").click();
 		});

@@ -167,8 +167,14 @@ class AllJobsController extends Controller
 		$user_info = User::find($job_info->user_id);
 		$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
         $leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
+        $applicants = JobApplication::where('job_id', $request->job_id)->paginate(10);
+        $n = 0;
+        foreach ($applicants as $applicant) {
+            $n++;
+            $applicant->no = $n;
+        }
 
-		return view('job_details',compact('user_info', 'job_info', 'users','leaderBoard'));
+		return view('job_details',compact('user_info', 'job_info', 'users','leaderBoard', 'applicants'));
 	}
 
 	function show_offer_letter(Request $request){
@@ -345,9 +351,16 @@ class AllJobsController extends Controller
         return view('job_edit', compact('user_info', 'job'));
     }
 
+    /**
+     * job update from school
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|mixed|string|void
+     */
     public function jobUpdate(Request $request, $id)
     {
-        return $request->description;
+
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
@@ -403,5 +416,26 @@ class AllJobsController extends Controller
             return "Quiz insertion error: " . $e->getMessage();
         }
 
+    }
+
+    public function schoolJobStatusUpdate(Request $request, $id)
+    {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+        if($user_info) {
+            if($user_info->identifier == 2){
+            } else {
+                return abort(404);
+            }
+        }else {
+            return abort(404);
+        }
+        $application = JobApplication::find($id);
+
+        $application->status = $request->admin_status;
+
+        $application->save();
+
+        return back()->with('job-status-success', 'Job Status Successfully Changed.');
     }
 }
