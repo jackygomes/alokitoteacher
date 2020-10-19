@@ -149,7 +149,7 @@
       		<div class="form-group">
 			  <textarea class="form-control" rows="10" id="coverLetterText" name="cover_letter" placeholder="Write Cover Letter Here"></textarea>
 			</div>
-			<input type="hidden" name="job_id">
+			<input type="hidden" name="job_id" id="form_job_id">
 			<button type="submit" id="coverLetterSubmitButton" class="btn background-yellow float-right">Submit</button>
 
       	</form>
@@ -202,8 +202,11 @@
 			});
 
 
-
 		});
+
+        function passJobIdToForm(id){
+            $('#form_job_id').val(id);
+        }
 
 		$('#searchButton').on('click', function () {
 			search_filter($('#search').val(), $('#location').val(), $('#school').val());

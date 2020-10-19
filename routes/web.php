@@ -135,7 +135,7 @@ Route::get ('about_us', 'AboutUsController@index');
 Route::get ('book_workshop', 'BookController@index');
 Route::post ('book_workshop', 'BookController@book_workshop')->name('book_workshop');
 
-Route::get ('jobs/{type?}', 'AllJobsController@index');
+Route::get ('jobs/{type?}', 'AllJobsController@index')->name('jobBoard');
 Route::get ('job_applications/{id}/{type?}', 'AllJobsController@job_applications');
 Route::get ('search_filter_jobs', 'AllJobsController@search_filter');
 Route::post ('verify_applied_job', 'AllJobsController@verify_applied_job');

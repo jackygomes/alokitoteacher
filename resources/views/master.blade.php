@@ -85,6 +85,13 @@
                     <a class="nav-link text-black" href="{{ url('about_us') }}">About Us</a>
 
                 </li>
+                @auth
+                <li class="nav-item">
+                    @if(Auth::user()->identifier == 1 || Auth::user()->identifier == 2 || Auth::user()->identifier == 101)
+                    <a class="nav-link text-black" href="{{ route('jobBoard') }}">Job Board</a>
+                    @endif
+                </li>
+                @endauth
 
                 @guest
                 <li class="nav-item">

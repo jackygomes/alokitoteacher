@@ -55,8 +55,8 @@
 			        				Deadline: {{ date("jS F, Y", strtotime($v_job_info->deadline)) }}</small>
 			        				<br>
 
-			        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
-			        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn border-yellow saveButton">Save</button>
+			        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$v_job_info->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
+{{--			        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn border-yellow saveButton">Save</button>--}}
 			        			</div>
 		        			</div>
 		        		</div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\JobPrice;
 use App\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +33,7 @@ class AllJobsController extends Controller
 
 		    return view ('posted-jobs', compact('posted_jobs', 'users'));
 
-   		}elseif (Auth::user()->identifier == 1){
+   		}elseif (Auth::user()->identifier == 1 || Auth::user()->identifier == 101){
 
    			if($request->type == 'saved'){
    				$job_info = DB::table('users')
@@ -97,7 +98,7 @@ class AllJobsController extends Controller
 
 		$job_info = DB::table('users')
 				    ->rightJoin('jobs', 'users.id', '=','jobs.user_id')
-				    ->select('users.id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.id as job_id','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline');
+				    ->select('jobs.id as job_id', 'users.id as user_id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline', 'jobs.removed', 'jobs.admin_status');
 
 		if(strlen(trim($request->search)) != 0){
 			$job_info = $job_info->where('users.name', 'like', '%' . $request->search . '%')
@@ -115,7 +116,15 @@ class AllJobsController extends Controller
 			$job_info = $job_info->where('users.id', '=', $request->school);
 		}
 
-		$job_info = $job_info->orderBy('jobs.created_at', 'asc')->paginate(10);
+        $condition = [
+            ['jobs.removed', '=', 0],
+            ['jobs.admin_status', '=', 'Approved'],
+        ];
+
+		$job_info = $job_info
+                    ->where($condition)
+                    ->whereDate('jobs.deadline', '>', Carbon::today()->toDateString())
+                    ->orderBy('jobs.created_at', 'DESC')->paginate(10);
 
 
 
@@ -155,7 +164,7 @@ class AllJobsController extends Controller
 		$job_application->user_id = Auth::id();
 		$job_application->job_id = $request->job_id;
 		$job_application->cover_letter = $request->cover_letter;
-		$job_application->resume = 'Example';
+		$job_application->resume = null;
 		$job_application->save();
 
 		return back()->with('success', 'Successfully Applied for the job');
