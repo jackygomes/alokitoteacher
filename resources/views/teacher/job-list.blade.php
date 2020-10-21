@@ -124,6 +124,7 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Job Name</th>
+                                        <th>School Name</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
@@ -132,10 +133,11 @@
                                         <tr>
                                             <td>{{$jobApplication->no}}</td>
                                             <td>
-                                                <a class="" href="#">
+                                                <a class="" href="{{ url('job_detail') }}/{{ $jobApplication->job_id }}">
                                                     {{$jobApplication->job->job_title}}
                                                 </a>
                                             </td>
+                                            <td>{{$jobApplication->job->user->name}}</td>
                                             <td>
                                                 @if($jobApplication->status == "New")
                                                     In Review

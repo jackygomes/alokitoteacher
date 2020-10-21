@@ -126,7 +126,13 @@ class AllJobsController extends Controller
                     ->whereDate('jobs.deadline', '>', Carbon::today()->toDateString())
                     ->orderBy('jobs.created_at', 'DESC')->paginate(10);
 
+        $userId = Auth::check() ? Auth::user()->id : 0;
+        foreach($job_info as $job){
 
+            $appliedCount = JobApplication::where('user_id','=', $userId)->where('job_id','=', $job->job_id)->count();
+
+            $job->isApplied = $appliedCount ? 1 : 0;
+        }
 
 	    return view ('all-jobs-search',compact('job_info'));
 
@@ -178,10 +184,16 @@ class AllJobsController extends Controller
         $leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
         $applicants = JobApplication::where('job_id', $request->job_id)->paginate(10);
         $n = 0;
+
+        $userId = Auth::check() ? Auth::user()->id : 0;
+        $appliedCount = JobApplication::where('user_id','=', $userId)->where('job_id','=', $job_info->id)->count();
+        $job_info->isApplied = $appliedCount ? 1 : 0;
+
         foreach ($applicants as $applicant) {
             $n++;
             $applicant->no = $n;
         }
+
 
 		return view('job_details',compact('user_info', 'job_info', 'users','leaderBoard', 'applicants'));
 	}

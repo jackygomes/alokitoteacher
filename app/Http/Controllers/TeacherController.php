@@ -244,6 +244,7 @@ class TeacherController extends Controller
             $jobApplication->no = $n;
         }
 
+
         return view('teacher.job-list', compact('leaderBoard','recent_institute','recent_work', 'jobApplications' ,'user_info'));
     }
 }

@@ -98,6 +98,24 @@
 			<h3>Job Details</h3>
 			<div class="row mt-3">
 				<div class="col-md-9 card p-3">
+                    @if(Auth::user()->identifier == 2)
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-3 col-form-label font-weight-bold">Job Status:</label>
+                        <div class="col-sm-9">
+                            <p style="margin: 6px 0 0">{{$job_info->admin_status}}</p>
+                        </div>
+                    </div>
+
+                    @if(isset($job_info->admin_comment))
+                        <div class="form-group row mb-0">
+                            <label class="col-sm-3 col-form-label font-weight-bold" style="color: #f40c0c;">Admin Comment:</label>
+                            <div class="col-sm-9">
+                                <p style="margin: 6px 0 0">{!! nl2br(e($job_info->admin_comment)) !!}</p>
+                            </div>
+                        </div>
+                    @endif
+                    @endif
+
                     <div class="form-group row mb-0">
                         <label class="col-sm-3 col-form-label font-weight-bold">Job Position:</label>
                         <div class="col-sm-9">
@@ -190,14 +208,6 @@
                         </div>
                     </div>
 
-                    @if(isset($job_info->admin_comment))
-                        <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label font-weight-bold" style="color: #f40c0c;">Admin Comment:</label>
-                            <div class="col-sm-9">
-                                <p style="margin: 6px 0 0">{!! nl2br(e($job_info->admin_comment)) !!}</p>
-                            </div>
-                        </div>
-                    @endif
 				</div>
 
 				<div class="col-md-3 card pt-3">
@@ -227,8 +237,12 @@
 
 			<div class="row justify-content-center mt-3">
 
-				<button type="button" value="{{ $job_info->id }}" class="btn btn-success mr-3 applyButton" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
-				<button type="button" value="{{ $job_info->id }}" class="btn border-yellow saveButton">Save</button>
+                @if($job_info->isApplied == 0)
+				    <button type="button" value="{{ $job_info->id }}" class="btn btn-success mr-3 applyButton" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
+                @else
+                    <button type="button" value="{{ $job_info->id }}" class="btn btn-success mr-3 applyButton" disabled>Applied</button>
+                @endif
+{{--			<button type="button" value="{{ $job_info->id }}" class="btn border-yellow saveButton">Save</button>--}}
 			</div>
 
 
@@ -237,6 +251,8 @@
 
 
         </div>
+
+        @if(Auth::user()->identifier == 2)
         <div class="row">
             <div class=" mt-5 mb-3 col-sm-12">
                 <h3 class="font-weight-bold mr-3" style="display: inline-block">Applicants List</h3>
@@ -282,6 +298,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
 
 
@@ -309,10 +326,15 @@
       </div>
       <div class="modal-body" id="modalBody">
 
-  		<div class="form-group">
-		  <textarea class="form-control" rows="10" id="coverLetterText" placeholder="Write Cover Letter Here"></textarea>
-		</div>
-		<button type="button" id="coverLetterSubmitButton" class="btn background-yellow float-right">Submit</button>
+          <form method="POST" id="coverLetterForm" action="{{ url('submit_cover_letter') }}">
+              {{csrf_field()}}
+              <div class="form-group">
+                  <textarea class="form-control" rows="10" id="coverLetterText" name="cover_letter" placeholder="Write Cover Letter Here"></textarea>
+              </div>
+              <input type="hidden" name="job_id" value="{{$job_info->id}}" id="form_job_id">
+              <button type="submit" id="coverLetterSubmitButton" class="btn background-yellow float-right">Submit</button>
+
+          </form>
 
       </div>
 
@@ -381,30 +403,30 @@
 
 		});
 
-		function verify_applied_job(job_id){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-              });
-              jQuery.ajax({
-                url: "{{ url('/verify_applied_job') }}",
-                method: 'POST',
-                data: {
-                   job_id: job_id,
-                },
-                success: function(result){
-                	if(result == 'success'){
-                		jQuery('#modalLongTitle').text('Error');
-                		jQuery('#modalBody').html('<h3 class="text-center text-danger">Already Applied for this Job</h3>');
-                	}else{
-                		jQuery('#modalLongTitle').text('Your Profile will be shared with the school as your CV. Would you like to add a cover letter to increase your chances of being selected ?');
-                		jQuery('#modalBody').html('<div class="form-group"><textarea class="form-control" rows="10" id="comment" placeholder="Write Cover Letter Here"></textarea></div><button type="button" id="coverLetterSubmitButton" class="btn background-yellow float-right">Submit</button>');
-                	}
+		{{--function verify_applied_job(job_id){--}}
+        {{--    $.ajaxSetup({--}}
+        {{--        headers: {--}}
+        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--        }--}}
+        {{--      });--}}
+        {{--      jQuery.ajax({--}}
+        {{--        url: "{{ url('/verify_applied_job') }}",--}}
+        {{--        method: 'POST',--}}
+        {{--        data: {--}}
+        {{--           job_id: job_id,--}}
+        {{--        },--}}
+        {{--        success: function(result){--}}
+        {{--        	if(result == 'success'){--}}
+        {{--        		jQuery('#modalLongTitle').text('Error');--}}
+        {{--        		jQuery('#modalBody').html('<h3 class="text-center text-danger">Already Applied for this Job</h3>');--}}
+        {{--        	}else{--}}
+        {{--        		jQuery('#modalLongTitle').text('Your Profile will be shared with the school as your CV. Would you like to add a cover letter to increase your chances of being selected ?');--}}
+        {{--        		jQuery('#modalBody').html('<div class="form-group"><textarea class="form-control" rows="10" id="comment" placeholder="Write Cover Letter Here"></textarea></div><button type="button" id="coverLetterSubmitButton" class="btn background-yellow float-right">Submit</button>');--}}
+        {{--        	}--}}
 
-                }
-            });
-        }
+        {{--        }--}}
+        {{--    });--}}
+        {{--}--}}
 
         function submit_cover_letter(job_id, cover_letter){
             $.ajaxSetup({

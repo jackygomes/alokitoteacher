@@ -174,7 +174,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label bold">Job Status:</label>
                                     <div class="col-sm-10">
-                                        <select class="custom-select mr-sm-2" name="admin_status">
+                                        <select id="job_status" class="custom-select mr-sm-2" name="admin_status">
                                             <option value="Approved" {{$job->admin_status == 'Approved' ? 'selected' : ''}}>Approved</option>
                                             <option value="Pending" {{$job->admin_status == 'Pending' ? 'selected' : ''}}>Pending</option>
                                             <option value="Disapprove" {{$job->admin_status == 'Disapprove' ? 'selected' : ''}}>Disapprove</option>
@@ -187,7 +187,7 @@
                                         <p style="margin: 6px 0 0">{{$job->deadline}}</p>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row" id="admin_comment">
                                     <label class="col-sm-2 col-form-label">Comment:</label>
                                     <div class="col-sm-10">
                                         <textarea class="form-control" name="comment" placeholder="Reason for disapproval" rows="3">{{$job->admin_comment}}</textarea>
@@ -224,6 +224,17 @@
             });
             $("#profile_picture").change(function () {
                 $("#pro_pic_upload_form").submit();
+            });
+
+            function disapprove(){
+                let selected = $('#job_status').children("option:selected").val();
+                if(selected == 'Disapprove')$('#admin_comment').show();
+                else $('#admin_comment').hide();
+            }
+            disapprove();
+
+            $( "#job_status" ).change(function() {
+                disapprove();
             });
 
         </script>

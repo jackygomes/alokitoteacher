@@ -42,7 +42,6 @@
 
 					        		{{ str_limit(strip_tags($v_job_info->description), 150) }}
 
-						              <a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="text-yellow">Read More</a>
 
 
 			        			</div>
@@ -55,8 +54,14 @@
 			        				Deadline: {{ date("jS F, Y", strtotime($v_job_info->deadline)) }}</small>
 			        				<br>
 
+                                    @if($v_job_info->isApplied == 0)
 			        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$v_job_info->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
+                                    @else
+                                    <button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" disabled>Applied</button>
+                                    @endif
 {{--			        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn border-yellow saveButton">Save</button>--}}
+{{--                                    <a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="btn btn-success text-white btn-sm">View</a>--}}
+                                    <a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="btn background-yellow  text-white">View</a>
 			        			</div>
 		        			</div>
 		        		</div>
