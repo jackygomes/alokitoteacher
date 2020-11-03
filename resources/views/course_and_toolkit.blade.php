@@ -202,7 +202,7 @@
         <div class="justify-content-right">
             <div class="row  ">
                 <div class="col-md-12 text-center">
-                    <a href="{{url('allResource') }}" class="btn shadow  px-5 py-3 mt-5 mb-5 font-weight-bold background-yellow text-white">View More Resources</a>
+                    <a href="{{route('allResource') }}" class="btn shadow  px-5 py-3 mt-5 mb-5 font-weight-bold background-yellow text-white">View More Resources</a>
                 </div>
             </div>
         </div>

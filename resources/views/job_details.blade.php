@@ -152,7 +152,7 @@
                     </div>
 
                     <div class="form-group row mb-0">
-                        <label class="col-sm-3 col-form-label font-weight-bold">Type:</label>
+                        <label class="col-sm-3 col-form-label font-weight-bold">Job Nature:</label>
                         <div class="col-sm-9">
                             <p style="margin: 6px 0 0">@if($job_info->nature == 1) Permanent @elseif($job_info->nature == 2) Part-Time  @elseif($job_info->nature == 3) Contractual @else - @endif</p>
                         </div>

@@ -20,20 +20,21 @@ class AllJobsController extends Controller
 
 	public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
+        $this->middleware('auth')->except(['index']);
     }
 
    	function index(Request $request){
-   		if(Auth::user()->identifier == 2){
-
-	    	$posted_jobs = Job::where('user_id', '=', Auth::id())->where('removed', '=', 0)->orderBy('updated_at', 'DESC')->paginate(10);
-
-	    	$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
-
-
-		    return view ('posted-jobs', compact('posted_jobs', 'users'));
-
-   		}elseif (Auth::user()->identifier == 1 || Auth::user()->identifier == 101){
+//   		if(Auth::user()->identifier == 2){
+//
+//	    	$posted_jobs = Job::where('user_id', '=', Auth::id())->where('removed', '=', 0)->orderBy('updated_at', 'DESC')->paginate(10);
+//
+//	    	$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+//
+//
+//		    return view ('posted-jobs', compact('posted_jobs', 'users'));
+//
+//   		}elseif (Auth::user()->identifier == 1 || Auth::user()->identifier == 101){
 
    			if($request->type == 'saved'){
    				$job_info = DB::table('users')
@@ -59,9 +60,9 @@ class AllJobsController extends Controller
 			$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
 		    return view ('all-jobs', compact('job_info', 'schools', 'locations', 'users'));
 
-		}
+//		}
 
-		return abort(404);
+//		return abort(404);
 	}
 
 	function job_applications(Request $request){

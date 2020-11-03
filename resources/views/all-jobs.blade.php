@@ -7,7 +7,7 @@
 		<div class="col-md-2 sidebar-job-all" style="background-color: #f5b82f;">
 
 			<a href="{{ url('jobs/all') }}" class="btn bg-white form-control mt-5 {{ request()->route('type') == 'all' ? 'job-button-active' : '' }}">All Jobs</a>
-			<a href="{{ url('jobs/saved') }}" class="btn bg-white form-control mt-3 {{ request()->route('type') == 'saved' ? 'job-button-active' : '' }}">Saved Jobs</a>
+{{--			<a href="{{ url('jobs/saved') }}" class="btn bg-white form-control mt-3 {{ request()->route('type') == 'saved' ? 'job-button-active' : '' }}">Saved Jobs</a>--}}
 
 
 
@@ -93,7 +93,7 @@
 
 										        		{{ str_limit(strip_tags($v_job_info->description), 150) }}
 
-											              <a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="text-yellow">Read More</a>
+{{--											              <a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="text-yellow">Read More</a>--}}
 
 
 								        			</div>
@@ -107,11 +107,12 @@
 								        				<br>
 
 								        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
-								        				@if(request()->route('type') == 'all')
-								        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn border-yellow saveButton">Save</button>
-								        				@else
-								        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-danger removeButton">Remove</button>
-								        				@endif
+{{--								        				@if(request()->route('type') == 'all')--}}
+{{--								        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn border-yellow saveButton">Save</button>--}}
+{{--								        				@else--}}
+{{--								        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-danger removeButton">Remove</button>--}}
+                                                        <a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="btn background-yellow  text-white">View</a>
+{{--								        				@endif--}}
 								        			</div>
 							        			</div>
 							        		</div>

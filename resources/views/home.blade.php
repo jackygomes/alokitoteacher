@@ -143,7 +143,7 @@
                   <div class="single-fun-factor">
 
                       <h1><span class="counter-count text-yellow font-weight-bold">{{$stat->teacher}}</span></h1>
-                      <p class="counter-name">Teachers Trained</p>
+                      <p class="counter-name">Educators Trained</p>
                   </div>
               </div>
               <div class="col-sm-6">
@@ -238,7 +238,7 @@
 
       <div class="teachers-toolkits">
 
-          <h2 class=" font-weight-bold text-center mt-5 mb-5 text-orange">Teachers Toolkits</h2>
+          <h2 class=" font-weight-bold text-center mt-5 mb-5 text-orange">Educators Toolkits</h2>
 
           <h4 class="text-center background-yellow py-2 my-5 col-lg-8 offset-lg-2" style="border-radius: 10px;"><a class="text-white">আপনার শিক্ষকতা জীবনকে আরো সহজ ও কার্যকরী করুন এই সৃজনশীল পদ্ধতি ও উপাদান প্রয়োগ করে</a></h4>
 

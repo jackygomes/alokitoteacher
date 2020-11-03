@@ -25,7 +25,16 @@ class ResourceController extends Controller
      */
     public function index()
     {
+        $userId = Auth::check() ? Auth::user()->id : 0;
         $resource_info = Resource::with('user')->where('status', 'Approved')->paginate(12);
+        foreach($resource_info as $resource){
+            $isOrdered = Order::where('status', 'paid')
+                ->where('product_type', 'resource')
+                ->where('user_id', $userId)
+                ->where('product_id', $resource->id)->count();
+
+            $resource->isBought = $isOrdered ? 1 : 0;
+        }
 
         return view ('resource.resources',compact('resource_info'));
     }
