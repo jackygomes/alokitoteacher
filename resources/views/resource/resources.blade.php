@@ -24,7 +24,7 @@
                                 <select class="custom-select mr-sm-2" name="category" id="category">
                                     <option selected>All...</option>
                                     @foreach($categories as $category)
-                                        <option value="{{$category->id}}"><a href="">{{$category->category_name}}</option>
+                                        <option value="{{$category->id}}" {{$category->id == app('request')->input('category') ? "selected" : ""}}><a href="">{{$category->category_name}}</option>
                                     @endforeach
                                 </select>
                             </div>

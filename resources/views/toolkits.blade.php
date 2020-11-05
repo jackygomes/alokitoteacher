@@ -24,7 +24,7 @@
                            <select class="custom-select mr-sm-2" name="subject" id="subjects">
                                <option selected>All...</option>
                                @foreach($subjects as $subject)
-                                   <option value="{{$subject->id}}"><a href="">{{$subject->subject_name}}</option>
+                                   <option value="{{$subject->id}}" {{$subject->id == app('request')->input('subject') ? "selected" : ""}}><a href="">{{$subject->subject_name}}</option>
                                @endforeach
                            </select>
                        </div>
