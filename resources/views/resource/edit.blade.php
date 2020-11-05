@@ -98,7 +98,7 @@
                                 <div class="form-group row">
                                     <label for="Price" class="col-sm-2 col-form-label">Price:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="resource_price" class="form-control" value="{{$resource->price}}" id="Price" placeholder="Resource Price">
+                                        <input type="number" name="resource_price" class="form-control" value="{{$resource->price}}" id="Price" placeholder="Resource Price">
                                         <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the resource is free.</p>
                                     </div>
                                 </div>
@@ -246,9 +246,25 @@
                 $('#earnings').val(afterCut);
             }
             earnings();
+            let defaultPrice = $("#Price").val();
+            let defaultPriceCut = $("#earnings").val();
             $("#Price").bind('keyup', function () {
                 earnings();
+                if($("#Price").val() > 600){
+                    $("#Price").val(defaultPrice);
+                    $('#earnings').val(defaultPriceCut);
+                    popupAlertInsufficientBalance();
+                }
             });
+
+            function popupAlertInsufficientBalance() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: 'You cannot set price more than 600.!',
+                    confirmButtonColor: '#f5b82f',
+                })
+            }
 
             $("#videoSection").hide();
             $("#documentSection").hide();

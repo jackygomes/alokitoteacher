@@ -131,6 +131,12 @@
                     let afterCut = price - cut;
 
                     $('#earnings').val(afterCut);
+
+                    if(price > 600){
+                        $("#Price").val(0);
+                        $('#earnings').val(0);
+                        popupAlertInsufficientBalance();
+                    }
                 });
 
                 $("#Price").keydown(function (event) {
@@ -142,6 +148,15 @@
                         event.preventDefault();
                     }
                 });
+
+                function popupAlertInsufficientBalance() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops!',
+                        text: 'You cannot set price more than 600.!',
+                        confirmButtonColor: '#f5b82f',
+                    })
+                }
             });
 
         </script>

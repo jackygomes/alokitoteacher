@@ -95,7 +95,7 @@ class ResourceController extends Controller
         $this->validate($request, [
             'resource_name'         => 'required',
             'resource_description'  => 'required',
-            'resource_price'        => 'required',
+            'resource_price'        => 'required|numeric|max:600',
             'category'              => 'required',
             'thumbnailImage'        => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
@@ -191,6 +191,7 @@ class ResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
@@ -209,7 +210,7 @@ class ResourceController extends Controller
         $this->validate($request, [
             'resource_name'         => 'required',
             'resource_description'  => 'required',
-            'resource_price'        => 'required',
+            'resource_price'        => 'required|numeric|max:600',
             'category'              => 'required',
         ]);
 
