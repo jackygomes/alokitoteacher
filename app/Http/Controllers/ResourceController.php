@@ -28,6 +28,7 @@ class ResourceController extends Controller
     {
         $categories = ResourceCategory::all();
         $userId = Auth::check() ? Auth::user()->id : 0;
+        $category = null;
 
         if(isset($request->category)){
             $category = ResourceCategory::where('id', $request->category)->first();
