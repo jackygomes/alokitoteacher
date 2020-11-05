@@ -49,8 +49,8 @@ class CourseController extends Controller
 
             return abort(404);
         }
-
-        return view('course.create', compact('user_info'));
+        $users= User::where('identifier', 1)->get();
+        return view('course.create', compact('user_info','users'));
     }
 
     public function store(Request $request){
@@ -66,6 +66,9 @@ class CourseController extends Controller
             'course_price'          => 'required',
             'certificate_price'     => 'required',
             'preview_video'         => 'required',
+            'facilitator'           => 'required',
+            'advisor'               => 'required',
+            'designer'              => 'required',
             'courseThumbnailImage'  => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         $randomText = Str::random(6);
@@ -84,6 +87,9 @@ class CourseController extends Controller
             'price'    => isset($request->course_price) ? $request->course_price : "",
             'certificate_price'    => isset($request->certificate_price) ? $request->certificate_price : "",
             'slug'    => $slug,
+            'course_facilitator'    => $request->facilitator,
+            'advisor'    => $request->advisor,
+            'designer'    => $request->designer,
             'thumbnail'    => $image_name,
         ];
 
@@ -125,6 +131,7 @@ class CourseController extends Controller
             ->union($videos)
             ->orderBy('sequence', 'ASC')
             ->get();
+
 
         return view('course.course_edit',compact( 'user_info','info', 'contents'));
     }
@@ -175,8 +182,9 @@ class CourseController extends Controller
                 }
             } else $publishEnable = 0;
 //            return $quizzes;
+        $users= User::where('identifier', 1)->get();
 
-        return view('course.edit_objective',compact( 'previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
+        return view('course.edit_objective',compact( 'users','previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
     }
 
     public function courseDetailsUpdate(Request $request, $courseId) {
@@ -193,13 +201,16 @@ class CourseController extends Controller
             'course_price'         => 'required',
             'certificate_price'         => 'required',
             'preview_video'         => 'required',
+            'facilitator'         => 'required',
+            'advisor'         => 'required',
+            'designer'         => 'required',
         ]);
         $randomText = Str::random(10);
         $slug = Str::slug($request->input('course_name'), '-');
         $slug = $slug.'-'.$randomText;
 
 
-        $previewVideo = CoursePreview::find($courseId);
+        $previewVideo = CoursePreview::where('course_id',$courseId)->first();
         $previewVideo->url = $request->preview_video;
 
         $previewVideo->save();
@@ -215,6 +226,9 @@ class CourseController extends Controller
         $course->certificate_price = $request->input('certificate_price');
         $course->status = isset($request->status) ? $request->input('status') : "Pending";
         $course->slug = $slug;
+        $course->course_facilitator = $request->facilitator;
+        $course->advisor = $request->advisor;
+        $course->designer = $request->designer;
 
         if(isset($request->courseThumbnailImage)) {
             $image = $request->file('courseThumbnailImage');

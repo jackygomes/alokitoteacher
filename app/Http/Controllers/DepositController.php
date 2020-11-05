@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transaction;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,14 +89,35 @@ class DepositController extends Controller
             'phone'  =>  'required',
             'amount'  =>  'required',
         ]);
+
+        try{
+            $transactionData = [
+                'user_id'           => Auth::id(),
+                'transaction_type'  => 'Deposit',
+                'amount'            => $request->amount,
+                'status'            => 'Pending',
+                'currency'          => 'BDT'
+            ];
+
+            $transaction = Transaction::create($transactionData);
+
+        }catch(\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
+
         $data = [
             'request'   => $request,
             'userId'    => Auth::id(),
+            'transaction_id' => $transaction->id
         ];
         $paymentData = $this->createPayment($data);
-//        dd($paymentData);
-//        return $paymentData;
+
         $this->makePayment($paymentData);
+
+
     }
 
     private function createPayment($paymentData)
@@ -112,7 +134,7 @@ class DepositController extends Controller
 
         $post_data['total_amount'] = $paymentData['request']->amount;
         $post_data['currency'] = "BDT";
-        $post_data['tran_id'] = "ALOKITO_" . uniqid();
+        $post_data['tran_id'] = $paymentData['transaction_id'];
         $post_data['success_url'] = route('deposit.complete');
         $post_data['fail_url'] = route('deposit.complete');
         $post_data['cancel_url'] = route('deposit.complete');
@@ -194,8 +216,12 @@ class DepositController extends Controller
                 $status = 'success';
                 $user = User::find($userId);
                 $user->balance += floatval($request->amount);
-
                 $user->save();
+
+                $transaction = Transaction::find($request->tran_id);
+                $transaction->status = 'Paid';
+
+                $transaction->save();
 
                 return view('deposit.complete', compact('status'));
             } else{

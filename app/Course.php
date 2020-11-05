@@ -25,5 +25,10 @@ class Course extends Model
 //        return $this->hasMany(CourseHistory::class,'user_id', $userId);
 //    }
 
+    public function facilitator()
+    {
+        return $this->belongsToMany(User::class)->using('');
+    }
+
 
 }

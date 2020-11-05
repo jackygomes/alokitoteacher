@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\StudentPersonalInfo;
+use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -27,8 +28,9 @@ class SettingsController extends Controller
     	if(Auth::user()->identifier == 1){
     		$recent_work = WorkExperience::where('user_id', '=', Auth::id())->where('to_date', '=', '0000-00-00')->first();
 	    	$recent_institute = Academic::where('user_id', '=', Auth::id())->orderBy('passing_year', 'DESC')->first();
+            $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type','Earning')->sum('amount');
 
-		    return view ('settings_teacher', compact('recent_work', 'recent_institute'));
+		    return view ('settings_teacher', compact('earnings','recent_work', 'recent_institute'));
 
     	}elseif(Auth::user()->identifier == 2) {
             return view ('settings_school');

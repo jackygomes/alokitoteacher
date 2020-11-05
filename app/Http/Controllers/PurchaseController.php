@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Job;
 use App\Order;
 use App\Resource;
+use App\Revenue;
 use App\Toolkit;
 use App\TrackHistory;
+use App\Transaction;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -118,7 +121,10 @@ class PurchaseController extends Controller
                     'currency'          => 'BDT'
                 ];
 
-                Order::create($orderData);
+                $order = Order::create($orderData);
+
+                //method call for transaction;
+                $this->transaction($order);
 
                 $userId = Auth::id();
                 $user_info = User::where('id', '=', $userId)->first();
@@ -151,5 +157,68 @@ class PurchaseController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function transaction($order) {
+        try{
+            // Spending entry
+            $transactionSpendingData = [
+                'user_id'           => Auth::id(),
+                'order_id'          => $order->id,
+                'transaction_type'  => 'Spending',
+                'amount'            => $order->amount,
+                'status'            => 'Paid',
+                'currency'          => 'BDT'
+            ];
+            Transaction::create($transactionSpendingData);
+
+            if($order->product_type == 'course')        $product = Course::find($order->product_id);
+            elseif($order->product_type == 'toolkit')   $product = Toolkit::find($order->product_id);
+            elseif($order->product_type == 'resource')  $product = Resource::find($order->product_id);
+//            elseif($order->product_type == 'Job')       $product = Job::find($order->product_id);
+
+            $user = User::find($product->user_id);
+
+            $earningAmount = 0;
+            if($user->identifier == 101){
+                $earningAmount = $order->amount;
+            }else {
+                $payCut = ($order->amount * 15)/100;
+                $earningAmount = $order->amount - $payCut;
+            }
+
+            // Earning entry
+            $transactionEarningData = [
+                'user_id'           => $product->user_id,
+                'order_id'          => $order->id,
+                'transaction_type'  => 'Earning',
+                'amount'            => $earningAmount,
+                'status'            => 'Paid',
+                'currency'          => 'BDT'
+            ];
+            Transaction::create($transactionEarningData);
+
+            // Revenue Entry
+            if($user->identifier == 101){
+                $revenueAmount = $order->amount;
+            }else {
+                $revenueAmount = $payCut;
+
+                $user->balance += floatval($earningAmount);
+                $user->save();
+            }
+            $revenueData = [
+                'order_id'          => $order->id,
+                'revenue'           => $revenueAmount,
+                'currency'          => 'BDT'
+            ];
+            Revenue::create($revenueData);
+
+        }catch(\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
     }
 }

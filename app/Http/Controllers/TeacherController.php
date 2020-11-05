@@ -8,6 +8,7 @@ use App\Toolkit;
 use App\ToolkitHistory;
 use App\ToolkitQuiz;
 use App\ToolkitRating;
+use App\Transaction;
 use App\Utilities\LeaderBoard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -87,9 +88,10 @@ class TeacherController extends Controller
             $user->rating = $teacherRating;
             $user->save();
         }
+        $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type','Earning')->sum('amount');
 
 
-	    return view ('teachers', compact('user_info','work_info','academic_info','skill_info', 'progresses', 'achievements', 'course_knowledges', 'leaderBoard', 'recent_work', 'recent_institute'));
+	    return view ('teachers', compact('earnings','user_info','work_info','academic_info','skill_info', 'progresses', 'achievements', 'course_knowledges', 'leaderBoard', 'recent_work', 'recent_institute'));
 
 	}
 
@@ -106,10 +108,11 @@ class TeacherController extends Controller
         $recent_institute = Academic::where('user_id', '=', $user_info->id)->orderBy('passing_year', 'DESC')->first();
         $toolkits = Toolkit::with('subject')->where('user_id', '=', $userId)->paginate(5);
         $resources = Resource::where('user_id',$userId)->paginate(10);
+        $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type','Earning')->sum('amount');
 
 //        return $toolkits;
 
-        return view('teacher.dashboard', compact('resources','toolkits', 'user_info','recent_work', 'leaderBoard', 'recent_institute'));
+        return view('teacher.dashboard', compact('earnings','resources','toolkits', 'user_info','recent_work', 'leaderBoard', 'recent_institute'));
     }
 
 	 function picture(Request $request){

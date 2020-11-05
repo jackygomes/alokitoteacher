@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Resource;
+use App\ResourceCategory;
 use App\ResourceDocument;
 use App\ResourceVideo;
 use App\User;
@@ -56,7 +57,8 @@ class ResourceController extends Controller
         }else {
             return abort(404);
         }
-        return view('resource.create', compact('user_info'));
+        $categories = ResourceCategory::all();
+        return view('resource.create', compact('user_info', 'categories'));
     }
 
     /**
@@ -83,6 +85,7 @@ class ResourceController extends Controller
             'resource_name'         => 'required',
             'resource_description'  => 'required',
             'resource_price'        => 'required',
+            'category'              => 'required',
             'thumbnailImage'        => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -97,6 +100,7 @@ class ResourceController extends Controller
         try{
             $resourceData = [
                 'user_id'       => $userId,
+                'category_id'   => $request->category,
                 'resource_title'=> isset($request->resource_name) ? $request->resource_name : "",
                 'description'   => isset($request->resource_description) ? $request->resource_description : "",
                 'price'         => $request->resource_price,
@@ -162,8 +166,9 @@ class ResourceController extends Controller
             ->union($videos)
             ->get();
 //        return count($contents);
+        $categories = ResourceCategory::all();
 
-        return view('resource.edit', compact('user_info','resource','contents'));
+        return view('resource.edit', compact('user_info','resource','contents','categories'));
     }
 
     /**
@@ -194,7 +199,7 @@ class ResourceController extends Controller
             'resource_name'         => 'required',
             'resource_description'  => 'required',
             'resource_price'        => 'required',
-            'status'                => 'required',
+            'category'              => 'required',
         ]);
 
         if($resource->resource_title != $request->resource_name){
@@ -205,6 +210,7 @@ class ResourceController extends Controller
             $slug = $resource->slug;
         }
 
+        $resource->category_id = $request->category;
         $resource->resource_title = $request->resource_name;
         $resource->description = $request->resource_description;
         $resource->price = $request->resource_price;

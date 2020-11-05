@@ -103,6 +103,26 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group row">
+                                    <label for="toolkitPrice" class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="earnings" class="form-control" placeholder="Earnings" readonly>
+                                        <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">*Earnings After 15% Cut.</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="subjects" class="col-sm-2 col-form-label">Category:</label>
+                                    <div class="col-sm-10">
+                                        <select class="custom-select mr-sm-2" name="category" id="category">
+                                            <option>Choose Subject...</option>
+                                            @foreach($categories as $category)
+                                                <option value="{{$category->id}}" {{$resource->category_id == $category->id ? "selected" : ""}}>{{$category->category_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                                 @if($user_info->identifier == 101)
                                     @php $statusOptions = ['Pending', 'Approved']; @endphp
                                     <div class="form-group row">
@@ -216,6 +236,18 @@
                         event.preventDefault();
                     }
                 });
+            });
+
+            function earnings(){
+                let price = $("#Price").val();
+                let cut = ($("#Price").val() * 15)/100;
+                let afterCut = price - cut;
+
+                $('#earnings').val(afterCut);
+            }
+            earnings();
+            $("#Price").bind('keyup', function () {
+                earnings();
             });
 
             $("#videoSection").hide();

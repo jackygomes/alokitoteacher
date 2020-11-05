@@ -1,6 +1,6 @@
 @extends('master')
 @section('content')
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
 <div class="container-fluid">
 
@@ -92,6 +92,39 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="subjects" class="col-sm-2 col-form-label">Facilitator:</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select mr-sm-2" name="facilitator" id="facilitator">
+                                    <option selected>Choose Facilitator...</option>
+                                    @foreach($users as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="subjects" class="col-sm-2 col-form-label">Advisor:</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select mr-sm-2" name="advisor" id="advisor">
+                                    <option selected>Choose Advisor...</option>
+                                    @foreach($users as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="subjects" class="col-sm-2 col-form-label">Designer:</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select mr-sm-2" name="designer" id="designer">
+                                    <option selected>Choose Designer...</option>
+                                    @foreach($users as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="thumbnailImage" class="col-sm-2 col-form-label">Thumbnail Image:</label>
                             <div class="col-sm-10">
                                 <input type="file" name="courseThumbnailImage" class="form-control-file" id="thumbnailImage">
@@ -106,9 +139,12 @@
     </div>
 </div>
 @push('js')
-
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
+            $('#facilitator').select2();
+            $('#advisor').select2();
+            $('#designer').select2();
             $("#coursePrice").keydown(function (event) {
                 // Allow Only: keyboard 0-9, numpad 0-9, backspace, tab, left arrow, right arrow, delete
                 if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46) {

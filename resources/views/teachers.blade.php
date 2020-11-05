@@ -102,6 +102,8 @@
             <a href="{{route('deposit.form')}}" class=" btn btn-success btn-sm"style="display: inline-block" >Deposit</a>
             <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
          </div>
+          <h4 class="mt-3">Total Earnings</h4>
+          <p>{{ $earnings }}</p>
          @endif
 
 

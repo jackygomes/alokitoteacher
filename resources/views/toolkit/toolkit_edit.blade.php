@@ -135,6 +135,14 @@
                                 <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the toolkit is free.</p>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="toolkitPrice" class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-10">
+                                <input type="text" id="earnings" class="form-control" placeholder="Earnings" readonly>
+                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">*Earnings After 15% Cut.</p>
+                            </div>
+                        </div>
                         @if($user_info->identifier == 101)
                         @php $statusOptions = ['Pending', 'Approved']; @endphp
                         <div class="form-group row">
@@ -325,6 +333,18 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
+                function earnings(){
+                    let price = $("#toolkitPrice").val();
+                    let cut = ($("#toolkitPrice").val() * 15)/100;
+                    let afterCut = price - cut;
+
+                    $('#earnings').val(afterCut);
+                }
+                earnings();
+                $("#toolkitPrice").bind('keyup', function () {
+                    earnings();
+                });
+
                 $("#videoSection").hide();
                 $("#questionSection").hide();
                 $('#editToolkit').hide();

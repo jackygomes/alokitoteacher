@@ -87,6 +87,26 @@
                             </div>
 
                             <div class="form-group row">
+                                <label for="toolkitPrice" class="col-sm-2 col-form-label">Your Earnings</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="earnings" class="form-control" placeholder="Earnings" readonly>
+{{--                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">*Earnings After 15% Cut.</p>--}}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="subjects" class="col-sm-2 col-form-label">Category:</label>
+                                <div class="col-sm-10">
+                                    <select class="custom-select mr-sm-2" name="category" id="category">
+                                        <option selected>Choose Category...</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="thumbnail_image" class="col-sm-2 col-form-label">Thumbnail Image:</label>
                                 <div class="col-sm-10">
                                     <input type="file" name="thumbnailImage" class="form-control-file" id="thumbnail_image">
@@ -105,6 +125,14 @@
 
         <script type="text/javascript">
             $(document).ready(function(){
+                $("#Price").bind('keyup', function () {
+                    let price = $("#Price").val();
+                    let cut = ($("#Price").val() * 15)/100;
+                    let afterCut = price - cut;
+
+                    $('#earnings').val(afterCut);
+                });
+
                 $("#Price").keydown(function (event) {
                     // Allow Only: keyboard 0-9, numpad 0-9, backspace, tab, left arrow, right arrow, delete
                     if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46) {
