@@ -22,7 +22,7 @@
                        <label for="subjects" class="col-sm-1 col-form-label">Subject:</label>
                        <div class="col-sm-2">
                            <select class="custom-select mr-sm-2" name="subject" id="subjects">
-                               <option selected>Choose Subject...</option>
+                               <option selected>All...</option>
                                @foreach($subjects as $subject)
                                    <option value="{{$subject->id}}"><a href="">{{$subject->subject_name}}</option>
                                @endforeach

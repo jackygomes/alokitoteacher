@@ -24,10 +24,20 @@ class ResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $categories = ResourceCategory::all();
         $userId = Auth::check() ? Auth::user()->id : 0;
-        $resource_info = Resource::with('user')->where('status', 'Approved')->paginate(12);
+
+        if(isset($request->category)){
+            $category = ResourceCategory::where('id', $request->category)->first();
+        }
+        if($category){
+            $resource_info = Resource::with('user')->where('category_id',$category->id)->where('status', 'Approved')->paginate(12);
+        }else {
+            $resource_info = Resource::with('user')->where('status', 'Approved')->paginate(12);
+        }
+
         foreach($resource_info as $resource){
             $isOrdered = Order::where('status', 'paid')
                 ->where('product_type', 'resource')
@@ -37,7 +47,7 @@ class ResourceController extends Controller
             $resource->isBought = $isOrdered ? 1 : 0;
         }
 
-        return view ('resource.resources',compact('resource_info'));
+        return view ('resource.resources',compact('categories','resource_info'));
     }
 
     /**
