@@ -87,10 +87,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="toolkitPrice" class="col-sm-2 col-form-label"></label>
+                                <label for="toolkitPrice" class="col-sm-2 col-form-label">Your Earnings</label>
                                 <div class="col-sm-10">
                                     <input type="text" id="earnings" class="form-control" placeholder="Earnings" readonly>
-                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">*Earnings After 15% Cut.</p>
+{{--                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">*Earnings After 15% Cut.</p>--}}
                                 </div>
                             </div>
 
