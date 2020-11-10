@@ -61,6 +61,11 @@ Route::get ('admin/leader-board', 'AdminController@leaderBoard')->name('admin.le
 Route::get ('admin/job-list', 'AllJobsController@adminJobList')->name('admin.job.list');
 Route::post ('admin/total-count-update/{id}', 'AdminController@totalCountUpdate')->name('admin.total.count.update');
 Route::post ('admin/job-price-update/{id}', 'AdminController@jobPriceUpdate')->name('admin.job.price.update');
+Route::get ('admin/course-activists', 'AdminController@courseActivist')->name('admin.course.activist');
+Route::get ('admin/course-activists/create', 'AdminController@courseActivistCreate')->name('admin.course.activist.create');
+Route::post ('admin/course-activists/store', 'AdminController@courseActivistStore')->name('admin.course.activist.store');
+Route::delete ('admin/course-activists/delete/{id}', 'AdminController@courseActivistDestroy')->name('admin.course.activist.delete');
+
 
 
 Route::get ('toolkit/create', 'ToolkitController@create')->name('toolkit.create');
@@ -73,6 +78,9 @@ Route::post ('toolkit/question/create/{id}', 'ToolkitController@questionCreate')
 Route::get ('toolkit/edit/{id}', 'ToolkitController@toolkit_edit')->name('toolkit.edit');
 Route::post ('toolkit/video/update/{id}', 'ToolkitController@toolkit_video_update')->name('toolkit.video.edit');
 Route::post ('toolkit/quiz/update/{id}', 'ToolkitController@toolkit_quiz_update')->name('toolkit.quiz.update');
+
+Route::delete ('toolkit/delete/{id}', 'ToolkitController@destroy')->name('toolkit.delete');
+
 
 
 Route::post ('admin/load_content', 'AdminController@load_content');

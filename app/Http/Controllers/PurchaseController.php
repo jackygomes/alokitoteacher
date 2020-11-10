@@ -201,9 +201,14 @@ class PurchaseController extends Controller
             // Revenue Entry
             if($user->identifier == 101){
                 $revenueAmount = $order->amount;
+
+                //admin balance update
+                $user->balance += floatval($revenueAmount);
+                $user->save();
             }else {
                 $revenueAmount = $payCut;
 
+                //user blance update
                 $user->balance += floatval($earningAmount);
                 $user->save();
             }

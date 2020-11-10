@@ -142,7 +142,16 @@
                                                 <td>{{$toolkit->toolkit_title}}</td>
                                                 <td>{{($toolkit->price == 0) ? 'Free' : $toolkit->price}}</td>
                                                 <td>{{$toolkit->status}}</td>
-                                                <td><a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
+                                                <td>
+{{--                                                    <a href="{{route('toolkit.delete',$toolkit->id)}}" class="btn btn-danger btn-sm">Remove</a>--}}
+                                                    <form id="deleteForm_{{$toolkit->id}}" action="{{ route('toolkit.delete', ['id' => $toolkit->id]) }}" method="post">
+                                                        <a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                                        <input class="btn btn-danger btn-sm" onclick="deleteConfirm({{$toolkit->id}})" type="button" value="Remove" />
+                                                        <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                                        @method('delete')
+                                                        @csrf
+                                                    </form>
+                                                </td>
                                             </tr>
                                             <?php $n++ ?>
                                         @endforeach
@@ -241,6 +250,22 @@
                     $('#work_end').attr("required", "required");
                 }
             });
+
+            function deleteConfirm(id) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Are you sure to delete?',
+                    confirmButtonColor: '#f5b82f',
+                    confirmButtonText: "Yes",
+                    showCancelButton: true,
+                    cancelButtonText:'Cancel',
+                    cancelButtonColor: '#d33'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#deleteForm_"+id).find('[type="submit"]').trigger('click');
+                    }
+                })
+            }
 
         </script>
 

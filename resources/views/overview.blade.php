@@ -13,6 +13,59 @@
 
         {!! $thumbnailPart !!}
 
+          @if(isset($facilitator) || isset($advisor) || isset($designer))
+          <div class="row pt-5">
+              @if(isset($facilitator))
+              <div class="col-lg-4">
+                  <div class="card text-center">
+                      <div class="card-header">
+                          <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$facilitator->image}}">
+                      </div>
+                      <div class="card-body">
+                          <h5 class="card-title">{{$facilitator->name}}</h5>
+                          <p class="card-text">{!! nl2br(e($facilitator->description)) !!}</p>
+                      </div>
+                      <div class="card-footer text-muted">
+                          {{$facilitator->type}}
+                      </div>
+                  </div>
+              </div>
+              @endif
+              @if(isset($advisor))
+              <div class="col-lg-4">
+                  <div class="card text-center">
+                      <div class="card-header">
+                          <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$advisor->image}}">
+                      </div>
+                      <div class="card-body">
+                          <h5 class="card-title">{{$advisor->name}}</h5>
+                          <p class="card-text">{!! nl2br(e($advisor->description)) !!}</p>
+                      </div>
+                      <div class="card-footer text-muted">
+                          {{$advisor->type}}
+                      </div>
+                  </div>
+              </div>
+              @endif
+              @if(isset($designer))
+              <div class="col-lg-4">
+                  <div class="card text-center">
+                      <div class="card-header">
+                          <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$designer->image}}">
+                      </div>
+                      <div class="card-body">
+                          <h5 class="card-title">{{$designer->name}}</h5>
+                          <p class="card-text">{!! nl2br(e($designer->description)) !!}</p>
+                      </div>
+                      <div class="card-footer text-muted">
+                          {{$designer->type}}
+                      </div>
+                  </div>
+              </div>
+              @endif
+          </div>
+          @endif
+
         <p style="margin-bottom: 0; background-color: #f3f2f0;" class="mt-5 p-5 card font-weight-bold text-center"> {{ $info->description }}</p>
 
       </div>

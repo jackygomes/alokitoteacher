@@ -505,5 +505,24 @@ class ToolkitController extends Controller
         return redirect()->route('toolkit.edit', $toolkit);
 
     }
+
+    /**
+     * Remove the specified toolkit from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try{
+            $toolkit = Toolkit::find($id);
+
+        }catch(\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
+    }
 }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CourseActivist;
 use App\CourseDocument;
 use App\CourseQuestion;
 use App\CourseQuiz;
@@ -19,6 +20,7 @@ use App\ToolkitQuizOption;
 use App\ToolkitVideo;
 use App\TrackHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -208,7 +210,73 @@ class AdminController extends Controller
 
     }
 
+    public function courseActivist(){
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
 
+        if(isset($user_info) && $user_info->identifier != 101){
 
+            return abort(404);
+        }
+        $activists = CourseActivist::all();
+
+        return view('admin.course-activists',compact('user_info','activists'));
+    }
+
+    public function courseActivistCreate(){
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+
+        return view('admin.course-activists-create',compact('user_info'));
+    }
+
+    public function courseActivistStore(Request $request){
+        $userId = Auth::id();
+        $this->validate($request, [
+            'name'    => 'required',
+            'type'    => 'required',
+            'image'   => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $image = $request->file('image');
+        $image_name = $request->type.'_'.md5(rand()).'.'.$image->getClientOriginalExtension();
+
+        $image->move(public_path("images/course_activist_image"), $image_name);
+
+        $activist = [
+            'name'          => $request->name,
+            'description'   => $request->description,
+            'type'          => $request->type,
+            'image'         => $image_name,
+        ];
+        CourseActivist::create($activist);
+
+        return redirect()->back()->with('success', $request->type.' Created Successfully ');
+    }
+
+    public function courseActivistDestroy($id){
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+        $activist = CourseActivist::find($id);
+
+        //user image delete
+        $image = 'images/course_activist_image/'.$activist->image;
+        File::delete($image);
+
+        $activist->delete();
+
+        return redirect()->back()->with('success', $activist->type.' Deleted Successfully ');
+
+    }
 
 }

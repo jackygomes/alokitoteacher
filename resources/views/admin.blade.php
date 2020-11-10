@@ -83,6 +83,9 @@
                         <a href="{{route('admin.job.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             Job List
                         </a>
+                        <a href="{{route('admin.course.activist')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                            Course Activists
+                        </a>
                     </div>
                 </div>
                 <div class="row">
@@ -114,7 +117,7 @@
                                             <td>{{$course->title}}</td>
                                             <td>{{($course->price == 0) ? 'Free' : $course->price}}</td>
                                             <td>{{$course->status}}</td>
-                                            <td><a href="{{route('course.edit', $course->id)}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
+                                            <td><a href="{{route('course.edit', $course->id)}}" class="btn btn-info text-white btn-sm">Edit</a></td>
                                         </tr>
                                         <?php $n++ ?>
                                     @endforeach
@@ -154,7 +157,15 @@
                                             <td>{{$toolkit->toolkit_title}}</td>
                                             <td>{{($toolkit->price == 0) ? 'Free' : $toolkit->price}}</td>
                                             <td>{{$toolkit->status}}</td>
-                                            <td><a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
+                                            <td>
+                                                <form id="deleteForm_{{$toolkit->id}}" action="{{ route('toolkit.delete', ['id' => $toolkit->id]) }}" method="post">
+                                                    <a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                                    <input class="btn btn-danger btn-sm" onclick="deleteConfirm({{$toolkit->id}})" type="button" value="Remove" />
+                                                    <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                                    @method('delete')
+                                                    @csrf
+                                                </form>
+                                            </td>
                                         </tr>
                                         <?php $n++ ?>
                                     @endforeach
@@ -179,7 +190,7 @@
                                     <thead>
                                     <tr>
                                         <th style="width:10%">No.</th>
-                                        <th style="width:30%">Toolkit Name</th>
+                                        <th style="width:30%">Resource Name</th>
                                         <th style="width:10%">Price</th>
                                         <th style="width:10%">Status</th>
                                         <th style="width:20%">Action</th>
@@ -221,6 +232,22 @@
     $("#profile_picture").change(function () {
         $("#pro_pic_upload_form").submit();
     });
+
+    function deleteConfirm(id) {
+        Swal.fire({
+            icon: 'question',
+            title: 'Are you sure to delete?',
+            confirmButtonColor: '#f5b82f',
+            confirmButtonText: "Yes",
+            showCancelButton: true,
+            cancelButtonText:'Cancel',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#deleteForm_"+id).find('[type="submit"]').trigger('click');
+            }
+        })
+    }
 
 </script>
 

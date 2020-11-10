@@ -4,7 +4,7 @@
 
 <div class="container-fluid">
 	<div class="row" style="min-height: 90vh">
-		<div class="col-md-2 col-sm-12 pt-5 text-center" style="background-color: #f5b82f;"><!--left col-->
+		<div class="col-md-3 col-sm-12 pt-5 text-center" style="background-color: #f5b82f;"><!--left col-->
 
 
 			<div style="width: 150px; height: 150px;" class="mx-auto">

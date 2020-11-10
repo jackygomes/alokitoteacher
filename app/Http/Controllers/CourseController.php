@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CourseActivist;
 use App\CoursePreview;
 use App\CourseQuestion;
 use App\CourseQuiz;
@@ -49,8 +50,10 @@ class CourseController extends Controller
 
             return abort(404);
         }
-        $users= User::where('identifier', 1)->get();
-        return view('course.create', compact('user_info','users'));
+        $facilitators = CourseActivist::where('type','Facilitator')->get();
+        $advisors = CourseActivist::where('type','Advisor')->get();
+        $designers = CourseActivist::where('type','Designer')->get();
+        return view('course.create', compact('user_info','users','facilitators','advisors','designers'));
     }
 
     public function store(Request $request){
@@ -182,9 +185,11 @@ class CourseController extends Controller
                 }
             } else $publishEnable = 0;
 //            return $quizzes;
-        $users= User::where('identifier', 1)->get();
+        $facilitators = CourseActivist::where('type','Facilitator')->get();
+        $advisors = CourseActivist::where('type','Advisor')->get();
+        $designers = CourseActivist::where('type','Designer')->get();
 
-        return view('course.edit_objective',compact( 'users','previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
+        return view('course.edit_objective',compact( 'users','facilitators','advisors','designers','previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
     }
 
     public function courseDetailsUpdate(Request $request, $courseId) {

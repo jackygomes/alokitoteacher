@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CourseActivist;
 use App\Order;
 use App\Utilities\LeaderBoard;
 use Illuminate\Http\Request;
@@ -149,12 +150,15 @@ class ContentController extends Controller
             $thumbnailPart = '<div style="border: 2px solid #f5b82f" class="embed-responsive embed-responsive-16by9 "><iframe src="' . $video . '" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div>';
 
             $creator = User::find($info->user_id);
+            $facilitator = CourseActivist::find($info->course_facilitator);
+            $advisor = CourseActivist::find($info->advisor);
+            $designer = CourseActivist::find($info->designer);
 
             $content_rating = DB::table('course_ratings')
                 ->where('course_id', '=', $info->id)
                 ->avg('rating');
 
-            return view('overview', compact('info', 'thumbnailPart', 'creator', 'content_rating', 'trackHistory'));
+            return view('overview', compact('info','facilitator','advisor','designer', 'thumbnailPart', 'creator', 'content_rating', 'trackHistory'));
 
         } else {
             if ($request->course_toolkit == 't') {

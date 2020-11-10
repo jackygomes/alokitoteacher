@@ -108,8 +108,8 @@
                             <div class="col-sm-10">
                                 <select class="custom-select mr-sm-2" name="facilitator" id="facilitator">
                                     <option selected>Choose Facilitator...</option>
-                                    @foreach($users as $user)
-                                        <option value="{{$user->id}}" {{$info->course_facilitator == $user->id ? "selected" : ""}}>{{$user->name}}</option>
+                                    @foreach($facilitators as $facilitator)
+                                        <option value="{{$facilitator->id}}" {{$info->course_facilitator == $facilitator->id ? "selected" : ""}}>{{$facilitator->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -119,8 +119,8 @@
                             <div class="col-sm-10">
                                 <select class="custom-select mr-sm-2" name="advisor" id="advisor">
                                     <option selected>Choose Advisor...</option>
-                                    @foreach($users as $user)
-                                        <option value="{{$user->id}}" {{$info->advisor == $user->id ? "selected" : ""}}>{{$user->name}}</option>
+                                    @foreach($advisors as $advisor)
+                                        <option value="{{$advisor->id}}" {{$info->advisor == $advisor->id ? "selected" : ""}}>{{$advisor->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -130,8 +130,8 @@
                             <div class="col-sm-10">
                                 <select class="custom-select mr-sm-2" name="designer" id="designer">
                                     <option selected>Choose Designer...</option>
-                                    @foreach($users as $user)
-                                        <option value="{{$user->id}}" {{$info->designer == $user->id ? "selected" : ""}}>{{$user->name}}</option>
+                                    @foreach($designers as $designer)
+                                        <option value="{{$designer->id}}" {{$info->designer == $designer->id ? "selected" : ""}}>{{$designer->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
