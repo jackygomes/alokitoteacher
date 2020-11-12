@@ -76,6 +76,11 @@
                             Advance Edit
                             @endif
                         </a>
+                        @if($message = Session::get('success'))
+                            <div class="alert alert-success">
+                                {{$message}}
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div id="content">

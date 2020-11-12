@@ -117,6 +117,11 @@
                         </div>
                     </div>
                     <div class="row">
+                        @if($message = Session::get('success'))
+                            <div class="alert alert-success">
+                                {{$message}}
+                            </div>
+                        @endif
                         <div class=" mt-5 mb-3 col-sm-12">
                             <h3 class="font-weight-bold mr-3" style="display: inline-block">Toolkits</h3>
                             <a href="{{route('toolkit.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
@@ -143,10 +148,9 @@
                                                 <td>{{($toolkit->price == 0) ? 'Free' : $toolkit->price}}</td>
                                                 <td>{{$toolkit->status}}</td>
                                                 <td>
-{{--                                                    <a href="{{route('toolkit.delete',$toolkit->id)}}" class="btn btn-danger btn-sm">Remove</a>--}}
-                                                    <form id="deleteForm_{{$toolkit->id}}" action="{{ route('toolkit.delete', ['id' => $toolkit->id]) }}" method="post">
+                                                    <form id="toolkitDeleteForm_{{$toolkit->id}}" action="{{ route('toolkit.delete', ['id' => $toolkit->id]) }}" method="post">
                                                         <a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
-                                                        <input class="btn btn-danger btn-sm" onclick="deleteConfirm({{$toolkit->id}})" type="button" value="Remove" />
+                                                        <input class="btn btn-danger btn-sm" onclick="toolkitDeleteConfirm({{$toolkit->id}})" type="button" value="Remove" />
                                                         <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
                                                         @method('delete')
                                                         @csrf
@@ -193,7 +197,15 @@
                                                 <td>{{$resource->resource_title}}</td>
                                                 <td>{{($resource->price == 0) ? 'Free' : $resource->price}}</td>
                                                 <td>{{$resource->status}}</td>
-                                                <td><a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a> <a href="#" class="btn btn-danger btn-sm">Remove</a></td>
+                                                <td>
+                                                    <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">
+                                                        <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                                        <input class="btn btn-danger btn-sm" onclick="resourceDeleteConfirm({{$resource->id}})" type="button" value="Remove" />
+                                                        <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                                        @method('delete')
+                                                        @csrf
+                                                    </form>
+                                                </td>
                                             </tr>
                                             <?php $n++ ?>
                                         @endforeach
@@ -251,7 +263,7 @@
                 }
             });
 
-            function deleteConfirm(id) {
+            function toolkitDeleteConfirm(id) {
                 Swal.fire({
                     icon: 'question',
                     title: 'Are you sure to delete?',
@@ -262,7 +274,23 @@
                     cancelButtonColor: '#d33'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $("#deleteForm_"+id).find('[type="submit"]').trigger('click');
+                        $("#toolkitDeleteForm_"+id).find('[type="submit"]').trigger('click');
+                    }
+                })
+            }
+
+            function resourceDeleteConfirm(id) {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Are you sure to delete?',
+                    confirmButtonColor: '#f5b82f',
+                    confirmButtonText: "Yes",
+                    showCancelButton: true,
+                    cancelButtonText:'Cancel',
+                    cancelButtonColor: '#d33'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#resourceDeleteForm_"+id).find('[type="submit"]').trigger('click');
                     }
                 })
             }

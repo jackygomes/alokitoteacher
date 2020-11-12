@@ -11,6 +11,7 @@ use App\ToolkitQuizOption;
 use App\ToolkitVideo;
 use App\TrackHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,7 @@ class ToolkitController extends Controller
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
                     ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.deleted','=', 0)
                     ->where('toolkits.subject_id', '=', $subject->id)
                     ->where('toolkits.type', '=', 'Student')
                     ->groupBy('toolkits.id')
@@ -57,6 +59,7 @@ class ToolkitController extends Controller
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
                     ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.deleted','=', 0)
                     ->where('toolkits.subject_id', '=', $subject->id)
                     ->where('toolkits.type', '=', 'Teacher')
                     ->groupBy('toolkits.id')
@@ -69,6 +72,7 @@ class ToolkitController extends Controller
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
                     ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.deleted','=', 0)
                     ->where('toolkits.subject_id', '=', $subject->id)
                     ->groupBy('toolkits.id')
                     ->orderby('toolkits.subject_id','asc')
@@ -82,6 +86,7 @@ class ToolkitController extends Controller
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
                     ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.deleted','=', 0)
                     ->where('toolkits.type', '=', 'Student')
                     ->groupBy('toolkits.id')
                     ->orderby('toolkits.subject_id','asc')
@@ -93,6 +98,7 @@ class ToolkitController extends Controller
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
                     ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.deleted','=', 0)
                     ->where('toolkits.type', '=', 'Teacher')
                     ->groupBy('toolkits.id')
                     ->orderby('toolkits.subject_id','asc')
@@ -104,6 +110,7 @@ class ToolkitController extends Controller
                     ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
                     ->select('users.id as user_id','users.name','users.email','users.image','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.slug','toolkits.price','toolkits.thumbnail','subjects.subject_name','subjects.id', DB::raw('avg(toolkit_ratings.rating) as rating'))
                     ->where('toolkits.status', '=', 'Approved')
+                    ->where('toolkits.deleted','=', 0)
                     ->groupBy('toolkits.id')
                     ->orderby('toolkits.subject_id','asc')
                     ->paginate(12);
@@ -168,26 +175,22 @@ class ToolkitController extends Controller
         $image_name = $userId.'_toolkit_'.md5(rand()).'.'.$image->getClientOriginalExtension();
         $image->move(public_path("images/thumbnail"), $image_name);
 
-        $toolkit = new Toolkit();
-        $toolkit->subject_id = $request->input('subject');
-        $toolkit->user_id = $userId;
-        $toolkit->toolkit_title = $request->input('toolkit_name');
-        $toolkit->description = $request->input('toolkit_description');
-        $toolkit->type = $request->input('toolkit_type');
-        $toolkit->price = $request->input('toolkit_price');
-        $toolkit->status = 'Pending';
-        $toolkit->slug = $slug;
-        $toolkit->thumbnail = $image_name;
 
-        $toolkit->save();
+        $toolkitData = [
+            'subject_id'    => $request->input('subject'),
+            'user_id'    => $userId,
+            'toolkit_title'    => $request->input('toolkit_name'),
+            'description'    => $request->input('toolkit_description'),
+            'type'    => $request->input('toolkit_type'),
+            'price'    => $request->input('toolkit_price'),
+            'status'    => 'Pending',
+            'slug'    => $slug,
+            'thumbnail'    => $image_name,
+        ];
 
-        if($user_info->identifier == 1){
-            return redirect()->route('teacher.dashboard')->with('success', 'Toolkit created successfully');
-        }elseif($user_info->identifier == 2) {
-            return redirect()->route('school.dashboard')->with('success', 'Toolkit created successfully');
-        }else {
-            return redirect()->route('dashboard')->with('success', 'Toolkit created successfully');
-        }
+        $toolkit = Toolkit::create($toolkitData);
+
+        return redirect()->route('toolkit.edit',$toolkit->id)->with('success', 'Toolkit created successfully');
 
     }
 
@@ -438,10 +441,14 @@ class ToolkitController extends Controller
         $toolkit->slug = $slug;
 
         if(isset($request->toolkitThumbnailImage)) {
+            $oldImagePath = 'images/thumbnail/'.$toolkit->thumbnail;
+            File::delete($oldImagePath);
+
             $image = $request->file('toolkitThumbnailImage');
             $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
             $image->move(public_path("images/thumbnail"), $image_name);
             $toolkit->thumbnail = $image_name;
+
         }
 
 
@@ -516,6 +523,12 @@ class ToolkitController extends Controller
     {
         try{
             $toolkit = Toolkit::find($id);
+
+            $toolkit->deleted = 1;
+            $toolkit->save();
+
+            return back()->with('success', 'Toolkit deleted successfully!');
+
 
         }catch(\Exception $e) {
             return response()->json([

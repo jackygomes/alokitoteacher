@@ -106,8 +106,8 @@ class TeacherController extends Controller
         $leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
         $recent_work = WorkExperience::where('user_id', '=', $user_info->id)->where('to_date', '=', '0000-00-00')->first();
         $recent_institute = Academic::where('user_id', '=', $user_info->id)->orderBy('passing_year', 'DESC')->first();
-        $toolkits = Toolkit::with('subject')->where('user_id', '=', $userId)->paginate(5);
-        $resources = Resource::where('user_id',$userId)->paginate(10);
+        $toolkits = Toolkit::with('subject')->where('deleted',0)->where('user_id', '=', $userId)->paginate(5);
+        $resources = Resource::where('user_id',$userId)->where('deleted',0)->paginate(10);
         $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type','Earning')->sum('amount');
 
 //        return $toolkits;

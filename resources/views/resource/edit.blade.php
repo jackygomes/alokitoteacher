@@ -99,7 +99,7 @@
                                     <label for="Price" class="col-sm-2 col-form-label">Price:</label>
                                     <div class="col-sm-10">
                                         <input type="number" name="resource_price" class="form-control" value="{{$resource->price}}" id="Price" placeholder="Resource Price">
-                                        <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the resource is free.</p>
+                                        <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter price between 0 - 600 BDT. Enter 0 in price field if the resource is free.</p>
                                     </div>
                                 </div>
 

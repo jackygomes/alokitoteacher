@@ -51,8 +51,8 @@ class AdminController extends Controller
         }
 
         $courses = Course::paginate(10);
-        $toolkits = Toolkit::with('subject')->paginate(10);
-        $resources = Resource::paginate(10);
+        $toolkits = Toolkit::with('subject')->where('deleted',0)->paginate(10);
+        $resources = Resource::where('deleted',0)->paginate(10);
 //        return $user_info;
         return view ('admin',compact( 'user_info', 'courses', 'toolkits', 'resources'));
     }

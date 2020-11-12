@@ -83,7 +83,7 @@
                                 @csrf
 
                                 <div class="form-group row">
-                                    <label for="teacher" class="col-md-2 col-form-label text-md-right">Teacher Trained</label>
+                                    <label for="teacher" class="col-md-2 col-form-label text-md-right">Educator Trained</label>
 
                                     <div class="col-md-6">
                                         <input id="teacher" type="number" class="form-control border-yellow" name="teacher" value="{{$teacher_student_count->teacher}}" required>

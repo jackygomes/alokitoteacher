@@ -32,6 +32,7 @@ class AllController extends Controller
                  ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
                  ->select('users.id as user_id','users.name', 'users.image','users.email','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.thumbnail','toolkits.price','subjects.subject_name','subjects.id','toolkits.slug', DB::raw('avg(toolkit_ratings.rating) as rating'))
                  ->where('toolkits.status', '=', 'Approved')
+                 ->where('toolkits.deleted','=', 0)
                  ->where('toolkits.type', '=', 'Student')
                  ->groupBy('toolkits.id')
                  ->limit(4)
@@ -53,6 +54,7 @@ class AllController extends Controller
                  ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
                  ->select('users.id as user_id','users.name', 'users.image','users.email','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.thumbnail','toolkits.price','subjects.subject_name','subjects.id','toolkits.slug', DB::raw('avg(toolkit_ratings.rating) as rating'))
                  ->where('toolkits.status', '=', 'Approved')
+                 ->where('toolkits.deleted','=', 0)
                  ->where('toolkits.type', '=', 'Teacher')
                  ->groupBy('toolkits.id')
                  ->limit(4)
@@ -74,11 +76,12 @@ class AllController extends Controller
                  ->leftJoin('toolkit_ratings', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
                  ->select('users.id as user_id','users.name', 'users.image','users.email','users.phone_number','users.balance','users.username','toolkits.id as toolkit_id','toolkits.subject_id','toolkits.toolkit_title','toolkits.description','toolkits.thumbnail','toolkits.price','subjects.subject_name','subjects.id','toolkits.slug', DB::raw('avg(toolkit_ratings.rating) as rating'))
                  ->where('toolkits.status', '=', 'Approved')
+                 ->where('toolkits.deleted','=', 0)
                  ->groupBy('toolkits.id')
                  ->limit(4)
                  ->get();
          }
-         $resource_info = Resource::with('user')->where('status', 'Approved')->get();
+         $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->get();
 
          $userId = Auth::check() ? Auth::user()->id : 0;
          foreach($course_info as $course){

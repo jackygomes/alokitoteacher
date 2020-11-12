@@ -94,6 +94,7 @@ Route::group(['prefix' => 'resource'], function() {
     Route::get('/', 'ResourceController@index')->name('allResource');
     Route::get('create', 'ResourceController@create')->name('resource.create');
     Route::post('store', 'ResourceController@store')->name('resource.store');
+    Route::delete ('delete/{id}', 'ResourceController@destroy')->name('resource.delete');
 
     Route::get('edit/{id}', 'ResourceController@edit')->name('resource.edit');
     Route::post('update/{id}', 'ResourceController@update')->name('resource.update');

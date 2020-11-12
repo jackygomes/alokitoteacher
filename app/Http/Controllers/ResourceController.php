@@ -11,6 +11,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class ResourceController extends Controller
@@ -34,9 +35,9 @@ class ResourceController extends Controller
             $category = ResourceCategory::where('id', $request->category)->first();
         }
         if($category){
-            $resource_info = Resource::with('user')->where('category_id',$category->id)->where('status', 'Approved')->paginate(12);
+            $resource_info = Resource::with('user')->where('deleted',0)->where('category_id',$category->id)->where('status', 'Approved')->paginate(12);
         }else {
-            $resource_info = Resource::with('user')->where('status', 'Approved')->paginate(12);
+            $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->paginate(12);
         }
 
         foreach($resource_info as $resource){
@@ -119,20 +120,14 @@ class ResourceController extends Controller
                 'thumbnail'     => $image_name,
             ];
 
-            Resource::create($resourceData);
+           $resource = Resource::create($resourceData);
 
 
         } catch(\Exception $e) {
             return "Quiz insertion error: " . $e->getMessage();
         }
 
-        if($user_info->identifier == 1){
-            return redirect()->route('teacher.dashboard')->with('success', 'Resource created successfully');
-        }elseif($user_info->identifier == 2) {
-            return redirect()->route('school.dashboard')->with('success', 'Resource created successfully');
-        }else {
-            return redirect()->route('dashboard')->with('success', 'Resource created successfully');
-        }
+        return redirect()->route('resource.edit',$resource->id)->with('success', 'Resource created successfully');
     }
 
     /**
@@ -230,6 +225,9 @@ class ResourceController extends Controller
         $resource->slug = $slug;
 
         if(isset($request->thumbnailImage)) {
+            $oldImagePath = 'images/thumbnail/'.$resource->thumbnail;
+            File::delete($oldImagePath);
+
             $image = $request->file('thumbnailImage');
             $image_name = $userId.'_resource_'.md5(rand()).'.'.$image->getClientOriginalExtension();
             $image->move(public_path("images/thumbnail"), $image_name);
@@ -441,6 +439,20 @@ class ResourceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $resource = Resource::find($id);
+
+            $resource->deleted = 1;
+            $resource->save();
+
+            return back()->with('success', 'Resource deleted successfully!');
+
+
+        }catch(\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
     }
 }

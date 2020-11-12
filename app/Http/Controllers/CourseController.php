@@ -13,6 +13,7 @@ use App\Toolkit;
 use App\ToolkitVideo;
 use App\TrackHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -104,7 +105,7 @@ class CourseController extends Controller
             CoursePreview::create($previewVideo);
         }
 
-        return redirect()->route('dashboard', $user_info->username)->with('success', 'Course created successfully');
+        return redirect()->route('course.edit', $courseInsert->id)->with('success', 'Course created successfully');
     }
 
     public function course_edit($id)
@@ -236,6 +237,9 @@ class CourseController extends Controller
         $course->designer = $request->designer;
 
         if(isset($request->courseThumbnailImage)) {
+            $oldImagePath = 'images/thumbnail/'.$course->thumbnail;
+            File::delete($oldImagePath);
+
             $image = $request->file('courseThumbnailImage');
             $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
             $image->move(public_path("images/thumbnail"), $image_name);

@@ -53,8 +53,8 @@ class SchoolController extends Controller
 
         $job_info = Job::where('user_id', '=', $user_info->id)->orderby('id','desc')->get();
         $leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
-        $toolkits = Toolkit::with('subject')->where('user_id', '=', $userId)->paginate(5);
-        $resources = Resource::where('user_id',$userId)->paginate(10);
+        $toolkits = Toolkit::with('subject')->where('deleted',0)->where('user_id', '=', $userId)->paginate(5);
+        $resources = Resource::where('user_id',$userId)->where('deleted',0)->paginate(10);
         $jobPrice = JobPrice::find(1);
 
         return view('educational-institute.dashboard', compact('leaderBoard','job_info','resources','toolkits', 'user_info','jobPrice'));
