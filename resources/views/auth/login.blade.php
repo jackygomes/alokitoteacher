@@ -206,9 +206,9 @@
                           <select class="form-control border-yellow" name="identifier" required>
                             <option value="" disabled selected>-- Select User Type --</option>
                             <option value="1">Educator</option>
-                            <option value="2">School</option>
+                            <option value="2">Educational Institute</option>
                             <!-- <option value="3">Parents</option> -->
-                            <option value="4">Educational Institute</option>
+                            <option value="4">Student</option>
                           </select>
                         </div>
                       </div>
