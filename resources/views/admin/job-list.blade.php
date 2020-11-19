@@ -82,8 +82,8 @@
                                     <th>Job Nature</th>
                                     <th>Vacancy</th>
                                     <th>Dead Line</th>
-                                    <th>Poster Status</th>
-                                    <th>Admin Status</th>
+                                    <th>Remove</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -106,7 +106,11 @@
                                         </td>
                                         <td>{{$job->vacancy}}</td>
                                         <td>{{$job->deadline}}</td>
-                                        <td>{{$job->poster_status}}</td>
+                                        <td>
+                                            @if($job->removed == 1) Yes
+                                            @else No
+                                            @endif
+                                        </td>
                                         <td>{{$job->admin_status}}</td>
                                         <td>
                                             <a href="{{route('admin.job.edit', $job->id)}}" class="btn btn-info text-white btn-sm">Edit</a>

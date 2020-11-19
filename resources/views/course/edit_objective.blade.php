@@ -106,10 +106,10 @@
                         <div class="form-group row">
                             <label for="subjects" class="col-sm-2 col-form-label">Facilitator:</label>
                             <div class="col-sm-10">
-                                <select class="custom-select mr-sm-2" name="facilitator" id="facilitator">
-                                    <option selected>Choose Facilitator...</option>
+                                <select class="custom-select mr-sm-2" name="facilitator[]" id="facilitator">
                                     @foreach($facilitators as $facilitator)
-                                        <option value="{{$facilitator->id}}" {{$info->course_facilitator == $facilitator->id ? "selected" : ""}}>{{$facilitator->name}}</option>
+                                        <option value="{{$facilitator->id}}">{{$facilitator->name}}</option>
+{{--                                        <option value="{{$facilitator->id}}" {{$info->course_facilitator == $facilitator->id ? "selected" : ""}}>{{$facilitator->name}}</option>--}}
                                     @endforeach
                                 </select>
                             </div>
@@ -117,10 +117,10 @@
                         <div class="form-group row">
                             <label for="subjects" class="col-sm-2 col-form-label">Advisor:</label>
                             <div class="col-sm-10">
-                                <select class="custom-select mr-sm-2" name="advisor" id="advisor">
-                                    <option selected>Choose Advisor...</option>
+                                <select class="custom-select mr-sm-2" name="advisor[]" id="advisor">
                                     @foreach($advisors as $advisor)
-                                        <option value="{{$advisor->id}}" {{$info->advisor == $advisor->id ? "selected" : ""}}>{{$advisor->name}}</option>
+                                        <option value="{{$advisor->id}}">{{$advisor->name}}</option>
+{{--                                        <option value="{{$advisor->id}}" {{$info->advisor == $advisor->id ? "selected" : ""}}>{{$advisor->name}}</option>--}}
                                     @endforeach
                                 </select>
                             </div>
@@ -128,10 +128,10 @@
                         <div class="form-group row">
                             <label for="subjects" class="col-sm-2 col-form-label">Designer:</label>
                             <div class="col-sm-10">
-                                <select class="custom-select mr-sm-2" name="designer" id="designer">
-                                    <option selected>Choose Designer...</option>
+                                <select class="custom-select mr-sm-2" name="designer[]" id="designer">
                                     @foreach($designers as $designer)
-                                        <option value="{{$designer->id}}" {{$info->designer == $designer->id ? "selected" : ""}}>{{$designer->name}}</option>
+                                        <option value="{{$designer->id}}" >{{$designer->name}}</option>
+{{--                                        <option value="{{$designer->id}}" {{$info->designer == $designer->id ? "selected" : ""}}>{{$designer->name}}</option>--}}
                                     @endforeach
                                 </select>
                             </div>
@@ -286,9 +286,43 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
-                $('#facilitator').select2();
-                $('#advisor').select2();
-                $('#designer').select2();
+                $('#facilitator').select2({
+                    multiple: true,
+                });
+                $('#advisor').select2({
+                    multiple: true,
+                });
+                $('#designer').select2({
+                    multiple: true,
+                });
+
+                faclitator();
+                function faclitator(){
+                    let facilitator = {!! json_encode($infoFacilitators) !!};
+                    let selectedValues = [];
+                    $.each( facilitator, function( key, value ) {
+                        selectedValues.push(value.id);
+                    });
+                    $('#facilitator').val(selectedValues).trigger('change');
+                }
+                advisor();
+                function advisor(){
+                    let advisor = {!! json_encode($infoAdvisors) !!};
+                    let selectedValues = [];
+                    $.each( advisor, function( key, value ) {
+                        selectedValues.push(value.id);
+                    });
+                    $('#advisor').val(selectedValues).trigger('change');
+                }
+                designer();
+                function designer(){
+                    let designer = {!! json_encode($infoDesigners) !!};
+                    let selectedValues = [];
+                    $.each( designer, function( key, value ) {
+                        selectedValues.push(value.id);
+                    });
+                    $('#designer').val(selectedValues).trigger('change');
+                }
 
                 $('#editCourseDetailsSection').show();
                 $('#addVideoSection').hide();

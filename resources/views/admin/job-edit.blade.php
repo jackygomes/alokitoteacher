@@ -182,6 +182,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label bold">Job Remove:</label>
+                                    <div class="col-sm-10">
+                                        <p style="margin: 6px 0 0">
+                                            @if($job->removed == 1) Yes
+                                            @else No
+                                            @endif
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-sm-2 col-form-label bold">Job DeadLine:</label>
                                     <div class="col-sm-10">
                                         <p style="margin: 6px 0 0">{{$job->deadline}}</p>

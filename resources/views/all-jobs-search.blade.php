@@ -54,10 +54,12 @@
 			        				Deadline: {{ date("jS F, Y", strtotime($v_job_info->deadline)) }}</small>
 			        				<br>
 
-                                    @if($v_job_info->isApplied == 0)
-			        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$v_job_info->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
-                                    @else
-                                    <button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" disabled>Applied</button>
+                                    @if(Auth::user()->identifier != 101)
+                                        @if($v_job_info->isApplied == 0)
+                                        <button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$v_job_info->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
+                                        @else
+                                        <button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" disabled>Applied</button>
+                                        @endif
                                     @endif
 {{--			        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn border-yellow saveButton">Save</button>--}}
 {{--                                    <a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="btn btn-success text-white btn-sm">View</a>--}}
@@ -68,6 +70,19 @@
 		        	 </td>
 		      	</tr>
 	    	@endforeach
+            @if(!$job_info)
+            <tr>
+                <td class="bg-white">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                No Job To Show
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            @endif
 	    </tbody>
 </table>
 

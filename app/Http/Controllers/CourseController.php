@@ -91,9 +91,9 @@ class CourseController extends Controller
             'price'    => isset($request->course_price) ? $request->course_price : "",
             'certificate_price'    => isset($request->certificate_price) ? $request->certificate_price : "",
             'slug'    => $slug,
-            'course_facilitator'    => $request->facilitator,
-            'advisor'    => $request->advisor,
-            'designer'    => $request->designer,
+            'course_facilitator'    => json_encode($request->facilitator),
+            'advisor'    => json_encode($request->advisor),
+            'designer'    => json_encode($request->designer),
             'thumbnail'    => $image_name,
         ];
 
@@ -185,15 +185,29 @@ class CourseController extends Controller
                     }
                 }
             } else $publishEnable = 0;
-//            return $quizzes;
+
+        $infoFacilitators = [];
+        $infoAdvisors = [];
+        $infoDesigners = [];
+
+        $decodeFacilitators  = $info->course_facilitator == null ? [] : json_decode($info->course_facilitator) ;
+        $decodeAdvisors     = $info->advisor == null ? [] : json_decode($info->advisor);
+        $decodeDesigners    = $info->designer == null ? [] : json_decode($info->designer);
+
+        $infoFacilitators = CourseActivist::where('type','Facilitator')->findMany($decodeFacilitators);
+        $infoAdvisors = CourseActivist::where('type','Advisor')->findMany($decodeAdvisors);
+        $infoDesigners = CourseActivist::where('type','Designer')->findMany($decodeDesigners);
+
+
         $facilitators = CourseActivist::where('type','Facilitator')->get();
         $advisors = CourseActivist::where('type','Advisor')->get();
         $designers = CourseActivist::where('type','Designer')->get();
 
-        return view('course.edit_objective',compact( 'users','facilitators','advisors','designers','previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
+        return view('course.edit_objective',compact( 'users','infoFacilitators','infoAdvisors','infoDesigners','facilitators','advisors','designers','previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
     }
 
     public function courseDetailsUpdate(Request $request, $courseId) {
+
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if(isset($user_info) && $user_info->identifier != 101){
@@ -205,11 +219,11 @@ class CourseController extends Controller
             'course_name'          => 'required',
             'course_description'   => 'required',
             'course_price'         => 'required',
-            'certificate_price'         => 'required',
-            'preview_video'         => 'required',
-            'facilitator'         => 'required',
-            'advisor'         => 'required',
-            'designer'         => 'required',
+            'certificate_price'    => 'required',
+            'preview_video'        => 'required',
+            'facilitator'          => 'required',
+            'advisor'              => 'required',
+            'designer'             => 'required',
         ]);
         $randomText = Str::random(10);
         $slug = Str::slug($request->input('course_name'), '-');
@@ -232,9 +246,9 @@ class CourseController extends Controller
         $course->certificate_price = $request->input('certificate_price');
         $course->status = isset($request->status) ? $request->input('status') : "Pending";
         $course->slug = $slug;
-        $course->course_facilitator = $request->facilitator;
-        $course->advisor = $request->advisor;
-        $course->designer = $request->designer;
+        $course->course_facilitator = json_encode($request->facilitator);
+        $course->advisor = json_encode($request->advisor);
+        $course->designer = json_encode($request->designer);
 
         if(isset($request->courseThumbnailImage)) {
             $oldImagePath = 'images/thumbnail/'.$course->thumbnail;

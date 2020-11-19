@@ -15,6 +15,7 @@
 			<hr>
 			<select class="form-control border-yellow" id="location" required>
 				<option value="" disabled="" selected="">-- Location --</option>
+				<option value="">-- All --</option>
 				@foreach($locations as $location)
 				<option value="{{ $location->location }}">{{ $location->location }}</option>
 				@endforeach
@@ -22,6 +23,7 @@
 			<br>
 			<select class="form-control border-yellow mb-3" id="school" required>
 				<option value="" disabled="" selected="">-- School --</option>
+				<option value="">-- All --</option>
 				@foreach($schools as $school)
 				<option value="{{ $school->id }}">{{ $school->name }}</option>
 				@endforeach
@@ -29,7 +31,7 @@
 
 		</div>
 
-		<div class="col-md-8" style="background-color: #f3f2f0;">
+		<div class="col-md-10" style="background-color: #f3f2f0;">
 
 			<div class="container mt-3">
 				@if(session()->has('success'))
