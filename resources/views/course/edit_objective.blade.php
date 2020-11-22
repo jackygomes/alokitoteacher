@@ -92,7 +92,7 @@
                                     @endforeach
                                 </select>
                                 @if($publishEnable == 0)
-                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* This Couse doesn't have minimum quiz question.</p>
+                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* This Course doesn't have minimum quiz question.</p>
                                 @endif
                             </div>
                         </div>

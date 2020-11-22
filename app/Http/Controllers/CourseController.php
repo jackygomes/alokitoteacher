@@ -186,9 +186,6 @@ class CourseController extends Controller
                 }
             } else $publishEnable = 0;
 
-        $infoFacilitators = [];
-        $infoAdvisors = [];
-        $infoDesigners = [];
 
         $decodeFacilitators  = $info->course_facilitator == null ? [] : json_decode($info->course_facilitator) ;
         $decodeAdvisors     = $info->advisor == null ? [] : json_decode($info->advisor);

@@ -211,6 +211,7 @@
             $('#form_job_id').val(id);
         }
 
+        let x='',y='',z='';
 		$('#searchButton').on('click', function () {
 			search_filter($('#search').val(), $('#location').val(), $('#school').val());
 		});
@@ -241,7 +242,7 @@
             });
         }
 
-        let x='',y='',z='';
+
         search_filter(x, y, z);
         function search_filter(search, location, school){
             $.ajaxSetup({

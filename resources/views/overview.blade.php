@@ -1,6 +1,16 @@
  @extends('master')
 @section('content')
-
+    <style>
+        .card-body{
+            min-height: 132px;
+            height: 132px;
+            overflow: hidden;
+        }
+        .activist-details-image {
+            width: 80px;
+            height: 80px;
+        }
+    </style>
 <div class="container mt-4" style="min-height: 90vh;">
     <div class="row">
 
@@ -15,59 +25,6 @@
 
 
         <p style="margin-bottom: 0; background-color: #f3f2f0;" class="mt-5 p-5 card font-weight-bold text-center"> {{ $info->description }}</p>
-
-          @if(isset($facilitator) || isset($advisor) || isset($designer))
-              <div class="row pt-5 pb-5">
-                  @if(isset($facilitator))
-                      <div class="col-lg-4">
-                          <div class="card text-center">
-                              <div class="card-header">
-                                  <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$facilitator->image}}">
-                              </div>
-                              <div class="card-body">
-                                  <h5 class="card-title">{{$facilitator->name}}</h5>
-                                  <p class="card-text">{!! nl2br(e($facilitator->description)) !!}</p>
-                              </div>
-                              <div class="card-footer text-muted">
-                                  {{$facilitator->type}}
-                              </div>
-                          </div>
-                      </div>
-                  @endif
-                  @if(isset($advisor))
-                      <div class="col-lg-4">
-                          <div class="card text-center">
-                              <div class="card-header">
-                                  <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$advisor->image}}">
-                              </div>
-                              <div class="card-body">
-                                  <h5 class="card-title">{{$advisor->name}}</h5>
-                                  <p class="card-text">{!! nl2br(e($advisor->description)) !!}</p>
-                              </div>
-                              <div class="card-footer text-muted">
-                                  {{$advisor->type}}
-                              </div>
-                          </div>
-                      </div>
-                  @endif
-                  @if(isset($designer))
-                      <div class="col-lg-4">
-                          <div class="card text-center">
-                              <div class="card-header">
-                                  <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$designer->image}}">
-                              </div>
-                              <div class="card-body">
-                                  <h5 class="card-title">{{$designer->name}}</h5>
-                                  <p class="card-text">{!! nl2br(e($designer->description)) !!}</p>
-                              </div>
-                              <div class="card-footer text-muted">
-                                  {{$designer->type}}
-                              </div>
-                          </div>
-                      </div>
-                  @endif
-              </div>
-          @endif
 
       </div>
       <div class="col-md-4 background-yellow text-center p-5">
@@ -256,6 +213,165 @@
 
 
     </div>
+        @if(isset($infoFacilitators) || isset($infoAdvisors) || isset($infoDesigners))
+            @if(isset($infoFacilitators))
+                <div class="row pt-5">
+                    <div class="col-lg-12">
+                        <h3 class="text-center pb-3 pt-3">Facilitator</h3>
+                    </div>
+                    @foreach($infoFacilitators as $facilitator)
+                    <div class="col-lg-4 pb-3">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$facilitator->image}}">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{$facilitator->name}}</h5>
+                                <p class="card-text">
+                                    @if(strlen($facilitator->description) < 56)
+                                        {!! nl2br(e($facilitator->description)) !!}
+                                    @else
+                                        {!! nl2br(e(substr($facilitator->description,0,56))).'...' !!}
+                                        <a href="#" class="" data-toggle="modal" data-target="#facilitatorModal_{{$facilitator->id}}">
+                                            Read More
+                                        </a>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="facilitatorModal_{{$facilitator->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Facilitator</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="modal-title pb-4"><img class="img-fluid rounded-circle activist-details-image mr-4" src="{{ url('images/course_activist_image') }}/{{ $facilitator->image }}"> <span>{{$facilitator->name}}</span></p>
+                                                        {!! nl2br(e($facilitator->description)) !!}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </p>
+                            </div>
+                            <div class="card-footer text-muted">
+                                {{$facilitator->type}}
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @endif
+                @if(isset($infoAdvisors))
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3 class="text-center pb-3 pt-3">Advisor</h3>
+                        </div>
+                        @foreach($infoAdvisors as $advisor)
+                        <div class="col-lg-4 pb-3">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$advisor->image}}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{$advisor->name}}</h5>
+                                    <p class="card-text">
+                                        @if(strlen($advisor->description) < 40)
+                                            {!! nl2br(e($advisor->description)) !!}
+                                        @else
+                                            {!! nl2br(e(substr($advisor->description,0,40))).'...' !!}
+                                            <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$advisor->id}}">
+                                                Read More
+                                            </a>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="advisorModal_{{$advisor->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Advisor</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p class="modal-title pb-4"><img class="img-fluid rounded-circle activist-details-image mr-4" src="{{ url('images/course_activist_image') }}/{{ $advisor->image }}"> <span>{{$advisor->name}}</span></p>
+                                                            {!! nl2br(e($advisor->description)) !!}
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </p>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    {{$advisor->type}}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    </div>
+                @endif
+                @if(isset($infoDesigners))
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3 class="text-center pb-3 pt-3">Designer</h3>
+                        </div>
+                        @foreach($infoDesigners as $designer)
+                        <div class="col-lg-4 pb-3">
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$designer->image}}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{$designer->name}}</h5>
+                                    <p class="card-text">
+                                        @if(strlen($designer->description) < 56)
+                                            {!! nl2br(e($designer->description)) !!}
+                                        @else
+                                            {!! nl2br(e(substr($designer->description,0,56))).'...' !!}
+                                            <a href="#" class="" data-toggle="modal" data-target="#designerModal_{{$designer->id}}">
+                                                Read More
+                                            </a>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="designerModal_{{$designer->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Facilitator</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p class="modal-title pb-4"><img class="img-fluid rounded-circle activist-details-image mr-4" src="{{ url('images/course_activist_image') }}/{{ $designer->image }}"> <span>{{$designer->name}}</span></p>
+                                                            {!! nl2br(e($designer->description)) !!}
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </p>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    {{$designer->type}}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    </div>
+                @endif
+            </div>
+        @endif
 </div>
 
 

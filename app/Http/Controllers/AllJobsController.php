@@ -21,7 +21,8 @@ class AllJobsController extends Controller
 	public function __construct()
     {
 //        $this->middleware('auth');
-        $this->middleware('auth')->except(['index']);
+//        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth', ['except' => ['index', 'search_filter']]);
     }
 
    	function index(Request $request){
@@ -101,6 +102,7 @@ class AllJobsController extends Controller
 				    ->rightJoin('jobs', 'users.id', '=','jobs.user_id')
 				    ->select('jobs.id as job_id', 'users.id as user_id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline', 'jobs.removed', 'jobs.admin_status');
 
+
 		if(strlen(trim($request->search)) != 0){
 			$job_info = $job_info->where('users.name', 'like', '%' . $request->search . '%')
 								->orWhere('jobs.description', 'like', '%' . $request->search . '%')
@@ -127,6 +129,7 @@ class AllJobsController extends Controller
                     ->whereDate('jobs.deadline', '>', Carbon::today()->toDateString())
                     ->orderBy('jobs.created_at', 'DESC')->paginate(10);
 
+
         $userId = Auth::check() ? Auth::user()->id : 0;
         foreach($job_info as $job){
 
@@ -134,6 +137,7 @@ class AllJobsController extends Controller
 
             $job->isApplied = $appliedCount ? 1 : 0;
         }
+//        return json_encode($job_info);
 
 	    return view ('all-jobs-search',compact('job_info'));
 
