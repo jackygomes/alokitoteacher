@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\JobPrice;
 use App\Order;
+use App\Revenue;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -315,7 +316,9 @@ class AllJobsController extends Controller
             return abort(404);
         }
         $jobs = Job::orderBy('id', 'desc')->get();
-        return view('admin.job-list', compact('jobs', 'user_info'));
+        $revenue = Revenue::all()->sum('revenue');
+
+        return view('admin.job-list', compact('jobs', 'user_info','revenue'));
     }
 
     /**

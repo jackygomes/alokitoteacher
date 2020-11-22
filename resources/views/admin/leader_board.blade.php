@@ -63,6 +63,8 @@
                     </div>
 
                 @endif
+                <h4 class="mt-3">Revenue Balance </h4>
+                <p>{{ $revenue }} BDT</p>
 
 
             </div>
@@ -71,7 +73,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-12 mb-5">
-                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Users</h3>
+                            <h3 class="font-weight-bold mr-3" style="display: inline-block">Leader Board</h3>
                             <table id="leaderBoard" class="table table-striped table-bordered " style="width:100%">
                                 <thead>
                                 <tr>

@@ -11,6 +11,7 @@ use App\CourseVideo;
 use App\JobPrice;
 use App\LeaderBoard;
 use App\Resource;
+use App\Revenue;
 use App\TeacherStudentCount;
 use App\Toolkit;
 use App\ToolkitDocument;
@@ -53,8 +54,10 @@ class AdminController extends Controller
         $courses = Course::paginate(10);
         $toolkits = Toolkit::with('subject')->where('deleted',0)->paginate(10);
         $resources = Resource::where('deleted',0)->paginate(10);
-//        return $user_info;
-        return view ('admin',compact( 'user_info', 'courses', 'toolkits', 'resources'));
+
+        $revenue = Revenue::all()->sum('revenue');
+
+        return view ('admin',compact( 'user_info', 'courses', 'toolkits', 'resources','revenue'));
     }
 
     public function userList() {
@@ -67,8 +70,8 @@ class AdminController extends Controller
 
             return abort(404);
         }
-
-        return view('admin.user-list', compact('user_info', 'allUser'));
+        $revenue = Revenue::all()->sum('revenue');
+        return view('admin.user-list', compact('user_info', 'allUser','revenue'));
     }
 
     public function basicInfo() {
@@ -84,7 +87,8 @@ class AdminController extends Controller
         $teacher_student_count = TeacherStudentCount::find(1);
         $jobPrice = JobPrice::find(1);
 
-        return view('admin.basic_info', compact('teacher_student_count','user_info','jobPrice'));
+        $revenue = Revenue::all()->sum('revenue');
+        return view('admin.basic_info', compact('teacher_student_count','user_info','jobPrice','revenue'));
     }
 
     public function leaderBoard() {
@@ -97,7 +101,9 @@ class AdminController extends Controller
         }
         $leaderboardUsers = LeaderBoard::with('user')->orderBy('position', 'asc')->limit(10)->get();
 
-        return view('admin.leader_board', compact('leaderboardUsers', 'user_info'));
+        $revenue = Revenue::all()->sum('revenue');
+
+        return view('admin.leader_board', compact('leaderboardUsers', 'user_info','revenue'));
     }
 
     public function totalCountUpdate(Request $request, $id) {
@@ -219,8 +225,9 @@ class AdminController extends Controller
             return abort(404);
         }
         $activists = CourseActivist::all();
+        $revenue = Revenue::all()->sum('revenue');
 
-        return view('admin.course-activists',compact('user_info','activists'));
+        return view('admin.course-activists',compact('user_info','activists','revenue'));
     }
 
     public function courseActivistCreate(){

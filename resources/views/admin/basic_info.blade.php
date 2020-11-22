@@ -63,6 +63,8 @@
                     </div>
 
                 @endif
+                <h4 class="mt-3">Revenue Balance </h4>
+                <p>{{ $revenue }} BDT</p>
 
 
             </div>
