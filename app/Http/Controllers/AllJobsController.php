@@ -15,14 +15,16 @@ use App\Job;
 use App\JobApplication;
 use App\SavedJob;
 use Mail;
+use App\Http\Controllers\PurchaseController;
 
 class AllJobsController extends Controller
 {
 
-	public function __construct()
+	public function __construct(PurchaseController $purchaseController)
     {
 //        $this->middleware('auth');
 //        $this->middleware('auth')->except(['index']);
+        $this->purchaseController = $purchaseController;
         $this->middleware('auth', ['except' => ['index', 'search_filter']]);
     }
 
@@ -214,50 +216,62 @@ class AllJobsController extends Controller
 		return $job_application->cover_letter;
 	}
 
-	function add_job(Request $request){
+	function add_job(Request $request)
+    {
+
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
         $jobPrice = JobPrice::find(1);
-        if($user_info->balance >= $jobPrice->price){
-            $job = new Job;
-            $job->user_id = Auth::id();
-            $job->job_title = $request->job_title;
-            $job->location = $request->location;
-            $job->expected_salary_range = $request->expected_salary_range;
-            $job->job_responsibilities = $request->job_responsibilities;
-            $job->educational_requirements = $request->educational_requirement;
-            $job->experience_requirements = $request->experience_requirements;
-            $job->additional_requirements  = $request->additional_requirements;
-            $job->compensation_other_benefits = $request->compensation_other_benefits;
-            $job->description = $request->description;
-            $job->vacancy = $request->vacancy;
-            $job->age_limit = $request->age_limit;
-            $job->gender = $request->gender;
-            $job->deadline = $request->deadline;
-            $job->nature = $request->nature;
-            $job->save();
 
-            $orderData = [
-                'user_id'           => Auth::id(),
-                'product_type'      => 'Job',
-                'product_id'        => $job->id,
-                'amount'            => $jobPrice->price,
-                'status'            => 'paid',
-                'transaction_id'    => "ALOKITO_" . uniqid(),
-                'currency'          => 'BDT'
-            ];
+        if (isset($user_info) && $user_info->identifier != 101) {
+            if ($user_info->balance >= $jobPrice->price) {
 
-            Order::create($orderData);
+            } else {
+                return back()->with('danger', 'Insufficient Balance');
+            }
+        }
 
+
+        $job = new Job;
+        $job->user_id = Auth::id();
+        $job->job_title = $request->job_title;
+        $job->location = $request->location;
+        $job->expected_salary_range = $request->expected_salary_range;
+        $job->job_responsibilities = $request->job_responsibilities;
+        $job->educational_requirements = $request->educational_requirement;
+        $job->experience_requirements = $request->experience_requirements;
+        $job->additional_requirements  = $request->additional_requirements;
+        $job->compensation_other_benefits = $request->compensation_other_benefits;
+        $job->description = $request->description;
+        $job->vacancy = $request->vacancy;
+        $job->age_limit = $request->age_limit;
+        $job->gender = $request->gender;
+        $job->deadline = $request->deadline;
+        $job->nature = $request->nature;
+        $job->save();
+
+        if(isset($user_info) && $user_info->identifier != 101){
             $user_info->balance = $user_info->balance - $jobPrice->price;
             $user_info->save();
+            $orderAmount = $jobPrice->price;
+        } else $orderAmount = 0;
 
+        $orderData = [
+            'user_id'           => Auth::id(),
+            'product_type'      => 'Job',
+            'product_id'        => $job->id,
+            'amount'            => $orderAmount,
+            'status'            => 'paid',
+            'transaction_id'    => "ALOKITO_" . uniqid(),
+            'currency'          => 'BDT'
+        ];
 
-            return back()->with('success', 'Job Added Successfully');
-        } else {
-            return back()->with('danger', 'Insufficient Balance');
-        }
+        $order = Order::create($orderData);
+        return $this->purchaseController->transaction($order);
+
+        return back()->with('success', 'Job Posted Successfully');
+
 
 	}
 
@@ -301,25 +315,6 @@ class AllJobsController extends Controller
 
 	}
 
-    /**
-     * view all jobs for admin
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
-     */
-    public function adminJobList()
-    {
-        $userId = Auth::id();
-        $user_info = User::where('id', '=', $userId)->first();
-
-        if(isset($user_info) && $user_info->identifier != 101){
-
-            return abort(404);
-        }
-        $jobs = Job::orderBy('id', 'desc')->get();
-        $revenue = Revenue::all()->sum('revenue');
-
-        return view('admin.job-list', compact('jobs', 'user_info','revenue'));
-    }
 
     /**
      * View single job for approve disapprove

@@ -106,6 +106,27 @@ class AdminController extends Controller
         return view('admin.leader_board', compact('leaderboardUsers', 'user_info','revenue'));
     }
 
+    /**
+     * view all jobs for admin
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
+     */
+    public function adminJobList()
+    {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        if(isset($user_info) && $user_info->identifier != 101){
+
+            return abort(404);
+        }
+        $jobs = Job::orderBy('id', 'desc')->get();
+        $revenue = Revenue::all()->sum('revenue');
+        $jobPrice = JobPrice::find(1);
+
+        return view('admin.job-list', compact('jobs', 'user_info','revenue','jobPrice'));
+    }
+
     public function totalCountUpdate(Request $request, $id) {
         $this->validate($request, [
             'teacher' => 'required',

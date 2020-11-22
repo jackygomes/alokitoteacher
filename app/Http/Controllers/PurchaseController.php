@@ -159,8 +159,10 @@ class PurchaseController extends Controller
         //
     }
 
-    private function transaction($order) {
+    public function transaction($order) {
         try{
+
+
             // Spending entry
             $transactionSpendingData = [
                 'user_id'           => Auth::id(),
@@ -175,21 +177,33 @@ class PurchaseController extends Controller
             if($order->product_type == 'course')        $product = Course::find($order->product_id);
             elseif($order->product_type == 'toolkit')   $product = Toolkit::find($order->product_id);
             elseif($order->product_type == 'resource')  $product = Resource::find($order->product_id);
-//            elseif($order->product_type == 'Job')       $product = Job::find($order->product_id);
+            elseif($order->product_type == 'Job')       $product = Job::find($order->product_id);
 
             $user = User::find($product->user_id);
 
             $earningAmount = 0;
+            $earningUserId = $product->user_id;
             if($user->identifier == 101){
-                $earningAmount = $order->amount;
+                if($order->product_type == 'Job'){
+                    $earningAmount = 0;
+                } else {
+                    $earningAmount = $order->amount;
+                }
             }else {
-                $payCut = ($order->amount * 15)/100;
-                $earningAmount = $order->amount - $payCut;
+                if($order->product_type == 'Job'){
+                    $earningAmount = $order->amount;
+
+                    $admin = User::where('identifier',101)->first();
+                    $earningUserId = $admin->id;
+                } else {
+                    $payCut = ($order->amount * 15)/100;
+                    $earningAmount = $order->amount - $payCut;
+                }
             }
 
             // Earning entry
             $transactionEarningData = [
-                'user_id'           => $product->user_id,
+                'user_id'           => $earningUserId,
                 'order_id'          => $order->id,
                 'transaction_type'  => 'Earning',
                 'amount'            => $earningAmount,
@@ -206,11 +220,13 @@ class PurchaseController extends Controller
                 $user->balance += floatval($revenueAmount);
                 $user->save();
             }else {
-                $revenueAmount = $payCut;
+                if($order->product_type != 'Job'){
+                    $revenueAmount = $payCut;
 
-                //user blance update
-                $user->balance += floatval($earningAmount);
-                $user->save();
+                    //user blance update
+                    $user->balance += floatval($earningAmount);
+                    $user->save();
+                } else $revenueAmount = $order->amount;
             }
             $revenueData = [
                 'order_id'          => $order->id,
@@ -218,6 +234,7 @@ class PurchaseController extends Controller
                 'currency'          => 'BDT'
             ];
             Revenue::create($revenueData);
+
 
         }catch(\Exception $e) {
             return response()->json([

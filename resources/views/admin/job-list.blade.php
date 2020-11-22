@@ -74,6 +74,12 @@
                     <div class="row">
                         <div class="col-sm-12 mb-5">
                             <h3 class="font-weight-bold mr-3" style="display: inline-block">Job List</h3>
+                            <span class="fa-clickable text-primary" data-toggle="modal" data-target="#addJobModal"><i class="fas fa-pen" ></i> <small>Add</small></span>
+                            @if($message = Session::get('success'))
+                                <div class="alert alert-success">
+                                    {{$message}}
+                                </div>
+                            @endif
                             <table id="userList" class="table table-striped table-bordered " style="width:100%">
                                 <thead>
                                 <tr>
@@ -124,6 +130,160 @@
                         </div>
                     </div>
                 </div>
+
+                {{--Modal--}}
+                <div class="modal fade" id="addJobModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLongTitle">Add New Job</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body" id="modalBody">
+
+                                <form id="jobPost" action="{{ route('add_job') }}" method="POST" class="mb-5">
+
+                                    @csrf
+                                    <div class="form-row mb-4">
+                                        <div class="col-md-12">
+                                            <label>Job Title <span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <input id="title" type="text" class="form-control border-yellow" name="job_title" required placeholder="Job Title">
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-12 mb-5">
+                                            <label>Location <span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <input id="location" type="text" class="form-control border-yellow" name="location" required placeholder="Job Location">
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-12 mb-5">
+                                            <label>Job Description <span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <textarea class="form-control border-yellow" rows="5" name="description" placeholder="Job Description" required></textarea>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-12 mb-5">
+                                            <label>Job Responsibilities <span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <textarea class="form-control border-yellow" rows="5" name="job_responsibilities" placeholder="Job Responsibilities" required></textarea>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-12 mb-5">
+                                            <label>Educational Requirement <span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <textarea class="form-control border-yellow" rows="5" name="educational_requirement" placeholder="Educational Requirements" required></textarea>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-12 mb-5">
+                                            <label>Experience Requirements<span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <textarea class="form-control border-yellow" rows="5" name="experience_requirements" placeholder="Experience Requirements" required></textarea>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-12 mb-5">
+                                            <label>Additional Requirements:</label>
+                                            <textarea class="form-control border-yellow" rows="5" name="additional_requirements" placeholder="Additional Requirements"></textarea>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-12 mb-5">
+                                            <label>Salary Range <span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <input id="salary" type="text" class="form-control border-yellow" name="expected_salary_range" required placeholder="Salary Range (10,000 - 15,000/ Negotiable)">
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-12 mb-5">
+                                            <label>Compensation & Other Benefits:</label>
+                                            <textarea class="form-control border-yellow" rows="5" name="compensation_other_benefits" placeholder="Compensation & Other Benefits"></textarea>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-6 mb-5">
+                                            <label>Gender Preference <span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <input type="text" class="form-control border-yellow" name="gender" required placeholder="Male/Female or both">
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-6 mb-5">
+                                            <label>Vacancy <span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <input type="number"  min="1" class="form-control border-yellow" name="vacancy" required placeholder="Number of vacancies">
+                                        </div>
+
+                                        <div class="col-md-6 mb-5">
+                                            <label>Age Limit:</label>
+                                            <input type="text" class="form-control border-yellow" name="age_limit" required placeholder="Age Limit (25-35)years">
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-6 mb-5">
+                                            <label>Deadline <span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <input min="<?php echo date("Y-m-d"); ?>" type="date" class="form-control border-yellow" name="deadline" required placeholder="Deadline of job">
+                                        </div>
+
+                                        <div class="col-md-6 mb-5">
+                                            <label>Job Type <span class="text-danger font-weight-bold"> *</span>:</label>
+                                            <select class="form-control border-yellow" name="nature" required>
+                                                <option value="" disabled selected>-- Select Job Type --</option>
+                                                <option value="1">Permanent</option>
+                                                <option value="2">Part-time</option>
+                                                <option value="3">Contractual</option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+
+                                    <button type="button" Onclick="formSubmitPopupMessage();" class="btn background-yellow float-right">Add Job</button>
+                                    <button type="submit" style="display: none" class="btn background-yellow float-right">Add Job</button>
+
+                                </form>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -143,6 +303,25 @@
             $("#profile_picture").change(function () {
                 $("#pro_pic_upload_form").submit();
             });
+
+            function formSubmitPopupMessage() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Job price posting is free for admin',
+                    text: 'Are you sure to spend for posting a job?',
+                    confirmButtonColor: '#f5b82f',
+                    confirmButtonText: "Yes",
+                    showCancelButton: true,
+                    cancelButtonText:'Cancel',
+                    cancelButtonColor: '#d33'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    $("#jobPost").find('[type="submit"]').trigger('click');
+                }
+            })
+            }
+
+
 
         </script>
 

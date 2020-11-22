@@ -58,7 +58,7 @@ Route::post ('admin/course/quiz/update/{id}', 'CourseController@course_quiz_upda
 
 Route::get ('admin/basic-info', 'AdminController@basicInfo')->name('admin.basic.info');
 Route::get ('admin/leader-board', 'AdminController@leaderBoard')->name('admin.leader.board');
-Route::get ('admin/job-list', 'AllJobsController@adminJobList')->name('admin.job.list');
+Route::get ('admin/job-list', 'AdminController@adminJobList')->name('admin.job.list');
 Route::post ('admin/total-count-update/{id}', 'AdminController@totalCountUpdate')->name('admin.total.count.update');
 Route::post ('admin/job-price-update/{id}', 'AdminController@jobPriceUpdate')->name('admin.job.price.update');
 Route::get ('admin/course-activists', 'AdminController@courseActivist')->name('admin.course.activist');
