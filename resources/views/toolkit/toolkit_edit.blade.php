@@ -181,6 +181,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="toolkitPrice" class="col-sm-2 col-form-label">Created By:</label>
+                            <div class="col-sm-10">
+                                <p>{{$toolkit->user->name}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="thumbnail_image" class="col-sm-2 col-form-label">Image:</label>
                             <div class="col-sm-10">
                                 <img style="width: 300px;" src="{{ url('images/thumbnail') }}/{{$toolkit->thumbnail}}" alt="">

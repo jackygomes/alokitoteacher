@@ -307,7 +307,7 @@
             function formSubmitPopupMessage() {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Job price posting is free for admin',
+                    title: 'Job price posting is free for admin.',
                     text: 'Are you sure to spend for posting a job?',
                     confirmButtonColor: '#f5b82f',
                     confirmButtonText: "Yes",

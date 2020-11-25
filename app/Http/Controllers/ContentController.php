@@ -405,6 +405,7 @@ class ContentController extends Controller
                 ->where('course_or_toolkit', '=', 1)
                 ->where('course_toolkit_id', '=', $course->id)
                 ->first();
+            $ratingHistory = CourseRating::where('course_id',$course->id)->where('user_id',Auth::id())->count();
 
             $retake = 60;
 
@@ -419,6 +420,7 @@ class ContentController extends Controller
             return response()->json([
                 'status' => 'success',
                 'retake' => $retake,
+                'existRating' => $ratingHistory,
                 'sequence' => $trackHistory->current_sequence,
             ]);
 

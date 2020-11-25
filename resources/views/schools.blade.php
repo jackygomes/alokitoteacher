@@ -110,7 +110,7 @@
 				<p><span class="font-weight-bold">Founded:</span> {{ date("jS F, Y", strtotime($user_info->founded)) }}</p>
 				<p><span class="font-weight-bold">Playing area:</span> @if(Auth::user()->playing_area == '1')Yes @elseif (Auth::user()->playing_area == '0') No @endif</p>
 				<p><span class="font-weight-bold">Students per classroom:</span> {{ $user_info->students_per_classroom }}</p>
-				<p><span class="font-weight-bold">Teacher student ratio:</span> {{ $user_info->teacher_student_ratio }}</p>
+				<p><span class="font-weight-bold">Teacher student ratio(Teacher to Student):</span> {{ $user_info->no_of_teacher }} : {{ $user_info->no_of_student }}</p>
 				<p><span class="font-weight-bold">Minimum qualification of teacher:</span> {{ $user_info->min_qualification_teacher }}</p>
 				<p><span class="font-weight-bold">Subject periods:</span> {{ $user_info->subject_periods }}</p>
       		</div>

@@ -419,7 +419,11 @@ console.log(result);
                                   $('#cannotRetakeModal').modal('show');
                                 }
                               }else{
-                                $('#ratingModal').modal('show');
+                                  if(result.existRating < 1){
+                                      $('#ratingModal').modal('show');
+                                  } else {
+                                      $('#cannotRetakeModal').modal('show');
+                                  }
                               }
 
                             }else{

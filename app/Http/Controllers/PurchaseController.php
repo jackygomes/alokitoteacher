@@ -184,7 +184,9 @@ class PurchaseController extends Controller
             $earningAmount = 0;
             $earningUserId = $product->user_id;
             if($user->identifier == 101){
+                //if admin
                 if($order->product_type == 'Job'){
+                    //if admin and job
                     $earningAmount = 0;
                 } else {
                     $earningAmount = $order->amount;
@@ -223,7 +225,7 @@ class PurchaseController extends Controller
                 if($order->product_type != 'Job'){
                     $revenueAmount = $payCut;
 
-                    //user blance update
+                    //user balance update
                     $user->balance += floatval($earningAmount);
                     $user->save();
                 } else $revenueAmount = $order->amount;
