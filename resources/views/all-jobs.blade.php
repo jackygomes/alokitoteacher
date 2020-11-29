@@ -49,6 +49,81 @@
 					</div>
 				</div>
 			  	<br>
+				@if($featuredJobs->count() > 0)
+				<div class="featured-job">
+					<table class="table table-bordered" style="border: 1px solid #f5b82f !important">
+						<thead>
+						<tr>
+							<th class="font-weight-bold">
+								<span>Featured Job:</span>
+							</th>
+
+						</tr>
+						</thead>
+						<tbody id="myTable">
+						@foreach ($featuredJobs as $featuredJob)
+							<tr id="job_{{ $featuredJob->job_id }}">
+								<td class="bg-white border-yellow" style="background-color: #fff4da !important;">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-md-2 text-center">
+												@if($featuredJob->image == null)
+													<i class="fas fa-user-circle fa-5x text-yellow"></i>
+												@else
+													<div class="mx-auto" style="width: 70px; height: 70px;">
+														<img class="img-fluid rounded-circle h-100 w-100" src="{{ url('images/profile_picture') }}/{{ $featuredJob->image }}">
+													</div>
+												@endif
+
+												<h4 class="font-weight-bold mt-3"><a class="text-yellow" href="{{ url('s') }}/{{ $featuredJob->username }}"> {{ $featuredJob->name }}</a></h4>
+											</div>
+
+
+											<div class="col-md-7">
+												<span class="font-weight-bold">Job Positon: {{ $featuredJob->job_title }}</span><br>
+
+												<span class="font-weight-bold">Salary Range:</span><span> {{ $featuredJob->expected_salary_range }}</span><br>
+
+												<span class="font-weight-bold">Type:</span><span>@if($featuredJob->nature == 1) Permanent @elseif($featuredJob->nature == 2) Part-Time  @elseif($featuredJob->nature == 3) Contractual @else - @endif</span><br>
+
+												<span class="font-weight-bold">Vacancy:</span><span> {{ $featuredJob->vacancy }}</span><br>
+
+												<span class="font-weight-bold" >Description:</span>
+
+												{{ str_limit(strip_tags($featuredJob->description), 150) }}
+
+
+											</div>
+
+											<div class="col-md-3">
+												<small>
+													Published: {{ date("jS F, Y", strtotime($featuredJob->created_at)) }}</small>
+												<br>
+												<small class="text-danger">
+													Deadline: {{ date("jS F, Y", strtotime($featuredJob->deadline)) }}</small>
+												<br>
+
+												@if(Auth::check())
+													@if(Auth::user()->identifier != 101 & Auth::user()->identifier != 2)
+														@if($featuredJob->isApplied == 0)
+															<button type="button" value="{{ $featuredJob->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$featuredJob->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
+														@else
+															<button type="button" value="{{ $featuredJob->job_id }}" class="btn btn-success applyButton" disabled>Applied</button>
+														@endif
+													@endif
+												@endif
+												<a href="{{ url('job_detail') }}/{{ $featuredJob->job_id }}" class="btn background-yellow  text-white">View</a>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						@endforeach
+						</tbody>
+					</table>
+				</div>
+				@endif
+				<br>
 
 			  	<div id="table">
 					<table class="table table-bordered">

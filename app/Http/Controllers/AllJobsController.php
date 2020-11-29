@@ -58,11 +58,35 @@ class AllJobsController extends Controller
 						    ->paginate(10);
 			}
 
-			$locations = Job::groupBy('location')->get();
-			$schools = User::where('identifier', '=', 2)->get();
+        $locations = Job::groupBy('location')->get();
+        $schools = User::where('identifier', '=', 2)->get();
 
-			$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
-		    return view ('all-jobs', compact('job_info', 'schools', 'locations', 'users'));
+        $users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+
+        $featuredJobs = DB::table('users')
+            ->rightJoin('jobs', 'users.id', '=','jobs.user_id')
+            ->select('jobs.id as job_id', 'users.id as user_id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline', 'jobs.removed', 'jobs.admin_status');
+
+        $condition = [
+            ['jobs.removed', '=', 0],
+            ['jobs.admin_status', '=', 'Approved'],
+            ['jobs.featured', '=', 1],
+        ];
+
+        $featuredJobs = $featuredJobs
+            ->where($condition)
+            ->whereDate('jobs.deadline', '>', Carbon::today()->toDateString())
+            ->orderBy('jobs.created_at', 'DESC')->paginate(10);
+
+        $userId = Auth::check() ? Auth::user()->id : 0;
+        foreach($featuredJobs as $job){
+
+            $appliedCount = JobApplication::where('user_id','=', $userId)->where('job_id','=', $job->job_id)->count();
+
+            $job->isApplied = $appliedCount ? 1 : 0;
+        }
+
+        return view ('all-jobs', compact('job_info', 'schools', 'locations', 'users','featuredJobs'));
 
 //		}
 
@@ -125,6 +149,7 @@ class AllJobsController extends Controller
         $condition = [
             ['jobs.removed', '=', 0],
             ['jobs.admin_status', '=', 'Approved'],
+            ['jobs.featured', '=', 0],
         ];
 
 		$job_info = $job_info
@@ -249,12 +274,31 @@ class AllJobsController extends Controller
         $job->gender = $request->gender;
         $job->deadline = $request->deadline;
         $job->nature = $request->nature;
+
+        if(isset($request->featureJob)){
+
+            $featuredJobCount = Job::where('featured', 1)->count();
+
+            if($featuredJobCount <= 3) $job->featured =  1;
+            else return back()->with('danger', 'You cannot feature this job. Already maximum feature reached.');
+
+        }
+
+
+
         $job->save();
 
         if(isset($user_info) && $user_info->identifier != 101){
             $user_info->balance = $user_info->balance - $jobPrice->price;
             $user_info->save();
             $orderAmount = $jobPrice->price;
+
+            if(isset($request->featureJob)){
+                // when feature extra 500 charge
+                $orderAmount += 500;
+                if($orderAmount > $user_info->balance) return back()->with('danger', 'Insufficient Balance');
+            }
+
         } else $orderAmount = 0;
 
         $orderData = [
@@ -268,7 +312,7 @@ class AllJobsController extends Controller
         ];
 
         $order = Order::create($orderData);
-        return $this->purchaseController->transaction($order);
+        $this->purchaseController->transaction($order);
 
         return back()->with('success', 'Job Posted Successfully');
 

@@ -1,6 +1,13 @@
 @extends('master')
 @section('content')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <style>
+        .custom-control-input:checked ~ .custom-control-label::before {
+            color: #f5b82f !important;
+            background-color: #f5b82f !important;
+            border-color: #f5b82f !important;
+        }
+    </style>
 
     <div class="container-fluid">
 
@@ -77,6 +84,10 @@
                             <span class="fa-clickable text-primary" data-toggle="modal" data-target="#addJobModal"><i class="fas fa-pen" ></i> <small>Add</small></span>
                             @if($message = Session::get('success'))
                                 <div class="alert alert-success">
+                                    {{$message}}
+                                </div>
+                            @elseif($message = Session::get('danger'))
+                                <div class="alert alert-danger">
                                     {{$message}}
                                 </div>
                             @endif
@@ -237,6 +248,18 @@
 
                                     </div>
 
+                                    <div class="form-row mt-1">
+                                        <div class="col-md-6 mb-5">
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="featureJob" class="custom-control-input" id="customCheck1">
+                                                <label class="custom-control-label" for="customCheck1">Feature your job</label>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
 
                                     <div class="form-row mt-1">
                                         <div class="col-md-6 mb-5">
@@ -307,7 +330,7 @@
             function formSubmitPopupMessage() {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Job price posting is free for admin.',
+                    title: 'Job posting is free for admin.',
                     text: 'Are you sure to spend for posting a job?',
                     confirmButtonColor: '#f5b82f',
                     confirmButtonText: "Yes",

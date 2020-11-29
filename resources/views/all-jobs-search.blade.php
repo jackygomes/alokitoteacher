@@ -55,7 +55,7 @@
 			        				<br>
 
 									@if(Auth::check())
-										@if(Auth::user()->identifier != 101)
+										@if(Auth::user()->identifier != 101 & Auth::user()->identifier != 2)
 											@if($v_job_info->isApplied == 0)
 											<button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$v_job_info->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
 											@else

@@ -487,6 +487,18 @@
 
                         </div>
 
+                        <div class="form-row mt-1">
+                            <div class="col-md-6 mb-5">
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="featureJob" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">Feature your job</label>
+                                </div>
+
+                            </div>
+
+                        </div>
+
 
                         <div class="form-row mt-1">
                             <div class="col-md-6 mb-5">

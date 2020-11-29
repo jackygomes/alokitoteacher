@@ -577,6 +577,13 @@ class ContentController extends Controller
                 ->first();
             $trackHistory->current_sequence = 0;
             $trackHistory->save();
+            $quizes = CourseQuiz::where('course_id',$course->id)->get();
+
+            foreach ($quizes as $quiz){
+                $history = CourseHistory::where('user_id',Auth::id())->where('quiz_id',$quiz->id)->first();
+                $history->points = 0;
+                $history->save();
+            }
 
         } else {
             if ($course_toolkit == 't') {

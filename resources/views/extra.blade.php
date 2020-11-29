@@ -132,7 +132,7 @@
 
       </div>
       <div class="modal-body text-center">
-        All of your previous scores of this course will be replaced with new socores.
+        All of your previous scores of this course will be replaced with new scores.
 
       </div>
       <div class="modal-footer">
@@ -411,7 +411,7 @@ console.log(result.options);
                         if(result.status == 'success'){
                             var button = $('button[sequence="'+(parseInt(result.sequence)+1)+'"]');
                             if(button.length == 0){
-console.log(result);
+
                               if(result.retake <= 0){
                                 if('{{ Request::segment(2) }}' == 'c'){
                                   $('#retakeModal').modal('show');
