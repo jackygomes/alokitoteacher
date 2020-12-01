@@ -517,7 +517,7 @@
                         <div class="form-row mt-1">
                             <div class="col-md-6 mb-5">
                                 <label>Deadline <span class="text-danger font-weight-bold"> *</span>:</label>
-                                <input min="<?php echo date("Y-m-d"); ?>" type="date" class="form-control border-yellow" name="deadline" required placeholder="Deadline of job">
+                                <input min="{{$deadLineMin}}" max="{{$deadLineMax}}" type="date" class="form-control border-yellow" name="deadline" required placeholder="Deadline of job">
                             </div>
 
                             <div class="col-md-6 mb-5">

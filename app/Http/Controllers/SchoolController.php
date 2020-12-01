@@ -7,6 +7,7 @@ use App\JobPrice;
 use App\Resource;
 use App\Toolkit;
 use App\WorkExperience;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -57,7 +58,10 @@ class SchoolController extends Controller
         $resources = Resource::where('user_id',$userId)->where('deleted',0)->paginate(10);
         $jobPrice = JobPrice::find(1);
 
-        return view('educational-institute.dashboard', compact('leaderBoard','job_info','resources','toolkits', 'user_info','jobPrice'));
+        $deadLineMin = Carbon::now()->format('Y-m-d');
+        $deadLineMax = Carbon::now()->addMonth(1)->format('Y-m-d');
+
+        return view('educational-institute.dashboard', compact('leaderBoard','job_info','resources','toolkits', 'user_info','jobPrice','deadLineMin','deadLineMax'));
     }
 
 	function add_job(Request $request){

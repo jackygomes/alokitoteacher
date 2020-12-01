@@ -110,6 +110,8 @@ class TeacherController extends Controller
         $resources = Resource::where('user_id',$userId)->where('deleted',0)->paginate(10);
         $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type','Earning')->sum('amount');
 
+
+
 //        return $toolkits;
 
         return view('teacher.dashboard', compact('earnings','resources','toolkits', 'user_info','recent_work', 'leaderBoard', 'recent_institute'));

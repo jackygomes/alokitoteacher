@@ -344,6 +344,25 @@ console.log(result.options);
 
             }
 
+            function finishTimeUpdate(){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                jQuery.ajax({
+                    url: "{{ url('/course_toolkit_complete_update') }}",
+                    method: 'POST',
+                    data: {
+                        slug: '{{ Request::segment(3) }}',
+                        course_toolkit: '{{ Request::segment(2) }}',
+                    },
+                    success: function(result) {
+//                        console.log(result);
+                    }
+                })
+            }
+
 
             function startTimer(duration, display) {
                 var timer = duration, minutes, seconds;
@@ -411,6 +430,9 @@ console.log(result.options);
                         if(result.status == 'success'){
                             var button = $('button[sequence="'+(parseInt(result.sequence)+1)+'"]');
                             if(button.length == 0){
+
+                                // course or toolkit end point
+                                finishTimeUpdate();
 
                               if(result.retake <= 0){
                                 if('{{ Request::segment(2) }}' == 'c'){

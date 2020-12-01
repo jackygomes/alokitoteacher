@@ -295,6 +295,44 @@ class ContentController extends Controller
         }
     }
 
+    function finishUpdate(Request $request)
+    {
+        $slug = $request->slug;
+        $course_toolkit = $request->course_toolkit;
+        if ($course_toolkit == 'c') {
+            $course = Course::where('slug', '=', $slug)->first();
+            $trackHistory = TrackHistory::where('user_id', '=', Auth::id())
+                ->where('course_or_toolkit', '=', 1)
+                ->where('course_toolkit_id', '=', $course->id)
+                ->first();
+
+            $trackHistory->finished = date('Y-m-d H:i:s');
+            $trackHistory->save();
+
+            return response()->json([
+                'status' => 'success',
+                'trackHistory' => $trackHistory,
+            ]);
+
+        } elseif ($course_toolkit == 't') {
+            $toolkit = Toolkit::where('slug', '=', $slug)->first();
+            $trackHistory = TrackHistory::where('user_id', '=', Auth::id())
+                ->where('course_or_toolkit', '=', 0)
+                ->where('course_toolkit_id', '=', $toolkit->id)
+                ->first();
+
+            $trackHistory->finished = date('Y-m-d H:i:s');
+            $trackHistory->save();
+
+            return response()->json([
+                'status' => 'success',
+                'trackHistory' => $trackHistory,
+            ]);
+
+        }
+
+    }
+
     function load_question(Request $request)
     {
         $course_toolkit = $request->course_toolkit;

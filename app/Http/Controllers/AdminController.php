@@ -21,6 +21,7 @@ use App\ToolkitQuizOption;
 use App\ToolkitVideo;
 use App\TrackHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -124,7 +125,12 @@ class AdminController extends Controller
         $revenue = Revenue::all()->sum('revenue');
         $jobPrice = JobPrice::find(1);
 
-        return view('admin.job-list', compact('jobs', 'user_info','revenue','jobPrice'));
+//        return $mytime = date('Y-m-d');
+
+        $deadLineMin = Carbon::now()->format('Y-m-d');
+        $deadLineMax = Carbon::now()->addMonth(1)->format('Y-m-d');
+
+        return view('admin.job-list', compact('jobs', 'user_info','revenue','jobPrice','deadLineMin','deadLineMax'));
     }
 
     public function totalCountUpdate(Request $request, $id) {

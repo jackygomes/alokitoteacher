@@ -33,7 +33,7 @@
 
 		<div class="col-md-10" style="background-color: #f3f2f0;">
 
-			<div class="container mt-3">
+			<div class=" mt-3 mx-5 px-5">
 				@if(session()->has('success'))
 		            <div class="alert alert-success">
 		                {{ session()->get('success') }}
@@ -54,16 +54,16 @@
 					<table class="table table-bordered" style="border: 1px solid #f5b82f !important">
 						<thead>
 						<tr>
-							<th class="font-weight-bold">
+							<th colspan="2" class="font-weight-bold">
 								<span>Featured Job:</span>
 							</th>
 
 						</tr>
 						</thead>
-						<tbody id="myTable">
-						@foreach ($featuredJobs as $featuredJob)
-							<tr id="job_{{ $featuredJob->job_id }}">
-								<td class="bg-white border-yellow" style="background-color: #fff4da !important;">
+						<tbody>
+							<tr>
+							@foreach ($featuredJobs as $featuredJob)
+								<td id="job_{{ $featuredJob->job_id }}" class="bg-white border-yellow" style="background-color: #fff4da !important;">
 									<div class="container-fluid">
 										<div class="row">
 											<div class="col-md-2 text-center">
@@ -75,7 +75,7 @@
 													</div>
 												@endif
 
-												<h4 class="font-weight-bold mt-3"><a class="text-yellow" href="{{ url('s') }}/{{ $featuredJob->username }}"> {{ $featuredJob->name }}</a></h4>
+												<h4 class="font-weight-bold mt-3"><a class="text-yellow" style="font-size: 16px" href="{{ url('s') }}/{{ $featuredJob->username }}"> {{ $featuredJob->name }}</a></h4>
 											</div>
 
 
@@ -117,8 +117,8 @@
 										</div>
 									</div>
 								</td>
+							@endforeach
 							</tr>
-						@endforeach
 						</tbody>
 					</table>
 				</div>

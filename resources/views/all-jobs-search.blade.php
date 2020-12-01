@@ -46,7 +46,7 @@
 
 			        			</div>
 
-			        			<div class="col-md-3">
+			        			<div class="col-md-3 text-right">
 			        				<small>
 			        				Published: {{ date("jS F, Y", strtotime($v_job_info->created_at)) }}</small>
 			        				<br>
@@ -72,7 +72,7 @@
 		        	 </td>
 		      	</tr>
 	    	@endforeach
-            @if(!$job_info)
+            @if($job_info->count() < 1)
             <tr>
                 <td class="bg-white">
                     <div class="container-fluid">
