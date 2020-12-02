@@ -237,12 +237,31 @@
                                 @else
                                     <p style="font-size: 18px;">If you want to purchase certificate click "Purchase" button.</p>
                                 @endif
-                                <p style="font-size: 18px;">Please fix your name from profile setting before you download your certificate.</p>
-                                <form action="{{route('certificate.purchase')}}" onclick="return confirm('Are you sure to purchase this certificate? if yes then click ok.')" method="post">
+                                <p style="font-size: 18px;">Please fill candidate name before you purchase your certificate.</p>
+                                    @if(session()->has('success'))
+                                        <div class="alert alert-success col-md-6">
+                                            {{ session()->get('success') }}
+                                        </div>
+                                    @endif
+
+                                    @if($errors->any())
+                                        <div class="alert alert-danger col-md-6">
+                                            @foreach($errors->all() as $error)
+                                                <p>{{$error}}</p>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                <form id="certificatePurchase" action="{{route('certificate.purchase')}}" method="post">
                                     @csrf
                                     <input type="hidden" name="order_id" value="{{$courseItem->id}}">
                                     <input type="hidden" name="certificate_price" value="{{$course->certificate_price}}">
-                                    <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Purchase</button>
+
+                                    <div class="form-group col-md-6 pl-0">
+                                        <label style="font-size: 18px;">Candidate Name:</label>
+                                        <input name="candidate_name" class="form-control" placeholder="John Doe" value=""/>
+                                    </div>
+                                    <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Purchase" />
+                                    <button type="button" onclick="certificatePurchase()" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Purchase</button>
                                 </form>
                             @else
                                 <p style="font-size: 18px;">Download your certificate.</p>
@@ -284,7 +303,7 @@
                                         </div>
                                         <p>This is to certify that</p>
                                         <div class="info">
-                                            <p class="person-name">{{$user_info->name}}</p>
+                                            <p class="person-name">{{isset($certificateData) ? $certificateData->candidate_name : $user_info->name}}</p>
                                             <p class="top-border">has successfully completed
                                                 @if($courseScore >= 85)
                                                 <span class="gold-badge">with a gold badge<img src="{{asset('images/certificate/gold-badge.png')}}" alt=""></span>
@@ -337,7 +356,7 @@
                                         </div>
                                         <p>This is to certify that</p>
                                         <div class="info">
-                                            <p class="person-name">{{$user_info->name}}</p>
+                                            <p class="person-name">{{isset($certificateData) ? $certificateData->candidate_name : $user_info->name}}</p>
                                             <p class="top-border">has successfully completed
                                                 @if($courseScore >= 85)
                                                     <span class="gold-badge">with gold badge<img src="{{asset('images/certificate/gold-badge.png')}}" alt=""></span>
@@ -395,6 +414,22 @@
             //         pdf.save(filename);
             //     });
             // };
+            function certificatePurchase() {
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Are you sure to purchase certificate?',
+                    confirmButtonColor: '#f5b82f',
+                    confirmButtonText: "Yes",
+                    showCancelButton: true,
+                    cancelButtonText:'Cancel',
+                    cancelButtonColor: '#d33'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    $("#certificatePurchase").find('[type="submit"]').trigger('click');
+                }
+            })
+            }
+
             function downloadPdf(id) {
                 var node = document.querySelector('#certificate-wrap-'+id);
                 var options = {

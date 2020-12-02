@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CertificateInfo;
 use App\Course;
 use App\Order;
 use App\Question;
@@ -59,6 +60,8 @@ class CertificateController extends Controller
                 ];
                 $courseItem = Order::create($orderData);
             }
+
+            $certificateData = CertificateInfo::where('order_id', $courseItem->id)->first();
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -66,7 +69,7 @@ class CertificateController extends Controller
             ], 420);
         }
 
-        return view('certificate.certificate', compact('courseScore', 'courseId', 'course', 'courseItem', 'user_info'));
+        return view('certificate.certificate', compact('courseScore', 'courseId', 'course', 'courseItem', 'user_info','certificateData'));
     }
 
     /**
@@ -80,15 +83,25 @@ class CertificateController extends Controller
         $this->validate($request, [
             'order_id' => 'required',
             'certificate_price' => 'required',
+            'candidate_name' => 'required',
         ]);
-        $user = User::find(Auth::id());
+
+
         try {
+            $user = User::find(Auth::id());
             if ($user->balance >= $request->certificate_price) {
                 $orderItem = Order::find($request->order_id);
 
                 $orderItem->certificate = 1;
                 $orderItem->amount += $request->certificate_price;
                 $orderItem->save();
+
+                $certificateData = [
+                    'order_id'      => $request->order_id,
+                    'candidate_name'=> $request->candidate_name,
+                    'certificate_price'         => $request->certificate_price
+                ];
+                CertificateInfo::create($certificateData);
 
                 $user->balance -= $request->certificate_price;
                 $user->save();
