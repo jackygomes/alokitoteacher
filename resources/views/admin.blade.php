@@ -162,8 +162,10 @@
                                             <td>
                                                 <form id="toolkitDeleteForm_{{$toolkit->id}}" action="{{ route('toolkit.delete', ['id' => $toolkit->id]) }}" method="post">
                                                     <a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                                    @if(Auth::user()->identifier != 104)
                                                     <input class="btn btn-danger btn-sm" onclick="toolkitDeleteConfirm({{$toolkit->id}})" type="button" value="Remove" />
                                                     <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                                    @endif
                                                     @method('delete')
                                                     @csrf
                                                 </form>
@@ -209,8 +211,10 @@
                                             <td>
                                                 <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">
                                                     <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                                    @if(Auth::user()->identifier != 104)
                                                     <input class="btn btn-danger btn-sm" onclick="resourceDeleteConfirm({{$resource->id}})" type="button" value="Remove" />
                                                     <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                                    @endif
                                                     @method('delete')
                                                     @csrf
                                                 </form>

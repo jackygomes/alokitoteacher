@@ -225,9 +225,12 @@
 					    <a href="{{route('job.edit',$job_info->id)}}" class="btn btn-success text-white btn-sm mb-3">Edit</a>
                         @endif
                         @if($job_info->removed == 0)
-					    <a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
+                            <a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
                         @endif
 					@endif
+                    @if(Auth::user()->identifier == 101)
+                        <a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
+                    @endif
 
 				</div>
 
