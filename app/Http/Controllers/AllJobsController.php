@@ -280,7 +280,7 @@ class AllJobsController extends Controller
             $featuredJobCount = Job::where('featured', 1)->whereDate('deadline', '>', Carbon::today()->toDateString())->count();
 
             if($featuredJobCount < 4) $job->featured =  1;
-            else return back()->with('danger', 'You cannot feature this job. Already maximum feature reached.');
+            else return back()->with('danger', 'You cannot post feature job. Already maximum feature job limit reached.');
 
         }
 

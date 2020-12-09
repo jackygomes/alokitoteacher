@@ -81,7 +81,7 @@ class AllController extends Controller
                  ->limit(4)
                  ->get();
          }
-         $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->get();
+         $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->limit(4)->get();
 
          $userId = Auth::check() ? Auth::user()->id : 0;
          foreach($course_info as $course){

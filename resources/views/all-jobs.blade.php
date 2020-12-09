@@ -13,6 +13,7 @@
 
 			<h3 class="font-weight-bold mt-5 text-white">Filter</h3>
 			<hr>
+			<label for="" class="text-white">Search By Location</label>
 			<select class="form-control border-yellow" id="location" required>
 				<option value="" disabled="" selected="">-- Location --</option>
 				<option value="">-- All --</option>
@@ -21,6 +22,7 @@
 				@endforeach
 			</select>
 			<br>
+			<label for="school" class="text-white">Search By School</label>
 			<select class="form-control border-yellow mb-3" id="school" required>
 				<option value="" disabled="" selected="">-- School --</option>
 				<option value="">-- All --</option>
@@ -51,20 +53,24 @@
 			  	<br>
 				@if($featuredJobs->count() > 0)
 				<div class="featured-job">
-					<table class="table table-bordered" style="border: 1px solid #f5b82f !important">
+					<table class="table table-bordered" >
 						<thead>
 						<tr>
 							<th colspan="2" class="font-weight-bold">
-								<span>Featured Job:</span>
+								<span>Featured Jobs:</span>
 							</th>
 
 						</tr>
 						</thead>
 						<tbody>
+						@php $count = 0 @endphp
+						@foreach ($featuredJobs as $featuredJob)
+							@php $count++ @endphp
+							@if( $count % 2 != 0 )
 							<tr>
-							@foreach ($featuredJobs as $featuredJob)
+							@endif
 								<td id="job_{{ $featuredJob->job_id }}" class="bg-white border-yellow" style="background-color: #fff4da !important;">
-									<div class="container-fluid">
+									<div class="">
 										<div class="row">
 											<div class="col-md-2 text-center">
 												@if($featuredJob->image == null)
@@ -97,14 +103,14 @@
 
 											<div class="col-md-3">
 												<small>
-													Published: {{ date("jS F, Y", strtotime($featuredJob->created_at)) }}</small>
+													Published: {{ date("jS M, Y", strtotime($featuredJob->created_at)) }}</small>
 												<br>
 												<small class="text-danger">
-													Deadline: {{ date("jS F, Y", strtotime($featuredJob->deadline)) }}</small>
+													Deadline: {{ date("jS M, Y", strtotime($featuredJob->deadline)) }}</small>
 												<br>
 
 												@if(Auth::check())
-													@if(Auth::user()->identifier != 101 & Auth::user()->identifier != 2)
+													@if(Auth::user()->identifier != 101 && Auth::user()->identifier != 2 && Auth::user()->identifier != 104)
 														@if($featuredJob->isApplied == 0)
 															<button type="button" value="{{ $featuredJob->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$featuredJob->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
 														@else
@@ -117,8 +123,10 @@
 										</div>
 									</div>
 								</td>
-							@endforeach
-							</tr>
+							{{--@if( $count % 2 == 0 )--}}
+								{{--</tr>--}}
+							{{--@endif--}}
+						@endforeach
 						</tbody>
 					</table>
 				</div>
@@ -139,63 +147,7 @@
 					      </tr>
 					    </thead>
 					    	<tbody id="myTable">
-					    		{{--@foreach ($job_info as $v_job_info)--}}
-							      	{{--<tr id="job_{{ $v_job_info->job_id }}">--}}
-							        	{{--<td class="bg-white">--}}
-							        		{{--<div class="container-fluid">--}}
-							        			{{--<div class="row">--}}
-							        				{{--<div class="col-md-2 text-center">--}}
-							        					{{--@if($v_job_info->image == null)--}}
-											          		{{--<i class="fas fa-user-circle fa-5x text-yellow"></i>--}}
-												        {{--@else--}}
-												        {{--<div class="mx-auto" style="width: 70px; height: 70px;">--}}
-												          {{--<img class="img-fluid rounded-circle h-100 w-100" src="{{ url('images/profile_picture') }}/{{ $v_job_info->image }}">--}}
-												        {{--</div>--}}
-												        {{--@endif--}}
-
-												        {{--<h4 class="font-weight-bold mt-3"><a class="text-yellow" href="{{ url('s') }}/{{ $v_job_info->username }}"> {{ $v_job_info->name }}</a></h4>--}}
-									        		{{--</div>--}}
-
-
-								        			{{--<div class="col-md-7">--}}
-								        				{{--<span class="font-weight-bold">Job Positon: {{ $v_job_info->job_title }}</span><br>--}}
-
-										        		{{--<span class="font-weight-bold">Salary Range:</span><span> {{ $v_job_info->expected_salary_range }}</span><br>--}}
-
-										        		{{--<span class="font-weight-bold">Type:</span><span>@if($v_job_info->nature == 1) Permanent @elseif($v_job_info->nature == 2) Part-Time  @elseif($v_job_info->nature == 3) Contractual @else - @endif</span><br>--}}
-
-										        		{{--<span class="font-weight-bold">Vacancy:</span><span> {{ $v_job_info->vacancy }}</span><br>--}}
-
-										        		{{--<span class="font-weight-bold" >Description:</span>--}}
-
-										        		{{--{{ str_limit(strip_tags($v_job_info->description), 150) }}--}}
-
-{{--											              <a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="text-yellow">Read More</a>--}}
-
-
-								        			{{--</div>--}}
-
-								        			{{--<div class="col-md-3">--}}
-								        				{{--<small>--}}
-								        				{{--Published: {{ date("jS F, Y", strtotime($v_job_info->created_at)) }}</small>--}}
-								        				{{--<br>--}}
-								        				{{--<small class="text-danger">--}}
-								        				{{--Deadline: {{ date("jS F, Y", strtotime($v_job_info->deadline)) }}</small>--}}
-								        				{{--<br>--}}
-
-								        				{{--<button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" data-toggle="modal" data-target="#coverLetterModal">Apply</button>--}}
-{{--								        				@if(request()->route('type') == 'all')--}}
-{{--								        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn border-yellow saveButton">Save</button>--}}
-{{--								        				@else--}}
-{{--								        				<button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-danger removeButton">Remove</button>--}}
-                                                        {{--<a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="btn background-yellow  text-white">View</a>--}}
-{{--								        				@endif--}}
-								        			{{--</div>--}}
-							        			{{--</div>--}}
-							        		{{--</div>--}}
-							        	 {{--</td>--}}
-							      	{{--</tr>--}}
-						    	{{--@endforeach--}}
+							 {{--search results showing--}}
 						    </tbody>
 				    </table>
 
@@ -286,7 +238,7 @@
             $('#form_job_id').val(id);
         }
 
-        let x='',y='',z='';
+
 		$('#searchButton').on('click', function () {
 			search_filter($('#search').val(), $('#location').val(), $('#school').val());
 		});
@@ -317,7 +269,7 @@
             });
         }
 
-
+        let x='',y='',z='';
         search_filter(x, y, z);
         function search_filter(search, location, school){
             $.ajaxSetup({

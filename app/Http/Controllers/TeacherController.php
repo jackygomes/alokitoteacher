@@ -11,6 +11,7 @@ use App\ToolkitRating;
 use App\Transaction;
 use App\Utilities\LeaderBoard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -124,6 +125,10 @@ class TeacherController extends Controller
 		]);
 
 		$user = User::find(Auth::id());
+
+		$oldImagePath = 'images/profile_picture/'.$user->image;
+		File::delete($oldImagePath);
+
         $imageName = $user->id.'_image'.time().'.'.request()->image->getClientOriginalExtension();
 		$image = $request->file('image');
 		$image_name = $user->id.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();

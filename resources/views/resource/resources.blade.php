@@ -41,7 +41,7 @@
             @foreach($resource_info as $key =>$resource)
 
             <div class="col-md-3 my-3">
-                <a href="{{ url('view') }}/t/{{$resource->slug}}">
+                <a href="{{ url('overview') }}/r/{{$resource->slug}}">
 
                     <div class="card" style="min-height: 22.5vh">
                         <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" class="card-img-top">

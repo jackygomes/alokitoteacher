@@ -109,7 +109,7 @@ class CertificateController extends Controller
                 $trackHistory = TrackHistory::where('user_id',Auth::id())->where('course_toolkit_id',$orderItem->product_id)->first();
                 if($trackHistory != null){
 
-                    $trackHistory->certificate_withdrawn = date('Y-m-d H:i:s');
+                    $trackHistory->certificate_withdrawn_date = date('Y-m-d H:i:s');
                     $trackHistory->save();
                 }
 

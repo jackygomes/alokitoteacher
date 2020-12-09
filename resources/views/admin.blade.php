@@ -267,7 +267,7 @@
             confirmButtonText: "Yes",
             showCancelButton: true,
             cancelButtonText:'Cancel',
-            cancelButtonColor: '#d33'
+            cancelButtonColor: '#d33',
         }).then((result) => {
             if (result.isConfirmed) {
                 $("#resourceDeleteForm_"+id).find('[type="submit"]').trigger('click');

@@ -60,8 +60,9 @@ class SchoolController extends Controller
 
         $deadLineMin = Carbon::now()->format('Y-m-d');
         $deadLineMax = Carbon::now()->addMonth(1)->format('Y-m-d');
+        $featuredJobCount = Job::where('featured', 1)->whereDate('deadline', '>', \Carbon\Carbon::today()->toDateString())->count();
 
-        return view('educational-institute.dashboard', compact('leaderBoard','job_info','resources','toolkits', 'user_info','jobPrice','deadLineMin','deadLineMax'));
+        return view('educational-institute.dashboard', compact('leaderBoard','job_info','resources','toolkits', 'user_info','jobPrice','deadLineMin','deadLineMax','featuredJobCount'));
     }
 
 	function add_job(Request $request){

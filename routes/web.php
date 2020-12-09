@@ -126,7 +126,7 @@ Route::post ('enroll_into_course', 'ContentController@enroll_into_course');
 Route::post ('rate_a_course', 'ContentController@rate_a_course');
 Route::post ('retake_course', 'ContentController@retake_course');
 Route::post ('verify_question', 'ContentController@verify_question');
-Route::post ('course_toolkit_complete_update', 'ContentController@finishUpdate');
+Route::post ('course_toolkit_complete_update', 'ContentController@completionUpdate');
 
 Route::get ('settings', 'SettingsController@index');
 Route::post ('updateInfo', 'SettingsController@updateInfo')->name('updateInfo');

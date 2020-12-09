@@ -1,6 +1,12 @@
 @extends('master')
 @section('content')
-
+    <style>
+        .custom-control-input:checked ~ .custom-control-label::before {
+            color: #f5b82f !important;
+            background-color: #f5b82f !important;
+            border-color: #f5b82f !important;
+        }
+    </style>
 
     <div class="container-fluid">
 
@@ -491,8 +497,8 @@
                             <div class="col-md-6 mb-5">
 
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="featureJob" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1">Feature your job</label>
+                                    <input type="checkbox" name="featureJob" class="custom-control-input" id="featureJobCheckbox">
+                                    <label class="custom-control-label" for="featureJobCheckbox">Feature your job</label>
                                 </div>
 
                             </div>
@@ -534,10 +540,11 @@
                         </div>
 
                         @if($user_info->balance >= $jobPrice->price)
-                        <button type="button" Onclick="formSubmitPopupMessage({{$jobPrice->price}});" class="btn background-yellow float-right">Add Job</button>
-                        <button type="submit" style="display: none" class="btn background-yellow float-right">Add Job</button>
+                                <button id="submitButton" type="button" Onclick="formSubmitPopupMessage({{$jobPrice->price}});" class="btn background-yellow float-right">Add Job</button>
+                                <button id="noSubmitButton" type="button" Onclick="maxFeatureJobMessage();" style="display: none" class="btn background-yellow float-right">Add Job</button>
+                            <button type="submit" style="display: none" class="btn background-yellow float-right">Add Job</button>
                         @else
-                        <button type="button" Onclick="popupAlertInsufficientBalance({{$jobPrice->price}});" class="btn background-yellow float-right">Add Job</button>
+                            <button type="button" Onclick="popupAlertInsufficientBalance({{$jobPrice->price}});" class="btn background-yellow float-right">Add Job</button>
                         @endif
 
                     </form>
@@ -598,11 +605,36 @@
                     }
                 })
             }
+
+            $('#featureJobCheckbox').change(function() {
+                let featuredJobCount = '{{$featuredJobCount}}';
+                if(featuredJobCount >= 4)
+                {
+                    if(this.checked) {
+                        $('#submitButton').hide();
+                        $('#noSubmitButton').show();
+                    }else {
+                        $('#submitButton').show();
+                        $('#noSubmitButton').hide();
+                    }
+                }
+            });
+
+            function maxFeatureJobMessage() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Sorry!',
+                    text: 'Maximum featured job limit reached',
+                    confirmButtonColor: '#f5b82f',
+                    confirmButtonText: "Ok",
+                })
+            }
+
             function popupAlertInsufficientBalance(price) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops! Job price is '+price+' BDT',
-                    text: 'Insufficient Balance!',
+                    title: 'Oops! Insufficient Balance.',
+                    text: 'Job price is '+price+' BDT',
                     confirmButtonColor: '#f5b82f',
                 })
             }

@@ -47,7 +47,7 @@ class CourseController extends Controller
     public function create () {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -60,7 +60,7 @@ class CourseController extends Controller
     public function store(Request $request){
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -112,7 +112,7 @@ class CourseController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -143,12 +143,8 @@ class CourseController extends Controller
     public function courseObjectiveEdit($courseId) {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if($user_info) {
-            if($user_info->identifier == 101){
-            } else {
-                return abort(404);
-            }
-        }else {
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
+
             return abort(404);
         }
 
@@ -207,7 +203,7 @@ class CourseController extends Controller
 
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -277,7 +273,7 @@ class CourseController extends Controller
     public function videoCreate(Request $request, $courseId) {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -305,7 +301,7 @@ class CourseController extends Controller
     public function quizCreate(Request $request, $courseId) {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -333,7 +329,7 @@ class CourseController extends Controller
     public function questionCreate(Request $request, $courseId) {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -382,7 +378,7 @@ class CourseController extends Controller
     public function courseSequenceUpdate(Request $request, $courseId) {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }

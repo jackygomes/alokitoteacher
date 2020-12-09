@@ -215,7 +215,7 @@
                         @if($course->certificate_price == 0)
                             @if($courseItem->certificate == 0)
                             <div class="col-md-12">
-                                <h3>Certificate is Free.</h3>
+                                <h3 class="text-yellow font-weight-bold">Certificate is Free.</h3>
                             </div>
                             @endif
                         @else
@@ -225,7 +225,7 @@
                             </div>
                             <div class="col-md-12">
 
-                                <p style="font-size: 18px;">Certificate price is {{round($course->certificate_price, 2)}} BDT.</p>
+                                <p class="text-yellow font-weight-bold" style="font-size: 18px;">Certificate price is {{round($course->certificate_price, 2)}} BDT.</p>
 
                             </div>
                             @endif
@@ -233,9 +233,9 @@
                         <div class="col-md-12">
                             @if($courseItem->certificate == 0)
                                 @if($course->certificate_price == 0)
-                                    <p style="font-size: 18px;">Click "Purchase" to get your certificate now.</p>
+                                    <p style="font-size: 18px;">Click "<span class="font-weight-bold">Purchase</span>" to get your certificate now.</p>
                                 @else
-                                    <p style="font-size: 18px;">If you want to purchase certificate click "Purchase" button.</p>
+                                    <p style="font-size: 18px;">If you want to purchase certificate click "<span class="font-weight-bold">Purchase</span>" button.</p>
                                 @endif
                                 <p style="font-size: 18px;">Please fill candidate name before you purchase your certificate.</p>
                                     @if(session()->has('success'))
@@ -258,14 +258,13 @@
 
                                     <div class="form-group col-md-6 pl-0">
                                         <label style="font-size: 18px;">Candidate Name:</label>
-                                        <input name="candidate_name" class="form-control" placeholder="John Doe" value=""/>
+                                        <input name="candidate_name" class="form-control" value="{{$user_info->name}}" value=""/>
                                     </div>
                                     <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Purchase" />
                                     <button type="button" onclick="certificatePurchase()" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Purchase</button>
                                 </form>
                             @else
                                 <p style="font-size: 18px;">Download your certificate.</p>
-                                <p style="font-size: 18px;">Please fix your name from profile setting before you download your certificate.</p>
                                 @if($courseId == 3)
                                 <button type="button" onClick="downloadPdf(2)" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Download</button>
                                 @else
@@ -391,29 +390,8 @@
 
     @push('js')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
         <script type="application/javascript">
-            // function downloadPdf(id){
-            //     // Initiate PDF create and Download
-            //     const filename  = 'certificate.pdf';
-            //     html2canvas(document.querySelector('#certificate-wrap-'+id ),
-            //         {scale: 2, dpi:144}
-            //     ).then(canvas => {
-            //         const imgData = canvas.toDataURL('image/png');
-            //         const pdf = new jsPDF({
-            //             orientation: 'Landscape',
-            //             quality:4
-            //         });
-            //         const imgProps= pdf.getImageProperties(imgData);
-            //         const pdfWidth = pdf.internal.pageSize.getWidth();
-            //         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            //         // pdf.addImage(imgData, 'PNG', 40, -100, pdfWidth, pdfHeight,'','Slow', -90);
-            //         pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-            //         pdf.internal.scaleFactor = 1.55
-            //         pdf.save(filename);
-            //     });
-            // };
             function certificatePurchase() {
                 Swal.fire({
                     icon: 'question',
@@ -425,9 +403,9 @@
                     cancelButtonColor: '#d33'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                    $("#certificatePurchase").find('[type="submit"]').trigger('click');
-                }
-            })
+                        $("#certificatePurchase").find('[type="submit"]').trigger('click');
+                    }
+                })
             }
 
             function downloadPdf(id) {

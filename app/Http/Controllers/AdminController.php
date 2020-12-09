@@ -47,8 +47,7 @@ class AdminController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if(isset($user_info) && $user_info->identifier != 101){
-
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
             return abort(404);
         }
 
@@ -67,7 +66,7 @@ class AdminController extends Controller
 
         $allUser = User::all();
 
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -81,7 +80,7 @@ class AdminController extends Controller
 
         $allUser = User::all();
 
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -96,7 +95,7 @@ class AdminController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -117,7 +116,7 @@ class AdminController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -129,8 +128,9 @@ class AdminController extends Controller
 
         $deadLineMin = Carbon::now()->format('Y-m-d');
         $deadLineMax = Carbon::now()->addMonth(1)->format('Y-m-d');
+        $featuredJobCount = Job::where('featured', 1)->whereDate('deadline', '>', \Carbon\Carbon::today()->toDateString())->count();
 
-        return view('admin.job-list', compact('jobs', 'user_info','revenue','jobPrice','deadLineMin','deadLineMax'));
+        return view('admin.job-list', compact('jobs', 'user_info','revenue','jobPrice','deadLineMin','deadLineMax','featuredJobCount'));
     }
 
     public function totalCountUpdate(Request $request, $id) {
@@ -247,7 +247,7 @@ class AdminController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -261,7 +261,7 @@ class AdminController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
@@ -297,7 +297,7 @@ class AdminController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }

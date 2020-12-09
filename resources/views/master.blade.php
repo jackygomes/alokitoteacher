@@ -111,8 +111,8 @@
                         {{ Auth::user()->name }}
                     </button>
                     <div class="dropdown-menu">
-                        @if(Auth::user()->identifier == 101)
-                        <a class="dropdown-item" href="@if(Auth::user()->identifier == 101) {{ url('dashboard') }}@endif">Dashboard</a>
+                        @if(Auth::user()->identifier == 101 || Auth::user()->identifier == 104)
+                        <a class="dropdown-item" href="@if(Auth::user()->identifier == 101 || Auth::user()->identifier == 104) {{ url('dashboard') }}@endif">Dashboard</a>
                         @else
                             @if(Auth::user()->identifier == 1)
                                 <a class="dropdown-item" href="{{url('t/dashboard')}}">Dashboard</a>

@@ -133,7 +133,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2 || $user_info->identifier == 104){
             } else {
                 return abort(404);
             }
@@ -198,7 +198,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2 || $user_info->identifier == 104){
             } else {
                 return abort(404);
             }
@@ -227,7 +227,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identicreatedfier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
+            if($user_info->identicreatedfier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2 || $user_info->identifier == 104){
             } else {
                 return abort(404);
             }
@@ -257,7 +257,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2 || $user_info->identifier == 104){
             } else {
                 return abort(404);
             }
@@ -343,7 +343,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2 || $user_info->identifier == 104){
             } else {
                 return abort(404);
             }
@@ -399,7 +399,7 @@ class ToolkitController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if($user_info) {
-            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2){
+            if($user_info->identifier == 101 || $user_info->identifier == 1 || $user_info->identifier == 2 || $user_info->identifier == 104){
             } else {
                 return abort(404);
             }

@@ -252,8 +252,8 @@
                                         <div class="col-md-6 mb-5">
 
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" name="featureJob" class="custom-control-input" id="customCheck1">
-                                                <label class="custom-control-label" for="customCheck1">Feature your job</label>
+                                                <input type="checkbox" name="featureJob" class="custom-control-input" id="featureJobCheckbox">
+                                                <label class="custom-control-label" for="featureJobCheckbox">Feature your job</label>
                                             </div>
 
                                         </div>
@@ -294,7 +294,8 @@
 
                                     </div>
 
-                                    <button type="button" Onclick="formSubmitPopupMessage();" class="btn background-yellow float-right">Add Job</button>
+                                    <button id="submitButton" type="button" Onclick="formSubmitPopupMessage();" class="btn background-yellow float-right">Add Job</button>
+                                    <button id="noSubmitButton" type="button" style="display: none" Onclick="maxFeatureJobMessage();" class="btn background-yellow float-right">Add Job</button>
                                     <button type="submit" style="display: none" class="btn background-yellow float-right">Add Job</button>
 
                                 </form>
@@ -328,11 +329,24 @@
                 $("#pro_pic_upload_form").submit();
             });
 
+            $('#featureJobCheckbox').change(function() {
+                let featuredJobCount = '{{$featuredJobCount}}';
+                if(featuredJobCount >= 4)
+                {
+                    if(this.checked) {
+                        $('#submitButton').hide();
+                        $('#noSubmitButton').show();
+                    }else {
+                        $('#submitButton').show();
+                        $('#noSubmitButton').hide();
+                    }
+                }
+            });
+
             function formSubmitPopupMessage() {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Job posting is free for admin.',
-                    text: 'Are you sure to spend for posting a job?',
                     confirmButtonColor: '#f5b82f',
                     confirmButtonText: "Yes",
                     showCancelButton: true,
@@ -342,6 +356,16 @@
                     if (result.isConfirmed) {
                         $("#jobPost").find('[type="submit"]').trigger('click');
                     }
+                })
+            }
+
+            function maxFeatureJobMessage() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Sorry!',
+                    text: 'Maximum featured job limit reached',
+                    confirmButtonColor: '#f5b82f',
+                    confirmButtonText: "Ok",
                 })
             }
 

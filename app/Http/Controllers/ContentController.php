@@ -295,7 +295,7 @@ class ContentController extends Controller
         }
     }
 
-    function finishUpdate(Request $request)
+    function completionUpdate(Request $request)
     {
         $slug = $request->slug;
         $course_toolkit = $request->course_toolkit;
@@ -306,7 +306,7 @@ class ContentController extends Controller
                 ->where('course_toolkit_id', '=', $course->id)
                 ->first();
 
-            $trackHistory->finished = date('Y-m-d H:i:s');
+            $trackHistory->completion_date = date('Y-m-d H:i:s');
             $trackHistory->save();
 
             return response()->json([
@@ -321,7 +321,7 @@ class ContentController extends Controller
                 ->where('course_toolkit_id', '=', $toolkit->id)
                 ->first();
 
-            $trackHistory->finished = date('Y-m-d H:i:s');
+            $trackHistory->completion_date = date('Y-m-d H:i:s');
             $trackHistory->save();
 
             return response()->json([
