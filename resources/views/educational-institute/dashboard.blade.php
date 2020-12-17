@@ -86,7 +86,7 @@
 
             </div>
 
-            <div class="col-md-7 col-sm-12 mt-2">
+            <div class="col-md-9 col-sm-12 mt-2">
                 <div class="container-fluid ">
                     <div class="row">
                         @if($message = Session::get('success'))
@@ -103,9 +103,10 @@
                                         <thead>
                                         <tr>
                                             <th style="width:10%">No.</th>
-                                            <th style="width:20%">Subject</th>
-                                            <th style="width:30%">Toolkit Name</th>
+                                            <th style="width:10%">Subject</th>
+                                            <th style="width:20%">Toolkit Name</th>
                                             <th style="width:10%">Price</th>
+                                            <th style="width:20%">Educators Enrolled</th>
                                             <th style="width:10%">Status</th>
                                             <th style="width:20%">Action</th>
                                         </tr>
@@ -118,6 +119,7 @@
                                                 <td>{{$toolkit->subject->subject_name}}</td>
                                                 <td>{{$toolkit->toolkit_title}}</td>
                                                 <td>{{($toolkit->price == 0) ? 'Free' : $toolkit->price}}</td>
+                                                <td>{{$toolkit->people_taken}}</td>
                                                 <td>{{$toolkit->status}}</td>
                                                 <td>
                                                     <form id="toolkitDeleteForm_{{$toolkit->id}}" action="{{ route('toolkit.delete', ['id' => $toolkit->id]) }}" method="post">

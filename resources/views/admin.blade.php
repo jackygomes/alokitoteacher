@@ -88,6 +88,14 @@
                         <a href="{{route('admin.course.activist')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             Course Activists
                         </a>
+                        @if($user_info->identifier == 101)
+                            <a href="{{route('admin.transactions')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                                Transactions
+                            </a>
+                            <a href="{{route('admin.revenue')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                                Revenue
+                            </a>
+                        @endif
                     </div>
                 </div>
                 <div class="row">
@@ -119,7 +127,10 @@
                                             <td>{{$course->title}}</td>
                                             <td>{{($course->price == 0) ? 'Free' : $course->price}}</td>
                                             <td>{{$course->status}}</td>
-                                            <td><a href="{{route('course.edit', $course->id)}}" class="btn btn-info text-white btn-sm">Edit</a></td>
+                                            <td>
+                                                <a href="{{route('course.edit', $course->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                                <a href="{{route('course.admin.view', $course->id)}}" class="btn btn-success text-white btn-sm">View</a>
+                                            </td>
                                         </tr>
                                         <?php $n++ ?>
                                     @endforeach
@@ -162,9 +173,10 @@
                                             <td>
                                                 <form id="toolkitDeleteForm_{{$toolkit->id}}" action="{{ route('toolkit.delete', ['id' => $toolkit->id]) }}" method="post">
                                                     <a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
-                                                    @if(Auth::user()->identifier != 104)
-                                                    <input class="btn btn-danger btn-sm" onclick="toolkitDeleteConfirm({{$toolkit->id}})" type="button" value="Remove" />
-                                                    <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                                    <a href="{{route('toolkit.admin.view', $toolkit->id)}}" class="btn btn-success text-white btn-sm">View</a>
+                                                @if(Auth::user()->identifier != 104)
+                                                        <input class="btn btn-danger btn-sm" onclick="toolkitDeleteConfirm({{$toolkit->id}})" type="button" value="Remove" />
+                                                        <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
                                                     @endif
                                                     @method('delete')
                                                     @csrf

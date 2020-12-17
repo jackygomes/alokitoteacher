@@ -10,6 +10,7 @@ use App\CourseQuizOption;
 use App\CourseVideo;
 use App\JobPrice;
 use App\LeaderBoard;
+use App\Order;
 use App\Resource;
 use App\Revenue;
 use App\TeacherStudentCount;
@@ -20,6 +21,7 @@ use App\ToolkitQuiz;
 use App\ToolkitQuizOption;
 use App\ToolkitVideo;
 use App\TrackHistory;
+use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
@@ -56,6 +58,19 @@ class AdminController extends Controller
         $resources = Resource::where('deleted',0)->paginate(10);
 
         $revenue = Revenue::all()->sum('revenue');
+
+        //TODO: one time script for transaction note field update
+//        $transactions = Transaction::all();
+//        foreach ($transactions as $transaction) {
+//            if($transaction->order_id != null){
+//                $order = Order::find($transaction->order_id);
+//                if(isset($order)) {
+//                    $transaction->note = $order->product_type;
+//                    $transaction->save();
+//                }
+//            }
+//        }
+
 
         return view ('admin',compact( 'user_info', 'courses', 'toolkits', 'resources','revenue'));
     }
@@ -158,6 +173,82 @@ class AdminController extends Controller
         return redirect()->back()->with('jobSuccess', 'Job Price Updated Successfully ');
     }
 
+    /**
+     * course taker view for admin
+     * @param $id
+     */
+    public function course_admin_view($id){
+
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        $revenue = Revenue::all()->sum('revenue');
+        $histories = TrackHistory::where('course_toolkit_id', $id)->orderBy('id','DESC')->get();
+
+        return view('course.admin_view',compact('user_info','revenue','histories'));
+    }
+
+    /**
+     * toolkit taker view for admin
+     * @param $id
+     */
+    public function toolkit_admin_view($id){
+
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        $revenue = Revenue::all()->sum('revenue');
+        $histories = TrackHistory::where('course_toolkit_id', $id)->orderBy('id','DESC')->get();
+
+        return view('toolkit.admin_view',compact('user_info','revenue','histories'));
+    }
+
+    /**
+     * transaction lists
+     * @param $id
+     */
+    public function transactions(){
+
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        if(isset($user_info) && $user_info->identifier != 101){
+            return abort(404);
+        }
+
+        $revenue = Revenue::all()->sum('revenue');
+
+        $transactions = Transaction::all();
+
+        return view('admin.transactions',compact('user_info','revenue','transactions'));
+    }
+
+    /**
+     * Revenue
+     * @param $id
+     */
+    public function revenue(){
+
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        if(isset($user_info) && $user_info->identifier != 101){
+            return abort(404);
+        }
+
+        $revenue = Revenue::all()->sum('revenue');
+        $revenueList = Revenue::all();
+
+        foreach ($revenueList as $item){
+            $order = Order::find($item->order_id);
+            if(isset($order)){
+                $item->product_type = $order->product_type;
+            }
+        }
+//        return $revenueList;
+
+        return view('admin.revenue_list',compact('user_info','revenue','revenueList'));
+    }
 
     /** toolkit content or course content return
      * ajax request method

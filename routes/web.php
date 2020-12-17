@@ -46,6 +46,8 @@ Route::post ('admin/course/store', 'CourseController@store')->name('course.store
 Route::get ('admin/course/edit/{id}', 'CourseController@course_edit')->name('course.edit');
 Route::post ('admin/course/update/{id}', 'CourseController@courseDetailsUpdate')->name('course.details.update');
 
+Route::get ('admin/course/view/{id}', 'AdminController@course_admin_view')->name('course.admin.view');
+
 Route::get ('admin/course/objective/edit/{id}', 'CourseController@courseObjectiveEdit')->name('course.objective.edit');
 Route::post ('admin/course/objective/update/{id}', 'CourseController@courseSequenceUpdate')->name('course.objective.update');
 Route::post ('admin/course/video/create/{id}', 'CourseController@videoCreate')->name('course.video.create');
@@ -65,6 +67,9 @@ Route::get ('admin/course-activists', 'AdminController@courseActivist')->name('a
 Route::get ('admin/course-activists/create', 'AdminController@courseActivistCreate')->name('admin.course.activist.create');
 Route::post ('admin/course-activists/store', 'AdminController@courseActivistStore')->name('admin.course.activist.store');
 Route::delete ('admin/course-activists/delete/{id}', 'AdminController@courseActivistDestroy')->name('admin.course.activist.delete');
+Route::get ('admin/transactions', 'AdminController@transactions')->name('admin.transactions');
+Route::get ('admin/revenue', 'AdminController@revenue')->name('admin.revenue');
+
 
 
 
@@ -78,6 +83,9 @@ Route::post ('toolkit/question/create/{id}', 'ToolkitController@questionCreate')
 Route::get ('toolkit/edit/{id}', 'ToolkitController@toolkit_edit')->name('toolkit.edit');
 Route::post ('toolkit/video/update/{id}', 'ToolkitController@toolkit_video_update')->name('toolkit.video.edit');
 Route::post ('toolkit/quiz/update/{id}', 'ToolkitController@toolkit_quiz_update')->name('toolkit.quiz.update');
+
+Route::get ('toolkit/admin/view/{id}', 'AdminController@toolkit_admin_view')->name('toolkit.admin.view');
+
 
 Route::delete ('toolkit/delete/{id}', 'ToolkitController@destroy')->name('toolkit.delete');
 

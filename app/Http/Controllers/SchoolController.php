@@ -6,6 +6,7 @@ use App\Academic;
 use App\JobPrice;
 use App\Resource;
 use App\Toolkit;
+use App\TrackHistory;
 use App\WorkExperience;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -61,6 +62,10 @@ class SchoolController extends Controller
         $deadLineMin = Carbon::now()->format('Y-m-d');
         $deadLineMax = Carbon::now()->addMonth(1)->format('Y-m-d');
         $featuredJobCount = Job::where('featured', 1)->whereDate('deadline', '>', \Carbon\Carbon::today()->toDateString())->count();
+
+        foreach ($toolkits as $toolkit){
+            $toolkit->people_taken = TrackHistory::where('course_toolkit_id', $toolkit->id)->count();
+        }
 
         return view('educational-institute.dashboard', compact('leaderBoard','job_info','resources','toolkits', 'user_info','jobPrice','deadLineMin','deadLineMax','featuredJobCount'));
     }

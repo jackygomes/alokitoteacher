@@ -8,6 +8,7 @@ use App\Toolkit;
 use App\ToolkitHistory;
 use App\ToolkitQuiz;
 use App\ToolkitRating;
+use App\TrackHistory;
 use App\Transaction;
 use App\Utilities\LeaderBoard;
 use Illuminate\Http\Request;
@@ -111,7 +112,9 @@ class TeacherController extends Controller
         $resources = Resource::where('user_id',$userId)->where('deleted',0)->paginate(10);
         $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type','Earning')->sum('amount');
 
-
+        foreach ($toolkits as $toolkit){
+            $toolkit->people_taken = TrackHistory::where('course_toolkit_id', $toolkit->id)->count();
+        }
 
 //        return $toolkits;
 

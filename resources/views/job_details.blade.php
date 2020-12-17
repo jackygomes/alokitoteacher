@@ -255,7 +255,7 @@
 
         </div>
 
-        @if(Auth::user()->identifier == 2)
+        @if(Auth::user()->identifier == 2 && $user_info->id == Auth::id())
         <div class="row">
             <div class=" mt-5 mb-3 col-sm-12">
                 <h3 class="font-weight-bold mr-3" style="display: inline-block">Applicants List</h3>
@@ -345,15 +345,15 @@
   </div>
 </div>
 
-<div class="toast toast-mod" role="alert" id="toast" data-autohide="true" data-animation="true" data-delay="3000">
+{{--<div class="toast toast-mod" role="alert" id="toast" data-autohide="true" data-animation="true" data-delay="3000">--}}
 
-    <div class="toast-body">
-        Job is saved.
-        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-    </div>
-</div>
+{{--    <div class="toast-body">--}}
+{{--        Job is saved.--}}
+{{--        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">--}}
+{{--            <span aria-hidden="true">×</span>--}}
+{{--        </button>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 
 

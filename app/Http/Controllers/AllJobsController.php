@@ -249,7 +249,7 @@ class AllJobsController extends Controller
 
         $jobPrice = JobPrice::find(1);
 
-        if (isset($user_info) && $user_info->identifier != 101) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
             if ($user_info->balance >= $jobPrice->price) {
 
             } else {
@@ -288,7 +288,7 @@ class AllJobsController extends Controller
 
         $job->save();
 
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
             $user_info->balance = $user_info->balance - $jobPrice->price;
             $user_info->save();
             $orderAmount = $jobPrice->price;
@@ -371,7 +371,7 @@ class AllJobsController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if(isset($user_info) && $user_info->identifier != 101){
+        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
 
             return abort(404);
         }
