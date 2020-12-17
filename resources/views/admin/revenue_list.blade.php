@@ -80,7 +80,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-12 mb-5">
-                            <h3 class="font-weight-bold mr-3">Transaction List</h3>
+                            <h3 class="font-weight-bold mr-3">Revenues</h3>
                             @if($message = Session::get('success'))
                                 <div class="alert alert-success">
                                     {{$message}}
