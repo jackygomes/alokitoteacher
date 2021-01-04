@@ -169,6 +169,7 @@ class PurchaseController extends Controller
                 'order_id'          => $order->id,
                 'transaction_type'  => 'Spending',
                 'amount'            => $order->amount,
+                'note'              => $order->product_type,
                 'status'            => 'Paid',
                 'currency'          => 'BDT'
             ];
@@ -209,6 +210,7 @@ class PurchaseController extends Controller
                 'order_id'          => $order->id,
                 'transaction_type'  => 'Earning',
                 'amount'            => $earningAmount,
+                'note'              => $order->product_type,
                 'status'            => 'Paid',
                 'currency'          => 'BDT'
             ];

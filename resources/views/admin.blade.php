@@ -90,7 +90,7 @@
                         </a>
                         @if($user_info->identifier == 101)
                             <a href="{{route('admin.transactions')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
-                                Transactions
+                                Transactions History
                             </a>
                             <a href="{{route('admin.revenue')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                                 Revenue

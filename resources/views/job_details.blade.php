@@ -182,7 +182,7 @@
                     <div class="form-group row mb-0">
                         <label class="col-sm-3 col-form-label font-weight-bold">Educational Requirement:</label>
                         <div class="col-sm-9">
-                            <p style="margin: 6px 0 0">{!! nl2br(e($job_info->educational_requirement)) !!}</p>
+                            <p style="margin: 6px 0 0">{!! nl2br(e($job_info->educational_requirements)) !!}</p>
                         </div>
                     </div>
 

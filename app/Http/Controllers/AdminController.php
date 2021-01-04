@@ -60,6 +60,13 @@ class AdminController extends Controller
         $revenue = Revenue::all()->sum('revenue');
 
         //TODO: one time script for transaction note field update
+//        $certificateOrders = Order::where('certificate', 1)->get();
+//
+//        foreach($certificateOrders as $order){
+//            $trackHistory = TrackHistory::where('user_id', $order->user_id)->where('course_toolkit_id', $order->product_id)->first();
+//            $trackHistory->certificate_withdrawn_date = $order->updated_at;
+//            $trackHistory->save();
+//        }
 //        $transactions = Transaction::all();
 //        foreach ($transactions as $transaction) {
 //            if($transaction->order_id != null){
@@ -70,6 +77,8 @@ class AdminController extends Controller
 //                }
 //            }
 //        }
+//        one time script end
+
 
 
         return view ('admin',compact( 'user_info', 'courses', 'toolkits', 'resources','revenue'));

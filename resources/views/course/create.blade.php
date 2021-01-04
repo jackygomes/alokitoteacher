@@ -57,6 +57,17 @@
                     <h3>Create Course:</h3>
                 </div>
                 <div class="row">
+                    <div class="col-md-12">
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                @foreach($errors->all() as $error)
+                                    <p>{{$error}}</p>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="row">
                     <form action="{{ route('course.store') }}" method="post" enctype="multipart/form-data" style="width: 100%;">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <div class="form-group row">
