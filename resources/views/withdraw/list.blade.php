@@ -79,7 +79,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-12 mb-5">
-                        <h3 class="font-weight-bold mr-3">Revenues</h3>
+                        <h3 class="font-weight-bold mr-3">Withdrawal Requests</h3>
                         @if($message = Session::get('success'))
                         <div class="alert alert-success">
                             {{$message}}
@@ -93,19 +93,59 @@
                             <thead>
                                 <tr>
                                     <th>Sl.</th>
-                                    <th>Product Type</th>
-                                    <th>Revenue</th>
+                                    <th>User</th>
+                                    <th>Amount</th>
                                     <th>Date</th>
+                                    <th>Payment Details</th>
+                                    <th>Status</th>
+                                    <th>Approve</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
-                                @foreach($revenueList as $item)
+                                @foreach($transactions as $item)
                                 <tr>
                                     <td>{{$i++}}</td>
-                                    <td style="text-transform:capitalize">{{$item->product_type}}</td>
-                                    <td>{{$item->revenue}}</td>
+                                    <td style="text-transform:capitalize">{{$item->user->name}}</td>
+                                    <td>{{$item->amount}}</td>
                                     <td>{{$item->created_at }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{{$item->id}}">
+                                            See payment Details
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalLong{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">{{$item->user->name}}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{$item->note}}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>{{$item->status }}</td>
+                                    @if($item->status == 'Pending')
+                                    <td><a href="{{route('withdrawals.approve',$item->id)}}"><button class="btn btn-success">Approve</button></a></td>
+                                    @elseif($item->status == 'paid')
+                                    <td><span class="btn-success">Completed</span></td>
+                                    @elseif($item->status == 'rejected')
+                                    <td><span class="btn-danger">Rejected</span></td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>

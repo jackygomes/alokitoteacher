@@ -1,50 +1,49 @@
 @extends('master')
 @section('content')
 
-
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-md-3 col-sm-12 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
+        <div class="col-md-3 col-sm-12 pt-5 pb-3 text-center" style="background-color: #f5b82f;">
+            <!--left col-->
 
             <div style="width: 150px; height: 150px;" class="mx-auto">
                 @if($user_info->image == null)
-                    <i class="fas fa-user-circle fa-10x text-white"></i>
+                <i class="fas fa-user-circle fa-10x text-white"></i>
                 @else
-                    <img class="img-fluid rounded-circle h-100 w-100" src="{{ url('images/profile_picture') }}/{{ $user_info->image }}">
+                <img class="img-fluid rounded-circle h-100 w-100" src="{{ url('images/profile_picture') }}/{{ $user_info->image }}">
                 @endif
             </div>
 
             @if($user_info->id == Auth::id())
 
-                <form method="post" id="pro_pic_upload_form" action="{{ url('upload_picture') }}" enctype="multipart/form-data">
+            <form method="post" id="pro_pic_upload_form" action="{{ url('upload_picture') }}" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <!-- <div class="form-group mt-3">
         <input type="file" class="text-center center-block mx-auto" name="image">
         <input type="submit" class="btn background-yellow text-white mt-2" value="Upload">
       </div> -->
-                    <input type="file" name="image" id="profile_picture" class="d-none">
-                    <button type="button" id="pro_pic_choose" class="btn bg-white mt-2 mb-3">Upload</button>
-                </form>
+                <input type="file" name="image" id="profile_picture" class="d-none">
+                <button type="button" id="pro_pic_choose" class="btn bg-white mt-2 mb-3">Upload</button>
+            </form>
 
-{{--                <a href="{{ url('settings') }}" class="text-dark float-right mt-3"><i class="fas fa-pen" ></i> <small>Edit Details</small></a>--}}
+            {{-- <a href="{{ url('settings') }}" class="text-dark float-right mt-3"><i class="fas fa-pen"></i> <small>Edit Details</small></a>--}}
 
             @endif
 
 
             <h3 class="mt-5 font-weight-bold text-white"> {{$user_info->name}}</h3>
 
-            @for($i = 1; $i <= 5; $i++)
-                @if($user_info->rating - $i >= 0)
-                    <i class="fa fa-star" aria-hidden="true"></i>
+            @for($i = 1; $i <= 5; $i++) @if($user_info->rating - $i >= 0)
+                <i class="fa fa-star" aria-hidden="true"></i>
                 @else
-                    <i class="far fa-star text-white"></i>
+                <i class="far fa-star text-white"></i>
                 @endif
-            @endfor
+                @endfor
 
 
 
-            @if($user_info->id == Auth::id())
+                @if($user_info->id == Auth::id())
 
                 <div class="row text-left p-2 mt-3">
                     <div class="col-2">
@@ -62,9 +61,9 @@
 
                 </div>
 
-            @endif
-            <h4 class="mt-3">Revenue Balance </h4>
-            <p>{{ $revenue }} BDT</p>
+                @endif
+                <h4 class="mt-3">Revenue Balance </h4>
+                <p>{{ $revenue }} BDT</p>
 
 
         </div>
@@ -89,39 +88,42 @@
                             Course Activists
                         </a>
                         @if($user_info->identifier == 101)
-                            <a href="{{route('admin.transactions')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
-                                Transactions History
-                            </a>
-                            <a href="{{route('admin.revenue')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
-                                Revenue
-                            </a>
+                        <a href="{{route('admin.transactions')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                            Transactions History
+                        </a>
+                        <a href="{{route('admin.revenue')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                            Revenue
+                        </a>
+                        <a href="{{route('withdrawals')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                            Withdrawal Requests
+                        </a>
                         @endif
                     </div>
                 </div>
                 <div class="row">
                     @if($message = Session::get('success'))
-                        <div class="alert alert-success">
-                            {{$message}}
-                        </div>
+                    <div class="alert alert-success">
+                        {{$message}}
+                    </div>
                     @endif
                     <div class="col-sm-12">
                         <h3 class="font-weight-bold mr-3" style="display: inline-block">Courses</h3>
-                        <a href="{{route('course.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
+                        <a href="{{route('course.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen"></i> <small>Add</small></span></a>
                         <div class="mr=2">
                             <div class="table-responsive-sm">
                                 <table class="table ">
                                     <thead>
-                                    <tr>
-                                        <th style="width:10%">No.</th>
-                                        <th style="width:30%">Course name</th>
-                                        <th style="width:20%">Price</th>
-                                        <th style="width:20%">Status</th>
-                                        <th style="width:20%">Action</th>
-                                    </tr>
+                                        <tr>
+                                            <th style="width:10%">No.</th>
+                                            <th style="width:30%">Course name</th>
+                                            <th style="width:20%">Price</th>
+                                            <th style="width:20%">Status</th>
+                                            <th style="width:20%">Action</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $n = 1?>
-                                    @foreach ($courses as $course)
+                                        <?php $n = 1 ?>
+                                        @foreach ($courses as $course)
                                         <tr>
                                             <td>{{$n}}</td>
                                             <td>{{$course->title}}</td>
@@ -133,11 +135,11 @@
                                             </td>
                                         </tr>
                                         <?php $n++ ?>
-                                    @endforeach
+                                        @endforeach
                                     </tbody>
                                 </table>
                                 @if($courses->count() == 0)
-                                    <h5 class="text-center text-muted">No Course to Show</h5>
+                                <h5 class="text-center text-muted">No Course to Show</h5>
                                 @endif
                             </div>
                         </div>
@@ -147,23 +149,23 @@
                 <div class="row">
                     <div class=" mt-5 mb-3 col-sm-12">
                         <h3 class="font-weight-bold mr-3" style="display: inline-block">Toolkits</h3>
-                        <a href="toolkit/create"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
+                        <a href="toolkit/create"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen"></i> <small>Add</small></span></a>
                         <div class="mr=2">
                             <div class="table-responsive-sm">
                                 <table class="table ">
                                     <thead>
-                                    <tr>
-                                        <th style="width:10%">No.</th>
-                                        <th style="width:20%">Subject</th>
-                                        <th style="width:30%">Toolkit Name</th>
-                                        <th style="width:10%">Price</th>
-                                        <th style="width:10%">Status</th>
-                                        <th style="width:20%">Action</th>
-                                    </tr>
+                                        <tr>
+                                            <th style="width:10%">No.</th>
+                                            <th style="width:20%">Subject</th>
+                                            <th style="width:30%">Toolkit Name</th>
+                                            <th style="width:10%">Price</th>
+                                            <th style="width:10%">Status</th>
+                                            <th style="width:20%">Action</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $n = 1?>
-                                    @foreach ($toolkits as $toolkit)
+                                        <?php $n = 1 ?>
+                                        @foreach ($toolkits as $toolkit)
                                         <tr>
                                             <td>{{$n}}</td>
                                             <td>{{$toolkit->subject->subject_name}}</td>
@@ -174,9 +176,9 @@
                                                 <form id="toolkitDeleteForm_{{$toolkit->id}}" action="{{ route('toolkit.delete', ['id' => $toolkit->id]) }}" method="post">
                                                     <a href="{{route('toolkit.edit',$toolkit->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
                                                     <a href="{{route('toolkit.admin.view', $toolkit->id)}}" class="btn btn-success text-white btn-sm">View</a>
-                                                @if(Auth::user()->identifier != 104)
-                                                        <input class="btn btn-danger btn-sm" onclick="toolkitDeleteConfirm({{$toolkit->id}})" type="button" value="Remove" />
-                                                        <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                                    @if(Auth::user()->identifier != 104)
+                                                    <input class="btn btn-danger btn-sm" onclick="toolkitDeleteConfirm({{$toolkit->id}})" type="button" value="Remove" />
+                                                    <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
                                                     @endif
                                                     @method('delete')
                                                     @csrf
@@ -184,12 +186,12 @@
                                             </td>
                                         </tr>
                                         <?php $n++ ?>
-                                    @endforeach
+                                        @endforeach
                                     </tbody>
                                 </table>
                                 {{$toolkits->links()}}
                                 {{--@if($toolkits->count() == 0)--}}
-                                    {{--<h5 class="text-center text-muted">No Toolkit to Show</h5>--}}
+                                {{--<h5 class="text-center text-muted">No Toolkit to Show</h5>--}}
                                 {{--@endif--}}
                             </div>
                         </div>
@@ -199,22 +201,22 @@
                 <div class="row">
                     <div class=" mt-5 mb-3 col-sm-12">
                         <h3 class="font-weight-bold mr-3" style="display: inline-block">Resource</h3>
-                        <a href="{{route('resource.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen" ></i> <small>Add</small></span></a>
+                        <a href="{{route('resource.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen"></i> <small>Add</small></span></a>
                         <div class="mr=2">
                             <div class="table-responsive-sm">
                                 <table class="table ">
                                     <thead>
-                                    <tr>
-                                        <th style="width:10%">No.</th>
-                                        <th style="width:30%">Resource Name</th>
-                                        <th style="width:10%">Price</th>
-                                        <th style="width:10%">Status</th>
-                                        <th style="width:20%">Action</th>
-                                    </tr>
+                                        <tr>
+                                            <th style="width:10%">No.</th>
+                                            <th style="width:30%">Resource Name</th>
+                                            <th style="width:10%">Price</th>
+                                            <th style="width:10%">Status</th>
+                                            <th style="width:20%">Action</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $n = 1?>
-                                    @foreach ($resources as $resource)
+                                        <?php $n = 1 ?>
+                                        @foreach ($resources as $resource)
                                         <tr>
                                             <td>{{$n}}</td>
                                             <td>{{$resource->resource_title}}</td>
@@ -233,7 +235,7 @@
                                             </td>
                                         </tr>
                                         <?php $n++ ?>
-                                    @endforeach
+                                        @endforeach
                                     </tbody>
                                 </table>
                                 {{$resources->links()}}
@@ -252,10 +254,10 @@
 @push('js')
 
 <script type="text/javascript">
-    $('#pro_pic_choose').on('click', function () {
+    $('#pro_pic_choose').on('click', function() {
         $("#profile_picture").click();
     });
-    $("#profile_picture").change(function () {
+    $("#profile_picture").change(function() {
         $("#pro_pic_upload_form").submit();
     });
 
@@ -266,11 +268,11 @@
             confirmButtonColor: '#f5b82f',
             confirmButtonText: "Yes",
             showCancelButton: true,
-            cancelButtonText:'Cancel',
+            cancelButtonText: 'Cancel',
             cancelButtonColor: '#d33'
         }).then((result) => {
             if (result.isConfirmed) {
-                $("#toolkitDeleteForm_"+id).find('[type="submit"]').trigger('click');
+                $("#toolkitDeleteForm_" + id).find('[type="submit"]').trigger('click');
             }
         })
     }
@@ -282,15 +284,14 @@
             confirmButtonColor: '#f5b82f',
             confirmButtonText: "Yes",
             showCancelButton: true,
-            cancelButtonText:'Cancel',
+            cancelButtonText: 'Cancel',
             cancelButtonColor: '#d33',
         }).then((result) => {
             if (result.isConfirmed) {
-                $("#resourceDeleteForm_"+id).find('[type="submit"]').trigger('click');
+                $("#resourceDeleteForm_" + id).find('[type="submit"]').trigger('click');
             }
         })
     }
-
 </script>
 
 @endpush

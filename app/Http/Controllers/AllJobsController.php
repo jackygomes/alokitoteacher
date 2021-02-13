@@ -20,43 +20,43 @@ use App\Http\Controllers\PurchaseController;
 class AllJobsController extends Controller
 {
 
-	public function __construct(PurchaseController $purchaseController)
+    public function __construct(PurchaseController $purchaseController)
     {
-//        $this->middleware('auth');
-//        $this->middleware('auth')->except(['index']);
+        //        $this->middleware('auth');
+        //        $this->middleware('auth')->except(['index']);
         $this->purchaseController = $purchaseController;
         $this->middleware('auth', ['except' => ['index', 'search_filter']]);
     }
 
-   	function index(Request $request){
-//   		if(Auth::user()->identifier == 2){
-//
-//	    	$posted_jobs = Job::where('user_id', '=', Auth::id())->where('removed', '=', 0)->orderBy('updated_at', 'DESC')->paginate(10);
-//
-//	    	$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
-//
-//
-//		    return view ('posted-jobs', compact('posted_jobs', 'users'));
-//
-//   		}elseif (Auth::user()->identifier == 1 || Auth::user()->identifier == 101){
+    function index(Request $request)
+    {
+        //   		if(Auth::user()->identifier == 2){
+        //
+        //	    	$posted_jobs = Job::where('user_id', '=', Auth::id())->where('removed', '=', 0)->orderBy('updated_at', 'DESC')->paginate(10);
+        //
+        //	    	$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+        //
+        //
+        //		    return view ('posted-jobs', compact('posted_jobs', 'users'));
+        //
+        //   		}elseif (Auth::user()->identifier == 1 || Auth::user()->identifier == 101){
 
-   			if($request->type == 'saved'){
-   				$job_info = DB::table('users')
-						    ->rightJoin('jobs', 'users.id', '=','jobs.user_id')
-						    ->join('saved_jobs', 'saved_jobs.job_id', '=', 'jobs.id')
-						    ->select('users.id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.id as job_id','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline')
-						    ->where('saved_jobs.user_id', '=', Auth::id())
-						    ->orderBy('jobs.created_at', 'asc')
-						    ->paginate(10);
-
-   			}else{
-				$job_info = DB::table('users')
-						    ->rightJoin('jobs', 'users.id', '=','jobs.user_id')
-						    ->select('users.id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.id as job_id','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline')
-						    ->where('jobs.deadline', '>=', date("Y-m-d"))
-						    ->orderBy('jobs.created_at', 'asc')
-						    ->paginate(10);
-			}
+        if ($request->type == 'saved') {
+            $job_info = DB::table('users')
+                ->rightJoin('jobs', 'users.id', '=', 'jobs.user_id')
+                ->join('saved_jobs', 'saved_jobs.job_id', '=', 'jobs.id')
+                ->select('users.id', 'users.name', 'users.email', 'users.phone_number', 'users.balance', 'users.username', 'users.image', 'jobs.id as job_id', 'jobs.description', 'jobs.job_title', 'jobs.location', 'jobs.expected_salary_range', 'jobs.job_responsibilities', 'jobs.created_at', 'jobs.nature', 'jobs.vacancy', 'jobs.deadline')
+                ->where('saved_jobs.user_id', '=', Auth::id())
+                ->orderBy('jobs.created_at', 'asc')
+                ->paginate(10);
+        } else {
+            $job_info = DB::table('users')
+                ->rightJoin('jobs', 'users.id', '=', 'jobs.user_id')
+                ->select('users.id', 'users.name', 'users.email', 'users.phone_number', 'users.balance', 'users.username', 'users.image', 'jobs.id as job_id', 'jobs.description', 'jobs.job_title', 'jobs.location', 'jobs.expected_salary_range', 'jobs.job_responsibilities', 'jobs.created_at', 'jobs.nature', 'jobs.vacancy', 'jobs.deadline')
+                ->where('jobs.deadline', '>=', date("Y-m-d"))
+                ->orderBy('jobs.created_at', 'asc')
+                ->paginate(10);
+        }
 
         $locations = Job::groupBy('location')->get();
         $schools = User::where('identifier', '=', 2)->get();
@@ -64,8 +64,8 @@ class AllJobsController extends Controller
         $users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
 
         $featuredJobs = DB::table('users')
-            ->rightJoin('jobs', 'users.id', '=','jobs.user_id')
-            ->select('jobs.id as job_id', 'users.id as user_id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline', 'jobs.removed', 'jobs.admin_status');
+            ->rightJoin('jobs', 'users.id', '=', 'jobs.user_id')
+            ->select('jobs.id as job_id', 'users.id as user_id', 'users.name', 'users.email', 'users.phone_number', 'users.balance', 'users.username', 'users.image', 'jobs.description', 'jobs.job_title', 'jobs.location', 'jobs.expected_salary_range', 'jobs.job_responsibilities', 'jobs.created_at', 'jobs.nature', 'jobs.vacancy', 'jobs.deadline', 'jobs.removed', 'jobs.admin_status');
 
         $condition = [
             ['jobs.removed', '=', 0],
@@ -79,72 +79,72 @@ class AllJobsController extends Controller
             ->orderBy('jobs.created_at', 'DESC')->paginate(10);
 
         $userId = Auth::check() ? Auth::user()->id : 0;
-        foreach($featuredJobs as $job){
+        foreach ($featuredJobs as $job) {
 
-            $appliedCount = JobApplication::where('user_id','=', $userId)->where('job_id','=', $job->job_id)->count();
+            $appliedCount = JobApplication::where('user_id', '=', $userId)->where('job_id', '=', $job->job_id)->count();
 
             $job->isApplied = $appliedCount ? 1 : 0;
         }
 
-        return view ('all-jobs', compact('job_info', 'schools', 'locations', 'users','featuredJobs'));
+        return view('all-jobs', compact('job_info', 'schools', 'locations', 'users', 'featuredJobs'));
 
-//		}
+        //		}
 
-//		return abort(404);
-	}
+        //		return abort(404);
+    }
 
-	function job_applications(Request $request){
+    function job_applications(Request $request)
+    {
 
-		if($request->type == 'shortlisted'){
-			$job_applications = DB::table('job_applications')
-				    ->join('jobs', 'jobs.id', '=','job_applications.job_id')
-				    ->join('users', 'users.id', '=','job_applications.user_id')
-				    ->select('job_applications.id', 'users.id as user_id', 'users.name', 'users.username','users.image', 'jobs.id as job_id','jobs.job_title', 'job_applications.shortlisted')
-				    ->where('job_applications.shortlisted', '=', 1)
-				    ->where('jobs.user_id', '=', Auth::id())
-				    ->where('jobs.id', '=', $request->id)
+        if ($request->type == 'shortlisted') {
+            $job_applications = DB::table('job_applications')
+                ->join('jobs', 'jobs.id', '=', 'job_applications.job_id')
+                ->join('users', 'users.id', '=', 'job_applications.user_id')
+                ->select('job_applications.id', 'users.id as user_id', 'users.name', 'users.username', 'users.image', 'jobs.id as job_id', 'jobs.job_title', 'job_applications.shortlisted')
+                ->where('job_applications.shortlisted', '=', 1)
+                ->where('jobs.user_id', '=', Auth::id())
+                ->where('jobs.id', '=', $request->id)
 
-    				->paginate(10);
+                ->paginate(10);
+        } else {
+            $job_applications = DB::table('job_applications')
+                ->join('jobs', 'jobs.id', '=', 'job_applications.job_id')
+                ->join('users', 'users.id', '=', 'job_applications.user_id')
+                ->select('job_applications.id', 'users.name', 'users.username', 'users.image', 'jobs.id as job_id', 'jobs.job_title', 'job_applications.shortlisted')
+                ->where('jobs.user_id', '=', Auth::id())
+                ->where('jobs.id', '=', $request->id)
 
-		}else{
-			$job_applications = DB::table('job_applications')
-				    ->join('jobs', 'jobs.id', '=','job_applications.job_id')
-				    ->join('users', 'users.id', '=','job_applications.user_id')
-				    ->select('job_applications.id','users.name', 'users.username','users.image', 'jobs.id as job_id','jobs.job_title', 'job_applications.shortlisted')
-				    ->where('jobs.user_id', '=', Auth::id())
-				    ->where('jobs.id', '=', $request->id)
+                ->paginate(10);
+        }
 
-    				->paginate(10);
+        $users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
 
-		}
+        return view('job_applications', compact('job_applications', 'users'));
+    }
 
-    	$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+    function search_filter(Request $request)
+    {
 
-	    return view ('job_applications', compact('job_applications', 'users'));
-	}
-
-	function search_filter(Request $request){
-
-		$job_info = DB::table('users')
-				    ->rightJoin('jobs', 'users.id', '=','jobs.user_id')
-				    ->select('jobs.id as job_id', 'users.id as user_id','users.name','users.email','users.phone_number','users.balance','users.username','users.image','jobs.description','jobs.job_title','jobs.location','jobs.expected_salary_range','jobs.job_responsibilities','jobs.created_at','jobs.nature', 'jobs.vacancy', 'jobs.deadline', 'jobs.removed', 'jobs.admin_status');
+        $job_info = DB::table('users')
+            ->rightJoin('jobs', 'users.id', '=', 'jobs.user_id')
+            ->select('jobs.id as job_id', 'users.id as user_id', 'users.name', 'users.email', 'users.phone_number', 'users.balance', 'users.username', 'users.image', 'jobs.description', 'jobs.job_title', 'jobs.location', 'jobs.expected_salary_range', 'jobs.job_responsibilities', 'jobs.created_at', 'jobs.nature', 'jobs.vacancy', 'jobs.deadline', 'jobs.removed', 'jobs.admin_status');
 
 
-		if(strlen(trim($request->search)) != 0){
-			$job_info = $job_info->where('users.name', 'like', '%' . $request->search . '%')
-								->orWhere('jobs.description', 'like', '%' . $request->search . '%')
-								->orWhere('jobs.job_title', 'like', '%' . $request->search . '%')
-								->orWhere('jobs.location', 'like', '%' . $request->search . '%')
-								->orWhere('jobs.expected_salary_range', 'like', '%' . $request->search . '%');
-		}
+        if (strlen(trim($request->search)) != 0) {
+            $job_info = $job_info->where('users.name', 'like', '%' . $request->search . '%')
+                ->orWhere('jobs.description', 'like', '%' . $request->search . '%')
+                ->orWhere('jobs.job_title', 'like', '%' . $request->search . '%')
+                ->orWhere('jobs.location', 'like', '%' . $request->search . '%')
+                ->orWhere('jobs.expected_salary_range', 'like', '%' . $request->search . '%');
+        }
 
-		if(strlen(trim($request->location)) != 0){
-			$job_info = $job_info->where('jobs.location', 'like', '%' . $request->location . '%');
-		}
+        if (strlen(trim($request->location)) != 0) {
+            $job_info = $job_info->where('jobs.location', 'like', '%' . $request->location . '%');
+        }
 
-		if(strlen(trim($request->school)) != 0){
-			$job_info = $job_info->where('users.id', '=', $request->school);
-		}
+        if (strlen(trim($request->school)) != 0) {
+            $job_info = $job_info->where('users.id', '=', $request->school);
+        }
 
         $condition = [
             ['jobs.removed', '=', 0],
@@ -152,74 +152,78 @@ class AllJobsController extends Controller
             ['jobs.featured', '=', 0],
         ];
 
-		$job_info = $job_info
-                    ->where($condition)
-                    ->whereDate('jobs.deadline', '>', Carbon::today()->toDateString())
-                    ->orderBy('jobs.created_at', 'DESC')->paginate(10);
+        $job_info = $job_info
+            ->where($condition)
+            ->whereDate('jobs.deadline', '>', Carbon::today()->toDateString())
+            ->orderBy('jobs.created_at', 'DESC')->paginate(10);
 
 
         $userId = Auth::check() ? Auth::user()->id : 0;
-        foreach($job_info as $job){
+        foreach ($job_info as $job) {
 
-            $appliedCount = JobApplication::where('user_id','=', $userId)->where('job_id','=', $job->job_id)->count();
+            $appliedCount = JobApplication::where('user_id', '=', $userId)->where('job_id', '=', $job->job_id)->count();
 
             $job->isApplied = $appliedCount ? 1 : 0;
         }
-//        return json_encode($job_info);
+        //        return json_encode($job_info);
 
-	    return view ('all-jobs-search',compact('job_info'));
+        return view('all-jobs-search', compact('job_info'));
+    }
 
-	}
+    function verify_applied_job(Request $request)
+    {
+        $job_application = JobApplication::where('user_id', '=', Auth::id())
+            ->where('job_id', '=', $request->job_id)->first();
 
-	function verify_applied_job(Request $request){
-		$job_application = JobApplication::where('user_id', '=', Auth::id())
-										->where('job_id', '=', $request->job_id)->first();
+        if ($job_application == null) {
+            return 'failed';
+        }
+        return 'success';
+    }
 
-		if($job_application == null){
-			return 'failed';
-		}
-		return 'success';
-	}
+    function save_job(Request $request)
+    {
+        $saved_job = SavedJob::where('user_id', '=', Auth::id())->where('job_id', '=', $request->job_id)->first();
+        if ($saved_job == null) {
+            $saved_job = new SavedJob;
+            $saved_job->user_id = Auth::id();
+            $saved_job->job_id = $request->job_id;
+            $saved_job->save();
+        }
 
-	function save_job(Request $request){
-		$saved_job = SavedJob::where('user_id', '=', Auth::id())->where('job_id', '=', $request->job_id)->first();
-		if($saved_job == null){
-			$saved_job = new SavedJob;
-			$saved_job->user_id = Auth::id();
-			$saved_job->job_id = $request->job_id;
-			$saved_job->save();
-		}
+        return 'success';
+    }
 
-		return 'success';
-	}
+    function remove_saved_job(Request $request)
+    {
+        SavedJob::where('user_id', '=', Auth::id())->where('job_id', '=', $request->job_id)->delete();
+        return 'success';
+    }
 
-	function remove_saved_job(Request $request){
-		SavedJob::where('user_id', '=', Auth::id())->where('job_id', '=', $request->job_id)->delete();
-		return 'success';
-	}
+    function submit_cover_letter(Request $request)
+    {
+        $job_application =  new JobApplication;
+        $job_application->user_id = Auth::id();
+        $job_application->job_id = $request->job_id;
+        $job_application->cover_letter = $request->cover_letter;
+        $job_application->resume = null;
+        $job_application->save();
 
-	function submit_cover_letter(Request $request){
-		$job_application =  new JobApplication;
-		$job_application->user_id = Auth::id();
-		$job_application->job_id = $request->job_id;
-		$job_application->cover_letter = $request->cover_letter;
-		$job_application->resume = null;
-		$job_application->save();
+        return back()->with('success', 'Successfully Applied for the job');
+    }
 
-		return back()->with('success', 'Successfully Applied for the job');
-	}
+    function job_detail(Request $request)
+    {
 
-	function job_detail(Request $request){
-
-		$job_info = Job::find($request->job_id);
-		$user_info = User::find($job_info->user_id);
-		$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
+        $job_info = Job::find($request->job_id);
+        $user_info = User::find($job_info->user_id);
+        $users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
         $leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
         $applicants = JobApplication::where('job_id', $request->job_id)->paginate(10);
         $n = 0;
 
         $userId = Auth::check() ? Auth::user()->id : 0;
-        $appliedCount = JobApplication::where('user_id','=', $userId)->where('job_id','=', $job_info->id)->count();
+        $appliedCount = JobApplication::where('user_id', '=', $userId)->where('job_id', '=', $job_info->id)->count();
         $job_info->isApplied = $appliedCount ? 1 : 0;
 
         foreach ($applicants as $applicant) {
@@ -228,22 +232,23 @@ class AllJobsController extends Controller
         }
 
 
-		return view('job_details',compact('user_info', 'job_info', 'users','leaderBoard', 'applicants'));
-	}
+        return view('job_details', compact('user_info', 'job_info', 'users', 'leaderBoard', 'applicants'));
+    }
 
-	function show_offer_letter(Request $request){
-		$job_application = JobApplication::find($request->application_id);
-
-		if($job_application->cover_letter == null){
-			return 'No Cover Letter Attached';
-		}
-
-		return $job_application->cover_letter;
-	}
-
-	function add_job(Request $request)
+    function show_offer_letter(Request $request)
     {
+        $job_application = JobApplication::find($request->application_id);
 
+        if ($job_application->cover_letter == null) {
+            return 'No Cover Letter Attached';
+        }
+
+        return $job_application->cover_letter;
+    }
+
+    function add_job(Request $request)
+    {
+        // return $request->obf;
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
@@ -251,7 +256,6 @@ class AllJobsController extends Controller
 
         if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
             if ($user_info->balance >= $jobPrice->price) {
-
             } else {
                 return back()->with('danger', 'Insufficient Balance');
             }
@@ -259,7 +263,7 @@ class AllJobsController extends Controller
 
 
         $job = new Job;
-        $job->user_id = Auth::id();
+        $request->obf ? $job->user_id = $request->obf : $job->user_id = Auth::id();
         $job->job_title = $request->job_title;
         $job->location = $request->location;
         $job->expected_salary_range = $request->expected_salary_range;
@@ -275,30 +279,28 @@ class AllJobsController extends Controller
         $job->deadline = $request->deadline;
         $job->nature = $request->nature;
 
-        if(isset($request->featureJob)){
+        if (isset($request->featureJob)) {
 
             $featuredJobCount = Job::where('featured', 1)->whereDate('deadline', '>', Carbon::today()->toDateString())->count();
 
-            if($featuredJobCount < 4) $job->featured =  1;
+            if ($featuredJobCount < 4) $job->featured =  1;
             else return back()->with('danger', 'You cannot post feature job. Already maximum feature job limit reached.');
-
         }
 
 
 
         $job->save();
 
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
             $user_info->balance = $user_info->balance - $jobPrice->price;
             $user_info->save();
             $orderAmount = $jobPrice->price;
 
-            if(isset($request->featureJob)){
+            if (isset($request->featureJob)) {
                 // when feature extra 500 charge
                 $orderAmount += 500;
-                if($orderAmount > $user_info->balance) return back()->with('danger', 'Insufficient Balance');
+                if ($orderAmount > $user_info->balance) return back()->with('danger', 'Insufficient Balance');
             }
-
         } else $orderAmount = 0;
 
         $orderData = [
@@ -315,49 +317,45 @@ class AllJobsController extends Controller
         $this->purchaseController->transaction($order);
 
         return back()->with('success', 'Job Posted Successfully');
+    }
+
+    function remove_job(Request $request)
+    {
+        $job = Job::find($request->id);
+        $job->removed = 1;
+        $job->save();
+
+        return back()->with('danger', 'Job is Removed');
+    }
+
+    function shortlisted(Request $request)
+    {
+        $job = JobApplication::find($request->id);
+        $job->shortlisted = 1;
+        $job->save();
+
+        return back()->with('success', 'Application Added in Shortlist');
+    }
+
+    function confirm_interview(Request $request)
+    {
+        $application = JobApplication::find($request->id);
+        $applicant = User::find($application->user_id);
+        $job = Job::find($application->job_id);
+
+        if ($job->user_id == Auth::id()) {
+
+            Mail::send('emails.job_confirmation', ['job' => $job, 'applicant' => $applicant], function ($message) use ($applicant, $job) {
+
+                $message->to($applicant->email)->subject('Interview for the position ' . $job->job_title);
+            });
 
 
-	}
-
-	function remove_job(Request $request){
-		$job = Job::find($request->id);
-		$job->removed = 1;
-		$job->save();
-
-		return back()->with('danger', 'Job is Removed');
-	}
-
-	function shortlisted(Request $request){
-		$job = JobApplication::find($request->id);
-		$job->shortlisted = 1;
-		$job->save();
-
-		return back()->with('success', 'Application Added in Shortlist');
-	}
-
-	function confirm_interview(Request $request){
-		$application = JobApplication::find($request->id);
-		$applicant = User::find($application->user_id);
-		$job = Job::find($application->job_id);
-
-		if($job->user_id == Auth::id()){
-
-			Mail::send('emails.job_confirmation', ['job' => $job, 'applicant' => $applicant], function ($message)use($applicant, $job)
-		        {
-
-		            $message->to($applicant->email)->subject('Interview for the position '.$job->job_title);
-
-		        });
-
-
-			return back()->with('success', 'Email has been sent Successfully!');
-		}else{
-			return back()->with('failed', 'Something is Wrong!');
-		}
-
-
-
-	}
+            return back()->with('success', 'Email has been sent Successfully!');
+        } else {
+            return back()->with('failed', 'Something is Wrong!');
+        }
+    }
 
 
     /**
@@ -371,7 +369,7 @@ class AllJobsController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
 
             return abort(404);
         }
@@ -389,16 +387,16 @@ class AllJobsController extends Controller
     public function adminUpdate(Request $request, $id)
     {
 
-//        return $request->all();
+        //        return $request->all();
         $job = Job::find($id);
         $job->admin_status = $request->admin_status;
 
-        if($request->admin_status == 'Disapprove'){
+        if ($request->admin_status == 'Disapprove') {
             $this->validate($request, [
                 'comment' => 'required',
             ]);
             $job->admin_comment = $request->comment;
-        }elseif($request->admin_status == 'Approved'){
+        } elseif ($request->admin_status == 'Approved') {
             $job->admin_comment = null;
         }
 
@@ -411,7 +409,7 @@ class AllJobsController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if(isset($user_info) && $user_info->identifier != 2){
+        if (isset($user_info) && $user_info->identifier != 2) {
 
             return abort(404);
         }
@@ -431,16 +429,16 @@ class AllJobsController extends Controller
 
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if($user_info) {
-            if($user_info->identifier == 2){
+        if ($user_info) {
+            if ($user_info->identifier == 2) {
             } else {
                 return abort(404);
             }
-        }else {
+        } else {
             return abort(404);
         }
 
-        try{
+        try {
 
             $job = Job::find($id);
             if ($job == null) {
@@ -479,23 +477,21 @@ class AllJobsController extends Controller
             $job->save();
 
             return back()->with('success', 'Job Edited Successfully.');
-
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return "Quiz insertion error: " . $e->getMessage();
         }
-
     }
 
     public function schoolJobStatusUpdate(Request $request, $id)
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if($user_info) {
-            if($user_info->identifier == 2){
+        if ($user_info) {
+            if ($user_info->identifier == 2) {
             } else {
                 return abort(404);
             }
-        }else {
+        } else {
             return abort(404);
         }
         $application = JobApplication::find($id);

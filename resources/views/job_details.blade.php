@@ -270,6 +270,7 @@
                         <tr>
                             <th>No.</th>
                             <th>Applicant Name</th>
+                            <th>Cover Letter</th>
                             <th>Status</th>
                         </tr>
                         </thead>
@@ -281,6 +282,33 @@
                                     <a class="" href="{{ url('t')}}/{{ $applicant->user->username }}">
                                         {{$applicant->user->name}}
                                     </a>
+                                </td>
+                                <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{{$applicant->id}}">
+                                            See Cover Letter
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalLong{{$applicant->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">{{$applicant->user->name}}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{$applicant->cover_letter}}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
                                 </td>
                                 <td>
                                     <form class="statusForm" action="{{ route('school.job.status.update', $applicant->id) }}" method="post" style="width: 100%;">
