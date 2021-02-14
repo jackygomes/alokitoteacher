@@ -214,7 +214,6 @@ class AllJobsController extends Controller
 
     function job_detail(Request $request)
     {
-
         $job_info = Job::find($request->job_id);
         $user_info = User::find($job_info->user_id);
         $users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();

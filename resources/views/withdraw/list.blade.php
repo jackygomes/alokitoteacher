@@ -136,11 +136,12 @@
                                     </td>
                                     <td>{{$item->status }}</td>
                                     @if($item->status == 'Pending')
-                                    <td><a href="{{route('withdrawals.approve',$item->id)}}"><button class="btn btn-success">Approve</button></a></td>
+                                    <!-- href="{{route('withdrawals.approve',$item->id)}}" -->
+                                    <td><a onclick="oki_doki('<?php echo $item->id ?>')"><button class="btn btn-success">Approve</button></a></td>
                                     @elseif($item->status == 'paid')
-                                    <td><span class="btn-success">Completed</span></td>
+                                    <td><span>Completed</span></td>
                                     @elseif($item->status == 'rejected')
-                                    <td><span class="btn-danger">Rejected</span></td>
+                                    <td><span>Rejected</span></td>
                                     @endif
                                 </tr>
                                 @endforeach
@@ -169,6 +170,26 @@
     $("#profile_picture").change(function() {
         $("#pro_pic_upload_form").submit();
     });
+
+    function oki_doki(url){
+        
+        url = '/withdrawals/approve/' + url;
+        console.log(url);
+        Swal.fire({
+                icon: 'warning',
+                text: 'Are you sure to Approve this withdrawal Request?',
+                confirmButtonColor: '#f5b82f',
+                confirmButtonText: "Yes",
+                showCancelButton: true,
+                cancelButtonText:'Cancel',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = url;
+                }
+            })
+    }
+
 </script>
 
 @endpush

@@ -76,7 +76,7 @@
                 <p>{{ round($user_info->balance, 2) }}</p>
                 <div class="">
                     <button type="button" class=" btn btn-success btn-sm" style="display: inline-block">Deposit</button>
-                    <button type="button" class="  btn btn-danger btn-sm">Withdraw</button>
+                    <a href="{{route('withdraw.form')}}" class=" btn btn-danger btn-sm" style="display: inline-block">Withdraw</a>
                 </div>
                 @endif
 
