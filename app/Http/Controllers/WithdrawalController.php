@@ -46,7 +46,6 @@ class WithdrawalController extends Controller
         $user_info = User::where('id', '=', $userId)->first();
         $revenue = Revenue::all()->sum('revenue');
         $transactions = Transaction::where('transaction_type', 'withdrawal')->get();
-        // return $transactions;
         return view('withdraw.list', compact('transactions', 'user_info', 'revenue'));
     }
 

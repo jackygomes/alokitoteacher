@@ -136,7 +136,6 @@
                                     </td>
                                     <td>{{$item->status }}</td>
                                     @if($item->status == 'Pending')
-                                    <!-- href="{{route('withdrawals.approve',$item->id)}}" -->
                                     <td><a onclick="oki_doki('<?php echo $item->id ?>')"><button class="btn btn-success">Approve</button></a></td>
                                     @elseif($item->status == 'paid')
                                     <td><span>Completed</span></td>

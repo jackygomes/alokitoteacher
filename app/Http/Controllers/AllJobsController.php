@@ -247,7 +247,6 @@ class AllJobsController extends Controller
 
     function add_job(Request $request)
     {
-        // return $request->obf;
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
