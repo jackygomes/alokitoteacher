@@ -134,10 +134,6 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
                                     <td>{{$item->status }}</td>
                                     @if($item->status == 'Pending')
                                     <td><a href="{{route('withdrawals.approve',$item->id)}}"><button class="btn btn-success">Approve</button></a></td>

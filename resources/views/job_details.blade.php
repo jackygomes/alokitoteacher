@@ -308,8 +308,6 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                </td>
                                 <td>
                                     <form class="statusForm" action="{{ route('school.job.status.update', $applicant->id) }}" method="post" style="width: 100%;">
                                         @csrf
