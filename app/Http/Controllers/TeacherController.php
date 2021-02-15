@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\WorkExperience;
 use App\Academic;
+use App\Course;
 use App\SubjectBasedKnowledge;
 use App\Skill;
 
@@ -116,10 +117,22 @@ class TeacherController extends Controller
 			$toolkit->people_taken = TrackHistory::where('course_toolkit_id', $toolkit->id)->count();
 		}
 
-		// return $toolkits;
 		$achievements = DB::select("SELECT * FROM (SELECT courses.title, courses.id, (SELECT count(*) FROM course_quizzes WHERE course_quizzes.course_id = courses.id) AS total_quizzes, count(course_histories.id) AS completed_quizzes, sum(course_histories.points) AS gained_points, sum((SELECT count(*) FROM course_questions WHERE course_quizzes.id = course_questions.quiz_id)) AS total_questions FROM courses JOIN course_quizzes ON courses.id = course_quizzes.course_id JOIN course_histories ON course_quizzes.id = course_histories.quiz_id WHERE course_histories.user_id = " . $user_info->id . " GROUP BY courses.id) a WHERE a.completed_quizzes = a.total_quizzes");
+		$canCreateCourse = false;
+		foreach($achievements as $achievement)  if(round((($achievement->gained_points/($achievement->total_questions * 2)) * 100), 1) >=50) $canCreateCourse = true;
+		$course_knowledges = DB::select("
+		select tk.toolkit_title, s.subject_name, sum(th.points) as totalPoints
+		FROM toolkits as tk
+		JOIN subjects as s ON s.id = tk.subject_id
+		JOIN toolkit_quizzes as tq ON tq.toolkit_id = tk.id
+		JOIN toolkit_histories as th ON th.quiz_id = tq.id AND th.user_id = '$user_info->id'
+		GROUP BY tk.id
+		 ");
+		if(count($course_knowledges)<5)  $canCreateCourse = false;
 
-		return view('teacher.dashboard', compact('earnings', 'resources', 'toolkits', 'user_info', 'recent_work', 'leaderBoard', 'recent_institute', 'achievements'));
+		$courses = Course::where('user_id',Auth::id())->get();
+
+		return view('teacher.dashboard', compact('courses','canCreateCourse','earnings', 'resources', 'toolkits', 'user_info', 'recent_work', 'leaderBoard', 'recent_institute', 'achievements'));
 	}
 
 	function picture(Request $request)
