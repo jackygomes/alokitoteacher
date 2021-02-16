@@ -196,7 +196,7 @@
                         </div>
                         @else
                             <div class="alert alert-danger">
-                                Before Create Question, Create Atleast One Quiz.
+                                Before Creating Question, Create Atleast One Quiz.
                             </div>
                         @endif
                         <div class="form-group">
