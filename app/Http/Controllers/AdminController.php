@@ -202,7 +202,7 @@ class AdminController extends Controller
         $user_info = User::where('id', '=', $userId)->first();
 
         $revenue = Revenue::all()->sum('revenue');
-        $histories = TrackHistory::where('course_toolkit_id', $id)->orderBy('id', 'DESC')->get();
+        $histories = TrackHistory::where('course_or_toolkit',1)->where('course_toolkit_id', $id)->orderBy('id', 'DESC')->get();
 
         return view('course.admin_view', compact('user_info', 'revenue', 'histories'));
     }
@@ -218,7 +218,7 @@ class AdminController extends Controller
         $user_info = User::where('id', '=', $userId)->first();
 
         $revenue = Revenue::all()->sum('revenue');
-        $histories = TrackHistory::where('course_toolkit_id', $id)->orderBy('id', 'DESC')->get();
+        $histories = TrackHistory::where('course_or_toolkit',0)->where('course_toolkit_id', $id)->orderBy('id', 'DESC')->get();
 
         return view('toolkit.admin_view', compact('user_info', 'revenue', 'histories'));
     }
@@ -239,7 +239,7 @@ class AdminController extends Controller
 
         $revenue = Revenue::all()->sum('revenue');
 
-        $transactions = Transaction::all();
+        $transactions = Transaction::where('status','!=','Pending')->get();
 
         return view('admin.transactions', compact('user_info', 'revenue', 'transactions'));
     }
