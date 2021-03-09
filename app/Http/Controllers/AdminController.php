@@ -80,9 +80,6 @@ class AdminController extends Controller
         //        }
         //        one time script end
 
-
-
-
         return view('admin', compact('user_info', 'courses', 'toolkits', 'resources', 'revenue'));
     }
 
@@ -213,7 +210,6 @@ class AdminController extends Controller
      */
     public function toolkit_admin_view($id)
     {
-
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
@@ -259,7 +255,7 @@ class AdminController extends Controller
         }
 
         $revenue = Revenue::all()->sum('revenue');
-        $revenueList = Revenue::all();
+        $revenueList = Revenue::with('order.user')->get();
 
         foreach ($revenueList as $item) {
             $order = Order::find($item->order_id);
@@ -267,7 +263,7 @@ class AdminController extends Controller
                 $item->product_type = $order->product_type;
             }
         }
-        //        return $revenueList;
+            //    return $revenueList;
 
         return view('admin.revenue_list', compact('user_info', 'revenue', 'revenueList'));
     }

@@ -15,11 +15,15 @@
                 <div class="card">
                     <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="height: 190px;" class="card-img-top">
                     <div class="text-center">
+                        @if(isset($v_course_info->image))
                         <img src="{{url('images\profile_picture')}}\{{ $v_course_info->image }}" alt="Avatar" class="avatar">
+                        @else
+                        <i class="fas fa-user-circle fa-4x avatar" style="color:#f5b82f"></i>
+                        @endif
                     </div>
                     <div class="card-body">
 
-                        <p class="card-title text-dark font-weight-bold">{{ str_limit(strip_tags($v_course_info->title), 30) }}</p>
+                        <p class="card-title text-dark font-weight-bold" style="font-size: 19px;">{{ str_limit(strip_tags($v_course_info->title), 30) }}</p>
                         <p class="card-text text-yellow font-weight-bold"><small>Posted By</small>
                             <br> {{ str_limit(strip_tags($v_course_info->name), 20) }}</p>
 
@@ -84,7 +88,12 @@
                 <div class="card" style="min-height: 22.5vh">
                     <img src="{{url('images\thumbnail')}}\{{ $toolkit->thumbnail }}" class="card-img-top">
                     <div class="text-center">
+                        
+                        @if(isset($toolkit->image))
                         <img src="{{url('images\profile_picture')}}\{{ $toolkit->image }}" alt="Avatar" class="avatar">
+                        @else
+                            <i class="fas fa-user-circle fa-4x avatar" style="color:#f5b82f"></i>
+                        @endif
                     </div>
                     <div class="card-body">
 

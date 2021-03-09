@@ -537,5 +537,12 @@ class ToolkitController extends Controller
             ], 420);
         }
     }
+
+    public function questionDelete($id)
+    {
+        $question = ToolkitQuestion::find($id);
+        $question->delete();
+        return redirect()->back();
+    }
 }
 

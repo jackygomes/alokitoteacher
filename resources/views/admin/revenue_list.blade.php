@@ -95,6 +95,7 @@
                                     <th>Sl.</th>
                                     <th>Product Type</th>
                                     <th>Revenue</th>
+                                    <th>User</th>
                                     <th>Date</th>
                                 </tr>
                             </thead>
@@ -105,6 +106,20 @@
                                     <td>{{$i++}}</td>
                                     <td style="text-transform:capitalize">{{$item->product_type}}</td>
                                     <td>{{$item->revenue}}</td>
+                                    <td>
+                                        @if(isset($item->order))
+                                        @if(isset($item->order->user))
+                                            @if($item->order->user->identifier == 101 || $item->order->user->identifier == 104)
+                                            {{$item->order->user->name}}
+                                            @elseif($item->order->user->identifier == 1)
+                                            <a href="{{ url('t')}}/{{ $item->order->user->username }}" class="btn btn-info text-white btn-sm">{{$item->order->user->name}}</a>
+                                            @elseif($item->order->user->identifier == 4)
+                                            <a href="{{ url('stu')}}/{{ $item->order->user->username }}" class="btn btn-info text-white btn-sm">{{$item->order->user->name}}</a>
+                                            @endif
+                                        @endif
+                                        @endif
+                                    
+                                    </td>
                                     <td>{{$item->created_at }}</td>
                                 </tr>
                                 @endforeach

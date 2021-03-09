@@ -2,7 +2,7 @@
 @foreach ($questions as $question)
     @php $count++ @endphp
     <div class="form-group">
-        <label>Quiz Question {{$count}}</label>
+        <label>Quiz Question {{$count}}</label><a style="color:red" onclick="del({{$question->id}})"><label class="float-right"><i class="fas fa-trash " style="font-size:16px;cursor: pointer;"></i></label></a>
         <input id="question-query" name="questions[]" class="form-control" value="{{$question->query}}"/>
         <input type="hidden" id="question-query-hidden" name="questionIds[]" class="form-control" value="{{$question->id}}"/>
     </div>
@@ -44,3 +44,23 @@
     </div>
     <hr>
 @endforeach
+
+
+
+<script>
+ var del = function(id){
+    Swal.fire({
+            icon: 'question',
+            title: 'Are you sure to delete?',
+            confirmButtonColor: '#f5b82f',
+            confirmButtonText: "Yes",
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            cancelButtonColor: '#d33',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = '/toolkit/question/delete/' + id;
+            }
+        })
+}
+</script>

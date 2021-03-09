@@ -94,8 +94,11 @@
                                 <tr>
                                     <th>Sl.</th>
                                     <th>User</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
                                     <th>Amount</th>
                                     <th>Date</th>
+                                    <th>Payment Method</th>
                                     <th>Payment Details</th>
                                     <th>Status</th>
                                     <th>Approve</th>
@@ -106,9 +109,18 @@
                                 @foreach($transactions as $item)
                                 <tr>
                                     <td>{{$i++}}</td>
-                                    <td style="text-transform:capitalize">{{$item->user->name}}</td>
+                                    <td>
+                                        @if($item->user->identifier == 1)
+                                        <a href="{{ url('t')}}/{{ $item->user->username }}" class="text-transform:capitalize">{{$item->user->name}}</a>
+                                        @elseif($item->user->identifier == 2)
+                                        <a href="{{ url('s')}}/{{ $item->user->username }}" class="text-transform:capitalize">{{$item->user->name}}</a>
+                                        @endif
+                                    </td>
+                                    <td>{{$item->user->email}}</td>
+                                    <td>{{$item->user->phone_number}}</td>
                                     <td>{{$item->amount}}</td>
                                     <td>{{$item->created_at }}</td>
+                                    <td>{{$item->payment_method }}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{{$item->id}}">
                                             See payment Details
@@ -136,7 +148,7 @@
                                     </td>
                                     <td>{{$item->status }}</td>
                                     @if($item->status == 'Pending')
-                                    <td><a onclick="oki_doki('<?php echo $item->id ?>')"><button class="btn btn-success">Approve</button></a></td>
+                                    <td><a onclick="approveWR('<?php echo $item->id ?>')"><button class="btn btn-success">Approve</button></a></td>
                                     @elseif($item->status == 'paid')
                                     <td><span>Completed</span></td>
                                     @elseif($item->status == 'rejected')
@@ -170,7 +182,7 @@
         $("#pro_pic_upload_form").submit();
     });
 
-    function oki_doki(url){
+    function approveWR(url){
         
         url = '/withdrawals/approve/' + url;
         console.log(url);

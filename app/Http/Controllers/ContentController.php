@@ -41,7 +41,6 @@ class ContentController extends Controller
 
     function index(Request $request)
     {
-
         if ($request->course_toolkit == 'c') {
             $info = Course::where('slug', '=', $request->slug)->first();
 
@@ -76,7 +75,6 @@ class ContentController extends Controller
 
 
             return view('extra', compact('info', 'contents'));
-
         } else {
             if ($request->course_toolkit == 't') {
 
@@ -112,18 +110,14 @@ class ContentController extends Controller
 
 
                 return view('extra', compact('info', 'contents'));
-
             } else {
                 return abort(404);
             }
         }
-
-
     }
 
     function overview(Request $request)
     {
-
         if ($request->course_toolkit == 'c') {
             $info = Course::where('slug', '=', $request->slug)->first();
 
@@ -151,20 +145,19 @@ class ContentController extends Controller
 
             $creator = User::find($info->user_id);
 
-            $decodeFacilitators  = $info->course_facilitator == null ? [] : json_decode($info->course_facilitator) ;
+            $decodeFacilitators  = $info->course_facilitator == null ? [] : json_decode($info->course_facilitator);
             $decodeAdvisors     = $info->advisor == null ? [] : json_decode($info->advisor);
             $decodeDesigners    = $info->designer == null ? [] : json_decode($info->designer);
 
-            $infoFacilitators = CourseActivist::where('type','Facilitator')->findMany($decodeFacilitators);
-            $infoAdvisors = CourseActivist::where('type','Advisor')->findMany($decodeAdvisors);
-            $infoDesigners = CourseActivist::where('type','Designer')->findMany($decodeDesigners);
+            $infoFacilitators = CourseActivist::where('type', 'Facilitator')->findMany($decodeFacilitators);
+            $infoAdvisors = CourseActivist::where('type', 'Advisor')->findMany($decodeAdvisors);
+            $infoDesigners = CourseActivist::where('type', 'Designer')->findMany($decodeDesigners);
 
             $content_rating = DB::table('course_ratings')
                 ->where('course_id', '=', $info->id)
                 ->avg('rating');
-
-            return view('overview', compact('info','infoFacilitators','infoAdvisors','infoDesigners', 'thumbnailPart', 'creator', 'content_rating', 'trackHistory'));
-
+            
+            return view('overview', compact('info', 'infoFacilitators', 'infoAdvisors', 'infoDesigners', 'thumbnailPart', 'creator', 'content_rating', 'trackHistory'));
         } else {
             if ($request->course_toolkit == 't') {
 
@@ -196,13 +189,10 @@ class ContentController extends Controller
                     ->avg('rating');
 
                 return view('overview', compact('info', 'thumbnailPart', 'creator', 'content_rating', 'trackHistory'));
-
             } else {
                 return abort(404);
             }
         }
-
-
     }
 
     function load_content(Request $request)
@@ -227,7 +217,6 @@ class ContentController extends Controller
                     'html' => view('quiz', compact('quiz_details', 'questions', 'count'))->render(),
                 ]);
             }
-
         } else {
             if ($course_toolkit == 't') {
                 if ($type == 1) {
@@ -243,13 +232,10 @@ class ContentController extends Controller
                         'html' => view('quiz', compact('quiz_details', 'questions', 'count'))->render(),
                     ]);
                 }
-
             } else {
                 return 'Error';
             }
         }
-
-
     }
 
 
@@ -269,15 +255,18 @@ class ContentController extends Controller
             $wrong = $total_questions - $correct;
 
             return response()->json([
-                'html' => view('quiz_result',
-                    compact('points', 'total_questions', 'correct', 'wrong', 'time'))->render(),
+                'html' => view(
+                    'quiz_result',
+                    compact('points', 'total_questions', 'correct', 'wrong', 'time')
+                )->render(),
             ]);
-
-
         } else {
             if ($course_toolkit == 't') {
-                $quiz_result = ToolkitHistory::where('user_id', '=', Auth::id())->where('quiz_id', '=',
-                    $quiz_id)->first();
+                $quiz_result = ToolkitHistory::where('user_id', '=', Auth::id())->where(
+                    'quiz_id',
+                    '=',
+                    $quiz_id
+                )->first();
                 $points = $quiz_result->points;
                 $time = $quiz_result->time;
                 $correct = $points / 2;
@@ -285,10 +274,11 @@ class ContentController extends Controller
                 $wrong = $total_questions - $correct;
 
                 return response()->json([
-                    'html' => view('quiz_result',
-                        compact('points', 'total_questions', 'correct', 'wrong', 'time'))->render(),
+                    'html' => view(
+                        'quiz_result',
+                        compact('points', 'total_questions', 'correct', 'wrong', 'time')
+                    )->render(),
                 ]);
-
             } else {
                 return 'Error';
             }
@@ -313,7 +303,6 @@ class ContentController extends Controller
                 'status' => 'success',
                 'trackHistory' => $trackHistory,
             ]);
-
         } elseif ($course_toolkit == 't') {
             $toolkit = Toolkit::where('slug', '=', $slug)->first();
             $trackHistory = TrackHistory::where('user_id', '=', Auth::id())
@@ -328,9 +317,7 @@ class ContentController extends Controller
                 'status' => 'success',
                 'trackHistory' => $trackHistory,
             ]);
-
         }
-
     }
 
     function load_question(Request $request)
@@ -339,8 +326,11 @@ class ContentController extends Controller
 
         if ($course_toolkit == 'c') {
             $quiz_details = CourseQuiz::find($request->quiz_id);
-            $question = CourseQuestion::where('quiz_id', '=',
-                $quiz_details->id)->offset($request->serial)->limit($request->serial)->first();
+            $question = CourseQuestion::where(
+                'quiz_id',
+                '=',
+                $quiz_details->id
+            )->offset($request->serial)->limit($request->serial)->first();
             $options = CourseQuizOption::where('question_id', '=', $question->id)->get();
 
             return response()->json([
@@ -350,8 +340,11 @@ class ContentController extends Controller
         } else {
             if ($course_toolkit == 't') {
                 $quiz_details = ToolkitQuiz::find($request->quiz_id);
-                $question = ToolkitQuestion::where('quiz_id', '=',
-                    $quiz_details->id)->offset($request->serial)->limit($request->serial)->first();
+                $question = ToolkitQuestion::where(
+                    'quiz_id',
+                    '=',
+                    $quiz_details->id
+                )->offset($request->serial)->limit($request->serial)->first();
                 $options = ToolkitQuizOption::where('question_id', '=', $question->id)->get();
 
                 return response()->json([
@@ -362,7 +355,6 @@ class ContentController extends Controller
                 return 'Error';
             }
         }
-
     }
 
     function verify_question(Request $request)
@@ -376,8 +368,11 @@ class ContentController extends Controller
             $quiz_id = $question_details->quiz_id;
             $correct_option = $question_details->correct_option;
 
-            $course_history = CourseHistory::where('user_id', '=', Auth::id())->where('quiz_id', '=',
-                $quiz_id)->first();
+            $course_history = CourseHistory::where('user_id', '=', Auth::id())->where(
+                'quiz_id',
+                '=',
+                $quiz_id
+            )->first();
 
             if ($course_history == null) {
                 $new_course_history = new CourseHistory;
@@ -385,11 +380,13 @@ class ContentController extends Controller
                 $new_course_history->quiz_id = $quiz_id;
                 $new_course_history->points = 0;
                 $new_course_history->save();
-
             }
 
-            $course_history = CourseHistory::where('user_id', '=', Auth::id())->where('quiz_id', '=',
-                $quiz_id)->first();
+            $course_history = CourseHistory::where('user_id', '=', Auth::id())->where(
+                'quiz_id',
+                '=',
+                $quiz_id
+            )->first();
 
             $course_history->time = date("H:i:s", strtotime($course_history->time) + $time);
 
@@ -397,15 +394,17 @@ class ContentController extends Controller
                 $course_history->points = $course_history->points + 2;
             }
             $course_history->save();
-
         } else {
             if ($course_toolkit == 't') {
                 $question_details = ToolkitQuestion::find($request->question_id);
                 $quiz_id = $question_details->quiz_id;
                 $correct_option = $question_details->correct_option;
 
-                $toolkit_history = ToolkitHistory::where('user_id', '=', Auth::id())->where('quiz_id', '=',
-                    $quiz_id)->first();
+                $toolkit_history = ToolkitHistory::where('user_id', '=', Auth::id())->where(
+                    'quiz_id',
+                    '=',
+                    $quiz_id
+                )->first();
 
                 if ($toolkit_history == null) {
                     $new_toolkit_history = new ToolkitHistory;
@@ -415,8 +414,11 @@ class ContentController extends Controller
                     $new_toolkit_history->save();
                 }
 
-                $toolkit_history = ToolkitHistory::where('user_id', '=', Auth::id())->where('quiz_id', '=',
-                    $quiz_id)->first();
+                $toolkit_history = ToolkitHistory::where('user_id', '=', Auth::id())->where(
+                    'quiz_id',
+                    '=',
+                    $quiz_id
+                )->first();
 
                 $toolkit_history->time = date("H:i:s", strtotime($toolkit_history->time) + $time);
 
@@ -428,8 +430,6 @@ class ContentController extends Controller
         }
 
         return 'success';
-
-
     }
 
 
@@ -443,7 +443,7 @@ class ContentController extends Controller
                 ->where('course_or_toolkit', '=', 1)
                 ->where('course_toolkit_id', '=', $course->id)
                 ->first();
-            $ratingHistory = CourseRating::where('course_id',$course->id)->where('user_id',Auth::id())->count();
+            $ratingHistory = CourseRating::where('course_id', $course->id)->where('user_id', Auth::id())->count();
 
             $retake = 60;
 
@@ -461,7 +461,6 @@ class ContentController extends Controller
                 'existRating' => $ratingHistory,
                 'sequence' => $trackHistory->current_sequence,
             ]);
-
         } else {
             if ($course_toolkit == 't') {
                 $toolkit = Toolkit::where('slug', '=', $slug)->first();
@@ -486,7 +485,6 @@ class ContentController extends Controller
                     'retake' => $retake,
                     'sequence' => $trackHistory->current_sequence,
                 ]);
-
             }
         }
         return response()->json([
@@ -510,8 +508,6 @@ class ContentController extends Controller
                 $trackHistory->current_sequence = $trackHistory->current_sequence + 1;
                 $trackHistory->save();
             }
-
-
         } else {
             if ($course_toolkit == 't') {
                 $toolkit = Toolkit::where('slug', '=', $slug)->first();
@@ -524,7 +520,6 @@ class ContentController extends Controller
                     $trackHistory->current_sequence = $trackHistory->current_sequence + 1;
                     $trackHistory->save();
                 }
-
             }
         }
         return 'success';
@@ -541,7 +536,6 @@ class ContentController extends Controller
             $trackHistory->course_or_toolkit = 1;
             $trackHistory->course_toolkit_id = $course->id;
             $trackHistory->save();
-
         } else {
             if ($course_toolkit == 't') {
                 $toolkit = Toolkit::where('slug', '=', $slug)->first();
@@ -580,7 +574,6 @@ class ContentController extends Controller
             $rating->save();
 
             $this->update_rating_of_user_table($course->user_id);
-
         } else {
             if ($course_toolkit == 't') {
                 $toolkit = Toolkit::where('slug', '=', $slug)->first();
@@ -615,14 +608,13 @@ class ContentController extends Controller
                 ->first();
             $trackHistory->current_sequence = 0;
             $trackHistory->save();
-            $quizes = CourseQuiz::where('course_id',$course->id)->get();
+            $quizes = CourseQuiz::where('course_id', $course->id)->get();
 
-            foreach ($quizes as $quiz){
-                $history = CourseHistory::where('user_id',Auth::id())->where('quiz_id',$quiz->id)->first();
+            foreach ($quizes as $quiz) {
+                $history = CourseHistory::where('user_id', Auth::id())->where('quiz_id', $quiz->id)->first();
                 $history->points = 0;
                 $history->save();
             }
-
         } else {
             if ($course_toolkit == 't') {
                 $toolkit = Toolkit::where('slug', '=', $slug)->first();
@@ -678,25 +670,23 @@ class ContentController extends Controller
 
 
         $toolkit = DB::table('toolkit_ratings')
-            ->select('toolkit_ratings.*','toolkits.user_id as teacherId')
-            ->join('toolkits','toolkits.id','=','toolkit_ratings.toolkit_id')
-            ->where('toolkits.user_id','=', $id)
+            ->select('toolkit_ratings.*', 'toolkits.user_id as teacherId')
+            ->join('toolkits', 'toolkits.id', '=', 'toolkit_ratings.toolkit_id')
+            ->where('toolkits.user_id', '=', $id)
             ->get();
 
         $user = User::find($id);
         $teacherRating = $user->rating;
 
-        if($toolkit->count() > 0){
+        if ($toolkit->count() > 0) {
             $teacherRating = round($toolkit->sum('rating') / $toolkit->count(), 2);
-
         }
 
         $user->rating = $teacherRating;
         $user->save();
 
-//        LeaderBoard::updateLeaderboardOnRatingChange($id, $teacherRating);
+        //        LeaderBoard::updateLeaderboardOnRatingChange($id, $teacherRating);
 
         return 0;
     }
-
 }

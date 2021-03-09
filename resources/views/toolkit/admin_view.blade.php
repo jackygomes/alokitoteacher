@@ -98,8 +98,8 @@
                                     <th>Email</th>
                                     <th>Start Date</th>
                                     <th>Completed Date</th>
-                                    <th>Certificate Purchase</th>
-                                    <th>Certificate Purchase Date</th>
+                                    <!-- <th>Certificate Purchase</th>
+                                    <th>Certificate Purchase Date</th> -->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -111,8 +111,8 @@
                                         <td>{{$history->user->email}}</td>
                                         <td>{{$history->created_at }}</td>
                                         <td>{{isset($history->completion_date) ? $history->completion_date : 'Not Yet'}}</td>
-                                        <td>{{isset($history->certificate_withdrawn_date) ? 'Yes' : 'No'}}</td>
-                                        <td>{{isset($history->certificate_withdrawn_date) ? $history->certificate_withdrawn_date : 'Not Yet'}}</td>
+                                        <!-- <td>{{isset($history->certificate_withdrawn_date) ? 'Yes' : 'No'}}</td>
+                                        <td>{{isset($history->certificate_withdrawn_date) ? $history->certificate_withdrawn_date : 'Not Yet'}}</td> -->
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -242,7 +242,12 @@
                                 <div class="form-row mt-1">
                                     <div class="col-md-6 mb-5">
                                         <label>Gender Preference <span class="text-danger font-weight-bold"> *</span>:</label>
-                                        <input type="text" class="form-control border-yellow" name="gender" required placeholder="Male/Female or both">
+                                        <select class="form-control border-yellow" name="gender" required>
+                                            <option value="" disabled selected>-- Select Prefered Gender --</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Not Specified">Not Specified</option>
+                                        </select>
 
                                     </div>
 

@@ -86,12 +86,12 @@
                         <div class="form-group row">
                             <label for="subjects" class="col-sm-2 col-form-label">Status:</label>
                             <div class="col-sm-10">
-                                <select class="custom-select mr-sm-2" name="status" id="status" {{ $publishEnable == 1 ? "" : "disabled"}}>
+                                <select class="custom-select mr-sm-2" name="status" id="status" {{ $canEdit == 1 ? "" : "disabled"}}>
                                     @foreach($statusOptions as $options)
                                         <option value="{{$options}}" {{$info->status == $options ? "selected" : ""}}>{{$options}}</option>
                                     @endforeach
                                 </select>
-                                @if($publishEnable == 0)
+                                @if($canEdit == 0)
                                     <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* This Course doesn't have minimum quiz question.</p>
                                 @endif
                             </div>
@@ -178,7 +178,7 @@
                     </form>
                 </div>
                 <div id="addQuestionSection">
-                    <p style="font-size: 14px; color: #004085">Add minimum 4 and maximum 10 question.</p>
+                    <p style="font-size: 14px; color: #004085">Add minimum 5 and maximum 10 question.</p>
                     <form action="{{ route('course.question.create', $info->id) }}" method="post">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
 

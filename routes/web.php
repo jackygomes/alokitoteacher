@@ -53,6 +53,7 @@ Route::post('admin/course/objective/update/{id}', 'CourseController@courseSequen
 Route::post('admin/course/video/create/{id}', 'CourseController@videoCreate')->name('course.video.create');
 Route::post('admin/course/quiz/create/{id}', 'CourseController@quizCreate')->name('course.quiz.create');
 Route::post('admin/course/question/create/{id}', 'CourseController@questionCreate')->name('course.question.create');
+Route::get('admin/course/question/delete/{id}', 'CourseController@questionDelete')->name('course.question.delete');
 
 Route::post('admin/course/video/update/{id}', 'CourseController@course_video_update')->name('course.update.edit');
 Route::post('admin/course/quiz/update/{id}', 'CourseController@course_quiz_update')->name('course.quiz.update');
@@ -79,6 +80,7 @@ Route::post('toolkit/update/{id}', 'ToolkitController@toolkitDetailsUpdate')->na
 Route::post('toolkit/video/create/{id}', 'ToolkitController@videoCreate')->name('toolkit.video.create');
 Route::post('toolkit/quiz/create/{id}', 'ToolkitController@quizCreate')->name('toolkit.quiz.create');
 Route::post('toolkit/question/create/{id}', 'ToolkitController@questionCreate')->name('toolkit.question.create');
+Route::get('toolkit/question/delete/{id}', 'ToolkitController@questionDelete')->name('toolkit.question.delete');
 
 Route::get('toolkit/edit/{id}', 'ToolkitController@toolkit_edit')->name('toolkit.edit');
 Route::post('toolkit/video/update/{id}', 'ToolkitController@toolkit_video_update')->name('toolkit.video.edit');

@@ -5,30 +5,30 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-md-3 col-sm-12 pt-5 pb-3 text-center" style="background-color: #f5b82f;"><!--left col-->
+        <div class="col-md-3 col-sm-12 pt-5 pb-3 text-center" style="background-color: #f5b82f;">
+            <!--left col-->
 
             <div style="width: 150px; height: 150px;" class="mx-auto">
                 @if($user_info->image == null)
-                    <i class="fas fa-user-circle fa-10x text-white"></i>
+                <i class="fas fa-user-circle fa-10x text-white"></i>
                 @else
-                    <img class="img-fluid rounded-circle h-100 w-100" src="{{ url('images/profile_picture') }}/{{ $user_info->image }}">
+                <img class="img-fluid rounded-circle h-100 w-100" src="{{ url('images/profile_picture') }}/{{ $user_info->image }}">
                 @endif
             </div>
 
 
             <h3 class="mt-5 font-weight-bold text-white"> {{$user_info->name}}</h3>
 
-            @for($i = 1; $i <= 5; $i++)
-                @if($user_info->rating - $i >= 0)
-                    <i class="fa fa-star" aria-hidden="true"></i>
+            @for($i = 1; $i <= 5; $i++) @if($user_info->rating - $i >= 0)
+                <i class="fa fa-star" aria-hidden="true"></i>
                 @else
-                    <i class="far fa-star text-white"></i>
+                <i class="far fa-star text-white"></i>
                 @endif
-            @endfor
+                @endfor
 
 
 
-            @if($user_info->id == Auth::id())
+                @if($user_info->id == Auth::id())
 
                 <div class="row text-left p-2 mt-3">
                     <div class="col-2">
@@ -46,7 +46,7 @@
 
                 </div>
 
-            @endif
+                @endif
 
 
         </div>
@@ -59,11 +59,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         @if($errors->any())
-                            <div class="alert alert-danger">
-                                @foreach($errors->all() as $error)
-                                    <p>{{$error}}</p>
-                                @endforeach
-                            </div>
+                        <div class="alert alert-danger">
+                            @foreach($errors->all() as $error)
+                            <p>{{$error}}</p>
+                            @endforeach
+                        </div>
                         @endif
                     </div>
                 </div>
@@ -86,14 +86,14 @@
                             <label for="coursePrice" class="col-sm-2 col-form-label">Course Price:</label>
                             <div class="col-sm-10">
                                 <input type="text" name="course_price" class="form-control" id="coursePrice" placeholder="Course Price">
-                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the toolkit is free.</p>
+                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the course is free.</p>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="certificatePrice" class="col-sm-2 col-form-label">Certificate Price:</label>
                             <div class="col-sm-10">
                                 <input type="text" name="certificate_price" class="form-control" id="certificatePrice" placeholder="Course Price">
-                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the toolkit is free.</p>
+                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter 0 in price field if the course is free.</p>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -107,7 +107,7 @@
                             <div class="col-sm-10">
                                 <select class="custom-select mr-sm-2" name="facilitator[]" id="facilitator" multiple="multiple">
                                     @foreach($facilitators as $facilitator)
-                                        <option value="{{$facilitator->id}}">{{$facilitator->name}}</option>
+                                    <option value="{{$facilitator->id}}">{{$facilitator->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -117,7 +117,7 @@
                             <div class="col-sm-10">
                                 <select class="custom-select mr-sm-2" name="advisor[]" id="advisor" multiple="multiple">
                                     @foreach($advisors as $advisor)
-                                        <option value="{{$advisor->id}}">{{$advisor->name}}</option>
+                                    <option value="{{$advisor->id}}">{{$advisor->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -127,7 +127,7 @@
                             <div class="col-sm-10">
                                 <select class="custom-select mr-sm-2" name="designer[]" id="designer" multiple="multiple">
                                     @foreach($designers as $designer)
-                                        <option value="{{$designer->id}}">{{$designer->name}}</option>
+                                    <option value="{{$designer->id}}">{{$designer->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -136,7 +136,7 @@
                             <label for="thumbnailImage" class="col-sm-2 col-form-label">Thumbnail Image:</label>
                             <div class="col-sm-10">
                                 <input type="file" name="courseThumbnailImage" class="form-control-file" id="thumbnailImage">
-                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be  400px X 300px (width = 400px, height = 300px).</p>
+                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be 400px X 300px (width = 400px, height = 300px).</p>
                             </div>
                         </div>
                         <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Submit</button>
@@ -147,30 +147,29 @@
     </div>
 </div>
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#facilitator').select2({
-                multiple: true,
-            });
-            $('#advisor').select2({
-                multiple: true,
-            });
-            $('#designer').select2({
-                multiple: true,
-            });
-            $("#coursePrice").keydown(function (event) {
-                // Allow Only: keyboard 0-9, numpad 0-9, backspace, tab, left arrow, right arrow, delete
-                if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46) {
-                    // Allow normal operation
-                } else {
-                    // Prevent the rest
-                    event.preventDefault();
-                }
-            });
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#facilitator').select2({
+            multiple: true,
         });
-
-    </script>
+        $('#advisor').select2({
+            multiple: true,
+        });
+        $('#designer').select2({
+            multiple: true,
+        });
+        $("#coursePrice").keydown(function(event) {
+            // Allow Only: keyboard 0-9, numpad 0-9, backspace, tab, left arrow, right arrow, delete
+            if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46) {
+                // Allow normal operation
+            } else {
+                // Prevent the rest
+                event.preventDefault();
+            }
+        });
+    });
+</script>
 
 @endpush
 @endsection

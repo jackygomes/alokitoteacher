@@ -115,10 +115,11 @@
                                     <thead>
                                         <tr>
                                             <th style="width:10%">No.</th>
-                                            <th style="width:30%">Course name</th>
-                                            <th style="width:20%">Price</th>
-                                            <th style="width:20%">Status</th>
-                                            <th style="width:20%">Action</th>
+                                            <th style="width:25%">Course name</th>
+                                            <th style="width:15%">Price</th>
+                                            <th style="width:25%">Creator</th>
+                                            <th style="width:15%">Status</th>
+                                            <th style="width:10%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -128,6 +129,7 @@
                                             <td>{{$n}}</td>
                                             <td>{{$course->title}}</td>
                                             <td>{{($course->price == 0) ? 'Free' : $course->price}}</td>
+                                            <td>{{$course->user->name}}</td>
                                             <td>{{$course->status}}</td>
                                             <td>
                                                 <a href="{{route('course.edit', $course->id)}}" class="btn btn-info text-white btn-sm">Edit</a>

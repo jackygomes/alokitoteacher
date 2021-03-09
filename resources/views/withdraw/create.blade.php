@@ -128,6 +128,16 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="amount" class="col-md-2 col-form-label text-md-right">Payment Method</label>
+                                <div class="col-md-6">
+                                    <select class="form-control border-yellow" name="payment_method" required>
+                                        <option value="" disabled selected>-- Select payment Method --</option>
+                                        <option value="bkash">bKash</option>
+                                        <option value="Bank Transfer">Bank Transfer</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="payment_details" class="col-md-2 col-form-label text-md-right">Payment Details</label>
                                 <div class="col-md-6">
                                     <textarea class="form-control border-yellow" placeholder="I.E - Bank Account No., bKash/Rocket, other payment details" name="payment_details" id="payment_details" cols="30" rows="10" required></textarea>
@@ -137,20 +147,14 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-2">
                                     <button type="submit" class="btn background-yellow">
-                                        Deposit
+                                        Withdraw
                                     </button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 border-top mt-2 mb-2 text-center d-flex justify-content-center" style="background-color: #343a40;">
-                        <div class="col-md-8">
-                            <img class="img-fluid ssl-banner" src="/images/ssl.png">
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div> <!-- 2nd col ends here -->
 

@@ -31,6 +31,7 @@ class WithdrawalController extends Controller
         $transaction->user_id = Auth::id();
         $transaction->transaction_type = 'withdrawal';
         $transaction->amount = $request->amount;
+        $transaction->payment_method = $request->payment_method;
         $transaction->note = $request->payment_details;
         $transaction->save();
         return redirect()->back()->with('successInfo', 'Withdrawal Request Submitted Successfully!');

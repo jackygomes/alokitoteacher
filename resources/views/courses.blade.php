@@ -25,7 +25,12 @@
 					<div class="card" style="min-height: 22.5vh">
 						<img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" class="card-img-top">
 						<div class="text-center">
-						 	<img src="{{url('images\profile_picture')}}\{{ $v_course_info->image }}" alt="Avatar" class="avatar">
+						 	
+							 @if(isset($v_course_info->image))
+								<img src="{{url('images\profile_picture')}}\{{ $v_course_info->image }}" alt="Avatar" class="avatar">
+							@else
+								<i class="fas fa-user-circle fa-4x avatar" style="color:#f5b82f"></i>
+							@endif
 						 </div>
 						<div class="card-body">
 						  

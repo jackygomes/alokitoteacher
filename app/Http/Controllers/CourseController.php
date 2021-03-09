@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Course;
+use App\Quiz;
 use Illuminate\Support\Str;
 
 
@@ -29,38 +30,40 @@ class CourseController extends Controller
         $this->middleware('auth');
     }
 
-    function index(){
+    function index()
+    {
 
-	    $course_info = DB::table('users')
-	    ->rightJoin('courses', 'users.id', '=','courses.user_id')
-	    ->leftJoin('course_ratings', 'courses.id', '=', 'course_ratings.course_id')
-	    ->select('users.id','users.name','users.email', 'users.image','users.phone_number','users.balance','users.username','courses.id','courses.thumbnail','courses.title','courses.description','courses.price','courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
-        ->where('courses.status', '=', 'Approved')
-        ->groupBy('courses.id')
-	    ->paginate(4);
+        $course_info = DB::table('users')
+            ->rightJoin('courses', 'users.id', '=', 'courses.user_id')
+            ->leftJoin('course_ratings', 'courses.id', '=', 'course_ratings.course_id')
+            ->select('users.id', 'users.name', 'users.email', 'users.image', 'users.phone_number', 'users.balance', 'users.username', 'courses.id', 'courses.thumbnail', 'courses.title', 'courses.description', 'courses.price', 'courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
+            ->where('courses.status', '=', 'Approved')
+            ->groupBy('courses.id')
+            ->paginate(4);
 
-	    return view ('courses',compact('course_info'));
+        return view('courses', compact('course_info'));
+    }
 
-	}
-
-//	Admin Functions
-    public function create () {
+    //	Admin Functions
+    public function create()
+    {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
 
             return abort(404);
         }
-        $facilitators = CourseActivist::where('type','Facilitator')->get();
-        $advisors = CourseActivist::where('type','Advisor')->get();
-        $designers = CourseActivist::where('type','Designer')->get();
-        return view('course.create', compact('user_info','users','facilitators','advisors','designers'));
+        $facilitators = CourseActivist::where('type', 'Facilitator')->get();
+        $advisors = CourseActivist::where('type', 'Advisor')->get();
+        $designers = CourseActivist::where('type', 'Designer')->get();
+        return view('course.create', compact('user_info', 'users', 'facilitators', 'advisors', 'designers'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
 
             return abort(404);
         }
@@ -70,17 +73,17 @@ class CourseController extends Controller
             'course_price'          => 'required',
             'certificate_price'     => 'required',
             'preview_video'         => 'required',
-            'facilitator'           => 'required',
-            'advisor'               => 'required',
-            'designer'              => 'required',
+            // 'facilitator'           => 'required',
+            // 'advisor'               => 'required',
+            // 'designer'              => 'required',
             'courseThumbnailImage'  => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         $randomText = Str::random(6);
         $slug = Str::slug($request->input('course_name'), '-');
-        $slug = $slug.'-'.$randomText;
+        $slug = $slug . '-' . $randomText;
 
         $image = $request->file('courseThumbnailImage');
-        $image_name = $userId.'_course_'.md5(rand()).'.'.$image->getClientOriginalExtension();
+        $image_name = $userId . '_course_' . md5(rand()) . '.' . $image->getClientOriginalExtension();
 
         $image->move(public_path("images/thumbnail"), $image_name);
 
@@ -97,7 +100,7 @@ class CourseController extends Controller
             'thumbnail'    => $image_name,
         ];
 
-        if($courseInsert = Course::create($course)) {
+        if ($courseInsert = Course::create($course)) {
             $previewVideo = [
                 'course_id' => $courseInsert->id,
                 'url'       => $request->preview_video,
@@ -112,7 +115,7 @@ class CourseController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
 
             return abort(404);
         }
@@ -136,22 +139,22 @@ class CourseController extends Controller
             ->orderBy('sequence', 'ASC')
             ->get();
 
-
-        return view('course.course_edit',compact( 'user_info','info', 'contents'));
+        return view('course.course_edit', compact('user_info', 'info', 'contents'));
     }
 
-    public function courseObjectiveEdit($courseId) {
+    public function courseObjectiveEdit($courseId)
+    {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
 
             return abort(404);
         }
 
         $info = Course::find($courseId);
 
-        $previewVideo = CoursePreview::where('course_id','=', $courseId)->first();
-//        return $previewVideo;
+        $previewVideo = CoursePreview::where('course_id', '=', $courseId)->first();
+        //        return $previewVideo;
 
         $videos = DB::table('course_videos')
             ->select('id', 'video_title as title', 'sequence', DB::raw('1 as type'))
@@ -171,39 +174,49 @@ class CourseController extends Controller
             ->get();
 
         $quizzes = CourseQuiz::where('course_id', '=', $courseId)->get();
-            if(count($quizzes) > 0) {
-                foreach ($quizzes as $quiz) {
-                    if($quiz->question_count < 4) {
-                        $publishEnable = 0;
-                        break;
-                    } else {
-                        $publishEnable = 1;
-                    }
+        if (count($quizzes) > 0) {
+            foreach ($quizzes as $quiz) {
+                if ($quiz->question_count < 5) {
+                    $publishEnable = 0;
+                    break;
+                } else {
+                    $publishEnable = 1;
                 }
-            } else $publishEnable = 0;
+            }
+        } else $publishEnable = 0;
 
-
-        $decodeFacilitators  = $info->course_facilitator == null ? [] : json_decode($info->course_facilitator) ;
+        $decodeFacilitators  = $info->course_facilitator == null ? [] : json_decode($info->course_facilitator);
         $decodeAdvisors     = $info->advisor == null ? [] : json_decode($info->advisor);
         $decodeDesigners    = $info->designer == null ? [] : json_decode($info->designer);
 
-        $infoFacilitators = CourseActivist::where('type','Facilitator')->findMany($decodeFacilitators);
-        $infoAdvisors = CourseActivist::where('type','Advisor')->findMany($decodeAdvisors);
-        $infoDesigners = CourseActivist::where('type','Designer')->findMany($decodeDesigners);
+        $infoFacilitators = CourseActivist::where('type', 'Facilitator')->findMany($decodeFacilitators);
+        $infoAdvisors = CourseActivist::where('type', 'Advisor')->findMany($decodeAdvisors);
+        $infoDesigners = CourseActivist::where('type', 'Designer')->findMany($decodeDesigners);
 
 
-        $facilitators = CourseActivist::where('type','Facilitator')->get();
-        $advisors = CourseActivist::where('type','Advisor')->get();
-        $designers = CourseActivist::where('type','Designer')->get();
+        $facilitators = CourseActivist::where('type', 'Facilitator')->get();
+        $advisors = CourseActivist::where('type', 'Advisor')->get();
+        $designers = CourseActivist::where('type', 'Designer')->get();
 
-        return view('course.edit_objective',compact( 'users','infoFacilitators','infoAdvisors','infoDesigners','facilitators','advisors','designers','previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
+        //Course Publication status chack...
+        $t_quizes = CourseQuiz::where('course_id',$courseId)->pluck('id');
+        $canEdit = 0;
+        foreach($t_quizes as $q){
+            $count = CourseQuestion::where('quiz_id',$q)->count();
+            if($count < 5) $canEdit = 0;
+            else $canEdit = 1;
+        }
+        //Course Publication status chack...
+
+        return view('course.edit_objective', compact('canEdit','users', 'infoFacilitators', 'infoAdvisors', 'infoDesigners', 'facilitators', 'advisors', 'designers', 'previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
     }
 
-    public function courseDetailsUpdate(Request $request, $courseId) {
+    public function courseDetailsUpdate(Request $request, $courseId)
+    {
 
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
 
             return abort(404);
         }
@@ -214,22 +227,22 @@ class CourseController extends Controller
             'course_price'         => 'required',
             'certificate_price'    => 'required',
             'preview_video'        => 'required',
-            'facilitator'          => 'required',
-            'advisor'              => 'required',
-            'designer'             => 'required',
+            // 'facilitator'          => 'required',
+            // 'advisor'              => 'required',
+            // 'designer'             => 'required',
         ]);
         $randomText = Str::random(10);
         $slug = Str::slug($request->input('course_name'), '-');
-        $slug = $slug.'-'.$randomText;
+        $slug = $slug . '-' . $randomText;
 
 
-        $previewVideo = CoursePreview::where('course_id',$courseId)->first();
+        $previewVideo = CoursePreview::where('course_id', $courseId)->first();
         $previewVideo->url = $request->preview_video;
 
         $previewVideo->save();
 
         $course = Course::find($courseId);
-        if($course->title  == $request->input('course_name')){
+        if ($course->title  == $request->input('course_name')) {
             $slug = $course->slug;
         }
 
@@ -243,12 +256,12 @@ class CourseController extends Controller
         $course->advisor = json_encode($request->advisor);
         $course->designer = json_encode($request->designer);
 
-        if(isset($request->courseThumbnailImage)) {
-            $oldImagePath = 'images/thumbnail/'.$course->thumbnail;
+        if (isset($request->courseThumbnailImage)) {
+            $oldImagePath = 'images/thumbnail/' . $course->thumbnail;
             File::delete($oldImagePath);
 
             $image = $request->file('courseThumbnailImage');
-            $image_name = $userId.'_image_'.md5(rand()).'.'.$image->getClientOriginalExtension();
+            $image_name = $userId . '_image_' . md5(rand()) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path("images/thumbnail"), $image_name);
             $course->thumbnail = $image_name;
         }
@@ -257,7 +270,7 @@ class CourseController extends Controller
 
         // TODO this code will get delete after question_count fills
         $quizzes = CourseQuiz::where('course_id', '=', $courseId)->get();
-        if(count($quizzes) > 0) {
+        if (count($quizzes) > 0) {
             foreach ($quizzes as $quiz) {
                 $questionCount = CourseQuestion::where('quiz_id', '=', $quiz->id)->count();
                 $quiz = CourseQuiz::find($quiz->id);
@@ -270,10 +283,11 @@ class CourseController extends Controller
         return redirect()->route('course.objective.edit', $courseId)->with('success', 'Course Details Edited successfully');
     }
 
-    public function videoCreate(Request $request, $courseId) {
+    public function videoCreate(Request $request, $courseId)
+    {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
 
             return abort(404);
         }
@@ -282,7 +296,7 @@ class CourseController extends Controller
             'title' => 'required',
         ]);
 
-        try{
+        try {
             $videoData = [
                 'course_id'    => $courseId,
                 'url'    => isset($request->url) ? $request->url : "",
@@ -292,16 +306,16 @@ class CourseController extends Controller
             ];
 
             CourseVideo::create($videoData);
-
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return "Quiz insertion error: " . $e->getMessage();
         }
         return redirect()->route('course.objective.edit', $courseId)->with('success', 'Video created successfully');
     }
-    public function quizCreate(Request $request, $courseId) {
+    public function quizCreate(Request $request, $courseId)
+    {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
 
             return abort(404);
         }
@@ -310,7 +324,7 @@ class CourseController extends Controller
             'quiz_name' => 'required',
         ]);
 
-        try{
+        try {
             $quizData = [
                 'course_id'    => $courseId,
                 'quiz_title'    => isset($request->quiz_name) ? $request->quiz_name : "",
@@ -319,17 +333,17 @@ class CourseController extends Controller
             ];
 
             CourseQuiz::create($quizData);
-
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return "Quiz insertion error: " . $e->getMessage();
         }
         return redirect()->route('course.objective.edit', $courseId)->with('success', 'Quiz created successfully');
     }
 
-    public function questionCreate(Request $request, $courseId) {
+    public function questionCreate(Request $request, $courseId)
+    {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
 
             return abort(404);
         }
@@ -344,11 +358,11 @@ class CourseController extends Controller
         // Maximum question count check
         $questionCountCheck = CourseQuiz::find($request->quiz);
 
-        if($questionCountCheck->question_count >= 10) {
+        if ($questionCountCheck->question_count >= 10) {
             return redirect()->route('course.objective.edit', $courseId)->with('warning', 'Sorry! You can add maximum 10 question.');
         }
 
-        try{
+        try {
             $questionData = [
                 'quiz_id'    => $request->quiz,
                 'query'    => isset($request->question) ? $request->question : "",
@@ -357,28 +371,28 @@ class CourseController extends Controller
                 'correct_option' => $request->correctOption,
             ];
 
-            if($questionInsert = CourseQuestion::create($questionData)){
-                foreach ($request->options0 as $option){
-                    if($option != null){
+            if ($questionInsert = CourseQuestion::create($questionData)) {
+                foreach ($request->options0 as $option) {
+                    if ($option != null) {
                         $optionData = [
                             'question_id'    => $questionInsert->id,
                             'question_option'    => isset($option) ? $option : "",
                         ];
-                        CourseQuizOption::create($optionData) ;
+                        CourseQuizOption::create($optionData);
                     }
                 }
             }
-
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return "Quiz insertion error: " . $e->getMessage();
         }
         return redirect()->route('course.objective.edit', $courseId)->with('success', 'Question created successfully');
     }
 
-    public function courseSequenceUpdate(Request $request, $courseId) {
+    public function courseSequenceUpdate(Request $request, $courseId)
+    {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if(isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)){
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
 
             return abort(404);
         }
@@ -387,17 +401,17 @@ class CourseController extends Controller
 
         $data = $request->all();
 
-        $items = array_map(function($value) {
+        $items = array_map(function ($value) {
             return ["item_sequence" => $value];
-        }, array_filter($data, function($value, $key) {
+        }, array_filter($data, function ($value, $key) {
             return Str::contains($key, 'item_sequence');
         }, ARRAY_FILTER_USE_BOTH));
 
-        $id = array_filter($data, function($value, $key) {
+        $id = array_filter($data, function ($value, $key) {
             return Str::contains($key, 'item_id');
         }, ARRAY_FILTER_USE_BOTH);
 
-        $type = array_filter($data, function($value, $key) {
+        $type = array_filter($data, function ($value, $key) {
             return Str::contains($key, 'item_type');
         }, ARRAY_FILTER_USE_BOTH);
 
@@ -408,26 +422,27 @@ class CourseController extends Controller
         }
 
         try {
-            foreach ($items as $item){
-                if($item['type'][0] == 1) {
+            foreach ($items as $item) {
+                if ($item['type'][0] == 1) {
                     $courseVideo = CourseVideo::find($item['id'][0]);
                     $courseVideo->sequence = $item['item_sequence'][0];
                     $courseVideo->save();
-                }elseif($item['type'][0] == 3) {
+                } elseif ($item['type'][0] == 3) {
                     $courseQuiz = CourseQuiz::find($item['id'][0]);
                     $courseQuiz->sequence = $item['item_sequence'][0];
 
                     $courseQuiz->save();
                 }
             }
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return "Quiz insertion error: " . $e->getMessage();
         }
 
         return redirect()->route('course.objective.edit', $courseId)->with('success', 'Sequence Updated successfully');
     }
 
-    public function course_video_update(Request $request, $id) {
+    public function course_video_update(Request $request, $id)
+    {
 
 
         $courseVideo = CourseVideo::find($id);
@@ -440,10 +455,9 @@ class CourseController extends Controller
 
         $courseVideo->save();
         return redirect()->route('course.edit', $courseId);
-
     }
 
-    public function course_quiz_update (Request $request, $id)
+    public function course_quiz_update(Request $request, $id)
     {
 
         $courseId = $id;
@@ -455,26 +469,32 @@ class CourseController extends Controller
 
         $questionCount = count($request->input('questionIds'));
 
-        for($x = 0; $x < $questionCount; $x++) {
-            $id = $request->input('questionIds.'.$x);
+        for ($x = 0; $x < $questionCount; $x++) {
+            $id = $request->input('questionIds.' . $x);
             $courseQuestion = CourseQuestion::find($id);
-            $courseQuestion->query = $request->input('questions.'.$x);
-            $courseQuestion->correct_option = $request->input('correctOption_'.$id);
+            $courseQuestion->query = $request->input('questions.' . $x);
+            $courseQuestion->correct_option = $request->input('correctOption_' . $id);
 
             $courseQuestion->save();
         }
 
         $optionCount = count($request->input('optionsIds'));
-        for($x = 0; $x < $optionCount; $x++) {
-            $id = $request->input('optionsIds.'.$x);
+        for ($x = 0; $x < $optionCount; $x++) {
+            $id = $request->input('optionsIds.' . $x);
             $courseQuestionOption = CourseQuizOption::find($id);
-            $courseQuestionOption->question_option = $request->input('options.'.$x);
+            $courseQuestionOption->question_option = $request->input('options.' . $x);
 
             $courseQuestionOption->save();
         }
 
 
         return redirect()->route('course.edit', $courseId);
+    }
 
+    public function questionDelete($id)
+    {
+        $question = CourseQuestion::find($id);
+        $question->delete();
+        return redirect()->back();
     }
 }
