@@ -73,7 +73,8 @@
                          @else
                          {{ round($info->price, 2)}} BDT
                          @endif
-                     </span></span>
+                     </span>
+                 </span>
                  <br>
                  <!-- <button class="your-button-class" id="sslczPayBtn"
                   token="{{ csrf_token() }}"
@@ -186,6 +187,8 @@
                  @endif
                  @endif
                  @endif
+
+                 <p class="mt-2">Total enrolled: {{$histories->count()}}</p>
 
                  @if(Request::segment(2) == 't')
                  <p class="text-danger mt-3">***You can not retake this toolkit</p>

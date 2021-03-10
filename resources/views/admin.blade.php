@@ -118,8 +118,8 @@
                                             <th style="width:25%">Course name</th>
                                             <th style="width:15%">Price</th>
                                             <th style="width:25%">Creator</th>
-                                            <th style="width:15%">Status</th>
-                                            <th style="width:10%">Action</th>
+                                            <th style="width:5%">Status</th>
+                                            <th style="width:30%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -132,8 +132,16 @@
                                             <td>{{$course->user->name}}</td>
                                             <td>{{$course->status}}</td>
                                             <td>
-                                                <a href="{{route('course.edit', $course->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
-                                                <a href="{{route('course.admin.view', $course->id)}}" class="btn btn-success text-white btn-sm">View</a>
+                                                <form id="courseDeleteForm_{{$course->id}}" action="{{ route('course.delete', ['id' => $course->id]) }}" method="post">
+                                                    <a href="{{route('course.edit', $course->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                                    <a href="{{route('course.admin.view', $course->id)}}" class="btn btn-success text-white btn-sm">View</a>
+                                                    @if(Auth::user()->identifier != 104)
+                                                        <input class="btn btn-danger btn-sm" onclick="courseDeleteConfirm({{$course->id}})" type="button" value="Remove" />
+                                                        <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                                    @endif
+                                                    @method('delete')
+                                                    @csrf
+                                                </form>
                                             </td>
                                         </tr>
                                         <?php $n++ ?>
@@ -227,6 +235,7 @@
                                             <td>
                                                 <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">
                                                     <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                                    <a href="{{route('resource.admin.view', $resource->id)}}" class="btn btn-success text-white btn-sm">View</a>
                                                     @if(Auth::user()->identifier != 104)
                                                     <input class="btn btn-danger btn-sm" onclick="resourceDeleteConfirm({{$resource->id}})" type="button" value="Remove" />
                                                     <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
@@ -262,6 +271,22 @@
     $("#profile_picture").change(function() {
         $("#pro_pic_upload_form").submit();
     });
+
+    function courseDeleteConfirm(id) {
+        Swal.fire({
+            icon: 'question',
+            title: 'Are you sure to delete?',
+            confirmButtonColor: '#f5b82f',
+            confirmButtonText: "Yes",
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#courseDeleteForm_" + id).find('[type="submit"]').trigger('click');
+            }
+        })
+    }
 
     function toolkitDeleteConfirm(id) {
         Swal.fire({

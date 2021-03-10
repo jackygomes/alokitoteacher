@@ -491,6 +491,31 @@ class CourseController extends Controller
         return redirect()->route('course.edit', $courseId);
     }
 
+    /**
+     * Remove the specified toolkit from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try{
+            $course = Course::find($id);
+
+            $course->deleted = 1;
+            $course->save();
+
+            return back()->with('success', 'Course deleted successfully!');
+
+
+        }catch(\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
+    }
+
     public function questionDelete($id)
     {
         $question = CourseQuestion::find($id);

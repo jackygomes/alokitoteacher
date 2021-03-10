@@ -87,7 +87,7 @@
                 </li>
                 {{--                @endauth--}}
                 <li class="nav-item">
-                    <a class="nav-link btn background-yellow text-black" href="{{ url('all') }}">Toolkits/Course</a>
+                    <a class="nav-link text-black" href="{{ url('all') }}">Toolkits/Course</a>
                 </li>
                 <!--
                 <li class="nav-item">
@@ -240,6 +240,9 @@
         $('.datepicker').datepicker({
             format: 'dd-mm-yyyy'
         });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 
     @stack('js')

@@ -93,22 +93,22 @@
             </div>
           </div>
         </div>
-        {{--<div class="col-md-1">--}}
-          {{----}}
-        {{--</div>--}}
+        <div class="col-md-1">
 
-        {{--<div class="col-md-5">--}}
-          {{--<p class="font-weight-bold mt-5" style="font-size: 1.3rem;"> I Would Like To Search Job:</p>--}}
-          {{--<div class="border border-yellow px-5 py-2 text-center rounded" style="font-size: 16px; ">--}}
-            {{--<div class="col-md-12 col-md-offset-1 ">--}}
-              {{--<p class="font-weight-bold ">View Jobs</p>--}}
-              {{--<div class=""><a href="{{ url('jobs') }}" class="btn btn-warning text-white" style="background-color: #f5b82f">Become an Alokito Teacher</a></div>--}}
-            {{--</div>--}}
-          {{--</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-md-2 ">--}}
-          {{----}}
-        {{--</div>--}}
+        </div>
+
+        <div class="col-md-5 text-center">
+          <p class="font-weight-bold mt-5" style="font-size: 1.3rem;"> I Would Like To Search Job:</p>
+          <div class="border border-yellow px-5 py-2 text-center rounded" style="font-size: 16px; ">
+            <div class="col-md-12 col-md-offset-1 ">
+              <p class="font-weight-bold ">View Jobs</p>
+              <div class=""><a href="{{ url('jobs') }}" class="btn btn-warning text-white" style="background-color: #f5b82f">Become an Alokito Teacher</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 ">
+
+        </div>
       </div>
 
 </header>
@@ -186,7 +186,7 @@
              </div>
             <div class="card-body">
 
-              <p class="card-title text-dark font-weight-bold">{{ str_limit(strip_tags($v_course_info->title), 30) }}</p>
+                  <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($v_course_info->title), 22) }}</p>
               <p class="card-text text-yellow font-weight-bold"><small>Posted By</small><br> {{ str_limit(strip_tags($v_course_info->name), 20) }}</p>
 
                   <div class="text-dark">
@@ -267,7 +267,7 @@
                            </div>
                           <div class="card-body">
 
-                            <p class="card-title text-dark font-weight-bold">{{ str_limit(strip_tags($toolkit->toolkit_title), 25) }}</p>
+                            <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($toolkit->toolkit_title), 22) }}</p>
                             <p class="card-text text-yellow font-weight-bold"><small>Posted By</small><br> {{ str_limit(strip_tags($toolkit->name), 20) }}</p>
 
                               <div class="text-dark">
@@ -337,7 +337,7 @@
                                </div>
                               <div class="card-body">
 
-                                <p class="card-title text-dark font-weight-bold">{{ str_limit(strip_tags($toolkit->toolkit_title), 25) }}</p>
+                                <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($toolkit->toolkit_title), 22) }}</p>
                                 <p class="card-text text-yellow font-weight-bold"><small>Posted By</small><br> {{ str_limit(strip_tags($toolkit->name), 20) }}</p>
 
                                   <div class="text-dark">

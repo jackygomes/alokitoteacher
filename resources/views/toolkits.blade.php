@@ -62,7 +62,7 @@
 						                <div class="card" style="min-height: 22.5vh">
 							                <img src="{{url('images\thumbnail')}}\{{ $toolkit->thumbnail }}" class="card-img-top">
 							                <div class="text-center">
-							                 	
+
                                                  @if(isset($toolkit->image))
                                                     <img src="{{url('images\profile_picture')}}\{{ $toolkit->image }}" alt="Avatar" class="avatar">
                                                 @else
@@ -71,7 +71,7 @@
 							                </div>
 							                <div class="card-body">
 
-							                    <p class="card-title text-dark font-weight-bold">{{ str_limit(strip_tags($toolkit->toolkit_title), 30) }}</p>
+							                    <p class="card-title text-dark font-weight-bold" style="font-size: 19px; height: 60px;" data-toggle="tooltip" data-html="true" title="{{$toolkit->toolkit_title}}">{{ str_limit(strip_tags($toolkit->toolkit_title), 30) }}</p>
 							                    <p class="card-text text-yellow font-weight-bold"><small>Posted By</small><br> {{ str_limit(strip_tags($toolkit->name), 20) }}</p>
 
 							                    <div class="text-dark">

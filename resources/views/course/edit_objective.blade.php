@@ -24,9 +24,11 @@
                         <div class="list-group-item list-group-item-action bg-light ItemButton">
                             <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuiz">Add Quiz</button>
                         </div>
+                        @if(count($quizzes) > 0)
                         <div class="list-group-item list-group-item-action bg-light ItemButton">
                             <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="addQuestion">Add Question</button>
                         </div>
+                        @endif
                         <div class="list-group-item list-group-item-action bg-light ItemButton">
                             <button class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white" id="setSequence">Set Sequence</button>
                         </div>
@@ -240,8 +242,11 @@
                 <div id="setSequenceSection">
                     @if(count($contents) > 0)
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-6">
                             <h3>Set Sequences</h3>
+                            <div class="alert alert-danger">
+                                Remember: sequence start from 1
+                            </div>
                         </div>
                     </div>
                     <form action="{{ route('course.objective.update', $info->id) }}" method="post" style="width: 100%;">

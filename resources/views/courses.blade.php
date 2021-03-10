@@ -6,26 +6,26 @@
 <section class="container">
     <div class="row">
         <div class="col-lg-12">
-           <h2 class="mt-3 text-center font-weight-bold">Courses</h2>	
+           <h2 class="mt-3 text-center font-weight-bold">Courses</h2>
         </div>
     </div>
 </section>
 
 
 <section>
-    
+
 
     <div class="container-fluid">
 
         <div class="row">
-        	
+
             @foreach ($course_info as $v_course_info)
 		    <div class="col-md-3 mt-3">
 		    	<a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
 					<div class="card" style="min-height: 22.5vh">
 						<img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" class="card-img-top">
 						<div class="text-center">
-						 	
+
 							 @if(isset($v_course_info->image))
 								<img src="{{url('images\profile_picture')}}\{{ $v_course_info->image }}" alt="Avatar" class="avatar">
 							@else
@@ -33,8 +33,8 @@
 							@endif
 						 </div>
 						<div class="card-body">
-						  
-							<p class="card-title text-dark font-weight-bold">{{ str_limit(strip_tags($v_course_info->title), 30) }}</p>
+
+							<p class="card-title text-dark font-weight-bold" style="font-size: 19px; height: 60px;" data-toggle="tooltip" data-html="true" title="{{$v_course_info->title}}">{{ str_limit(strip_tags($v_course_info->title), 30) }}</p>
 							<p class="card-text text-yellow font-weight-bold"><small>Posted By</small><br> {{ str_limit(strip_tags($v_course_info->name), 20) }}</p>
 
 					      	<div class="text-dark">
@@ -76,7 +76,7 @@
 
 			<!-- Modal Header -->
 			<div class="modal-header">
-				
+
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
@@ -102,7 +102,7 @@
 
 						<h5 class="mt-3 mb-3">Reviewer-Review1 <br>Date</h5>
 
-						
+
 
 						<div class="">
 							<i class="fa fa-star checked" aria-hidden="true"></i>
@@ -128,25 +128,25 @@
 			</div>
 		</div>
 
-						      <!-- Modal footer 
+						      <!-- Modal footer
 
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 						    </div>
-					
+
 						just link with modal
 								<a href="#" data-toggle="modal" data-target="#myModal"><h5 class="text-white text-center"></h5></a>
 						-->
 
 						</div>
 					</div>
-					
+
 
 
 @endsection
 
 
- 
+
 
 
 

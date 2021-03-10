@@ -54,7 +54,7 @@ class AdminController extends Controller
             return abort(404);
         }
 
-        $courses = Course::paginate(10);
+        $courses = Course::where('deleted', 0)->paginate(10);
         $toolkits = Toolkit::with('subject')->where('deleted', 0)->paginate(10);
         $resources = Resource::where('deleted', 0)->paginate(10);
 
@@ -217,6 +217,21 @@ class AdminController extends Controller
         $histories = TrackHistory::where('course_or_toolkit',0)->where('course_toolkit_id', $id)->orderBy('id', 'DESC')->get();
 
         return view('toolkit.admin_view', compact('user_info', 'revenue', 'histories'));
+    }
+
+    /**
+     * resource taker view for admin
+     * @param $id
+     */
+    public function resource_admin_view($id)
+    {
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        $revenue = Revenue::all()->sum('revenue');
+        $histories = Order::where('product_type', 'resource')->where('status', 'paid')->where('product_id', $id)->get();
+
+        return view('resource.admin_view', compact('user_info', 'revenue', 'histories'));
     }
 
     /**

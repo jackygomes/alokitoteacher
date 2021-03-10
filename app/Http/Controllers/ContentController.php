@@ -129,6 +129,8 @@ class ContentController extends Controller
 
             $info->isBought = $isOrdered ? 1 : 0;
 
+            $histories = TrackHistory::where('course_or_toolkit',1)->where('course_toolkit_id', $info->id)->orderBy('id', 'DESC')->get();
+
 
             if ($info == null) {
                 return abort(404);
@@ -156,8 +158,8 @@ class ContentController extends Controller
             $content_rating = DB::table('course_ratings')
                 ->where('course_id', '=', $info->id)
                 ->avg('rating');
-            
-            return view('overview', compact('info', 'infoFacilitators', 'infoAdvisors', 'infoDesigners', 'thumbnailPart', 'creator', 'content_rating', 'trackHistory'));
+
+            return view('overview', compact('info', 'infoFacilitators', 'infoAdvisors', 'infoDesigners', 'thumbnailPart', 'creator', 'content_rating', 'trackHistory', 'histories'));
         } else {
             if ($request->course_toolkit == 't') {
 
@@ -170,6 +172,8 @@ class ContentController extends Controller
                     ->where('product_id', $info->id)->first();
 
                 $info->isBought = $isOrdered ? 1 : 0;
+                $histories = TrackHistory::where('course_or_toolkit',0)->where('course_toolkit_id', $info->id)->orderBy('id', 'DESC')->get();
+
 
                 if ($info == null) {
                     return abort(404);
@@ -188,7 +192,7 @@ class ContentController extends Controller
                     ->where('toolkit_id', '=', $info->id)
                     ->avg('rating');
 
-                return view('overview', compact('info', 'thumbnailPart', 'creator', 'content_rating', 'trackHistory'));
+                return view('overview', compact('info', 'thumbnailPart', 'creator', 'content_rating', 'trackHistory', 'histories'));
             } else {
                 return abort(404);
             }

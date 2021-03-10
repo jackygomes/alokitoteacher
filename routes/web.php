@@ -87,9 +87,11 @@ Route::post('toolkit/video/update/{id}', 'ToolkitController@toolkit_video_update
 Route::post('toolkit/quiz/update/{id}', 'ToolkitController@toolkit_quiz_update')->name('toolkit.quiz.update');
 
 Route::get('toolkit/admin/view/{id}', 'AdminController@toolkit_admin_view')->name('toolkit.admin.view');
+Route::get('resource/admin/view/{id}', 'AdminController@resource_admin_view')->name('resource.admin.view');
 
 
 Route::delete('toolkit/delete/{id}', 'ToolkitController@destroy')->name('toolkit.delete');
+Route::delete('course/delete/{id}', 'CourseController@destroy')->name('course.delete');
 
 
 

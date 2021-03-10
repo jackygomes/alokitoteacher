@@ -50,7 +50,7 @@
                         </div>
                         <div class="card-body">
 
-                            <p class="card-title text-dark font-weight-bold">{{ str_limit(strip_tags($resource->resource_title), 30) }}</p>
+                            <p class="card-title text-dark font-weight-bold" style="font-size: 19px; height: 60px;" data-toggle="tooltip" data-html="true" title="{{$resource->resource_title}}">{{ str_limit(strip_tags($resource->resource_title), 30) }}</p>
                             <p class="card-text text-yellow font-weight-bold"><small>Posted By</small><br> {{ str_limit(strip_tags($resource->user->name), 20) }}</p>
 
                             <div class="text-dark">

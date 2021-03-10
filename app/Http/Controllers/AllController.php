@@ -44,6 +44,7 @@ class AllController extends Controller
                  ->leftJoin('course_ratings', 'courses.id', '=', 'course_ratings.course_id')
                  ->select('users.id','users.name', 'users.image','courses.thumbnail','users.email','users.phone_number','users.balance','users.username','courses.id','courses.title','courses.description','courses.price','courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
                  ->where('courses.status', '=', 'Approved')
+                 ->where('courses.deleted','=', 0)
                  ->groupBy('courses.id')
                  ->limit(4)
                  ->get();
@@ -66,6 +67,7 @@ class AllController extends Controller
                  ->leftJoin('course_ratings', 'courses.id', '=', 'course_ratings.course_id')
                  ->select('users.id','users.name', 'users.image','courses.thumbnail','users.email','users.phone_number','users.balance','users.username','courses.id','courses.title','courses.description','courses.price','courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
                  ->where('courses.status', '=', 'Approved')
+                 ->where('courses.deleted','=', 0)
                  ->groupBy('courses.id')
                  ->limit(4)
                  ->get();
