@@ -143,7 +143,7 @@
 {{--                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">*Earnings After 15% Cut.</p>--}}
                             </div>
                         </div>
-                        @if($user_info->identifier == 101)
+                        @if($user_info->identifier == 101 || $user_info->identifier == 104)
                         @php $statusOptions = ['Pending', 'Approved']; @endphp
                         <div class="form-group row">
                             <label for="subjects" class="col-sm-2 col-form-label">Status:</label>
@@ -195,7 +195,7 @@
                         <div class="form-group row">
                             <label for="thumbnail_image" class="col-sm-2 col-form-label">Choose New Image:</label>
                             <div class="col-sm-10">
-                                <input type="file" name="toolkitThumbnailImage" class="form-control-file" id="thumbnail_image">
+                                <input type="file" name="toolkitThumbnailImage" class="form-control-file check-image-size" id="thumbnail_image" data-min-width="400" data-min-height="300" data-max-width="400" data-max-height="300" >
                                 <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be  750px X 450px (width = 750px, height = 450px).</p>
                             </div>
                         </div>
@@ -325,6 +325,11 @@
 {{--                            @endfor--}}
                             <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Create</button>
                         </form>
+                        @if($message = Session::get('success'))
+                            <div class="alert alert-success">
+                                {{$message}}
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div id="content">
@@ -339,6 +344,17 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
+
+                $('.alert').delay(5000).fadeOut('slow');
+
+                $("#thumbnail_image").checkImageSize({
+                    minWidth: 400,
+                    minHeight: 300,
+                    maxWidth: 400,
+                    maxHeight: 300,
+                    showError:true,
+                    ignoreError:false
+                });
                 function earnings(){
                     let price = $("#toolkitPrice").val();
                     let cut = ($("#toolkitPrice").val() * 15)/100;

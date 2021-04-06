@@ -96,6 +96,8 @@
 
             $(document).ready(function () {
 
+                $('.alert').delay(5000).fadeOut('slow');
+
                 $('.edit-button').on('click', function (e) {
                     var id = $(this).attr('id');
                     var type = $(this).attr('type');

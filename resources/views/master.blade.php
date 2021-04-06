@@ -233,6 +233,8 @@
     <script src="{{URL::asset('js/app.js')}}"></script>
     <script src="{{URL::asset('js/bootstrap-datepicker.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{{URL::asset('js/jquery.checkImageSize.min.js')}}"></script>
+
     <script src="{{URL::asset('js/custom.js')}}"></script>
 
     <script type="text/javascript">

@@ -58,7 +58,7 @@ class LeaderBoardUpdateCommand extends Command
         // script end
 
         //Rating calculation...
-        $users = User::where('identifier', '=','1')->get();
+        $users = User::where('identifier', '=','1')->where('id', '!=', 13)->get();
         foreach ($users as $user) {
 
             // teacher rating making out of hundred

@@ -520,6 +520,6 @@ class CourseController extends Controller
     {
         $question = CourseQuestion::find($id);
         $question->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Question deleted successfully!');
     }
 }

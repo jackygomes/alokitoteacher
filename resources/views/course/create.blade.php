@@ -135,7 +135,7 @@
                         <div class="form-group row">
                             <label for="thumbnailImage" class="col-sm-2 col-form-label">Thumbnail Image:</label>
                             <div class="col-sm-10">
-                                <input type="file" name="courseThumbnailImage" class="form-control-file" id="thumbnailImage">
+                                <input type="file" name="courseThumbnailImage" class="form-control-file check-image-size" id="thumbnailImage" data-min-width="400" data-min-height="300" data-max-width="400" data-max-height="300" >
                                 <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be 400px X 300px (width = 400px, height = 300px).</p>
                             </div>
                         </div>
@@ -150,6 +150,14 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $("#thumbnailImage").checkImageSize({
+            minWidth: 400,
+            minHeight: 300,
+            maxWidth: 400,
+            maxHeight: 300,
+            showError:true,
+            ignoreError:false
+        });
         $('#facilitator').select2({
             multiple: true,
         });

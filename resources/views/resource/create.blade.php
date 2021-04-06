@@ -109,7 +109,7 @@
                             <div class="form-group row">
                                 <label for="thumbnail_image" class="col-sm-2 col-form-label">Thumbnail Image:</label>
                                 <div class="col-sm-10">
-                                    <input type="file" name="thumbnailImage" class="form-control-file" id="thumbnail_image">
+                                    <input type="file" name="thumbnailImage" class="form-control-file check-image-size" id="thumbnail_image" data-min-width="400" data-min-height="300" data-max-width="400" data-max-height="300" >
                                     <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be  750px X 450px (width = 750px, height = 450px).</p>
                                 </div>
                             </div>
@@ -125,6 +125,14 @@
 
         <script type="text/javascript">
             $(document).ready(function(){
+                $("#thumbnail_image").checkImageSize({
+                    minWidth: 400,
+                    minHeight: 300,
+                    maxWidth: 400,
+                    maxHeight: 300,
+                    showError:true,
+                    ignoreError:false
+                });
                 $("#Price").bind('keyup', function () {
                     let price = $("#Price").val();
                     let cut = ($("#Price").val() * 15)/100;
