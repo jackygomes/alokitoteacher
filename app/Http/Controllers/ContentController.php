@@ -143,7 +143,7 @@ class ContentController extends Controller
 
             $video = CoursePreview::where('course_id', '=', $info->id)->first()->url;
 
-            $thumbnailPart = '<div style="border: 2px solid #f5b82f" class="embed-responsive embed-responsive-16by9 "><iframe src="' . $video . '" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div>';
+            $thumbnailPart = '<div class="video-content embed-responsive embed-responsive-16by9 "><iframe src="' . $video . '" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div>';
 
             $creator = User::find($info->user_id);
 

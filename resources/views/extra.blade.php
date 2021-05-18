@@ -1,22 +1,49 @@
  @extends('master')
 @section('content')
-
+    <style>
+        #sidebar {
+            padding: 10px;
+            background-color: #fff !important;
+        }
+        #sidebar .list-group-flush .ItemButton i {
+            width: 14%;
+        }
+        #sidebar .list-group-flush .ItemButton span {
+            width: 84%;
+            float: right;
+        }
+        #sidebar .list-group-flush .active-course-tab {
+            box-shadow: none;
+            background-color: #532436 !important;
+            color: #fff !important;
+            border-radius: 10px;
+        }
+        #sidebar .list-group-flush .active-course-tab i {
+            color: #F59D1F;
+        }
+        #sidebar .list-group-flush .list-group-item {
+            border:none;
+        }
+        .video-content-text {
+            padding: 30px 0;
+        }
+    </style>
 <div class="container-fluid" style="min-height: 90vh">
     <div class="row">
 
-        <div id="sidebarCol" class="col-md-3 order-2 order-md-1" style="padding-left: 0 !important; min-height: 90vh;overflow-y: auto;">
+        <div id="sidebarCol" class="col-md-3" style="padding-left: 0 !important; min-height: 90vh;overflow-y: auto;">
             <div id="sidebar" class="background-yellow" style="min-height: 100%">
 
                 <div class="list-group list-group-flush">
                     @foreach($contents as $content)
                     @if($content->type == 1)
-                    <button  content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton">{{ $content->title }} <i class=" float-right fas fa-play-circle text-yellow" style="font-size:30px;"></i></button>
+                    <button  content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton"><i class=" float-left fas fa-play-circle" style="font-size:30px;"></i><span>{{ $content->title }}</span></button>
 
                     @elseif($content->type == 2)
-                    <button content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton">{{ $content->title }} <i class="float-right fas fa-book text-yellow " style="font-size:30px;"></i></button>
+                    <button content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton"> <i class="float-left fas fa-book " style="font-size:30px;"></i><span>{{ $content->title }}</span></button>
 
                     @else
-                    <button content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton">{{ $content->title }}<i class="float-right fas fa-question-circle text-yellow " style="font-size:30px;"></i></button>
+                    <button content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton"><i class="float-left fas fa-question-circle " style="font-size:30px;"></i><span>{{ $content->title }}</span></button>
 
                     @endif
 
@@ -27,18 +54,22 @@
             </div>
        </div>
 
-        <div id="contentCol" class="col-md-9 order-1 order-md-2 mt-3">
+        <div id="contentCol" class="col-md-7">
+            <div>
+                <a href="#"><i class="fas fa-long-arrow-alt-left"></i> Back to Courses</a>
+            </div>
             <div id="content">
-
-
-
 
 
             </div>
         </div>
+        <div class="col-md-2">
+
+        </div>
 
     </div>
 </div>
+<hr>
 
 
 <!-- Modal -->
@@ -224,9 +255,9 @@
 
                         if(type == 1){
                             if(result.url.includes("youtube")){
-                                $('#content').html('<div class="embed-responsive  embed-responsive-16by9 "><div id="videoPlayer" data-url="'+result.url+'"></div></div><h3 class="text-center font-weight-bold mt-2">'+result.video_title+'</h3><p class="mt-3 text-center mb-3">'+result.short_description+'</p>');
+                                $('#content').html('<div class="embed-responsive  embed-responsive-16by9 "><div id="videoPlayer" data-url="'+result.url+'"></div></div><div class="video-content-text"><h3 class="text-center font-weight-bold mt-2">'+result.video_title+'</h3><p class="mt-3 text-center mb-3">'+result.short_description+'</p></div>');
                             }else {
-                                $('#content').html('<div class="embed-responsive  embed-responsive-16by9 "><iframe src="'+result.url+'" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div><h3 class="text-center font-weight-bold mt-2">'+result.video_title+'</h3><p class="mt-3 text-center mb-3">'+result.short_description+'</p>');
+                                $('#content').html('<div class="embed-responsive  embed-responsive-16by9 "><iframe src="'+result.url+'" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div><div class="video-content-text"><h3 class="text-center font-weight-bold mt-2">'+result.video_title+'</h3><p class="mt-3 text-center mb-3">'+result.short_description+'</p></div>');
                             }
                             videoControl();
                         }else if(type == 2){

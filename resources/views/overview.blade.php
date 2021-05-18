@@ -11,12 +11,25 @@
          width: 80px;
          height: 80px;
      }
+     .video-content {
+         border-radius: 10px;
+     }
+     .right-panel {
+         border: 2px solid #f59d1f;
+         border-radius: 10px;
+     }
+     .rating-inactive {
+         color: #9d9d9d;
+     }
+     .fa-star {
+         font-size: 26px;
+     }
  </style>
  <div class="container mt-4" style="min-height: 90vh;">
      <div class="row">
 
-         <div class="col-md-12 text-center mb-3">
-             <small class="font-weight-bold "> Overview of</small>
+         <div class="col-md-12 text-left mb-3">
+             <small class="text-black"> Overview of</small>
              <h3 class="font-weight-bold"> {{ $info->title }} {{ $info->toolkit_title }}</h3>
          </div>
 
@@ -25,10 +38,11 @@
              {!! $thumbnailPart !!}
 
 
-             <p style="margin-bottom: 0; background-color: #f3f2f0;" class="mt-5 p-5 card font-weight-bold text-center"> {{ $info->description }}</p>
+             <p class="mt-4 p-3"> {{ $info->description }}</p>
 
          </div>
-         <div class="col-md-4 background-yellow text-center p-5">
+         <div class="col-md-4 text-center">
+         <div class="right-panel p-5">
              @if($message = Session::get('success'))
              <div class="alert alert-success">
                  {{$message}}
@@ -45,29 +59,31 @@
              <h3><a href="{{ url('t') }}/{{ $creator->username }}" class="font-weight-bold text-white">{{ $creator->name }}</a></h3>
 
 
-             <span>
-                 @if(Request::segment(2) == 't')
-                 Toolkit Rating:
-                 @elseif(Request::segment(2) == 'c')
-                 Course Rating:
-                 @endif
-             </span>
+{{--             <span>--}}
+{{--                 @if(Request::segment(2) == 't')--}}
+{{--                 Toolkit Rating:--}}
+{{--                 @elseif(Request::segment(2) == 'c')--}}
+{{--                 Course Rating:--}}
+{{--                 @endif--}}
+{{--             </span>--}}
 
              @for($i = 1; $i <= 5; $i++) @if($content_rating - $i>= 0)
-                 <i class="fa fa-star" aria-hidden="true"></i>
+                 <i class="fa fa-star text-yellow" aria-hidden="true"></i>
                  @else
-                 <i class="far fa-star text-white"></i>
+                 <i class="far fa-star rating-inactive"></i>
                  @endif
                  @endfor
                  <br>
                  <br>
+                 <hr>
+                 <br>
                  <span>
-                     @if(Request::segment(2) == 't')
-                     Toolkit Price:
-                     @elseif(Request::segment(2) == 'c')
-                     Course Price:
-                     @endif
-                     <span class="h3">
+{{--                     @if(Request::segment(2) == 't')--}}
+{{--                     Toolkit Price:--}}
+{{--                     @elseif(Request::segment(2) == 'c')--}}
+{{--                     Course Price:--}}
+{{--                     @endif--}}
+                     <span class="h3 text-success">
                          @if($info->price == 0)
                          Free
                          @else
@@ -90,11 +106,11 @@
                      <input type="hidden" name="slug" value="{{ Request::segment(3) }}">
                      <input type="hidden" name="course_toolkit" value="{{ Request::segment(2) }}">
 
-                     <button type="submit" class="mt-4 btn btn-success btn-lg">Enroll</button>
+                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Enroll Now</button>
 
                  </form>
                  @else
-                 <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
+                 <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn text-white background-yellow  btn-lg">
                      @if(Request::segment(2) == 't')
                      View Toolkit
                      @elseif(Request::segment(2) == 'c')
@@ -112,11 +128,11 @@
                      <input type="hidden" name="slug" value="{{ Request::segment(3) }}">
                      <input type="hidden" name="course_toolkit" value="{{ Request::segment(2) }}">
 
-                     <button type="submit" class="mt-4 btn btn-success btn-lg">Enroll</button>
+                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Enroll Now</button>
 
                  </form>
                  @else
-                 <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
+                 <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn text-white background-yellow btn-lg">
                      @if(Request::segment(2) == 't')
                      View Toolkit
                      @elseif(Request::segment(2) == 'c')
@@ -129,20 +145,20 @@
                  @if($info->price > Auth::user()->balance)
                  <form onclick="return confirm('Insufficiant Balance. Deposit your balance first.')">
                      @csrf
-                     <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Purchase</button>
                  </form>
                  @else
                  <form action="{{route('purchase.product', $info->id)}}" onclick="return confirm('Are you sure to purchase this course? if yes then click ok.')" method="post">
                      @csrf
                      <input type="hidden" name="type" value="course">
-                     <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Purchase</button>
                  </form>
                  @endif
                  @else
                  <form action="{{route('purchase.product', $info->id)}}" method="post">
                      @csrf
                      <input type="hidden" name="type" value="course">
-                     <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Purchase</button>
                  </form>
                  @endif
                  @elseif(Request::segment(2) == 't')
@@ -153,11 +169,11 @@
                      <input type="hidden" name="slug" value="{{ Request::segment(3) }}">
                      <input type="hidden" name="course_toolkit" value="{{ Request::segment(2) }}">
 
-                     <button type="submit" class="mt-4 btn btn-success btn-lg">Enroll</button>
+                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Enroll Now</button>
 
                  </form>
                  @else
-                 <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
+                 <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn text-white background-yellow btn-lg">
                      @if(Request::segment(2) == 't')
                      View Toolkit
                      @endif
@@ -168,20 +184,20 @@
                  @if($info->price > Auth::user()->balance)
                  <form onclick="return confirm('Insufficiant Balance. Deposit your balance first.')">
                      @csrf
-                     <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Purchase</button>
                  </form>
                  @else
                  <form action="{{route('purchase.product', $info->id)}}" onclick="return confirm('Are you sure to purchase this toolkit? if yes then click ok.')" method="post">
                      @csrf
                      <input type="hidden" name="type" value="toolkit">
-                     <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Purchase</button>
                  </form>
                  @endif
                  @else
                  <form action="{{route('purchase.product', $info->id)}}" method="post">
                      @csrf
                      <input type="hidden" name="type" value="toolkit">
-                     <button type="submit" class="mt-4 btn btn-success btn-lg">Purchase</button>
+                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Purchase</button>
                  </form>
                  @endif
                  @endif
@@ -195,7 +211,7 @@
                  @elseif(Request::segment(2) == 'c')
                  <p class="text-danger mt-3">***You can not retake this course</p>
                  @endif
-
+         </div>
          </div>
 
 
