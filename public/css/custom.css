@@ -1,0 +1,40 @@
+.login-button {
+    background-color: transparent;
+    border: 1px solid #E1E1E1;
+}
+.navbar-light .navbar-nav .nav-link.login-button:hover {
+    background-color: #F59D1F;
+    color: #fff !important;
+    border-color: #F59D1F;
+}
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #F59D1F !important;
+}
+a {
+    color: #212529;
+}
+.page-footer {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.page-footer h4 {
+    padding-bottom: 20px;
+}
+.page-footer .social-icon a {
+    font-size: 12px;
+}
+.copyright {
+    padding-top: 30px;
+    padding-bottom:0;
+}
+.copyright ul {
+    list-style: none;
+    text-align: right;
+}
+.copyright ul li {
+    display: inline-block;
+    margin-left: 10px;
+}
+.copyright ul li a:hover {
+    color: #F59D1F !important;
+}
