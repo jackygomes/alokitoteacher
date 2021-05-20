@@ -1,30 +1,44 @@
  @extends('master')
  @section('content')
- <style>
-     .card-body {
-         min-height: 132px;
-         height: 132px;
-         overflow: hidden;
-     }
+     <style>
+         .card-body {
+             min-height: 132px;
+             height: 132px;
+             overflow: hidden;
+         }
 
-     .activist-details-image {
-         width: 80px;
-         height: 80px;
-     }
-     .video-content {
-         border-radius: 10px;
-     }
-     .right-panel {
-         border: 2px solid #f59d1f;
-         border-radius: 10px;
-     }
-     .rating-inactive {
-         color: #9d9d9d;
-     }
-     .fa-star {
-         font-size: 26px;
-     }
- </style>
+         .activist-details-image {
+             width: 80px;
+             height: 80px;
+         }
+         .video-content {
+             border-radius: 10px;
+         }
+         .right-panel {
+             border: 2px solid #f59d1f;
+             border-radius: 10px;
+         }
+         .rating-inactive {
+             color: #9d9d9d;
+         }
+         .fa-star {
+             font-size: 26px;
+         }
+         .nav-tabs .nav-link.active {
+             color: #000;
+             background-color: #fff;
+             border: none;
+             border-bottom: 2px solid #000;
+         }
+         .nav-tabs .nav-link {
+             border:none;
+         }
+         .nav-tabs .nav-link:hover {
+             border:none;
+             color: #000;
+             border-bottom: 2px solid #000;
+         }
+     </style>
  <div class="container mt-4" style="min-height: 90vh;">
      <div class="row">
 
@@ -37,10 +51,179 @@
 
              {!! $thumbnailPart !!}
 
-
-             <p class="mt-4 p-3"> {{ $info->description }}</p>
-
+             <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
+                 <li class="nav-item">
+                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#about" role="tab" aria-controls="home" aria-selected="true">About</a>
+                 </li>
+                 @if(Request::segment(2) == 'c')
+                 <li class="nav-item">
+                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#advisor" role="tab" aria-controls="profile" aria-selected="false">Course Advisor</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#designer" role="tab" aria-controls="contact" aria-selected="false">Course Designer</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#facilitators" role="tab" aria-controls="contact" aria-selected="false">Course Facilitators</a>
+                 </li>
+                 @endif
+             </ul>
+             <div class="tab-content pt-4" id="myTabContent">
+                 <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab">
+                     <p>{{$info->description}}</p>
+                 </div>
+                 <div class="tab-pane fade" id="advisor" role="tabpanel" aria-labelledby="profile-tab">
+                     @if(isset($infoAdvisors) && count($infoAdvisors))
+                     @foreach($infoAdvisors as $advisor)
+                         <div class="col-lg-4 pb-3">
+                             <div class="card text-center">
+                                 <div class="card-header">
+                                     <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$advisor->image}}">
+                                 </div>
+                                 <div class="card-body">
+                                     <h5 class="card-title">{{$advisor->name}}</h5>
+                                     <p class="card-text">
+                                         @if(strlen($advisor->description) < 40) {!! nl2br(e($advisor->description)) !!}
+                                         @else
+                                             {!! nl2br(e(substr($advisor->description,0,40))).'...' !!}
+                                             <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$advisor->id}}">
+                                                 Read More
+                                             </a>
+                                             <!-- Modal -->
+                                             <div class="modal fade" id="advisorModal_{{$advisor->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                 <div class="modal-dialog modal-dialog-centered" role="document">
+                                                     <div class="modal-content">
+                                                         <div class="modal-header">
+                                                             <h5 class="modal-title" id="exampleModalLongTitle">Advisor</h5>
+                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                 <span aria-hidden="true">&times;</span>
+                                                             </button>
+                                                         </div>
+                                                         <div class="modal-body">
+                                                                 <p class="modal-title pb-4"><img class="img-fluid rounded-circle activist-details-image mr-4" src="{{ url('images/course_activist_image') }}/{{ $advisor->image }}"> <span>{{$advisor->name}}</span></p>
+                                                                 {!! nl2br(e($advisor->description)) !!}
+                                                             </div>
+                                                             <div class="modal-footer">
+                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                             </div>
+                                         @endif
+                                     </p>
+                                 </div>
+                                 <div class="card-footer text-muted">
+                                     {{$advisor->type}}
+                                 </div>
+                             </div>
+                         </div>
+                    @endforeach
+                    @else
+                        <p>No Advisor</p>
+                    @endif
+                 </div>
+                 <div class="tab-pane fade" id="designer" role="tabpanel" aria-labelledby="contact-tab">
+                     @if(isset($infoDesigners) && count($infoDesigners))
+                     @foreach($infoDesigners as $Designer)
+                         <div class="col-lg-4 pb-3">
+                             <div class="card text-center">
+                                 <div class="card-header">
+                                     <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$Designer->image}}">
+                                 </div>
+                                 <div class="card-body">
+                                     <h5 class="card-title">{{$Designer->name}}</h5>
+                                     <p class="card-text">
+                                         @if(strlen($Designer->description) < 40) {!! nl2br(e($Designer->description)) !!}
+                                         @else
+                                             {!! nl2br(e(substr($Designer->description,0,40))).'...' !!}
+                                             <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$Designer->id}}">
+                                                 Read More
+                                             </a>
+                                             <!-- Modal -->
+                                             <div class="modal fade" id="advisorModal_{{$Designer->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                 <div class="modal-dialog modal-dialog-centered" role="document">
+                                                     <div class="modal-content">
+                                                         <div class="modal-header">
+                                                             <h5 class="modal-title" id="exampleModalLongTitle">Advisor</h5>
+                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                 <span aria-hidden="true">&times;</span>
+                                                             </button>
+                                                         </div>
+                                                         <div class="modal-body">
+                                                             <p class="modal-title pb-4"><img class="img-fluid rounded-circle activist-details-image mr-4" src="{{ url('images/course_activist_image') }}/{{ $Designer->image }}"> <span>{{$Designer->name}}</span></p>
+                                                             {!! nl2br(e($Designer->description)) !!}
+                                                         </div>
+                                                         <div class="modal-footer">
+                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         @endif
+                                     </p>
+                                 </div>
+                                 <div class="card-footer text-muted">
+                                     {{$Designer->type}}
+                                 </div>
+                             </div>
+                         </div>
+                     @endforeach
+                     @else
+                        <p>No Designer</p>
+                     @endif
+                 </div>
+                 <div class="tab-pane fade" id="facilitators" role="tabpanel" aria-labelledby="contact-tab">
+                     @if(isset($infoFacilitators) && count($infoFacilitators))
+                     @foreach($infoFacilitators as $Facilitators)
+                         <div class="col-lg-4 pb-3">
+                             <div class="card text-center">
+                                 <div class="card-header">
+                                     <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$Facilitators->image}}">
+                                 </div>
+                                 <div class="card-body">
+                                     <h5 class="card-title">{{$Facilitators->name}}</h5>
+                                     <p class="card-text">
+                                         @if(strlen($Facilitators->description) < 40) {!! nl2br(e($Facilitators->description)) !!}
+                                         @else
+                                             {!! nl2br(e(substr($Facilitators->description,0,40))).'...' !!}
+                                             <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$Facilitators->id}}">
+                                                 Read More
+                                             </a>
+                                             <!-- Modal -->
+                                             <div class="modal fade" id="advisorModal_{{$Facilitators->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                 <div class="modal-dialog modal-dialog-centered" role="document">
+                                                     <div class="modal-content">
+                                                         <div class="modal-header">
+                                                             <h5 class="modal-title" id="exampleModalLongTitle">Advisor</h5>
+                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                 <span aria-hidden="true">&times;</span>
+                                                             </button>
+                                                         </div>
+                                                         <div class="modal-body">
+                                                             <p class="modal-title pb-4"><img class="img-fluid rounded-circle activist-details-image mr-4" src="{{ url('images/course_activist_image') }}/{{ $Facilitators->image }}"> <span>{{$Facilitators->name}}</span></p>
+                                                             {!! nl2br(e($Facilitators->description)) !!}
+                                                         </div>
+                                                         <div class="modal-footer">
+                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                            </div>
+                                        @endif
+                                    </p>
+                                </div>
+                                <div class="card-footer text-muted">
+                                 {{$Facilitators->type}}
+                                </div>
+                            </div>
+                         </div>
+                     @endforeach
+                    @else
+                        <p>No Facilitator</p>
+                    @endif
+                 </div>
+             </div>
          </div>
+
          <div class="col-md-4 text-center">
          <div class="right-panel p-5">
              @if($message = Session::get('success'))
@@ -218,166 +401,8 @@
 
 
      </div>
-     @if(isset($infoFacilitators)|| isset($infoAdvisors) || isset($infoDesigners))
-     @if(isset($infoFacilitators) && count($infoFacilitators))
-     <div class="row pt-5">
-         <div class="col-lg-12">
-             <h3 class="text-center pb-3 pt-3">Facilitator</h3>
-         </div>
-         @foreach($infoFacilitators as $facilitator)
-         <div class="col-lg-4 pb-3">
-             <div class="card text-center">
-                 <div class="card-header">
-                     <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$facilitator->image}}">
-                 </div>
-                 <div class="card-body">
-                     <h5 class="card-title">{{$facilitator->name}}</h5>
-                     <p class="card-text">
-                         @if(strlen($facilitator->description) < 56) {!! nl2br(e($facilitator->description)) !!}
-                             @else
-                             {!! nl2br(e(substr($facilitator->description,0,56))).'...' !!}
-                             <a href="#" class="" data-toggle="modal" data-target="#facilitatorModal_{{$facilitator->id}}">
-                                 Read More
-                             </a>
-                             <!-- Modal -->
-                             <div class="modal fade" id="facilitatorModal_{{$facilitator->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                 <div class="modal-dialog modal-dialog-centered" role="document">
-                                     <div class="modal-content">
-                                         <div class="modal-header">
-                                             <h5 class="modal-title" id="exampleModalLongTitle">Facilitator</h5>
-                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                 <span aria-hidden="true">&times;</span>
-                                             </button>
-                                         </div>
-                                         <div class="modal-body">
-                                             <p class="modal-title pb-4"><img class="img-fluid rounded-circle activist-details-image mr-4" src="{{ url('images/course_activist_image') }}/{{ $facilitator->image }}"> <span>{{$facilitator->name}}</span></p>
-                                             {!! nl2br(e($facilitator->description)) !!}
-                                         </div>
-                                         <div class="modal-footer">
-                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                             @endif
-                     </p>
-                 </div>
-                 <div class="card-footer text-muted">
-                     {{$facilitator->type}}
-                 </div>
-             </div>
-         </div>
-         @endforeach
-     </div>
-     @endif
-     @if(isset($infoAdvisors)  && count($infoAdvisors))
-     <div class="row">
-         <div class="col-lg-12">
-             <h3 class="text-center pb-3 pt-3">Advisor</h3>
-         </div>
-         @foreach($infoAdvisors as $advisor)
-         <div class="col-lg-4 pb-3">
-             <div class="card text-center">
-                 <div class="card-header">
-                     <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$advisor->image}}">
-                 </div>
-                 <div class="card-body">
-                     <h5 class="card-title">{{$advisor->name}}</h5>
-                     <p class="card-text">
-                         @if(strlen($advisor->description) < 40) {!! nl2br(e($advisor->description)) !!}
-                             @else
-                             {!! nl2br(e(substr($advisor->description,0,40))).'...' !!}
-                             <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$advisor->id}}">
-                                 Read More
-                             </a>
-                             <!-- Modal -->
-                             <div class="modal fade" id="advisorModal_{{$advisor->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                 <div class="modal-dialog modal-dialog-centered" role="document">
-                                     <div class="modal-content">
-                                         <div class="modal-header">
-                                             <h5 class="modal-title" id="exampleModalLongTitle">Advisor</h5>
-                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                 <span aria-hidden="true">&times;</span>
-                                             </button>
-                                         </div>
-                                         <div class="modal-body">
-                                             <p class="modal-title pb-4"><img class="img-fluid rounded-circle activist-details-image mr-4" src="{{ url('images/course_activist_image') }}/{{ $advisor->image }}"> <span>{{$advisor->name}}</span></p>
-                                             {!! nl2br(e($advisor->description)) !!}
-                                         </div>
-                                         <div class="modal-footer">
-                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                             @endif
-                     </p>
-                 </div>
-                 <div class="card-footer text-muted">
-                     {{$advisor->type}}
-                 </div>
-             </div>
-         </div>
-         @endforeach
-     </div>
-     @endif
-     @if(isset($infoDesigners)  && count($infoDesigners))
-     <div class="row">
-         <div class="col-lg-12">
-             <h3 class="text-center pb-3 pt-3">Designer</h3>
-         </div>
-         @foreach($infoDesigners as $designer)
-         <div class="col-lg-4 pb-3">
-             <div class="card text-center">
-                 <div class="card-header">
-                     <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$designer->image}}">
-                 </div>
-                 <div class="card-body">
-                     <h5 class="card-title">{{$designer->name}}</h5>
-                     <p class="card-text">
-                         @if(strlen($designer->description) < 56) {!! nl2br(e($designer->description)) !!}
-                             @else
-                             {!! nl2br(e(substr($designer->description,0,56))).'...' !!}
-                             <a href="#" class="" data-toggle="modal" data-target="#designerModal_{{$designer->id}}">
-                                 Read More
-                             </a>
-                             <!-- Modal -->
-                             <div class="modal fade" id="designerModal_{{$designer->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                 <div class="modal-dialog modal-dialog-centered" role="document">
-                                     <div class="modal-content">
-                                         <div class="modal-header">
-                                             <h5 class="modal-title" id="exampleModalLongTitle">Facilitator</h5>
-                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                 <span aria-hidden="true">&times;</span>
-                                             </button>
-                                         </div>
-                                         <div class="modal-body">
-                                             <p class="modal-title pb-4"><img class="img-fluid rounded-circle activist-details-image mr-4" src="{{ url('images/course_activist_image') }}/{{ $designer->image }}"> <span>{{$designer->name}}</span></p>
-                                             {!! nl2br(e($designer->description)) !!}
-                                         </div>
-                                         <div class="modal-footer">
-                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                             @endif
-                     </p>
-                 </div>
-                 <div class="card-footer text-muted">
-                     {{$designer->type}}
-                 </div>
-             </div>
-         </div>
-         @endforeach
-     </div>
-     @endif
  </div>
- @endif
- </div>
-
-
-
+ <hr>
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\LeaderBoard;
 use App\Order;
+use App\Resource;
 use App\TeacherStudentCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -56,13 +57,24 @@ class HomeController extends Controller
             $toolkit->isBought = $isOrdered ? 1 : 0;
         }
 
+        $resources = Resource::with('user')->limit(10)->get();
+
+        foreach($resources as $resource){
+            $isOrdered = Order::where('status', 'paid')
+                ->where('product_type', 'resource')
+                ->where('user_id', $userId)
+                ->where('product_id', $resource->id)->count();
+
+            $resource->isBought = $isOrdered ? 1 : 0;
+        }
+
 		$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
 		$stat = TeacherStudentCount::find(1);
 
         $leaderBoard = LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
 
 //        return $leaderBoard;
-	    return view ('home',compact('course_info','toolkit_info', 'users','stat','leaderBoard'));
+	    return view ('home',compact('course_info','toolkit_info', 'users','stat','leaderBoard', 'resources'));
 	}
 
 	function email_subscribe(Request $request){

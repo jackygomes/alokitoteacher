@@ -5,7 +5,7 @@
             padding: 10px;
             background-color: #fff !important;
         }
-        #sidebar .list-group-flush .ItemButton i {
+        #sidebar .list-group-flush .ItemButton img {
             width: 14%;
         }
         #sidebar .list-group-flush .ItemButton span {
@@ -18,8 +18,14 @@
             color: #fff !important;
             border-radius: 10px;
         }
-        #sidebar .list-group-flush .active-course-tab i {
-            color: #F59D1F;
+        #sidebar .list-group-flush .active-video-icon{
+            display: none;
+        }
+        #sidebar .list-group-flush .active-course-tab .active-video-icon{
+            display: initial;
+        }
+        #sidebar .list-group-flush .active-course-tab .inactive-video-icon{
+            display: none;
         }
         #sidebar .list-group-flush .list-group-item {
             border:none;
@@ -37,13 +43,13 @@
                 <div class="list-group list-group-flush">
                     @foreach($contents as $content)
                     @if($content->type == 1)
-                    <button  content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton"><i class=" float-left fas fa-play-circle" style="font-size:30px;"></i><span>{{ $content->title }}</span></button>
+                    <button  content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton"><img class="active-video-icon" src="{{asset('images/new_design/video-play-active.png')}}"><img class="inactive-video-icon" src="{{asset('images/new_design/video-play-inactive.png')}}"><span>{{ $content->title }}</span></button>
 
                     @elseif($content->type == 2)
                     <button content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton"> <i class="float-left fas fa-book " style="font-size:30px;"></i><span>{{ $content->title }}</span></button>
 
                     @else
-                    <button content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton"><i class="float-left fas fa-question-circle " style="font-size:30px;"></i><span>{{ $content->title }}</span></button>
+                    <button content="{{ $content->type }}" sequence="{{ $content->sequence }}" value="{{ $content->id }}" class="list-group-item list-group-item-action bg-light disable-click ItemButton"><img src="{{asset('images/new_design/quiz.png')}}"><span>{{ $content->title }}</span></button>
 
                     @endif
 
@@ -56,7 +62,7 @@
 
         <div id="contentCol" class="col-md-7">
             <div>
-                <a href="#"><i class="fas fa-long-arrow-alt-left"></i> Back to Courses</a>
+                <a href="#" class="p-2 btn"><i class="fas fa-long-arrow-alt-left"></i> Back to Courses</a>
             </div>
             <div id="content">
 

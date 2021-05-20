@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Exo&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
     <link rel="stylesheet" href="{{URL::asset('css/bootstrap-datepicker.min.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/style1.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/custom.css')}}">
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -225,10 +226,12 @@
 
 
 
+    <script src="{{URL::asset('js/jquery.min.js')}}"></script>
     <script src="{{URL::asset('js/app.js')}}"></script>
     <script src="{{URL::asset('js/bootstrap-datepicker.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{URL::asset('js/jquery.checkImageSize.min.js')}}"></script>
+    <script src="{{URL::asset('js/owl.carousel.min.js')}}"></script>
 
     <script src="{{URL::asset('js/custom.js')}}"></script>
 

@@ -154,11 +154,14 @@ class AdminController extends Controller
 
         $deadLineMin = Carbon::now()->format('Y-m-d');
         $deadLineMax = Carbon::now()->addMonth(1)->format('Y-m-d');
-        $featuredJobCount = Job::where('featured', 1)->whereDate('deadline', '>', \Carbon\Carbon::today()->toDateString())->count();
+        $featuredJobCount = Job::where('featured', 1)->whereDate('deadline', '>',
+            \Carbon\Carbon::today()->toDateString())->count();
         $schools = User::where('identifier', 2)->get();
         // return $schools;
 
-        return view('admin.job-list', compact('jobs', 'user_info', 'revenue', 'jobPrice', 'deadLineMin', 'deadLineMax', 'featuredJobCount', 'schools'));
+        return view('admin.job-list',
+            compact('jobs', 'user_info', 'revenue', 'jobPrice', 'deadLineMin', 'deadLineMax', 'featuredJobCount',
+                'schools'));
     }
 
     public function totalCountUpdate(Request $request, $id)
@@ -199,7 +202,8 @@ class AdminController extends Controller
         $user_info = User::where('id', '=', $userId)->first();
 
         $revenue = Revenue::all()->sum('revenue');
-        $histories = TrackHistory::where('course_or_toolkit',1)->where('course_toolkit_id', $id)->orderBy('id', 'DESC')->get();
+        $histories = TrackHistory::where('course_or_toolkit', 1)->where('course_toolkit_id', $id)->orderBy('id',
+            'DESC')->get();
 
         return view('course.admin_view', compact('user_info', 'revenue', 'histories'));
     }
@@ -214,7 +218,8 @@ class AdminController extends Controller
         $user_info = User::where('id', '=', $userId)->first();
 
         $revenue = Revenue::all()->sum('revenue');
-        $histories = TrackHistory::where('course_or_toolkit',0)->where('course_toolkit_id', $id)->orderBy('id', 'DESC')->get();
+        $histories = TrackHistory::where('course_or_toolkit', 0)->where('course_toolkit_id', $id)->orderBy('id',
+            'DESC')->get();
 
         return view('toolkit.admin_view', compact('user_info', 'revenue', 'histories'));
     }
@@ -250,7 +255,7 @@ class AdminController extends Controller
 
         $revenue = Revenue::all()->sum('revenue');
 
-        $transactions = Transaction::where('status','!=','Pending')->get();
+        $transactions = Transaction::where('status', '!=', 'Pending')->get();
 
         return view('admin.transactions', compact('user_info', 'revenue', 'transactions'));
     }
@@ -278,14 +283,14 @@ class AdminController extends Controller
                 $item->product_type = $order->product_type;
             }
         }
-            //    return $revenueList;
+        //    return $revenueList;
 
         return view('admin.revenue_list', compact('user_info', 'revenue', 'revenueList'));
     }
 
     /** toolkit content or course content return
      * ajax request method
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse|string
      * @throws \Throwable
      */
@@ -321,7 +326,8 @@ class AdminController extends Controller
                     $count = $questions->count();
                     //                    return $count;
                     return response()->json([
-                        'html' => view('toolkit.toolkit_quiz_edit', compact('quiz_details', 'questions', 'count'))->render(),
+                        'html' => view('toolkit.toolkit_quiz_edit',
+                            compact('quiz_details', 'questions', 'count'))->render(),
                     ]);
                 }
             } else {
@@ -332,7 +338,7 @@ class AdminController extends Controller
 
     /** returns all questions for toolkit or course
      * ajax request method
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse|string
      * @throws \Throwable
      */
@@ -394,25 +400,25 @@ class AdminController extends Controller
     {
         $userId = Auth::id();
         $this->validate($request, [
-            'name'    => 'required',
-            'type'    => 'required',
-            'image'   => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'name' => 'required',
+            'type' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $image = $request->file('image');
-        $image_name = $request->type . '_' . md5(rand()) . '.' . $image->getClientOriginalExtension();
+        $image_name = $request->type.'_'.md5(rand()).'.'.$image->getClientOriginalExtension();
 
         $image->move(public_path("images/course_activist_image"), $image_name);
 
         $activist = [
-            'name'          => $request->name,
-            'description'   => $request->description,
-            'type'          => $request->type,
-            'image'         => $image_name,
+            'name' => $request->name,
+            'description' => $request->description,
+            'type' => $request->type,
+            'image' => $image_name,
         ];
         CourseActivist::create($activist);
 
-        return redirect()->back()->with('success', $request->type . ' Created Successfully ');
+        return redirect()->back()->with('success', $request->type.' Created Successfully ');
     }
 
     public function courseActivistDestroy($id)
@@ -427,11 +433,11 @@ class AdminController extends Controller
         $activist = CourseActivist::find($id);
 
         //user image delete
-        $image = 'images/course_activist_image/' . $activist->image;
+        $image = 'images/course_activist_image/'.$activist->image;
         File::delete($image);
 
         $activist->delete();
 
-        return redirect()->back()->with('success', $activist->type . ' Deleted Successfully ');
+        return redirect()->back()->with('success', $activist->type.' Deleted Successfully ');
     }
 }

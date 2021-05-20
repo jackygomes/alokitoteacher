@@ -37,47 +37,6 @@
         <div class="col-sm-4">
            <img src="{{asset('images\logo\alokito_logo.png')}}" class="img-responsive">
         </div>
-
-
-       <!-- <form class="form-inline pt-2">
-          <div class="col-md-3">
-
-              <div class="form-group">
-                  <h6 class="font-weight-bold">Course</h6>
-                  <input type="text" class="form-control is-valid border-yellow" placeholder="Course Name" >
-              </div>
-          </div>
-
-          <div class="col-md-3">
-              <h6 class="font-weight-bold">Subject</h6>
-              <div class="form-group">
-                  <input type="text" class="form-control is-valid border-yellow" placeholder="Pick Subject" >
-              </div>
-          </div>
-
-          <div class="col-md-3 ">
-
-                <div class="btn-group mt-4">
-                  <button type="button" class="btn btn-dark dropdown-toggle text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     Choose By Category
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Course</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Toolkit</a>
-                  </div>
-                </div>
-          </div>
-
-          <div class="col-md-3 col-sm-12 mt-4">
-              <button type="submit" class="btn background-yellow text-white">Search</button>
-          </div>
-
-        </form> -->
-
-
-
-
       </div>
 
 
@@ -160,356 +119,305 @@
   </div>
   <!--End of Fun Factor Area-->
 
-
-
-
-
-<!--start of explore Area-->
-  <div class="explore-teaching-courses pb-3" style="min-height: 100vh; background: #f9f9f9 url({{ url('images/logo/A25A435311.jpg')}}) !important;">
+{{--new design--}}
+{{--course--}}
+<div class="explore-teaching">
     <div class="container">
-      <div class="row">
-
-
-          <div class="col-sm-12">
-            <h2 class="text-center text-white font-weight-bold">Explore Teaching Courses</h2>
-
-              <h4 class="text-center bg-white py-2 mt-5 col-lg-8 offset-lg-2" style="border-radius: 10px;"><a class="text-yellow" href="{{ url('login') }}">আপনার প্রথম ফ্রি কোর্সটি দেখতে রেজিস্টার করুন</a></h4>
-          </div>
-
-      @foreach ($course_info as $v_course_info)
-        <div class="col-md-4 mt-5">
-        <a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
-          <div class="card">
-            <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="height: 262px;" class="card-img-top">
-            <div class="text-center">
-              <img src="{{url('images\profile_picture')}}\{{ $v_course_info->image }}" alt="Avatar" class="avatar">
-             </div>
-            <div class="card-body">
-
-                  <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($v_course_info->title), 22) }}</p>
-              <p class="card-text text-yellow font-weight-bold"><small>Posted By</small><br> {{ str_limit(strip_tags($v_course_info->name), 20) }}</p>
-
-                  <div class="text-dark">
-                @for($i = 1; $i <= 5; $i++)
-                      @if($v_course_info->rating - $i >= 0)
-                      <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                      @else
-                      <i class="far fa-star"></i>
-                      @endif
-                    @endfor
-              </div>
-
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2 class="text-center font-weight-bold">Explore Teaching Courses</h2>
+                <button class="btn text-center background-yellow mt-3"><a class="text-white font-weight-bold px-3" href="{{ url('login') }}">Explore More</a></button>
             </div>
-            <div class="card-footer" style="background:
-            @if($v_course_info->isBought == 1)
-                #98b59d;
-            @else
-                #51b964;
-            @endif
-            ">
-                <h5 class="text-white text-center">
-                    @if($v_course_info->isBought == 1)
-                        Owned
-                    @else
-                        @if($v_course_info->price == 0)
-                            Free
-                        @else
-                            {{ round($v_course_info->price, 2)}} BDT
-                        @endif
-                    @endif
-                </h5>
-            </div>
-          </div>
-        </a>
         </div>
-      @endforeach
-
-      </div>
-    </div>
-  </div>
-<!--end of explore Area-->
-
-
-
-<!--Toolkits Area-->
-<div class="container-fluid bg-light " style="min-height: 100vh">
-  <div class="row">
-    <div class="col-md-12">
-
-      <div class="teachers-toolkits">
-
-          <h2 class=" font-weight-bold text-center mt-5 mb-5 text-orange">Educators Toolkits</h2>
-
-          <h4 class="text-center background-yellow py-2 my-5 col-lg-8 offset-lg-2" style="border-radius: 10px;"><a class="text-white">আপনার শিক্ষকতা জীবনকে আরো সহজ ও কার্যকরী করুন এই সৃজনশীল পদ্ধতি ও উপাদান প্রয়োগ করে</a></h4>
-
-            <section class="carousel slide mt-5 d-none d-md-block" data-ride="carousel" id="postsCarousel">
-              <div class="container-fluid">
-                  <div class="row float-right mr-5 mb-3">
-                    <div class="col-md-12">
-                      <a class="carousel-control-prev" href="#postsCarousel" data-slide="prev"><i class="mb-5 far fa-caret-square-left fa-3x mr-4 custom-hover2 text-yellow"></i></a>
-                      <a class="carousel-control-next" href="#postsCarousel"  data-slide="next"><i class="mb-5 far fa-caret-square-right fa-3x ml-4 custom-hover2 text-yellow"></i></a>
-                    </div>
-                  </div>
-              </div>
-
-              <div class="container-fluid carousel-inner">
-                @foreach($toolkit_info as $key=> $toolkit)
-                  @if(($key+1) % 4 == 1)
-                  <div class="row carousel-item {{ $key == 0? 'active' : '' }} ">
-                    <div class="card-deck text-center">
-                  @endif
-                      <div class="col-md-3">
-                       <a href="{{ url('view') }}/t/{{$toolkit->slug}}">
+        <div class="row">
+            <div id="exploreCourse" class="owl-carousel card-slider">
+            @foreach ($course_info as $v_course_info)
+                <div class="item mt-5">
+                    <a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
                         <div class="card">
-                          <img src="{{url('images\thumbnail')}}\{{ $toolkit->thumbnail }}" class="card-img-top">
-                          <div class="text-center">
-                            <img src="{{url('images\profile_picture')}}\{{ $toolkit->image }}" alt="Avatar" class="avatar">
-                           </div>
-                          <div class="card-body">
+                            <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="height: 262px;" class="card-img-top">
+                            <div class="card-body">
 
-                            <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($toolkit->toolkit_title), 22) }}</p>
-                            <p class="card-text text-yellow font-weight-bold"><small>Posted By</small><br> {{ str_limit(strip_tags($toolkit->name), 20) }}</p>
+                                <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($v_course_info->title), 22) }}</p>
+                                <hr>
+                                <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($v_course_info->name), 20) }}</strong></p>
 
-                              <div class="text-dark">
-                              @for($i = 1; $i <= 5; $i++)
-                                @if($toolkit->rating - $i >= 0)
-                                  <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                                @else
-                                  <i class="far fa-star"></i>
-                                @endif
-                              @endfor
-                              </div>
-                          </div>
-                            <div class="card-footer" style="background:
-                            @if($toolkit->isBought == 1)
-                                #98b59d;
-                            @else
-                                #51b964;
-                            @endif
-                                ">
-                                <h5 class="text-white text-center">
-                                    @if($toolkit->isBought == 1)
-                                        Owned
-                                    @else
-                                        @if($toolkit->price == 0)
-                                            Free
+                                <div class="text-dark">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($v_course_info->rating - $i >= 0)
+                                            <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
                                         @else
-                                            {{ round($toolkit->price, 2)}} BDT
+                                            <i class="far fa-star text-light-dark"></i>
                                         @endif
-                                    @endif
-                                </h5>
-                            </div>
-
-
-                        </div>
-                      </a>
-                    </div>
-                  @if(($key+1) % 4 == 0)
-                    </div>
-                  </div>
-                  @endif
-                @endforeach
-              </div>
-            </section>
-
-            <section class="carousel slide mt-5 d-sm-none" data-ride="carousel" id="postsCarousel_mobile">
-              <div class="container-fluid">
-                  <div class="row float-right mr-5 mb-3">
-                    <div class="col-md-12">
-                      <a class="carousel-control-prev" href="#postsCarousel_mobile" data-slide="prev"><i class="mb-5 far fa-caret-square-left fa-3x mr-4 custom-hover2 text-yellow"></i></a>
-                      <a class="carousel-control-next" href="#postsCarousel_mobile"  data-slide="next"><i class="mb-5 far fa-caret-square-right fa-3x ml-4 custom-hover2 text-yellow"></i></a>
-                    </div>
-                  </div>
-              </div>
-
-
-
-                <div class="container-fluid carousel-inner">
-                    @foreach($toolkit_info as $key=> $toolkit)
-                      <div class="carousel-item {{ $key == 0? 'active' : '' }} ">
-                        <div class="card-deck text-center">
-
-                           <a href="{{ url('view') }}/t/{{$toolkit->slug}}">
-                            <div class="card">
-                              <img src="{{url('images\thumbnail')}}\{{ $toolkit->thumbnail }}" class="card-img-top">
-                              <div class="text-center">
-                                <img src="{{url('images\profile_picture')}}\{{ $toolkit->image }}" alt="Avatar" class="avatar">
-                               </div>
-                              <div class="card-body">
-
-                                <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($toolkit->toolkit_title), 22) }}</p>
-                                <p class="card-text text-yellow font-weight-bold"><small>Posted By</small><br> {{ str_limit(strip_tags($toolkit->name), 20) }}</p>
-
-                                  <div class="text-dark">
-                                  @for($i = 1; $i <= 5; $i++)
-                                    @if($toolkit->rating - $i >= 0)
-                                      <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                                    @else
-                                      <i class="far fa-star"></i>
-                                    @endif
-                                  @endfor
-                                  </div>
-                              </div>
-                              <div class="card-footer" style="background: #51b964;">
-                                <h5 class="text-white text-center">Free</h5>
-                              </div>
-
+                                    @endfor
+                                    <span class="float-right text-success font-weight-bold">
+                                        @if($v_course_info->isBought == 1)
+                                            Owned
+                                        @else
+                                            @if($v_course_info->price == 0)
+                                                Free
+                                            @else
+                                                {{ round($v_course_info->price, 2)}} BDT
+                                            @endif
+                                        @endif
+                                    </span>
+                                </div>
 
                             </div>
-                          </a>
+{{--                            <div class="card-footer" style="background:--}}
+{{--                            @if($v_course_info->isBought == 1)--}}
+{{--                                #98b59d;--}}
+{{--                            @else--}}
+{{--                                #51b964;--}}
+{{--                            @endif--}}
+{{--                                ">--}}
+{{--                                <h5 class="text-white text-center">--}}
+{{--                                    @if($v_course_info->isBought == 1)--}}
+{{--                                        Owned--}}
+{{--                                    @else--}}
+{{--                                        @if($v_course_info->price == 0)--}}
+{{--                                            Free--}}
+{{--                                        @else--}}
+{{--                                            {{ round($v_course_info->price, 2)}} BDT--}}
+{{--                                        @endif--}}
+{{--                                    @endif--}}
+{{--                                </h5>--}}
+{{--                            </div>--}}
                         </div>
-                      </div>
-
-                    @endforeach
-                  </div>
-              </section>
-          </div>
-          <div class="text-center">
-            <button type="button" class="btn background-yellow shadow text-white px-5 py-3 mt-5 mb-5 font-weight-bold">
-              <a class="text-white" href="{{ url('toolkit') }}">View All Toolkits</a></button>
-          </div>
+                    </a>
+                </div>
+            @endforeach
+            </div>
         </div>
-      </div>
     </div>
+</div>
+{{--course end--}}
 
-<!--end of Toolkits Area-->
+{{--toolkit--}}
+<div class="explore-teaching dark-yellow-section text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2 class="text-center font-weight-bold">Explore Teachers Toolkits</h2>
+                <p>Make your teaching life easier and more effective by applying these creative methods and elements</p>
+                <button class="btn text-center bg-white mt-3"><a class="text-dark font-weight-bold px-3" href="{{ url('login') }}">View All Toolkits</a></button>
+            </div>
+        </div>
+        <div class="row">
+            <div id="exploreToolkit" class="owl-carousel card-slider">
+                @foreach ($toolkit_info as $toolkit)
+                    <div class="item mt-5">
+                        <a href="{{ url('view') }}/t/{{$toolkit->slug}}">
+                            <div class="card">
+                                <img src="{{url('images\thumbnail')}}\{{ $toolkit->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                <div class="card-body">
+
+                                    <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($toolkit->toolkit_title), 22) }}</p>
+                                    <hr>
+                                    <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($toolkit->name), 20) }}</strong></p>
+
+                                    <div class="text-dark">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            @if($toolkit->rating - $i >= 0)
+                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
+                                            @else
+                                                <i class="far fa-star text-light-dark"></i>
+                                            @endif
+                                        @endfor
+                                        <span class="float-right text-success font-weight-bold">
+                                        @if($toolkit->isBought == 1)
+                                                Owned
+                                            @else
+                                                @if($toolkit->price == 0)
+                                                    Free
+                                                @else
+                                                    {{ round($toolkit->price, 2)}} BDT
+                                                @endif
+                                            @endif
+                                    </span>
+                                    </div>
+
+                                </div>
+                                {{--                            <div class="card-footer" style="background:--}}
+                                {{--                            @if($toolkit->isBought == 1)--}}
+                                {{--                                #98b59d;--}}
+                                {{--                            @else--}}
+                                {{--                                #51b964;--}}
+                                {{--                            @endif--}}
+                                {{--                                ">--}}
+                                {{--                                <h5 class="text-white text-center">--}}
+                                {{--                                    @if($toolkit->isBought == 1)--}}
+                                {{--                                        Owned--}}
+                                {{--                                    @else--}}
+                                {{--                                        @if($toolkit->price == 0)--}}
+                                {{--                                            Free--}}
+                                {{--                                        @else--}}
+                                {{--                                            {{ round($toolkit->price, 2)}} BDT--}}
+                                {{--                                        @endif--}}
+                                {{--                                    @endif--}}
+                                {{--                                </h5>--}}
+                                {{--                            </div>--}}
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+{{--toolkit end--}}
+
+{{--resource--}}
+<div class="explore-teaching">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2 class="text-center font-weight-bold">Explore Teaching Resources</h2>
+                <button class="btn text-center background-yellow mt-3"><a class="text-white font-weight-bold px-3" href="{{ url('login') }}">View All Resources</a></button>
+            </div>
+        </div>
+        <div class="row">
+            <div id="exploreResource" class="owl-carousel card-slider">
+                @foreach ($resources as $resource)
+                    <div class="item mt-5">
+                        <a href="{{ url('view') }}/c/{{$resource->slug}}">
+                            <div class="card">
+                                <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                <div class="card-body">
+
+                                    <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($resource->resource_title), 22) }}</p>
+                                    <hr>
+                                    <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 20) }}</strong></p>
+
+                                    <div class="text-dark">
+{{--                                        @for($i = 1; $i <= 5; $i++)--}}
+{{--                                            @if($resources->rating - $i >= 0)--}}
+{{--                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
+{{--                                            @else--}}
+{{--                                                <i class="far fa-star text-light-dark"></i>--}}
+{{--                                            @endif--}}
+{{--                                        @endfor--}}
+                                        <span class="float-left text-success font-weight-bold">
+                                        @if($resource->isBought == 1)
+                                                Owned
+                                            @else
+                                                @if($resource->price == 0)
+                                                    Free
+                                                @else
+                                                    {{ round($resource->price, 2)}} BDT
+                                                @endif
+                                            @endif
+                                    </span>
+                                    </div>
+
+                                </div>
+                                {{--                            <div class="card-footer" style="background:--}}
+                                {{--                            @if($v_course_info->isBought == 1)--}}
+                                {{--                                #98b59d;--}}
+                                {{--                            @else--}}
+                                {{--                                #51b964;--}}
+                                {{--                            @endif--}}
+                                {{--                                ">--}}
+                                {{--                                <h5 class="text-white text-center">--}}
+                                {{--                                    @if($v_course_info->isBought == 1)--}}
+                                {{--                                        Owned--}}
+                                {{--                                    @else--}}
+                                {{--                                        @if($v_course_info->price == 0)--}}
+                                {{--                                            Free--}}
+                                {{--                                        @else--}}
+                                {{--                                            {{ round($v_course_info->price, 2)}} BDT--}}
+                                {{--                                        @endif--}}
+                                {{--                                    @endif--}}
+                                {{--                                </h5>--}}
+                                {{--                            </div>--}}
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+{{--resource end--}}
+{{--new design end--}}
 
 <!--Leaderboard Area-->
-<div class="container-fluid background-yellow pb-5">
+<div class="container-fluid pb-5 home-leaderboard">
   <div class="row">
     <div class="col-md-12">
       <div class="teachers-toolkits">
-        <h2 class="font-weight-bold text-center mt-5 mb-5 text-white">Leaderboard</h2>
-
+        <h2 class="font-weight-bold text-center mt-5 mb-5 text-dark">Leaderboard</h2>
           <div class="d-flex justify-content-center">
               <div class="col-md-4">
-                  @foreach ($leaderBoard as $key =>$leader)
-                      <a class="card p-2 mb-2 border-yellow" href="{{ url('t')}}/{{ $leader['user']->username }}">
-                          <div class="row">
-                              <div class="col-4 my-auto">
-                                  @if($leader['user']->image == null)
-                                      <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
-                                  @else
-                                      <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/{{ $leader['user']->image }}">
-                                  @endif
-                              </div>
-                              <div class="col-6 text-yellow font-weight-bold my-auto" >{{ $leader['user']->name }}</div>
-
-{{--                              <div class="col-2 my-auto" style="padding-right: 0px !important; padding-left: 0px !important;">@if($key <= 2) <i class="fas fa-trophy" style="color: @if($key == 0) #d4af37 @elseif($key == 1) #aaa9ad @elseif($key == 2) #cd7f32 @else #fff @endif"></i>@endif</div>--}}
-
+                  <div class="top-3 mt-4 text-center">
+                      <div class="second top-3-card">
+                          <div class="image">
+                              @if($leaderBoard[2]['user']->image == null)
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                              @else
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[2]['user']->image}}">
+                              @endif
+                              <span class="position">2</span>
                           </div>
-                      </a>
+                          <div class="content">
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 10) }}</p>
+                              <p class="m-0">{{ $leaderBoard[2]->score }} points</p>
+                          </div>
+                      </div>
+                      <div class="first top-3-card">
+                          <div class="image">
+                              @if($leaderBoard[1]['user']->image == null)
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                              @else
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[1]['user']->image}}">
+                              @endif
+                                  <span class="position background-yellow">1</span>
+                                  <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
+                          </div>
+                          <div class="content">
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 10) }}</p>
+                              <p class="m-0">{{ $leaderBoard[1]->score }} points</p>
+                          </div>
+                      </div>
+                      <div class="third top-3-card">
+                          <div class="image">
+                              @if($leaderBoard[3]['user']->image == null)
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                              @else
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[3]['user']->image}}">
+                              @endif
+                              <span class="position">3</span>
+                          </div>
+                          <div class="content">
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[3]['user']->name), 10) }}</p>
+                              <p class="m-0">{{ $leaderBoard[3]->score }} points</p>
+                          </div>
+                      </div>
+                  </div>
+                  <ul>
+                  @foreach ($leaderBoard as $key =>$leader)
+                      @if($key > 3)
+
+                          <li>
+                              <a href="{{ url('t')}}/{{ $leader['user']->username }}">
+                               <div class="serial">{{$key + 1}}.</div>
+                               <div class="image">
+                                   @if($leader['user']->image == null)
+                                       <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                   @else
+                                       <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/{{ $leader['user']->image }}">
+                                   @endif
+                               </div>
+                               <div class="name">{{ $leader['user']->name }}</div>
+                               <div class="points">{{$leader->score}} points</div>
+                              </a>
+                          </li>
+
+                      @endif
                   @endforeach
+                  </ul>
               </div>
           </div>
-
-{{--        <section class="carousel slide mt-5 d-none d-md-block" data-ride="carousel" id="leadLargeCarousel">--}}
-{{--          <div class="container-fluid">--}}
-{{--              <div class="row float-right mr-5 mb-3">--}}
-{{--                <div class="col-md-12">--}}
-{{--                  <a class="carousel-control-prev" href="#leadLargeCarousel" data-slide="prev"><i class="mb-5 far fa-caret-square-left fa-3x mr-4 custom-hover2 text-yellow"></i></a>--}}
-{{--                  <a class="carousel-control-next" href="#leadLargeCarousel"  data-slide="next"><i class="mb-5 far fa-caret-square-right fa-3x ml-4 custom-hover2 text-yellow"></i></a>--}}
-{{--                </div>--}}
-{{--              </div>--}}
-{{--          </div>--}}
-
-{{--          <div class="container-fluid carousel-inner">--}}
-{{--            @foreach($users as $key=> $user)--}}
-{{--              @if(($key+1) % 4 == 1)--}}
-{{--              <div class="row carousel-item {{ $key == 0? 'active' : '' }} ">--}}
-{{--                <div class="card-deck text-center">--}}
-{{--              @endif--}}
-{{--                  <div class="col-md-3">--}}
-{{--                    <a href="{{ url('t') }}/{{$user->username}}">--}}
-{{--                      <div class="card">--}}
-{{--                        <div class="py-3 bg-secondary">--}}
-{{--                        @if($user->image == null)--}}
-{{--                          <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">--}}
-{{--                        @else--}}
-{{--                          <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/{{ $user->image }}">--}}
-{{--                        @endif--}}
-{{--                        </div>--}}
-{{--                        <div class="card-body">--}}
-
-{{--                          <h4 class="card-title text-yellow  font-weight-bold">--}}
-{{--                            @if($key < 3) <i class="fas fa-trophy" style="color: @if($key == 0) #d4af37 @elseif($key == 1) #aaa9ad @elseif($key == 2) #cd7f32 @else #fff @endif"></i>@endif--}}
-{{--                            {{ $user->name }}--}}
-{{--                          </h4>--}}
-
-
-{{--                          <div class="text-dark">--}}
-{{--                          @for($i = 1; $i <= 5; $i++)--}}
-{{--                            @if($user->rating - $i >= 0)--}}
-{{--                              <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
-{{--                            @else--}}
-{{--                              <i class="far fa-star"></i>--}}
-{{--                            @endif--}}
-{{--                          @endfor--}}
-{{--                          </div>--}}
-{{--                        </div>--}}
-{{--                      </div>--}}
-{{--                    </a>--}}
-
-{{--                </div>--}}
-{{--              @if(($key+1) % 4 == 0)--}}
-{{--                </div>--}}
-{{--              </div>--}}
-{{--              @endif--}}
-{{--            @endforeach--}}
-{{--            </div>--}}
-{{--          </section>--}}
-
-
-{{--          <section class="carousel slide mt-5 d-sm-none" data-ride="carousel" id="leadSmallCarousel">--}}
-{{--            <div class="container-fluid">--}}
-{{--                <div class="row float-right mr-5 mb-3">--}}
-{{--                  <div class="col-md-12">--}}
-{{--                    <a class="carousel-control-prev" href="#leadSmallCarousel" data-slide="prev"><i class="mb-5 far fa-caret-square-left fa-3x mr-4 custom-hover2 text-yellow"></i></a>--}}
-{{--                    <a class="carousel-control-next" href="#leadSmallCarousel"  data-slide="next"><i class="mb-5 far fa-caret-square-right fa-3x ml-4 custom-hover2 text-yellow"></i></a>--}}
-{{--                  </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class="container-fluid carousel-inner">--}}
-{{--              @foreach($users as $key=> $user)--}}
-{{--                <div class="carousel-item {{ $key == 0? 'active' : '' }} ">--}}
-{{--                  <div class="card-deck text-center">--}}
-{{--                      <a href="{{ url('t') }}/{{$user->username}}">--}}
-{{--                        <div class="card">--}}
-{{--                          <div class="py-3 bg-secondary">--}}
-{{--                          @if($user->image == null)--}}
-{{--                            <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">--}}
-{{--                          @else--}}
-{{--                            <img class="img-fluid rounded-circle" style="height: 150px; width: 150px;" src="{{ url('images/profile_picture') }}/{{ $user->image }}">--}}
-{{--                          @endif--}}
-{{--                          </div>--}}
-{{--                          <div class="card-body">--}}
-
-{{--                            <h4 class="card-title text-yellow  font-weight-bold">--}}
-{{--                              @if($key < 3) <i class="fas fa-trophy" style="color: @if($key == 0) #d4af37 @elseif($key == 1) #aaa9ad @elseif($key == 2) #cd7f32 @else #fff @endif"></i>@endif--}}
-{{--                              {{ $user->name }}--}}
-{{--                            </h4>--}}
-
-
-{{--                            <div class="text-dark">--}}
-{{--                            @for($i = 1; $i <= 5; $i++)--}}
-{{--                              @if($user->rating - $i >= 0)--}}
-{{--                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
-{{--                              @else--}}
-{{--                                <i class="far fa-star"></i>--}}
-{{--                              @endif--}}
-{{--                            @endfor--}}
-{{--                            </div>--}}
-{{--                          </div>--}}
-{{--                        </div>--}}
-{{--                      </a>--}}
-{{--                  </div>--}}
-{{--                </div>--}}
-{{--              @endforeach--}}
-{{--              </div>--}}
-{{--          </section>--}}
-
-
 
       </div>
     </div>
@@ -518,97 +426,61 @@
 <!-- Leaderboar area ends -->
 
 
-<div class="container-fluid pt-5">
-      <h2 class="text-center font-weight-bold journey text-orange">Your Alokito Journey</h2>
-      <div class="d-flex flex-row justify-content-center align-items-center" style="background: url({{ url('images/logo/sec-bg.png')}}) !important;min-height: 100vh">
-        <div class="row mx-5 px-5">
-
-          <div class="col-sm-4 col-md-4 col-lg-3 mt-4 zoom">
-              <img class="card-img-top border-yellow-image img-fluid" src="{{asset('images\logo\step1.jpg')}}"alt="Responsive image" >
-
-                  <p class="card-text text-center font-weight-bold text-yellow ">Step 1</p>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-3 mt-4 zoom">
-              <img class="card-img-top border-yellow-image img-fluid" src="{{asset('images\logo\step2.jpg')}}"alt="Responsive image" >
-                  <p class="card-text text-center font-weight-bold text-yellow">Step 2</p>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-3 mt-4 zoom">
-              <img class="card-img-top border-yellow-image img-fluid " src="{{asset('images\logo\step3.jpg')}}"alt="Responsive image">
-                  <p class="card-text text-center font-weight-bold text-yellow">Step 3</p>
-          </div>
-          <div class="col-sm-4 col-md-4 col-lg-3 mt-4 zoom">
-              <img class="card-img-top border-yellow-image img-fluid" src="{{asset('images\logo\step4.jpg')}}"alt="Responsive image">
-                  <p class="card-text text-center font-weight-bold text-yellow">Step 4</p>
-          </div>
-
+<div class="container alokito-journey">
+      <h2 class="text-center font-weight-bold text-dark mb-4">Your Alokito Journey</h2>
+        <div class="row">
+            <div class="col-md-6 mt-5">
+                <div class="media">
+                    <img class="mr-3" src="{{asset('images/new_design/step-icon-1.png')}}" alt="Generic placeholder image">
+                    <div class="media-body">
+                        <span class="text-uppercase">Step 1</span>
+                        <h5 class="mt-2 font-weight-bold">Create Account</h5>
+                        <p>You can get all the courses and toolkits by registration <br> in our platform.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mt-5">
+                <div class="media">
+                    <img class="mr-3" src="{{asset('images/new_design/step-icon-2.png')}}" alt="Generic placeholder image">
+                    <div class="media-body">
+                        <span class="text-uppercase">Step 2</span>
+                        <h5 class="mt-2 font-weight-bold">Earn Certificates</h5>
+                        <p>To earn money by creating your own toolkit you have to complete our 5 classroom toolkit and 1 course first.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mt-5">
+                <div class="media">
+                    <img class="mr-3" src="{{asset('images/new_design/step-icon-3.png')}}" alt="Generic placeholder image">
+                    <div class="media-body">
+                        <span class="text-uppercase">Step 3</span>
+                        <h5 class="mt-2 font-weight-bold">Share and Earn</h5>
+                        <p>You can earn by creating your own course, worksheet, toolkit and by sharing with others.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mt-5">
+                <div class="media">
+                    <img class="mr-3" src="{{asset('images/new_design/step-icon-4.png')}}" alt="Generic placeholder image">
+                    <div class="media-body">
+                        <span class="text-uppercase">Step 4</span>
+                        <h5 class="mt-2 font-weight-bold">Become an Online Trainer</h5>
+                        <p>You can make course and earn from it if at least 10 users view your course.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
-      </div>
 </div>
 
  <!-- journey ends area -->
-
-<div class="row">
-  <div class="col-md-3">
-
-  </div>
-  <div class="col-md-3">
-
-  </div>
-  <div class="col-md-3">
-
-  </div>
-  <div class="col-md-3">
-
-  </div>
-</div>
-
-
-
-
-<div class="bg-light justify-content-center align-items-center" style="min-height: 78vh">
-  <div class="container py-5">
-        <div class="row">
-          <div class="row col-md-6">
-
-            <div class="col-6 mt-4 zoom">
-              <img class="card-img-top border-yellow-image img-fluid" src="{{asset('images\logo\pic01.png')}}"alt="Responsive image" >
-            </div>
-            <div class="col-6 mt-4 zoom">
-                <img class="card-img-top border-yellow-image img-fluid" src="{{asset('images\logo\pic02.png')}}"alt="Responsive image">
-            </div>
-            <div class="col-6 mt-4 zoom">
-                <img class="card-img-top border-yellow-image img-fluid " src="{{asset('images\logo\pic03.png')}}"alt="Responsive image">
-            </div>
-            <div class="col-6 mt-4 zoom">
-                <img class="card-img-top border-yellow-image img-fluid" src="{{asset('images\logo\pic04.png')}}"alt="Responsive image">
-            </div>
-
-
-
-
-           </div>
-
-
-          <div class="col-md-6 my-auto">
-            <h1 class="text-center mt-5 mb-3 font-weight-bold text-orange" >Share your creativity</h1>
-            <hr class="border-yellow-image mb-5" width="80%">
-            <h4 class="text-dark m-3">আমরা বিশ্বাস করি আমাদের উদ্ভাবনী চিন্তাগুলো যখন কাজে পরিনত করা হয় তখনই সৃজনশীলতা অর্জন হয়। আপনাদের প্রতিভাগুলোকে আমাদের প্লাটফরমে শেয়ার করার মাধ্যমে তা থেকে আয় করুন ও স্বীকৃতি অর্জন করুন</h4>
-          </div>
+<div class="container px-0">
+    <div class="teachAtAlokito" style="background-image: url('{{asset('images/new_design/journey_line.png')}}')">
+        <h1 class="text-center text-white font-weight-bold mb-3">Teach at Alokito</h1>
+        <p class="text-center text-white mb-3">Share Your Creativity. Earn money. Grow with us</p>
+        <div class="d-flex justify-content-center">
+            <button class="btn text-center background-yellow mt-3"><a class="text-white font-weight-bold px-3" href="{{ url('about_us') }}">Learn More</a></button>
+        </div>
     </div>
-  </div>
-</div>
-
-
-<div class="py-5 background-yellow">
-
-      <h1 class="text-center text-white font-weight-bold mb-3">Teach at Alokito</h1>
-      <h5 class="text-center text-white mb-3">Share Your Creativity. Earn money. Grow with us</h5>
-      <div class="d-flex justify-content-center">
-        <a href="{{ url('about_us') }}" class="btn btn-dark font-weight-bold text-white ">Learn More</a>
-      </div>
-
-
 </div>
 
 
@@ -629,10 +501,58 @@
     </div>
   </div>
 </div>
-
-
-
-
+@push('js')
+    <script>
+        $('#exploreCourse').owlCarousel({
+            loop:false,
+            margin:30,
+            nav:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:3
+                },
+                1000:{
+                    items:3
+                }
+            }
+        });
+        $('#exploreToolkit').owlCarousel({
+            loop:false,
+            margin:30,
+            nav:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:3
+                },
+                1000:{
+                    items:3
+                }
+            }
+        })
+        $('#exploreResource').owlCarousel({
+            loop:false,
+            margin:30,
+            nav:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:3
+                },
+                1000:{
+                    items:3
+                }
+            }
+        })
+    </script>
+@endpush
 
 @endsection
 

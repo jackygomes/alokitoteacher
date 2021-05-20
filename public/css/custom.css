@@ -1,3 +1,10 @@
+.text-light-dark {
+    color: #6D6E74 !important;
+}
+.text-dark {
+    color: #09112B !important;
+}
+
 .login-button {
     background-color: transparent;
     border: 1px solid #E1E1E1;
@@ -37,4 +44,140 @@ a {
 }
 .copyright ul li a:hover {
     color: #F59D1F !important;
+}
+
+/*home page*/
+.explore-teaching {
+    background-color: #FED495;
+    color: #09112B;
+    padding: 70px 0;
+}
+.dark-yellow-section {
+    background-color: #F59D1F;
+}
+.dark-yellow-section .card-slider .owl-next,.dark-yellow-section .card-slider .owl-prev {
+    color: #000 !important;
+}
+
+/*course toolkit resource card*/
+.card-slider {
+    position: relative;
+}
+.card-slider .owl-prev {
+    position: absolute;
+    left: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.card-slider .owl-next {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.card-slider .owl-next,.card-slider .owl-prev {
+    background-color: #fff !important;
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
+    font-size: 20px !important;
+}
+.card-slider .owl-next.disabled,.card-slider .owl-prev.disabled { opacity: 0}
+.card {
+    border-radius: 8px;
+}
+.card-img-top {
+    width: 100%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.card-footer:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+/*alokito journey*/
+.alokito-journey {
+    padding: 70px 0 110px;
+}
+
+.teachAtAlokito {
+    padding: 90px 0;
+    margin-bottom: 50px;
+    background-color: #532436;
+    border-radius: 20px;
+    background-position: bottom;
+}
+
+/*home leaderboard*/
+.home-leaderboard ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.home-leaderboard ul li div{
+    display: inline-block;
+}
+.home-leaderboard ul li{
+    margin-bottom: 4px;
+    padding: 10px 0;
+    overflow: hidden;
+}
+.home-leaderboard ul li .image{
+    width: 50px;
+    height: 50px;
+}
+.home-leaderboard ul li .image img{
+    width: 100%;
+    height: 100%;
+}
+.home-leaderboard ul li .points{
+    float: right;
+}
+.home-leaderboard ul li .serial{
+    margin-right: 10px;
+}
+.home-leaderboard ul li .image{
+    margin-right: 10px;
+}
+.home-leaderboard ul li .serial, .home-leaderboard ul li .image, .home-leaderboard ul li .name {float:left}
+.home-leaderboard ul li .serial, .home-leaderboard ul li .points, .home-leaderboard ul li .name {margin-top: 20px}
+
+.home-leaderboard .top-3 { margin-bottom: 30px}
+.home-leaderboard .top-3 .first {
+    width: 30%;
+    margin: 0 20px;
+}
+.home-leaderboard .top-3 .second, .home-leaderboard .top-3 .third { width: 24%}
+.home-leaderboard .top-3 .first, .home-leaderboard .top-3 .second, .home-leaderboard .top-3 .third { display: inline-block}
+.home-leaderboard .top-3 .top-3-card {
+    text-align: center;
+}
+.home-leaderboard .top-3 .top-3-card .image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px;
+}
+.home-leaderboard .top-3 .top-3-card .image img{
+    width: 100%;
+    height: 100%;
+}
+.home-leaderboard .top-3 .top-3-card .position {
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #532436;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 50%;
+}
+.home-leaderboard .top-3 .first .crown {
+    position: absolute;
+    top: -41px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px !important;
+    display: block;
+    height: auto !important;
 }
