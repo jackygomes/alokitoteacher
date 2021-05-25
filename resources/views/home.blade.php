@@ -26,100 +26,116 @@
   }
 </style>
 
-<header class="container mt-5" style="min-height: 62vh">
-
-    <div class="row">
-        <div class="col-sm-8">
-          <h2 class="font-weight-bold text-yellow">২১ শতকের দক্ষ শিক্ষক এবং শিক্ষার্থী গড়ে তোলার লক্ষ্যে আপনার আলোকিত যাত্রা শুরু করুন</h2>
-          <!--<h4 class="font-weight-bold mt-4">আপনার আলোকিতোর যাত্রা শুরু করুন</h4>-->
-        </div>
-
-        <div class="col-sm-4">
-           <img src="{{asset('images\logo\alokito_logo.png')}}" class="img-responsive">
-        </div>
-      </div>
-
-
-
-      <div class="row  mb-5 mt-5 justify-content-center">
-
-        <div class="col-md-5">
-          <p class="text-center font-weight-bold mt-5" style="font-size: 1.3rem;"> I Would Like To Learn:</p>
-          <div class="border border-yellow px-5 py-2 text-center rounded" style="font-size: 16px; ">
-            <div class="col-md-12 col-md-offset-1 ">
-              <p class="font-weight-bold ">View All Courses and toolkit</p>
-              <div class=""><a href="{{ url('all') }}" class="btn btn-warning text-white" style="background-color: #f5b82f">Be a member and learn with us</a></div>
+<div class="home-hero-slider">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="headerSlider" class="owl-carousel">
+                    <div class="home-hero-slider-wrap d-flex justify-content-between">
+                        <div class="left">
+                            <h1 class="font-weight-bold">Learn, Grow and</h1>
+                            <p class="pb-3">Start your enlightened journey to build skilled teachers and students in the 21st century</p>
+                            <div class="buttons mt-5">
+                                <a class="btn background-yellow px-5 py-3 text-white" href="#">Be a Member</a>
+                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="{{asset('images/new_design/slider-1.png')}}" alt="">
+                        </div>
+                    </div>
+                    <div class="home-hero-slider-wrap d-flex justify-content-between">
+                        <div class="left">
+                            <h1 class="font-weight-bold">Learn, Slider 2</h1>
+                            <p class="pb-3">Start your enlightened journey to build skilled teachers and students in the 21st century</p>
+                            <div class="buttons mt-5">
+                                <a class="btn background-yellow px-5 py-3 text-white" href="#">Be a Member</a>
+                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="{{asset('images/new_design/slider-1.png')}}" alt="">
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="col-md-1">
-
-        </div>
-
-        <div class="col-md-5 text-center">
-          <p class="font-weight-bold mt-5" style="font-size: 1.3rem;"> I Would Like To Search Job:</p>
-          <div class="border border-yellow px-5 py-2 text-center rounded" style="font-size: 16px; ">
-            <div class="col-md-12 col-md-offset-1 ">
-              <p class="font-weight-bold ">View Jobs</p>
-              <div class=""><a href="{{ url('jobs') }}" class="btn btn-warning text-white" style="background-color: #f5b82f">Become an Alokito Teacher</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 ">
-
-        </div>
-      </div>
-
-</header>
-
-<section class="container-fluid">
-    <div class="row background-yellow py-5">
-      <div class="col-md-8 text-center">
-          <div class="text mt-4 text-white text-center ">
-              <h2 class="font-weight-bold">বিস্তারিত জানতে ভিডিওটি দেখুন</h2>
-          </div>
-      </div>
-
-      <div class="col-md-4 text-center picture">
-          <a href="#" class="" style="color: #ffffff;" data-toggle="modal" data-target="#homeVideo">
-           <!--<i class=" fas fa-play-circle mt-4" style="background: #f5b82f; font-size: 70px;"></i> -->
-           <div class="zoom">
-              <img class="border border-success" src="{{asset('images\logo\wat3.jpg')}}" style="width:50%">
-           </div>
-
-          </a>
-      </div>
     </div>
-</section>
+</div>
 
-
-<!--Start of Fun Factor Area-->
-<div class="container-fluid">
-  <div class="fun-factor-area text-center fix" style="background: #f9f9f9 url({{ url('images/logo/sec-bg.png')}}) !important;">
-      <div class="container">
-          <div class=" row fun">
-              <div class="col-sm-6" >
-                  <div class="single-fun-factor">
-
-                      <h1><span class="counter-count text-yellow font-weight-bold">{{$stat->teacher}}</span></h1>
-                      <p class="counter-name">Educators Trained</p>
-                  </div>
-              </div>
-              <div class="col-sm-6">
-                  <div class="single-fun-factor">
-
-                      <h1><span class="counter-count text-yellow font-weight-bold">{{$stat->future_number}}</span></h1>
-                      <p class="counter-name">Future Changemakers Being Developed</p>
-                  </div>
-              </div>
-
-          </div>
-        </div>
-      </div>
-  </div>
-  <!--End of Fun Factor Area-->
 
 {{--new design--}}
+{{--statistics--}}
+<div class="container statistic-section">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="stat-block">
+                <div>
+                    <img src="{{asset('images/new_design/feature-icon-1.png')}}" alt="">
+                </div>
+                <div>
+                    <h3 class="font-weight-bold">{{$stat->teacher}}</h3>
+                    <p>Teachers Trained</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-block">
+                <div>
+                    <img src="{{asset('images/new_design/feature-icon-2.png')}}" alt="">
+                </div>
+                <div>
+                    <h3 class="font-weight-bold">{{$stat->future_number}}</h3>
+                    <p>Changemakers Developed</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-block">
+                <div>
+                    <img src="{{asset('images/new_design/feature-icon-3.png')}}" alt="">
+                </div>
+                <div>
+                    <h3 class="font-weight-bold">100+</h3>
+                    <p>Courses Created</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{--statistics end--}}
+{{--video section--}}
+<div class="video-section" style="background-image: url('{{asset('images/new_design/line_wave.png')}}')">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2 class="text-center font-weight-bold mb-5">Watch the video for details.</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hero text-center">
+                    <a class="hero__play" href="#nogo">
+                        <img src="{{asset('images/new_design/video-thumbnail.png')}}"/>
+                        <img class="play-button" src="{{asset('images/new_design/video-section-play.png')}}"/>
+                    </a>
+                </div>
+
+                <!-- The following is only needed when the video is in the html
+                    otherwise the who .hero__overlay html can be removed -->
+                <div class="hero__overlay">
+                    <div class="hero__modal">
+                        <a class="hero__close" href="#">Close</a>
+
+                        <iframe allowscriptaccess="always" id="hero-video" class="hero__player" src="https://www.youtube.com/embed/1NSA8ycGfKg?enablejsapi=1&html5=1" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+                    </div><!-- /.hero__modal -->
+                </div><!-- /.hero__overlay -->
+            </div>
+        </div>
+    </div>
+</div>
+{{--video section end--}}
 {{--course--}}
 <div class="explore-teaching">
     <div class="container">
@@ -194,81 +210,62 @@
 {{--course end--}}
 
 {{--toolkit--}}
-<div class="explore-teaching dark-yellow-section text-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <h2 class="text-center font-weight-bold">Explore Teachers Toolkits</h2>
-                <p>Make your teaching life easier and more effective by applying these creative methods and elements</p>
-                <button class="btn text-center bg-white mt-3"><a class="text-dark font-weight-bold px-3" href="{{ url('login') }}">View All Toolkits</a></button>
-            </div>
-        </div>
-        <div class="row">
-            <div id="exploreToolkit" class="owl-carousel card-slider">
-                @foreach ($toolkit_info as $toolkit)
-                    <div class="item mt-5">
-                        <a href="{{ url('view') }}/t/{{$toolkit->slug}}">
-                            <div class="card">
-                                <img src="{{url('images\thumbnail')}}\{{ $toolkit->thumbnail }}" style="height: 262px;" class="card-img-top">
-                                <div class="card-body">
+{{--<div class="explore-teaching dark-yellow-section text-white">--}}
+{{--    <div class="container">--}}
+{{--        <div class="row">--}}
+{{--            <div class="col-sm-12 text-center">--}}
+{{--                <h2 class="text-center font-weight-bold">Explore Teachers Toolkits</h2>--}}
+{{--                <p>Make your teaching life easier and more effective by applying these creative methods and elements</p>--}}
+{{--                <button class="btn text-center bg-white mt-3"><a class="text-dark font-weight-bold px-3" href="{{ url('login') }}">View All Toolkits</a></button>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="row">--}}
+{{--            <div id="exploreToolkit" class="owl-carousel card-slider">--}}
+{{--                @foreach ($toolkit_info as $toolkit)--}}
+{{--                    <div class="item mt-5">--}}
+{{--                        <a href="{{ url('view') }}/t/{{$toolkit->slug}}">--}}
+{{--                            <div class="card">--}}
+{{--                                <img src="{{url('images\thumbnail')}}\{{ $toolkit->thumbnail }}" style="height: 262px;" class="card-img-top">--}}
+{{--                                <div class="card-body">--}}
 
-                                    <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($toolkit->toolkit_title), 22) }}</p>
-                                    <hr>
-                                    <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($toolkit->name), 20) }}</strong></p>
+{{--                                    <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($toolkit->toolkit_title), 22) }}</p>--}}
+{{--                                    <hr>--}}
+{{--                                    <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($toolkit->name), 20) }}</strong></p>--}}
 
-                                    <div class="text-dark">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            @if($toolkit->rating - $i >= 0)
-                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                                            @else
-                                                <i class="far fa-star text-light-dark"></i>
-                                            @endif
-                                        @endfor
-                                        <span class="float-right text-success font-weight-bold">
-                                        @if($toolkit->isBought == 1)
-                                                Owned
-                                            @else
-                                                @if($toolkit->price == 0)
-                                                    Free
-                                                @else
-                                                    {{ round($toolkit->price, 2)}} BDT
-                                                @endif
-                                            @endif
-                                    </span>
-                                    </div>
+{{--                                    <div class="text-dark">--}}
+{{--                                        @for($i = 1; $i <= 5; $i++)--}}
+{{--                                            @if($toolkit->rating - $i >= 0)--}}
+{{--                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
+{{--                                            @else--}}
+{{--                                                <i class="far fa-star text-light-dark"></i>--}}
+{{--                                            @endif--}}
+{{--                                        @endfor--}}
+{{--                                        <span class="float-right text-success font-weight-bold">--}}
+{{--                                        @if($toolkit->isBought == 1)--}}
+{{--                                                Owned--}}
+{{--                                            @else--}}
+{{--                                                @if($toolkit->price == 0)--}}
+{{--                                                    Free--}}
+{{--                                                @else--}}
+{{--                                                    {{ round($toolkit->price, 2)}} BDT--}}
+{{--                                                @endif--}}
+{{--                                            @endif--}}
+{{--                                    </span>--}}
+{{--                                    </div>--}}
 
-                                </div>
-                                {{--                            <div class="card-footer" style="background:--}}
-                                {{--                            @if($toolkit->isBought == 1)--}}
-                                {{--                                #98b59d;--}}
-                                {{--                            @else--}}
-                                {{--                                #51b964;--}}
-                                {{--                            @endif--}}
-                                {{--                                ">--}}
-                                {{--                                <h5 class="text-white text-center">--}}
-                                {{--                                    @if($toolkit->isBought == 1)--}}
-                                {{--                                        Owned--}}
-                                {{--                                    @else--}}
-                                {{--                                        @if($toolkit->price == 0)--}}
-                                {{--                                            Free--}}
-                                {{--                                        @else--}}
-                                {{--                                            {{ round($toolkit->price, 2)}} BDT--}}
-                                {{--                                        @endif--}}
-                                {{--                                    @endif--}}
-                                {{--                                </h5>--}}
-                                {{--                            </div>--}}
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
+{{--                @endforeach--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 {{--toolkit end--}}
 
 {{--resource--}}
-<div class="explore-teaching">
+<div class="explore-teaching dark-yellow-section text-white">
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
@@ -342,11 +339,11 @@
 {{--new design end--}}
 
 <!--Leaderboard Area-->
-<div class="container-fluid pb-5 home-leaderboard">
+<div class="container-fluid pb-5 home-leaderboard mb-4">
   <div class="row">
     <div class="col-md-12">
       <div class="teachers-toolkits">
-        <h2 class="font-weight-bold text-center mt-5 mb-5 text-dark">Leaderboard</h2>
+        <h2 class="font-weight-bold text-center mt-5 mb-5 text-dark pt-5">Leaderboard</h2>
           <div class="d-flex justify-content-center">
               <div class="col-md-4">
                   <div class="top-3 mt-4 text-center">
@@ -425,9 +422,9 @@
 </div>
 <!-- Leaderboar area ends -->
 
-
-<div class="container alokito-journey">
-      <h2 class="text-center font-weight-bold text-dark mb-4">Your Alokito Journey</h2>
+<div class="alokito-journey">
+    <div class="container">
+        <h2 class="text-center font-weight-bold text-dark mb-4">Your Alokito Journey</h2>
         <div class="row">
             <div class="col-md-6 mt-5">
                 <div class="media">
@@ -470,6 +467,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </div>
 
  <!-- journey ends area -->
@@ -502,7 +500,27 @@
   </div>
 </div>
 @push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
     <script>
+        $('#headerSlider').owlCarousel({
+            loop:true,
+            margin:30,
+            nav:false,
+            autoplay:true,
+            autoplayTimeout:4000,
+            autoplayHoverPause:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:1
+                },
+                1000:{
+                    items:1
+                }
+            }
+        });
         $('#exploreCourse').owlCarousel({
             loop:false,
             margin:30,
@@ -519,22 +537,22 @@
                 }
             }
         });
-        $('#exploreToolkit').owlCarousel({
-            loop:false,
-            margin:30,
-            nav:true,
-            responsive:{
-                0:{
-                    items:1
-                },
-                600:{
-                    items:3
-                },
-                1000:{
-                    items:3
-                }
-            }
-        })
+        // $('#exploreToolkit').owlCarousel({
+        //     loop:false,
+        //     margin:30,
+        //     nav:true,
+        //     responsive:{
+        //         0:{
+        //             items:1
+        //         },
+        //         600:{
+        //             items:3
+        //         },
+        //         1000:{
+        //             items:3
+        //         }
+        //     }
+        // });
         $('#exploreResource').owlCarousel({
             loop:false,
             margin:30,
@@ -550,7 +568,58 @@
                     items:3
                 }
             }
-        })
+        });
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/player_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // global variable for the player
+        var player;
+
+        // this function gets called when API is ready to use
+        function onYouTubePlayerAPIReady() {
+            // create the global player from the specific iframe (#video)
+            player = new YT.Player('hero-video',{
+                events: {
+                    'onReady': onPlayerReady,
+                }
+            });
+        }
+
+
+
+        function onPlayerReady(event) {
+
+            var playBtn = $('.hero__play');
+            var closeBtn = $('.hero__close');
+            var overlay = $('.hero__overlay');
+            var modal = $('.hero__modal');
+
+            $(playBtn).click(function (e) {
+                $(overlay).css('left', 0);
+                $(overlay).addClass('hero__overlay--active');
+                // player.api("play");
+                player.playVideo();
+
+                e.preventDefault();
+            });
+
+            $.merge(closeBtn, overlay).click(function (e) {
+                $(overlay).removeClass('hero__overlay--active');
+                setTimeout(function () {
+                    $(overlay).css('left', '-100%');
+                }, 300);
+                player.stopVideo();
+
+                e.preventDefault();
+
+            });
+
+            // Used for the full width videos
+            $(modal).fitVids();
+
+        }
     </script>
 @endpush
 

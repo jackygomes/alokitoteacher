@@ -19,7 +19,8 @@ class AllController extends Controller
         $this->middleware('auth');
     }
 
-     function index(){
+     function index()
+     {
          $userId = Auth::id();
          $user_info = User::where('id', '=', $userId)->first();
 

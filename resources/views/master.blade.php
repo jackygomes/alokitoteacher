@@ -35,7 +35,7 @@
 
 <body>
     <!--navStart -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
 
         @if( Request::segment(1) == 'view')
         <ul class="navbar-nav mr-auto d-none d-md-block">
@@ -106,7 +106,7 @@
                     </li>
                 @endguest @auth
                 <div class="btn-group ml-2">
-                    <button type="button" class="btn background-yellow text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ Auth::user()->name }}
                     </button>
                     <div class="dropdown-menu">

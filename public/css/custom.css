@@ -47,6 +47,131 @@ a {
 }
 
 /*home page*/
+.home-hero-slider {padding: 100px 0;}
+.home-hero-slider h1 {
+    font-size: 50px;
+    margin: 2rem 0 10rem;
+}
+.home-hero-slider-wrap .left, .home-hero-slider-wrap .right {
+    display: inline-block;
+    width: 49%;
+}
+.buttons a {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.statistic-section {
+    padding: 50px 0;
+}
+.statistic-section .stat-block div {
+    display: inline-block;
+    overflow: hidden;
+}
+.statistic-section .stat-block {
+    padding: 20px;
+    border: 1px solid #E1E1E1;
+    border-radius: 14px;
+}
+.statistic-section .stat-block div:first-child {
+    width: 26%;
+    float: left;
+    margin-right: 18px;
+}
+.statistic-section .stat-block div:last-child {
+    width: 68%;
+    margin-top: 10px;
+}
+.statistic-section .stat-block div:last-child p { margin: 0 !important;}
+/*video section*/
+.video-section {
+    padding: 100px 0;
+    background-repeat: no-repeat;
+    background-position: 0 156px;
+}
+.hero {
+    position: relative;
+}
+.hero__overlay {
+     position: absolute;
+     z-index: 1;
+     left: 0;
+     top: 0;
+     right: 0;
+     bottom: 0;
+}
+.hero__overlay .no-background-blend-mode {
+    background: rgba(27,82,83, 0.6) !important;
+}
+
+.hero__overlay {
+     position: fixed;
+     z-index: 50;
+     top: 0;
+     left: -100%;
+     width: 100%;
+     height: 100vh;
+     background: rgba(0, 0, 0, 0.5);
+     transition: opacity 300ms linear;
+     opacity: 0;
+ }
+
+.hero__overlay--active {
+     opacity: 1;
+ }
+
+.hero__modal {
+     width: 90%;
+     margin: 30px auto 0;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+ }
+
+.hero__close {
+    position: absolute;
+    z-index: 15;
+    right: 0;
+    bottom: 100%;
+    width: 50px;
+    height: 50px;
+    text-indent: -9999em;
+}
+
+.hero__close:before,
+.hero__close:after {
+     content: '';
+     position: absolute;
+     width: 30px;
+     top: 50%;
+     left: 50%;
+     height: 2px;
+     margin-left: -15px;
+     background: #fff;
+     transform: rotate(45deg);
+ }
+
+.hero__close:after {
+     transform: rotate(-45deg);
+ }
+
+.hero a {
+    position: relative;
+    display: inline-block;
+    border-radius: 30px;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+}
+.hero a .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*video section end*/
 .explore-teaching {
     background-color: #FED495;
     color: #09112B;
@@ -97,7 +222,9 @@ a {
 
 /*alokito journey*/
 .alokito-journey {
-    padding: 70px 0 110px;
+    padding: 70px 0 70px;
+    background-color: #EEE;
+    margin-bottom: 60px;
 }
 
 .teachAtAlokito {
@@ -181,3 +308,10 @@ a {
     display: block;
     height: auto !important;
 }
+@media screen and (max-width: 1366px) {
+    .video-section {
+        background-position: 0 267px;
+        background-size: 117% auto;
+    }
+}
+
