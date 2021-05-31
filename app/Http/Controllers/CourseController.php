@@ -8,6 +8,7 @@ use App\CourseQuestion;
 use App\CourseQuiz;
 use App\CourseQuizOption;
 use App\CourseVideo;
+use App\Order;
 use App\Subject;
 use App\Toolkit;
 use App\ToolkitVideo;
@@ -40,6 +41,16 @@ class CourseController extends Controller
             ->where('courses.status', '=', 'Approved')
             ->groupBy('courses.id')
             ->paginate(4);
+
+        $userId = Auth::check() ? Auth::user()->id : 0;
+        foreach($course_info as $course){
+            $isOrdered = Order::where('status', 'paid')
+                ->where('product_type', 'course')
+                ->where('user_id', $userId)
+                ->where('product_id', $course->id)->count();
+
+            $course->isBought = $isOrdered ? 1 : 0;
+        }
 
         return view('courses', compact('course_info'));
     }

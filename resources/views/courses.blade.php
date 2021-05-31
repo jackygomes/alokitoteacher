@@ -15,46 +15,66 @@
 <section>
 
 
-    <div class="container-fluid">
+    <div class="container">
 
         <div class="row">
 
             @foreach ($course_info as $v_course_info)
-		    <div class="col-md-3 mt-3">
-		    	<a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
-					<div class="card" style="min-height: 22.5vh">
-						<img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" class="card-img-top">
-						<div class="text-center">
+                <div class="col-md-4 mt-5">
+                    <a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
+                        <div class="card">
+                            <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="height: 262px;" class="card-img-top">
+                            <div class="card-body">
 
-							 @if(isset($v_course_info->image))
-								<img src="{{url('images\profile_picture')}}\{{ $v_course_info->image }}" alt="Avatar" class="avatar">
-							@else
-								<i class="fas fa-user-circle fa-4x avatar" style="color:#f5b82f"></i>
-							@endif
-						 </div>
-						<div class="card-body">
+                                <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($v_course_info->title), 22) }}</p>
+                                <hr>
+                                <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($v_course_info->name), 20) }}</strong></p>
 
-							<p class="card-title text-dark font-weight-bold" style="font-size: 19px; height: 60px;" data-toggle="tooltip" data-html="true" title="{{$v_course_info->title}}">{{ str_limit(strip_tags($v_course_info->title), 30) }}</p>
-							<p class="card-text text-yellow font-weight-bold"><small>Posted By</small><br> {{ str_limit(strip_tags($v_course_info->name), 20) }}</p>
+                                <div class="text-dark">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($v_course_info->rating - $i >= 0)
+                                            <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
+                                        @else
+                                            <i class="far fa-star text-light-dark"></i>
+                                        @endif
+                                    @endfor
+                                    <span class="float-right text-success font-weight-bold">
+                                        @if($v_course_info->isBought == 1)
+                                            Owned
+                                        @else
+                                            @if($v_course_info->price == 0)
+                                                Free
+                                            @else
+                                                {{ round($v_course_info->price, 2)}} BDT
+                                            @endif
+                                        @endif
+                                    </span>
+                                </div>
 
-					      	<div class="text-dark">
-								@for($i = 1; $i <= 5; $i++)
-						          @if($v_course_info->rating - $i >= 0)
-						          <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-						          @else
-						          <i class="far fa-star"></i>
-						          @endif
-						        @endfor
-							</div>
-
-						</div>
-						<div class="card-footer" style="background: #51b964;">
-							<h5 class="text-white text-center">Free</h5>
-						</div>
-					</div>
-				</a>
-		    </div>
-		  @endforeach
+                            </div>
+                            {{--                            <div class="card-footer" style="background:--}}
+                            {{--                            @if($v_course_info->isBought == 1)--}}
+                            {{--                                #98b59d;--}}
+                            {{--                            @else--}}
+                            {{--                                #51b964;--}}
+                            {{--                            @endif--}}
+                            {{--                                ">--}}
+                            {{--                                <h5 class="text-white text-center">--}}
+                            {{--                                    @if($v_course_info->isBought == 1)--}}
+                            {{--                                        Owned--}}
+                            {{--                                    @else--}}
+                            {{--                                        @if($v_course_info->price == 0)--}}
+                            {{--                                            Free--}}
+                            {{--                                        @else--}}
+                            {{--                                            {{ round($v_course_info->price, 2)}} BDT--}}
+                            {{--                                        @endif--}}
+                            {{--                                    @endif--}}
+                            {{--                                </h5>--}}
+                            {{--                            </div>--}}
+                        </div>
+                    </a>
+                </div>
+            @endforeach
         </div>
 
         <div class="mt-5">

@@ -70,7 +70,7 @@ class AllController extends Controller
                  ->where('courses.status', '=', 'Approved')
                  ->where('courses.deleted','=', 0)
                  ->groupBy('courses.id')
-                 ->limit(4)
+                 ->limit(3)
                  ->get();
 
              $toolkit_info = DB::table('users')
@@ -81,10 +81,10 @@ class AllController extends Controller
                  ->where('toolkits.status', '=', 'Approved')
                  ->where('toolkits.deleted','=', 0)
                  ->groupBy('toolkits.id')
-                 ->limit(4)
+                 ->limit(3)
                  ->get();
          }
-         $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->limit(4)->get();
+         $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->limit(3)->get();
 
          $userId = Auth::check() ? Auth::user()->id : 0;
          foreach($course_info as $course){
