@@ -266,6 +266,7 @@ class TeacherController extends Controller
 		$recent_work = WorkExperience::where('user_id', '=', $user_info->id)->where('to_date', '=', '0000-00-00')->first();
 		$recent_institute = Academic::where('user_id', '=', $user_info->id)->orderBy('passing_year', 'DESC')->first();
 		$leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
+        $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type', 'Earning')->sum('amount');
 
 		$jobApplications = JobApplication::where('user_id', $userId)->get();
 
@@ -276,6 +277,6 @@ class TeacherController extends Controller
 		}
 
 
-		return view('teacher.job-list', compact('leaderBoard', 'recent_institute', 'recent_work', 'jobApplications', 'user_info'));
+		return view('teacher.job-list', compact('leaderBoard', 'recent_institute', 'recent_work', 'jobApplications', 'user_info', 'earnings'));
 	}
 }

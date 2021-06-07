@@ -40,7 +40,7 @@ class CourseController extends Controller
             ->select('users.id', 'users.name', 'users.email', 'users.image', 'users.phone_number', 'users.balance', 'users.username', 'courses.id', 'courses.thumbnail', 'courses.title', 'courses.description', 'courses.price', 'courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
             ->where('courses.status', '=', 'Approved')
             ->groupBy('courses.id')
-            ->paginate(4);
+            ->paginate(9);
 
         $userId = Auth::check() ? Auth::user()->id : 0;
         foreach($course_info as $course){
@@ -48,6 +48,8 @@ class CourseController extends Controller
                 ->where('product_type', 'course')
                 ->where('user_id', $userId)
                 ->where('product_id', $course->id)->count();
+
+            $course->lessons = CourseVideo::where('course_id', $course->id)->count();
 
             $course->isBought = $isOrdered ? 1 : 0;
         }

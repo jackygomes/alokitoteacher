@@ -84,7 +84,7 @@
                     <a class="nav-link text-black" href="{{ route('jobBoard') }}">Job Board</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ url('all') }}">Toolkits/Course</a>
+                    <a class="nav-link text-black" href="{{ url('all') }}">Course</a>
                 </li>
 
 

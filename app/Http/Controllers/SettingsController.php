@@ -24,20 +24,22 @@ class SettingsController extends Controller
     }
 
     function index(){
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
 
     	if(Auth::user()->identifier == 1){
     		$recent_work = WorkExperience::where('user_id', '=', Auth::id())->where('to_date', '=', '0000-00-00')->first();
 	    	$recent_institute = Academic::where('user_id', '=', Auth::id())->orderBy('passing_year', 'DESC')->first();
             $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type','Earning')->sum('amount');
 
-		    return view ('settings_teacher', compact('earnings','recent_work', 'recent_institute'));
+		    return view ('settings_teacher', compact('earnings','recent_work', 'recent_institute', 'user_info'));
 
     	}elseif(Auth::user()->identifier == 2) {
-            return view ('settings_school');
+            return view ('settings_school', compact('user_info'));
 
         } elseif(Auth::user()->identifier == 4) {
     	    $personalInfo = StudentPersonalInfo::where('user_id', Auth::user()->id)->first();
-            return view ('student.settings', compact('personalInfo'));
+            return view ('student.settings', compact('personalInfo', 'user_info'));
 
         }
 

@@ -142,7 +142,7 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h2 class="text-center font-weight-bold">Explore Teaching Courses</h2>
-                <button class="btn text-center background-yellow mt-3"><a class="text-white font-weight-bold px-3" href="{{ url('login') }}">Explore More</a></button>
+                <a href="{{ url('course') }}" class="mt-3 btn text-center background-yellow text-white font-weight-bold home-explore-button">Explore More</a>
             </div>
         </div>
         <div class="row">
@@ -154,7 +154,8 @@
                             <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="height: 262px;" class="card-img-top">
                             <div class="card-body">
 
-                                <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($v_course_info->title), 22) }}</p>
+                                <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 19px">{{ str_limit(strip_tags($v_course_info->title), 22) }}</p>
+                                <p class="text-light-dark">{{$v_course_info->lessons}} Lessons</p>
                                 <hr>
                                 <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($v_course_info->name), 20) }}</strong></p>
 
@@ -270,7 +271,7 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h2 class="text-center font-weight-bold">Explore Teaching Resources</h2>
-                <button class="btn text-center background-yellow mt-3"><a class="text-white font-weight-bold px-3" href="{{ url('login') }}">View All Resources</a></button>
+                <a href="{{ route('allResource') }}" class="btn mt-3 text-center bg-white text-dark font-weight-bold home-explore-button">View All Resources</a>
             </div>
         </div>
         <div class="row">

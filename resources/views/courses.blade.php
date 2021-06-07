@@ -26,7 +26,8 @@
                             <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="height: 262px;" class="card-img-top">
                             <div class="card-body">
 
-                                <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($v_course_info->title), 22) }}</p>
+                                <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 19px">{{ str_limit(strip_tags($v_course_info->title), 22) }}</p>
+                                <p class="text-light-dark">{{$v_course_info->lessons}} Lessons</p>
                                 <hr>
                                 <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($v_course_info->name), 20) }}</strong></p>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CourseVideo;
 use App\LeaderBoard;
 use App\Order;
 use App\Resource;
@@ -33,10 +34,10 @@ class HomeController extends Controller
                 ->where('product_type', 'course')
                 ->where('user_id', $userId)
                 ->where('product_id', $course->id)->count();
+            $course->lessons = CourseVideo::where('course_id', $course->id)->count();
 
             $course->isBought = $isOrdered ? 1 : 0;
         }
-
 
 	    $toolkit_info = DB::table('users')
 						->rightJoin('toolkits', 'users.id', '=','toolkits.user_id')

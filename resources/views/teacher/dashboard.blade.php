@@ -1,13 +1,13 @@
-@extends('master')
+@extends('layouts.master-dashboard')
 @section('content')
 
 
-<div class="container-fluid">
+<div class="container-fluid dashboard-bg">
 
     <div class="row">
         @include('includes.dashboard.teacher')
 
-        <div class="col-md-7 col-sm-12 mt-5">
+        <div class="col-md-7 col-sm-12 pt-5">
             <div class="container-fluid ">
                 <div class="row">
                     <div class="col-md-12">
@@ -16,7 +16,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row dashboard-content-block">
                     @if($message = Session::get('success'))
                     <div class="alert alert-success">
                         {{$message}}
@@ -75,7 +75,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row dashboard-content-block">
                     <div class=" mt-5 mb-3 col-sm-12">
                         <h3 class="font-weight-bold mr-3" style="display: inline-block">Resource</h3>
                         <a href="{{route('resource.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen"></i> <small>Add</small></span></a>
@@ -172,7 +172,12 @@
             </div>
         </div> <!-- 2nd col ends here -->
 
-        @include('leaderboard')
+        <div class="col-md-3">
+            @include('leaderboard')
+            <div class="advertise">
+
+            </div>
+        </div>
 
 
 

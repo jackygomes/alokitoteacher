@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CourseVideo;
 use App\Order;
 use App\Resource;
 use Illuminate\Http\Request;
@@ -47,7 +48,6 @@ class AllController extends Controller
                  ->where('courses.status', '=', 'Approved')
                  ->where('courses.deleted','=', 0)
                  ->groupBy('courses.id')
-                 ->limit(4)
                  ->get();
 
              $toolkit_info = DB::table('users')
@@ -70,7 +70,6 @@ class AllController extends Controller
                  ->where('courses.status', '=', 'Approved')
                  ->where('courses.deleted','=', 0)
                  ->groupBy('courses.id')
-                 ->limit(3)
                  ->get();
 
              $toolkit_info = DB::table('users')
@@ -84,7 +83,7 @@ class AllController extends Controller
                  ->limit(3)
                  ->get();
          }
-         $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->limit(3)->get();
+         $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->get();
 
          $userId = Auth::check() ? Auth::user()->id : 0;
          foreach($course_info as $course){
@@ -92,6 +91,8 @@ class AllController extends Controller
                  ->where('product_type', 'course')
                  ->where('user_id', $userId)
                  ->where('product_id', $course->id)->count();
+
+             $course->lessons = CourseVideo::where('course_id', $course->id)->count();
 
              $course->isBought = $isOrdered ? 1 : 0;
          }
