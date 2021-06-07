@@ -270,120 +270,118 @@
         </div>
 
 
-      <div class="container-fluid">
-        <div class="row dashboard-content-block">
-          <div class="col-sm-12">
-            <h3 class="font-weight-bold mt-5" style="display: inline-block">Subject Based Knowledge</h3>
-            <div class="mr=2">
-              <div class="table-responsive-sm">
-                <table class="table score-table">
-                  <thead>
-                    <tr>
-                      <th style="width:20%">Subject</th>
-                      <th style="width:40%">Toolkit</th>
-                      <th style="width:10%">Score</th>
-                      <th style="width:10%">Average Score</th>
-                      <!-- <th style="width:20%">Date</th> -->
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php $i = 0; $subject = '' ; ?>
-                      @foreach ($course_knowledges as $course_knowledge)
-                    <?php
-                        if($subject !== $course_knowledge->subject_name){
-                            $i++;
-                        }
-                     $class = "same_subject". $i ;
-                    ?>
-                      <tr class="subject {{$class}}" >
-                        <td>{{ $course_knowledge->subject_name }}</td>
-                        <td>
-                         {{$course_knowledge->toolkit_title}}
-                        </td>
-                        <td>{{$course_knowledge->totalPoints}}</td>
-                        <td> </td>
+{{--      <div class="container-fluid">--}}
+{{--        <div class="row dashboard-content-block">--}}
+{{--          <div class="col-sm-12">--}}
+{{--            <h3 class="font-weight-bold mt-5" style="display: inline-block">Subject Based Knowledge</h3>--}}
+{{--            <div class="mr=2">--}}
+{{--              <div class="table-responsive-sm">--}}
+{{--                <table class="table score-table">--}}
+{{--                  <thead>--}}
+{{--                    <tr>--}}
+{{--                      <th style="width:20%">Subject</th>--}}
+{{--                      <th style="width:40%">Toolkit</th>--}}
+{{--                      <th style="width:10%">Score</th>--}}
+{{--                      <th style="width:10%">Average Score</th>--}}
+{{--                      <!-- <th style="width:20%">Date</th> -->--}}
+{{--                    </tr>--}}
+{{--                    </thead>--}}
+{{--                    <tbody>--}}
+{{--                    @php $i = 0; $subject = '' ; @endphp--}}
+{{--                      @foreach ($course_knowledges as $course_knowledge)--}}
+{{--                    @php--}}
+{{--                        if($subject !== $course_knowledge->subject_name){--}}
+{{--                            $i++;--}}
+{{--                        }--}}
+{{--                     $class = "same_subject". $i ;--}}
+{{--                    @endphp--}}
+{{--                      <tr class="subject {{$class}}" >--}}
+{{--                        <td>{{ $course_knowledge->subject_name }}</td>--}}
+{{--                        <td>--}}
+{{--                         {{$course_knowledge->toolkit_title}}--}}
+{{--                        </td>--}}
+{{--                        <td>{{$course_knowledge->totalPoints}}</td>--}}
+{{--                        <td> </td>--}}
 
 
-                      </tr>
-                      <?php $subject = $course_knowledge->subject_name ; ?>
-                      @endforeach
+{{--                      </tr>--}}
+{{--                      @php $subject = $course_knowledge->subject_name ; @endphp--}}
+{{--                      @endforeach--}}
 
-                    </tbody>
-                </table>
-                {{--{{ var_dump($course_knowledges) }}--}}
-                @if($course_knowledges == null)
+{{--                    </tbody>--}}
+{{--                </table>--}}
+{{--                @if($course_knowledges == null)--}}
 
-                  <h5 class="text-center text-muted">No Subject Based Knowledge to Show</h5>
-                @endif
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+{{--                  <h5 class="text-center text-muted">No Subject Based Knowledge to Show</h5>--}}
+{{--                @endif--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--        </div>--}}
+{{--      </div>--}}
+{{--    </div>--}}
 
 
-        <div class="container-fluid mb-5">
-          <div class="row dashboard-content-block">
 
-            <div class="col-sm-12">
-              <h3 class="font-weight-bold mt-5 mr-3" style="display: inline-block">Skills</h3>
-              @if($user_info->id == Auth::id())
-              <span class="fa-clickable" data-toggle="modal" data-target="#skills"><i class="fas fa-pen" ></i> <small>Add</small></span>
-              @endif
-                <div class="mr=2">
-                    <div class="table-responsive-sm">
-                        <table class="table ">
-                          <thead>
-                            <tr>
-                              <th style="width:15%">Training Title</th>
+{{--        <div class="container-fluid mb-5">--}}
+{{--          <div class="row dashboard-content-block">--}}
+
+{{--            <div class="col-sm-12">--}}
+{{--              <h3 class="font-weight-bold mt-5 mr-3" style="display: inline-block">Skills</h3>--}}
+{{--              @if($user_info->id == Auth::id())--}}
+{{--              <span class="fa-clickable" data-toggle="modal" data-target="#skills"><i class="fas fa-pen" ></i> <small>Add</small></span>--}}
+{{--              @endif--}}
+{{--                <div class="mr=2">--}}
+{{--                    <div class="table-responsive-sm">--}}
+{{--                        <table class="table ">--}}
+{{--                          <thead>--}}
+{{--                            <tr>--}}
+{{--                              <th style="width:15%">Training Title</th>--}}
 {{--                              <th style="width:15%">Topic</th>--}}
-                              <th style="width:15%">Institute</th>
-                              <th style="width:15%">Country</th>
-                              <th style="width:15%">Location</th>
-                              <th style="width:5%">Year</th>
-                              <th style="width:10%">Duration (days)</th>
-                              @if($user_info->id == Auth::id())
-                              <th style="width:10%">Action</th>
-                              @endif
+{{--                              <th style="width:15%">Institute</th>--}}
+{{--                              <th style="width:15%">Country</th>--}}
+{{--                              <th style="width:15%">Location</th>--}}
+{{--                              <th style="width:5%">Year</th>--}}
+{{--                              <th style="width:10%">Duration (days)</th>--}}
+{{--                              @if($user_info->id == Auth::id())--}}
+{{--                              <th style="width:10%">Action</th>--}}
+{{--                              @endif--}}
 
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach ($skill_info as $v_skill_info)
-                            <tr>
-                              <td>{{$v_skill_info->training_title}}</td>
-{{--                              <td>{{$v_skill_info->topic}}</td>--}}
-                              <td>{{$v_skill_info->institute}}</td>
-                              <td>{{$v_skill_info->country}}</td>
-                              <td>{{$v_skill_info->location}}</td>
-                              <td>
-                                  @if(strlen($v_skill_info->year) > 4)
-                                      {{ date("Y", strtotime($v_skill_info->year)) }}
-                                  @else
-                                      {{$v_skill_info->year}}
-                                  @endif
-                              </td>
-                              <td>{{$v_skill_info->duration}}</td>
+{{--                            </tr>--}}
+{{--                          </thead>--}}
+{{--                          <tbody>--}}
+{{--                            @foreach ($skill_info as $v_skill_info)--}}
+{{--                            <tr>--}}
+{{--                              <td>{{$v_skill_info->training_title}}</td>--}}
+{{--                              <td>{{$v_skill_info->institute}}</td>--}}
+{{--                              <td>{{$v_skill_info->country}}</td>--}}
+{{--                              <td>{{$v_skill_info->location}}</td>--}}
+{{--                              <td>--}}
+{{--                                  @if(strlen($v_skill_info->year) > 4)--}}
+{{--                                      {{ date("Y", strtotime($v_skill_info->year)) }}--}}
+{{--                                  @else--}}
+{{--                                      {{$v_skill_info->year}}--}}
+{{--                                  @endif--}}
+{{--                              </td>--}}
+{{--                              <td>{{$v_skill_info->duration}}</td>--}}
 
-                              @if($user_info->id == Auth::id())
-                              <td><a href="{{ url('remove') }}/skill/{{ $v_skill_info->id }}" class="btn btn-danger btn-sm">Remove</a></td>
-                              @endif
+{{--                              @if($user_info->id == Auth::id())--}}
+{{--                              <td><a href="{{ url('remove') }}/skill/{{ $v_skill_info->id }}" class="btn btn-danger btn-sm">Remove</a></td>--}}
+{{--                              @endif--}}
 
-                            </tr>
-                             @endforeach
-                          </tbody>
-                          </table>
+{{--                            </tr>--}}
+{{--                             @endforeach--}}
+{{--                          </tbody>--}}
+{{--                          </table>--}}
 
-                          @if($skill_info->count() == 0)
-                            <h5 class="text-center text-muted">No Skill to Show</h5>
-                          @endif
+{{--                          @if($skill_info->count() == 0)--}}
+{{--                            <h5 class="text-center text-muted">No Skill to Show</h5>--}}
+{{--                          @endif--}}
 
-                      </div>
-              </div>
-            </div>
-          </div>
-        </div>
+{{--                      </div>--}}
+{{--              </div>--}}
+{{--            </div>--}}
+{{--          </div>--}}
+{{--        </div>--}}
 
 
       </div> <!-- 2nd col ends here -->

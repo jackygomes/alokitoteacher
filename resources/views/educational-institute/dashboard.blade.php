@@ -447,7 +447,7 @@
 
                         <div class="col-md-6 mb-5">
                             <label>Age Limit:</label>
-                            <input type="text" class="form-control border-yellow" name="age_limit" required placeholder="Age Limit (25-35)years">
+                            <input type="text" class="form-control border-yellow" name="age_limit" placeholder="Age Limit (25-35)years">
 
                         </div>
 
@@ -523,7 +523,7 @@
     });
 
     function formSubmitPopupMessage(price) {
-        
+
         if(document.getElementById("featureJobCheckbox").checked) price+=500;
 
         Swal.fire({

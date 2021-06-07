@@ -274,7 +274,7 @@
 
                                     <div class="col-md-6 mb-5">
                                         <label>Age Limit:</label>
-                                        <input type="text" class="form-control border-yellow" name="age_limit" required placeholder="Age Limit (25-35)years">
+                                        <input type="text" class="form-control border-yellow" name="age_limit" placeholder="Age Limit (25-35)years">
 
                                     </div>
 
@@ -300,7 +300,7 @@
                                 </div>
                                 <div class="form-row mb-4">
                                     <div class="col-md-12">
-                                        <label>On Behalf Of:</label>
+                                        <label>On Behalf Of <span class="text-danger font-weight-bold"> *</span>:</label>
                                         <select class="form-control border-yellow" name="obf" required>
                                             <option value="0" selected>-- Select Institution --</option>
                                             @foreach($schools as $school)
