@@ -89,6 +89,7 @@
                                 @if($courses->count() == 0)
                                 <h5 class="text-center text-muted">No Course to Show</h5>
                                 @endif
+                                {{$courses->links()}}
                             </div>
                         </div>
                     </div>

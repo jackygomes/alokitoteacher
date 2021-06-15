@@ -35,9 +35,9 @@ class ResourceController extends Controller
             $category = ResourceCategory::where('id', $request->category)->first();
         }
         if($category){
-            $resource_info = Resource::with('user')->where('deleted',0)->where('category_id',$category->id)->where('status', 'Approved')->paginate(9);
+            $resource_info = Resource::with('user')->where('deleted',0)->where('category_id',$category->id)->where('status', 'Approved')->orderBy('created_at', 'desc')->paginate(9);
         }else {
-            $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->paginate(9);
+            $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->orderBy('created_at', 'desc')->paginate(9);
         }
 
         foreach($resource_info as $resource){

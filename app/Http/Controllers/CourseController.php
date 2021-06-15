@@ -40,6 +40,7 @@ class CourseController extends Controller
             ->select('users.id', 'users.name', 'users.email', 'users.image', 'users.phone_number', 'users.balance', 'users.username', 'courses.id', 'courses.thumbnail', 'courses.title', 'courses.description', 'courses.price', 'courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
             ->where('courses.status', '=', 'Approved')
             ->groupBy('courses.id')
+            ->orderBy('courses.created_at', 'desc')
             ->paginate(9);
 
         $userId = Auth::check() ? Auth::user()->id : 0;

@@ -26,7 +26,7 @@ class HomeController extends Controller
 						->select('users.id','users.name', 'users.image','courses.thumbnail','users.email','users.phone_number','users.balance','users.username','courses.id','courses.title','courses.description','courses.price','courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
                         ->where('courses.status', '=', 'Approved')
                         ->groupBy('courses.id')
-						->inRandomOrder(4)
+                        ->orderBy('courses.created_at', 'desc')
 						->get();
         $userId = Auth::check() ? Auth::user()->id : 0;
         foreach($course_info as $course){
@@ -58,7 +58,7 @@ class HomeController extends Controller
             $toolkit->isBought = $isOrdered ? 1 : 0;
         }
 
-        $resources = Resource::with('user')->limit(10)->get();
+        $resources = Resource::with('user')->limit(10)->where('deleted',0)->where('status', '=', 'Approved')->orderBy('created_at', 'desc')->get();
 
         foreach($resources as $resource){
             $isOrdered = Order::where('status', 'paid')

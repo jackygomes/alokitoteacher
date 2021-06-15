@@ -57,13 +57,30 @@
         </div>
         <div class="stat mt-4">
             <div class="stat-block">
-                <p><span class="float-left">Course in progress</span><span class="float-right text-yellow">8</span></p>
+                <p><span class="float-left">Course in progress</span><span class="float-right text-yellow">
+                        @if(isset($achievements))
+                            {{count($achievements)}}
+                        @else
+                            0
+                        @endif
+                    </span></p>
             </div>
             <div class="stat-block">
-                <p><span class="float-left">Course completed</span><span class="float-right text-yellow">20</span></p>
+                <p><span class="float-left">Course completed</span><span class="float-right text-yellow">
+                        @if(isset($progresses))
+                            {{count($progresses)}}
+                        @else
+                            0
+                        @endif
+                    </span></p>
             </div>
             <div class="stat-block">
-                <p><span class="float-left">Certificates earned</span><span class="float-right text-yellow">0</span></p>
+                <p><span class="float-left">Certificates earned</span><span class="float-right text-yellow">
+                        @if(isset($certificateCount))
+                            {{count($certificateCount)}}
+                        @else
+                            0
+                        @endif</span></p>
             </div>
         </div>
         @if($user_info->id == Auth::id())

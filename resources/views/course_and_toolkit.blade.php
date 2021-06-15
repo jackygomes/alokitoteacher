@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h2 class="text-center font-weight-bold">Explore Teaching Courses</h2>
-                <button class="btn text-center background-yellow mt-3"><a class="text-white font-weight-bold px-3" href="{{url('course') }}">Explore More</a></button>
+                <a class="mt-3 btn text-center background-yellow text-white font-weight-bold home-explore-button" href="{{url('course') }}">Explore More</a>
             </div>
         </div>
         <div class="row">
@@ -77,7 +77,7 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h2 class="text-center font-weight-bold">Explore Teaching Resources</h2>
-                <button class="btn text-center bg-white mt-3"><a class="text-dark font-weight-bold px-3" href="{{route('allResource') }}">View All Resources</a></button>
+                <a class="btn mt-3 text-center bg-white text-dark font-weight-bold home-explore-button" href="{{route('allResource') }}">View All Resources</a>
             </div>
         </div>
         <div class="row">

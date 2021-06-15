@@ -47,6 +47,7 @@ class AllController extends Controller
                  ->select('users.id','users.name', 'users.image','courses.thumbnail','users.email','users.phone_number','users.balance','users.username','courses.id','courses.title','courses.description','courses.price','courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
                  ->where('courses.status', '=', 'Approved')
                  ->where('courses.deleted','=', 0)
+                 ->orderBy('courses.created_at', 'desc')
                  ->groupBy('courses.id')
                  ->get();
 
@@ -69,6 +70,7 @@ class AllController extends Controller
                  ->select('users.id','users.name', 'users.image','courses.thumbnail','users.email','users.phone_number','users.balance','users.username','courses.id','courses.title','courses.description','courses.price','courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
                  ->where('courses.status', '=', 'Approved')
                  ->where('courses.deleted','=', 0)
+                 ->orderBy('courses.created_at', 'desc')
                  ->groupBy('courses.id')
                  ->get();
 
@@ -83,7 +85,7 @@ class AllController extends Controller
                  ->limit(3)
                  ->get();
          }
-         $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->get();
+         $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->orderBy('created_at', 'desc')->get();
 
          $userId = Auth::check() ? Auth::user()->id : 0;
          foreach($course_info as $course){

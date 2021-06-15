@@ -33,28 +33,93 @@
                 <div id="headerSlider" class="owl-carousel">
                     <div class="home-hero-slider-wrap d-flex justify-content-between">
                         <div class="left">
-                            <h1 class="font-weight-bold">Learn, Grow and</h1>
-                            <p class="pb-3">Start your enlightened journey to build skilled teachers and students in the 21st century</p>
+                            <h1 class="font-weight-bold">Problem-based Learning</h1>
+                            <p class="pb-0 mb-0">In this course, we will discuss what is Problem-based Learning (PbL), what are the steps to follow in PbL, what will be a teacher's role in PbL and how will you assess students in PbL.</p>
                             <div class="buttons mt-5">
-                                <a class="btn background-yellow px-5 py-3 text-white" href="#">Be a Member</a>
-                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>
+                                <a class="btn background-yellow px-5 py-3 text-white" href="{{ url('view') }}/c/problem-based-learning-O2Vk1SIHe3">Enrol Now</a>
+{{--                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>--}}
                             </div>
                         </div>
                         <div class="right">
-                            <img src="{{asset('images/new_design/slider-1.png')}}" alt="">
+                            <img src="{{asset('images/new_design/pbl.jpg')}}" alt="">
                         </div>
                     </div>
                     <div class="home-hero-slider-wrap d-flex justify-content-between">
                         <div class="left">
-                            <h1 class="font-weight-bold">Learn, Slider 2</h1>
-                            <p class="pb-3">Start your enlightened journey to build skilled teachers and students in the 21st century</p>
+                            <h1 class="font-weight-bold">21st Century Classroom</h1>
+                            <p class="pb-0 mb-0">In this course we will discuss what is the 21st century classroom, how does it look like and how can a teacher transform his/her classroom to a 21st century classroom.</p>
                             <div class="buttons mt-5">
-                                <a class="btn background-yellow px-5 py-3 text-white" href="#">Be a Member</a>
-                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>
+                                <a class="btn background-yellow px-5 py-3 text-white" href="{{ url('view') }}/c/21st-century-classroom-Fpu9a1">Enrol Now</a>
+{{--                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>--}}
                             </div>
                         </div>
                         <div class="right">
-                            <img src="{{asset('images/new_design/slider-1.png')}}" alt="">
+                            <img src="{{asset('images/new_design/21st.jpg')}}" alt="">
+                        </div>
+                    </div>
+                    <div class="home-hero-slider-wrap d-flex justify-content-between">
+                        <div class="left">
+                            <h1 class="font-weight-bold">Game-based Learning</h1>
+                            <p class="pb-0 mb-0">In this course, we will discuss what is Game-based Learning (GbL), how can a lesson be taught using GbL and how will you assess students in GbL.</p>
+                            <div class="buttons mt-5">
+                                <a class="btn background-yellow px-5 py-3 text-white" href="{{ url('view') }}/c/game-based-learning-wKZ1DSase1">Enrol Now</a>
+                                {{--                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>--}}
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="{{asset('images/new_design/GbL.jpg')}}" alt="">
+                        </div>
+                    </div>
+                    <div class="home-hero-slider-wrap d-flex justify-content-between">
+                        <div class="left">
+                            <h1 class="font-weight-bold">Class Management</h1>
+                            <p class="pb-0 mb-0">In this course we will talk about different aspects of classroom management which includes preventative and corrective measures as well as importance of building good relationships with student.</p>
+                            <div class="buttons mt-5">
+                                <a class="btn background-yellow px-5 py-3 text-white" href="{{ url('view') }}/c/class-management-XtTZUr">Enrol Now</a>
+                                {{--                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>--}}
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="{{asset('images/new_design/CM.jpg')}}" alt="">
+                        </div>
+                    </div>
+                    <div class="home-hero-slider-wrap d-flex justify-content-between">
+                        <div class="left">
+                            <h1 class="font-weight-bold">Psychological Development of Students</h1>
+                            <p class="pb-0 mb-0">In this course we will talk about the importance of proper psychological development and share techniques to build empathy, self-confidence, resilience and grit within our students.</p>
+                            <div class="buttons mt-5">
+                                <a class="btn background-yellow px-5 py-3 text-white" href="{{ url('view') }}/c/psychological-development-of-students-YQg9yW">Enrol Now</a>
+                                {{--                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>--}}
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="{{asset('images/new_design/Psy.jpg')}}" alt="">
+                        </div>
+                    </div>
+                    <div class="home-hero-slider-wrap d-flex justify-content-between">
+                        <div class="left">
+                            <h1 class="font-weight-bold">Inquiry-based Learning</h1>
+                            <p class="pb-0 mb-0">In this course, we will discuss what is Inquiry-based Learning (IbL), what are the steps to follow in IbL, what will be a teacher's role in IbL and how will you assess students in IbL.</p>
+                            <div class="buttons mt-5">
+                                <a class="btn background-yellow px-5 py-3 text-white" href="{{ url('view') }}/c/inquiry-based-learning-IhDGWbSNdh">Enrol Now</a>
+                                {{--                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>--}}
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="{{asset('images/new_design/IbL.jpg')}}" alt="">
+                        </div>
+                    </div>
+                    <div class="home-hero-slider-wrap d-flex justify-content-between">
+                        <div class="left">
+                            <h1 class="font-weight-bold">Math Pedagogy</h1>
+                            <p class="pb-0 mb-0">This course contains tips to introduce basic math concepts to primary students.</p>
+                            <div class="buttons mt-5">
+                                <a class="btn background-yellow px-5 py-3 text-white" href="{{ url('view') }}/c/math-pedagogy-f4lYZe">Enrol Now</a>
+                                {{--                                <a class="btn px-5 py-3 mr-2 text-black login-button" href="#">Explore Jobs</a>--}}
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="{{asset('images/new_design/MP.jpg')}}" alt="">
                         </div>
                     </div>
                 </div>
@@ -116,7 +181,7 @@
             <div class="col-md-12">
                 <div class="hero text-center">
                     <a class="hero__play" href="#nogo">
-                        <img src="{{asset('images/new_design/video-thumbnail.png')}}"/>
+                        <img src="{{asset('images/new_design/video-thumbnail-final.jpg')}}"/>
                         <img class="play-button" src="{{asset('images/new_design/video-section-play.png')}}"/>
                     </a>
                 </div>
@@ -127,7 +192,7 @@
                     <div class="hero__modal">
                         <a class="hero__close" href="#">Close</a>
 
-                        <iframe allowscriptaccess="always" id="hero-video" class="hero__player" src="https://www.youtube.com/embed/1NSA8ycGfKg?enablejsapi=1&html5=1" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        <iframe allowscriptaccess="always" id="hero-video" class="hero__player" src="https://www.youtube.com/embed/MTBDnRDdE_E?enablejsapi=1&html5=1" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
                     </div><!-- /.hero__modal -->
                 </div><!-- /.hero__overlay -->
@@ -394,7 +459,7 @@
                   </div>
                   <ul>
                   @foreach ($leaderBoard as $key =>$leader)
-                      @if($key > 3)
+                      @if($key > 2)
 
                           <li>
                               <a href="{{ url('t')}}/{{ $leader['user']->username }}">

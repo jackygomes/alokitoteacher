@@ -237,7 +237,7 @@
                             <div class="image">
                                 <img src="{{asset('images/new_design/student.png')}}" alt="">
                                 <img class="checkmark" src="{{asset('images/new_design/login-checkmark-circle.png')}}" alt="">
-                                <p>Student</p>
+                                <p>Educator</p>
                             </div>
                         </label>
                     </div>

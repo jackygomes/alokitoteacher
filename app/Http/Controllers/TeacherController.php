@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\JobApplication;
+use App\Order;
 use App\Resource;
 use App\Toolkit;
 use App\ToolkitHistory;
@@ -118,6 +119,8 @@ class TeacherController extends Controller
 		}
 
 		$achievements = DB::select("SELECT * FROM (SELECT courses.title, courses.id, (SELECT count(*) FROM course_quizzes WHERE course_quizzes.course_id = courses.id) AS total_quizzes, count(course_histories.id) AS completed_quizzes, sum(course_histories.points) AS gained_points, sum((SELECT count(*) FROM course_questions WHERE course_quizzes.id = course_questions.quiz_id)) AS total_questions FROM courses JOIN course_quizzes ON courses.id = course_quizzes.course_id JOIN course_histories ON course_quizzes.id = course_histories.quiz_id WHERE course_histories.user_id = " . $user_info->id . " GROUP BY courses.id) a WHERE a.completed_quizzes = a.total_quizzes");
+        $progresses = DB::select("SELECT * FROM (SELECT courses.title, (SELECT count(*) FROM course_quizzes WHERE course_quizzes.course_id = courses.id) AS total_quizzes, count(course_histories.id) AS completed_quizzes, MAX(course_histories.updated_at) AS updated_at FROM courses JOIN course_quizzes ON courses.id = course_quizzes.course_id JOIN course_histories ON course_quizzes.id = course_histories.quiz_id WHERE course_histories.user_id = " . $user_info->id . " GROUP BY courses.id) a WHERE a.completed_quizzes != a.total_quizzes");
+        $certificateCount = Order::where('user_id', Auth::id())->where('certificate', 1)->get();
 		$canCreateCourse = false;
 		foreach($achievements as $achievement)  if(round((($achievement->gained_points/($achievement->total_questions * 2)) * 100), 1) >=50) $canCreateCourse = true;
 		$course_knowledges = DB::select("
@@ -132,7 +135,7 @@ class TeacherController extends Controller
 
 		$courses = Course::where('user_id',Auth::id())->get();
 
-		return view('teacher.dashboard', compact('courses','canCreateCourse','earnings', 'resources', 'toolkits', 'user_info', 'recent_work', 'leaderBoard', 'recent_institute', 'achievements'));
+		return view('teacher.dashboard', compact('courses','canCreateCourse','earnings', 'resources', 'toolkits', 'user_info', 'recent_work', 'leaderBoard', 'recent_institute', 'achievements','progresses','certificateCount'));
 	}
 
 	function picture(Request $request)
