@@ -2,30 +2,28 @@
 @section('content')
 
 
-<div class="container-fluid" style="min-height: 100vh">
+<div class="container-fluid all-job" style="min-height: 100vh">
 	<div class="row">
-		<div class="col-md-2 sidebar-job-all" style="background-color: #f5b82f;">
+		<div class="col-md-2 sidebar-job-all px-4" style="background-color: #532436;">
 
-			<a href="{{ url('jobs/all') }}" class="btn bg-white form-control mt-5 {{ request()->route('type') == 'all' ? 'job-button-active' : '' }}">All Jobs</a>
+			<a href="{{ url('jobs/all') }}" class="btn background-yellow text-white home-explore-button btn-block mt-5 {{ request()->route('type') == 'all' ? 'job-button-active' : '' }}">View All Jobs</a>
 {{--			<a href="{{ url('jobs/saved') }}" class="btn bg-white form-control mt-3 {{ request()->route('type') == 'saved' ? 'job-button-active' : '' }}">Saved Jobs</a>--}}
 
 
 
 			<h3 class="font-weight-bold mt-5 text-white">Filter</h3>
 			<hr>
-			<label for="" class="text-white">Search By Location</label>
-			<select class="form-control border-yellow" id="location" required>
-				<option value="" disabled="" selected="">-- Location --</option>
-				<option value="">-- All --</option>
+			<select class="form-control mt-5" id="location" required>
+				<option value="" disabled="" selected="">Select Location</option>
+				<option value="">All Location</option>
 				@foreach($locations as $location)
 				<option value="{{ $location->location }}">{{ $location->location }}</option>
 				@endforeach
 			</select>
 			<br>
-			<label for="school" class="text-white">Search By School</label>
-			<select class="form-control border-yellow mb-3" id="school" required>
-				<option value="" disabled="" selected="">-- School --</option>
-				<option value="">-- All --</option>
+			<select class="form-control mb-3" id="school" required>
+				<option value="" disabled="" selected="">Select School</option>
+				<option value="">All School</option>
 				@foreach($schools as $school)
 				<option value="{{ $school->id }}">{{ $school->name }}</option>
 				@endforeach
@@ -42,18 +40,17 @@
 		            </div>
 		        @endif
 				<div class="row">
-					<div class="col-8 col-md-10">
-					  <input class="form-control" id="search" type="text" placeholder="Search For Job..">
-					</div>
-
-					<div class="col-4 col-md-2">
-					  <button id="searchButton" class="btn background-yellow mb-2 float-right w-100">Search</button>
+					<div class="col-12 col-md-12">
+                        <div class="search-wrapper">
+                            <input class="form-control" id="search" type="text" placeholder="Search For Job..">
+                            <img id="searchButton" class="background-yellow" src="{{asset('images/new_design/job-search-button.png')}}" alt="">
+                        </div>
 					</div>
 				</div>
 			  	<br>
 				@if($featuredJobs->count() > 0)
 				<div class="featured-job">
-					<table class="table table-bordered" >
+					<table class="table" >
 						<thead>
 						<tr>
 							<th colspan="2" class="font-weight-bold">
@@ -69,56 +66,63 @@
 							@if( $count % 2 != 0 )
 							<tr>
 							@endif
-								<td id="job_{{ $featuredJob->job_id }}" class="bg-white border-yellow" style="background-color: #fff4da !important;">
-									<div class="">
+								<td id="job_{{ $featuredJob->job_id }}" class="">
+									<div class="bg-white feature-job-card border-yellow text-light-dark">
 										<div class="row">
 											<div class="col-md-2 text-center">
 												@if($featuredJob->image == null)
 													<i class="fas fa-user-circle fa-5x text-yellow"></i>
 												@else
-													<div class="mx-auto" style="width: 70px; height: 70px;">
+													<div class="mx-auto" style="width: 138px; height: 138px;">
 														<img class="img-fluid rounded-circle h-100 w-100" src="{{ url('images/profile_picture') }}/{{ $featuredJob->image }}">
 													</div>
 												@endif
-
-												<h4 class="font-weight-bold mt-3"><a class="text-yellow" style="font-size: 16px" href="{{ url('s') }}/{{ $featuredJob->username }}"> {{ $featuredJob->name }}</a></h4>
 											</div>
 
 
 											<div class="col-md-7">
-												<span class="font-weight-bold">Job Positon: {{ $featuredJob->job_title }}</span><br>
+												<span class="font-weight-bold text-dark">{{ $featuredJob->job_title }}</span><br>
 
-												<span class="font-weight-bold">Salary Range:</span><span> {{ $featuredJob->expected_salary_range }}</span><br>
+                                                <span class="text-yellow">{{ $featuredJob->name }}</span><br>
 
-												<span class="font-weight-bold">Type:</span><span>@if($featuredJob->nature == 1) Permanent @elseif($featuredJob->nature == 2) Part-Time  @elseif($featuredJob->nature == 3) Contractual @else - @endif</span><br>
+												<span class="label-image"><img class="img-fluid" src="{{asset('images/new_design/salary.png')}}"></span><span class="text-dark"> {{ $featuredJob->expected_salary_range }}</span><br>
 
-												<span class="font-weight-bold">Vacancy:</span><span> {{ $featuredJob->vacancy }}</span><br>
+{{--												<span class="font-weight-bold">Type:</span><span>@if($featuredJob->nature == 1) Permanent @elseif($featuredJob->nature == 2) Part-Time  @elseif($featuredJob->nature == 3) Contractual @else - @endif</span><br>--}}
 
-												<span class="font-weight-bold" >Description:</span>
+{{--												<span class="font-weight-bold">Vacancy:</span><span> {{ $featuredJob->vacancy }}</span><br>--}}
 
-												{{ str_limit(strip_tags($featuredJob->description), 150) }}
+                                                <p class="ma-0 description">{{ str_limit(strip_tags($featuredJob->description), 150) }}</p>
 
 
 											</div>
 
-											<div class="col-md-3">
-												<small>
-													Published: {{ date("jS M, Y", strtotime($featuredJob->created_at)) }}</small>
-												<br>
-												<small class="text-danger">
-													Deadline: {{ date("jS M, Y", strtotime($featuredJob->deadline)) }}</small>
-												<br>
+											<div class="col-md-3 text-right">
+												<div class="job-card-right">
+                                                    <small>
+                                                        @php
+                                                            $date = \Carbon\Carbon::parse($featuredJob->created_at);
 
-												@if(Auth::check())
-													@if(Auth::user()->identifier != 101 && Auth::user()->identifier != 2 && Auth::user()->identifier != 104)
-														@if($featuredJob->isApplied == 0)
-															<button type="button" value="{{ $featuredJob->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$featuredJob->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
-														@else
-															<button type="button" value="{{ $featuredJob->job_id }}" class="btn btn-success applyButton" disabled>Applied</button>
-														@endif
-													@endif
-												@endif
-												<a href="{{ url('job_detail') }}/{{ $featuredJob->job_id }}" class="btn background-yellow  text-white">View</a>
+                                                            $now = \Carbon\Carbon::now();
+
+                                                            $diff = $date->diffInDays($now);
+                                                        @endphp
+                                                        Posted {{$diff}} days ago</small>
+                                                    <br>
+                                                    <p class="ma-0 text-dark">Deadline: {{ date("jS M, Y", strtotime($featuredJob->deadline)) }}</p>
+
+                                                    @if(Auth::check())
+                                                        @if(Auth::user()->identifier != 101 && Auth::user()->identifier != 2 && Auth::user()->identifier != 104)
+                                                            @if($featuredJob->isApplied == 0)
+                                                                <button type="button" value="{{ $featuredJob->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$featuredJob->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
+                                                            @else
+                                                                <button type="button" value="{{ $featuredJob->job_id }}" class="btn btn-success applyButton" disabled>Applied</button>
+                                                            @endif
+                                                        @endif
+                                                    @endif
+                                                    <div class="button-section">
+                                                        <a href="{{ url('job_detail') }}/{{ $featuredJob->job_id }}" class="btn background-yellow text-white">View Job</a>
+                                                    </div>
+                                                </div>
 											</div>
 										</div>
 									</div>
@@ -134,7 +138,7 @@
 				<br>
 
 			  	<div id="table">
-					<table class="table table-bordered">
+					<table class="table">
 					    <thead>
 					      <tr>
 					        <th class="font-weight-bold">

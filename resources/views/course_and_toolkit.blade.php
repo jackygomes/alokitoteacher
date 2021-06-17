@@ -17,8 +17,16 @@
                             <div class="card">
                                 <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="height: 262px;" class="card-img-top">
                                 <div class="card-body">
-
-                                    <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 19px">{{ str_limit(strip_tags($v_course_info->title), 22) }}</p>
+                                    @if(strlen($v_course_info->title) < 26)
+                                        <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($v_course_info->title), 26) }}</p>
+                                    @else
+                                        <div class="ticker-wrap">
+                                            <div class="ticker">
+                                                <div class="ticker__item card-title text-dark font-weight-bold mb-0">
+                                                    {{$v_course_info->title}}</div>
+                                            </div>
+                                        </div>
+                                    @endif
                                     <p class="text-light-dark">{{$v_course_info->lessons}} Lessons</p>
                                     <hr>
                                     <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($v_course_info->name), 20) }}</strong></p>
@@ -88,8 +96,16 @@
                             <div class="card">
                                 <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
                                 <div class="card-body">
-
-                                    <p class="card-title text-dark font-weight-bold" style="font-size: 19px">{{ str_limit(strip_tags($resource->resource_title), 22) }}</p>
+                                    @if(strlen($resource->resource_title) < 26)
+                                        <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($resource->resource_title), 26) }}</p>
+                                    @else
+                                        <div class="ticker-wrap">
+                                            <div class="ticker">
+                                                <div class="ticker__item card-title text-dark font-weight-bold mb-0">
+                                                    {{$resource->resource_title}}</div>
+                                            </div>
+                                        </div>
+                                    @endif
                                     <hr>
                                     <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 20) }}</strong></p>
 

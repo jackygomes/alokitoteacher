@@ -234,6 +234,9 @@ a {
 .card {
     border-radius: 8px;
 }
+.card-body {
+    overflow: hidden;
+}
 .card-img-top {
     width: 100%;
     border-top-left-radius: 8px;
@@ -242,6 +245,66 @@ a {
 .card-footer:last-child {
     border-radius: 0 0 8px 8px;
 }
+
+/*card ticker*/
+@-webkit-keyframes ticker {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+@keyframes ticker {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+.ticker-wrap {
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    padding-left: 100%;
+    box-sizing: content-box;
+}
+
+.ticker-wrap .ticker {
+
+    display: inline-block;
+    white-space: nowrap;
+    padding-right: 100%;
+    box-sizing: content-box;
+
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-name: ticker;
+    animation-name: ticker;
+    -webkit-animation-duration: 10s;
+    animation-duration: 10s;
+}
+
+.ticker-wrap .ticker__item {
+     display: inline-block;
+     padding: 0 2rem;
+     font-size: 20px;
+     color: white;
+
+ }
 
 /*alokito journey*/
 .alokito-journey {
@@ -445,4 +508,62 @@ a {
     left: 50%;
     top: 15%;
     background-color: #fff;
+}
+
+.all-job hr {
+    /*border-color: #;*/
+    border:1px solid #ffffff14;
+}
+.all-job .form-control {
+    padding: 16px;
+    height: auto;
+    border-radius: 9px;
+    color: #09090970;
+}
+.all-job .table thead th {
+    border: none;
+    padding: 20px 0;
+    font-size: 20px;
+}
+.all-job td {
+    padding: 0;
+    border: none;
+}
+.all-job .feature-job-card,.all-job .job-card {
+    border: 2px solid;
+    padding:2rem;
+    border-radius: 8px;
+}
+.all-job .feature-job-card .job-card-right,.all-job .job-card  .job-card-right {
+    position: relative;
+    height: 100%;
+}
+.all-job .feature-job-card .job-card-right .button-section,.all-job .job-card  .job-card-right .button-section {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.all-job .job-card {
+    border-color: #E1E1E1;
+    margin-bottom: 20px;
+}
+.all-job .feature-job-card .label-image img {
+    margin-top: -2px;
+    margin-right: 5px;
+}
+.all-job .feature-job-card .description {
+    font-size: 12px;
+}
+.search-wrapper {
+    position: relative;
+}
+.all-job #searchButton{
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    top: 49%;
+    transform: translateY(-50%);
+    padding: 14px 14px 15px;
+    border-top-right-radius: 9px;
+    border-bottom-right-radius: 9px;
 }
