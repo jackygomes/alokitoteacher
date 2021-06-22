@@ -567,3 +567,66 @@ a {
     border-top-right-radius: 9px;
     border-bottom-right-radius: 9px;
 }
+
+/*Contact Us*/
+.contact-us-wrapper {
+    background-color: #532436;
+    border-radius: 12px;
+    padding: 80px;
+    background-image: url("../images/new_design/Shape.png");
+    background-position: top right;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.contact-us-content .item {
+    margin-bottom: 20px;
+}
+.contact-us-content .item img, .contact-us-content .item a, .contact-us-content .item p{
+    display: inline-block;
+}
+.contact-us-content .item p {
+    display: inline-flex;
+}
+.contact-us-content .item img {
+    width: 22px;
+    margin-right: 10px;
+}
+.contact-us-content-bottom {
+    margin-top: 80px;
+}
+.contact-us-content-bottom a{
+    display: inline-block;
+    margin-right: 28px;
+}
+.contact-us-content-bottom a img {
+    width: 28px;
+}
+.contact-us-wrapper form {
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 12px;
+}
+
+/* About Us */
+.about-page .top-section {
+    padding: 110px 0;
+}
+.about-page .banner-header {
+    font-size: 50px;
+    margin-top: 90px;
+    margin-bottom: 50px;
+}
+.about-page .section-header {
+    font-size: 50px;
+    margin-bottom: 40px;
+}
+.about-page .about-us-section {
+    padding: 150px 0;
+    background-color: #FED495;
+    position: relative;
+}
+.about-page .our-vision {
+    position: relative;
+    padding: 200px 0;
+    background-color: #F5F9FE;
+}

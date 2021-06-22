@@ -219,7 +219,7 @@
                             <div class="image" >
                                 <img src="{{asset('images/new_design/education.png')}}" alt="">
                                 <img class="checkmark" src="{{asset('images/new_design/login-checkmark-circle.png')}}" alt="">
-                                <p>Education</p>
+                                <p>Educator</p>
                             </div>
                         </label>
 
@@ -237,7 +237,7 @@
                             <div class="image">
                                 <img src="{{asset('images/new_design/student.png')}}" alt="">
                                 <img class="checkmark" src="{{asset('images/new_design/login-checkmark-circle.png')}}" alt="">
-                                <p>Educator</p>
+                                <p>Student</p>
                             </div>
                         </label>
                     </div>
