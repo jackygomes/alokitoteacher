@@ -95,7 +95,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+               <!-- <div class="row">
                     <div class=" mt-5 mb-3 col-sm-12">
                         <h3 class="font-weight-bold mr-3" style="display: inline-block">Toolkits</h3>
                         <a href="toolkit/create"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen"></i> <small>Add</small></span></a>
@@ -145,11 +145,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row">
                     <div class=" mt-5 mb-3 col-sm-12">
-                        <h3 class="font-weight-bold mr-3" style="display: inline-block">Resource</h3>
+                        <h3 class="font-weight-bold mr-3" style="display: inline-block">Innovations</h3>
                         <a href="{{route('resource.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen"></i> <small>Add</small></span></a>
                         <div class="mr=2">
                             <div class="table-responsive-sm">
@@ -157,7 +157,7 @@
                                     <thead>
                                         <tr>
                                             <th style="width:10%">No.</th>
-                                            <th style="width:30%">Resource Name</th>
+                                            <th style="width:30%">Innovation Name</th>
                                             <th style="width:10%">Price</th>
                                             <th style="width:10%">Status</th>
                                             <th style="width:20%">Action</th>

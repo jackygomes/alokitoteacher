@@ -7,6 +7,7 @@ use App\Resource;
 use App\ResourceCategory;
 use App\ResourceDocument;
 use App\ResourceVideo;
+use App\ResourceRating;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,8 +97,8 @@ class ResourceController extends Controller
         $this->validate($request, [
             'resource_name'         => 'required',
             'resource_description'  => 'required',
-            'resource_price'        => 'required|numeric|max:600',
-            'category'              => 'required',
+            // 'resource_price'        => 'required|numeric|max:600',
+            // 'category'              => 'required',
             'thumbnailImage'        => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -112,10 +113,10 @@ class ResourceController extends Controller
         try{
             $resourceData = [
                 'user_id'       => $userId,
-                'category_id'   => $request->category,
+                // 'category_id'   => $request->category,
                 'resource_title'=> isset($request->resource_name) ? $request->resource_name : "",
                 'description'   => isset($request->resource_description) ? $request->resource_description : "",
-                'price'         => $request->resource_price,
+                // 'price'         => $request->resource_price,
                 'slug'          => $slug,
                 'thumbnail'     => $image_name,
             ];
@@ -205,8 +206,8 @@ class ResourceController extends Controller
         $this->validate($request, [
             'resource_name'         => 'required',
             'resource_description'  => 'required',
-            'resource_price'        => 'required|numeric|max:600',
-            'category'              => 'required',
+            // 'resource_price'        => 'required|numeric|max:600',
+            // 'category'              => 'required',
         ]);
 
         if($resource->resource_title != $request->resource_name){
@@ -217,10 +218,10 @@ class ResourceController extends Controller
             $slug = $resource->slug;
         }
 
-        $resource->category_id = $request->category;
+        // $resource->category_id = $request->category;
         $resource->resource_title = $request->resource_name;
         $resource->description = $request->resource_description;
-        $resource->price = $request->resource_price;
+        // $resource->price = $request->resource_price;
         $resource->status = $request->status;
         $resource->slug = $slug;
 
@@ -407,7 +408,11 @@ class ResourceController extends Controller
             return abort(404);
         }
         $creator = User::find($info->user_id);
-        return view('resource.overview', compact('info','creator'));
+        $content_rating = DB::table('resource_ratings')
+                ->where('resource_id', '=', $info->id)
+                ->avg('rating');
+
+        return view('resource.overview', compact('info','creator', 'content_rating'));
     }
 
     public function resourceView(Request $request) {
@@ -446,6 +451,32 @@ class ResourceController extends Controller
             $resource->save();
 
             return back()->with('success', 'Resource deleted successfully!');
+
+
+        }catch(\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
+    }
+
+    function rateResource(Request $request)
+    {
+        try{
+            $rating = ResourceRating::where('user_id', '=', Auth::id())
+            ->where('resource_id', '=', $request->resource_id)
+            ->first();
+            if ($rating == null) {
+                $rating = new ResourceRating;
+                $rating->user_id = Auth::id();
+                $rating->resource_id = $request->resource_id;
+            }
+
+            $rating->rating = $request->resourceRating;
+            $rating->save();
+
+            return back()->with('success', 'Innovation rated successfully!');
 
 
         }catch(\Exception $e) {

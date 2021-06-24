@@ -47,6 +47,7 @@
                                             <i class="far fa-star text-light-dark"></i>
                                         @endif
                                     @endfor
+                                    ({{$v_course_info->rating_count}})
                                     <span class="float-right text-success font-weight-bold">
                                         @if($v_course_info->isBought == 1)
                                             Owned

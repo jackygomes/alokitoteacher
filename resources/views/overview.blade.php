@@ -239,7 +239,7 @@
                  @endif
              </div>
              <br>
-             <h3><a href="{{ url('t') }}/{{ $creator->username }}" class="font-weight-bold text-white">{{ $creator->name }}</a></h3>
+             <h3><a href="{{ url('t') }}/{{ $creator->username }}" class="font-weight-bold text-capitalize">{{ $creator->name }}</a></h3>
 
 
 {{--             <span>--}}
@@ -326,10 +326,7 @@
                  @endif
                  @elseif(Auth::check())
                  @if($info->price > Auth::user()->balance)
-                 <form onclick="return confirm('Insufficiant Balance. Deposit your balance first.')">
-                     @csrf
-                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Purchase</button>
-                 </form>
+                    <button type="submit" onclick="insufficientBalance('{{route("deposit.form")}}')" class="mt-4 btn text-white background-yellow btn-lg">Purchase</button>
                  @else
                  <form action="{{route('purchase.product', $info->id)}}" onclick="return confirm('Are you sure to purchase this course? if yes then click ok.')" method="post">
                      @csrf
@@ -365,10 +362,7 @@
                  @endif
                  @elseif(Auth::check())
                  @if($info->price > Auth::user()->balance)
-                 <form onclick="return confirm('Insufficiant Balance. Deposit your balance first.')">
-                     @csrf
-                     <button type="submit" class="mt-4 btn text-white background-yellow btn-lg">Purchase</button>
-                 </form>
+                     <button type="submit" onclick="insufficientBalance('{{route("deposit.form")}}')" class="mt-4 btn text-white background-yellow btn-lg">Purchase</button>
                  @else
                  <form action="{{route('purchase.product', $info->id)}}" onclick="return confirm('Are you sure to purchase this toolkit? if yes then click ok.')" method="post">
                      @csrf
@@ -401,8 +395,9 @@
 
 
      </div>
+     <hr>
  </div>
- <hr>
+ 
 
 
 
@@ -415,6 +410,21 @@
 
 
  <script>
+    function insufficientBalance(url) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Insufficiant Balance. Deposit your balance first.',
+            confirmButtonColor: '#f5b82f',
+            confirmButtonText: "Yes",
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        })
+    }
      (function(window, document) {
          var loader = function() {
              var script = document.createElement("script"),

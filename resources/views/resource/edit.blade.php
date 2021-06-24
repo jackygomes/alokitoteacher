@@ -56,12 +56,12 @@
                                 <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
                                 <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addDocument">Add Document</button>
                             @endif
-                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="editResource">Edit Resource Info</button>
+                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="editResource">Edit Innovation Info</button>
                         </div>
                     </div>
                     <div id="resourceSection">
                         <div class="row">
-                            <h3>Edit Resource Information:</h3>
+                            <h3>Edit Innovation Information:</h3>
                         </div>
                         <div class="row">
                             @if($message = Session::get('success'))
@@ -86,7 +86,7 @@
                                 <div class="form-group row">
                                     <label for="resourceName" class="col-sm-2 col-form-label">Name:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="resource_name" class="form-control" value="{{$resource->resource_title}}" id="resourceName" placeholder="Resource Name">
+                                        <input type="text" name="resource_name" class="form-control" value="{{$resource->resource_title}}" id="resourceName" placeholder="Innovation Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -95,20 +95,20 @@
                                         <textarea class="form-control" name="resource_description" placeholder="Description" id="resourceDescription" rows="3">{{$resource->description}}</textarea>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <!-- <div class="form-group row">
                                     <label for="Price" class="col-sm-2 col-form-label">Price:</label>
                                     <div class="col-sm-10">
-                                        <input type="number" name="resource_price" class="form-control" value="{{$resource->price}}" id="Price" placeholder="Resource Price">
-                                        <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter price between 0 - 600 BDT. Enter 0 in price field if the resource is free.</p>
+                                        <input type="number" name="resource_price" class="form-control" value="{{$resource->price}}" id="Price" placeholder="Innovation Price">
+                                        <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter price between 0 - 600 BDT. Enter 0 in price field if the innovation is free.</p>
                                     </div>
-                                </div>
+                                </div> -->
 
-                                <div class="form-group row">
+                                <!-- <div class="form-group row">
                                     <label for="toolkitPrice" class="col-sm-2 col-form-label">Your Earnings</label>
                                     <div class="col-sm-10">
                                         <input type="text" id="earnings" class="form-control" placeholder="Earnings" readonly>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="form-group row">
                                     <label for="toolkitPrice" class="col-sm-2 col-form-label">Created By:</label>
@@ -117,7 +117,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                                <!-- <div class="form-group row">
                                     <label for="subjects" class="col-sm-2 col-form-label">Category:</label>
                                     <div class="col-sm-10">
                                         <select class="custom-select mr-sm-2" name="category" id="category">
@@ -127,7 +127,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 @if($user_info->identifier == 101 || $user_info->identifier == 104)
                                     @php $statusOptions = ['Pending', 'Approved']; @endphp

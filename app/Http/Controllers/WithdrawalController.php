@@ -19,8 +19,9 @@ class WithdrawalController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
+		$earnings = Transaction::where('user_id', Auth::id())->where('transaction_type', 'Earning')->sum('amount');
 
-        return view('withdraw.create', compact('user_info'));
+        return view('withdraw.create', compact('user_info', 'earnings'));
     }
 
     public function submit(Request $request)
@@ -47,7 +48,9 @@ class WithdrawalController extends Controller
         $user_info = User::where('id', '=', $userId)->first();
         $revenue = Revenue::all()->sum('revenue');
         $transactions = Transaction::where('transaction_type', 'withdrawal')->get();
-        return view('withdraw.list', compact('transactions', 'user_info', 'revenue'));
+		$earnings = Transaction::where('user_id', Auth::id())->where('transaction_type', 'Earning')->sum('amount');
+
+        return view('withdraw.list', compact('transactions', 'user_info', 'revenue', 'earnings'));
     }
 
     public function approve($id)

@@ -54,7 +54,7 @@
             <div class="col-md-9 col-sm-12 mt-3">
                 <div class="container-fluid">
                     <div class="row">
-                        <h3>Create Resource:</h3>
+                        <h3>Create Innovation:</h3>
                     </div>
                     <div class="row">
                         @if($errors->any())
@@ -69,7 +69,7 @@
                             <div class="form-group row">
                                 <label for="resourceName" class="col-sm-2 col-form-label">Name:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="resource_name" class="form-control" id="resourceName" placeholder="Resource Name">
+                                    <input type="text" name="resource_name" class="form-control" id="resourceName" placeholder="Innovation Name">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -78,23 +78,23 @@
                                     <textarea class="form-control" name="resource_description" placeholder="Description" id="resourceDescription" rows="3"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="Price" class="col-sm-2 col-form-label">Price:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="resource_price" class="form-control" id="Price" placeholder="Resource Price">
-                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter price between 0 - 600 BDT. Enter 0 in price field if the resource is free.</p>
+                                    <input type="text" name="resource_price" class="form-control" id="Price" placeholder="Innovation Price">
+                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter price between 0 - 600 BDT. Enter 0 in price field if the Innovation is free.</p>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="toolkitPrice" class="col-sm-2 col-form-label">Your Earnings</label>
                                 <div class="col-sm-10">
                                     <input type="text" id="earnings" class="form-control" placeholder="Earnings" readonly>
 {{--                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">*Earnings After 15% Cut.</p>--}}
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="subjects" class="col-sm-2 col-form-label">Category:</label>
                                 <div class="col-sm-10">
                                     <select class="custom-select mr-sm-2" name="category" id="category">
@@ -104,7 +104,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="form-group row">
                                 <label for="thumbnail_image" class="col-sm-2 col-form-label">Thumbnail Image:</label>

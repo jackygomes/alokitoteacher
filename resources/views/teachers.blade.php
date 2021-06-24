@@ -6,7 +6,7 @@
 
     <div class="row">
         @include('includes.dashboard.teacher')
-            <div class="col-md-7 col-sm-12 pt-5">
+        <div class="col-md-7 col-sm-12 pt-5">
 
 {{--    @if($user_info->id == Auth::id())--}}
 {{--    <div class="col-md-7 col-sm-12 mt-5">--}}
@@ -15,6 +15,13 @@
 {{--    @endif--}}
       <div class="container-fluid ">
 
+        <div class="row">
+          <div class="col-md-12">
+              <a href="{{route('teacher.job.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                  Job Application
+              </a>
+          </div>
+        </div>
         @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}
@@ -28,9 +35,9 @@
         @endif
 
 
-        <h3 class="font-weight-bold" >Achievements</h3>
         <div class="row dashboard-content-block">
           <div class="col-sm-12 mt-2">
+          <h3 class="font-weight-bold mt-2 mb-5" >Achievements</h3>
 
             {{--
             {{Auth::id()}}
@@ -91,6 +98,70 @@
           </div>
         </div>
       </div>
+
+      <div class="container-fluid">
+        <div class="row dashboard-content-block">
+          <div class="col-md-12">
+          <h3 class="font-weight-bold mr-3 pt-3 pb-2" style="display: inline-block">My Innovations</h3>
+          <a href="{{route('resource.create')}}"><span class="fa-clickable"><i class="fas fa-pen"></i> <small>Add</small></span></a>
+            <div id="exploreResource" class="owl-carousel card-slider">
+                @foreach ($resources as $resource)
+                    <div class="item mt-3 mb-5">
+                        <a href="{{ url('overview') }}/r/{{$resource->slug}}">
+                            <div class="card">
+                                <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                <div class="card-body">
+                                    @if(strlen($resource->resource_title) < 26)
+                                        <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($resource->resource_title), 26) }}</p>
+                                    @else
+                                        <div class="ticker-wrap">
+                                            <div class="ticker">
+                                                <div class="ticker__item card-title text-dark font-weight-bold mb-0">
+                                                    {{$resource->resource_title}}</div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <hr>
+                                    <div class="text-dark">
+{{--                                        @for($i = 1; $i <= 5; $i++)--}}
+{{--                                            @if($resources->rating - $i >= 0)--}}
+{{--                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
+{{--                                            @else--}}
+{{--                                                <i class="far fa-star text-light-dark"></i>--}}
+{{--                                            @endif--}}
+{{--                                        @endfor--}}
+                                      <span class="text-success font-weight-bold">
+                                      @if($resource->isBought == 1)
+                                              Owned
+                                          @else
+                                              @if($resource->price == 0)
+                                                  Free
+                                              @else
+                                                  {{ round($resource->price, 2)}} BDT
+                                              @endif
+                                          @endif
+                                        </span>
+                                      </div>
+                                      <div >
+                                      <hr>
+                                        <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">
+                                            <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                            <input class="btn btn-danger btn-sm" onclick="resourceDeleteConfirm({{$resource->id}})" type="button" value="Remove" />
+                                            <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                            @method('delete')
+                                            @csrf
+                                        </form>
+                                      </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                  @endforeach
+              </div>
+          </div>
+          </div>
+        </div>
 
 
 
@@ -492,7 +563,7 @@
             </div> -->
             <div class="col-12">
               <label>Result:</label>
-              <input type="number" class="form-control border-yellow" step="0.01" min="0" max="5" name="cgpa" placeholder="CGPA/GPA" required>
+              <input type="text" class="form-control border-yellow" step="0.01" min="0" max="5" name="cgpa" placeholder="CGPA/GPA" required>
 
             </div>
           </div>
@@ -602,6 +673,22 @@
  @push('js')
 
     <script type="text/javascript">
+        $('#exploreResource').owlCarousel({
+            loop:false,
+            margin:30,
+            nav:false,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:3
+                },
+                1000:{
+                    items:3
+                }
+            }
+        });
         $(".yearDatepicker").datepicker({
             format: "yyyy",
             viewMode: "years",
@@ -644,6 +731,21 @@
         $(subject).find('td:nth-child(4)').remove() ;
         $(subject[0]).append(`<td style="vertical-align: middle; text-align: center" rowspan="${totalSubject}">${score} </td>`) ;
 
+    }
+    function resourceDeleteConfirm(id) {
+        Swal.fire({
+            icon: 'question',
+            title: 'Are you sure to delete?',
+            confirmButtonColor: '#f5b82f',
+            confirmButtonText: "Yes",
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#resourceDeleteForm_" + id).find('[type="submit"]').trigger('click');
+            }
+        })
     }
 
     </script>

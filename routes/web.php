@@ -115,6 +115,8 @@ Route::group(['prefix' => 'resource'], function () {
     Route::post('document/create/{id}', 'ResourceController@documentCreate')->name('resource.document.create');
     Route::post('document/update/{id}', 'ResourceController@documentUpdate')->name('resource.document.update');
 
+    Route::post('rate', 'ResourceController@rateResource')->name('rate.resource');
+
 
     Route::post('load_content', 'ResourceController@load_content');
 });
@@ -122,7 +124,7 @@ Route::group(['prefix' => 'resource'], function () {
 
 Route::get('all', 'AllController@index');
 
-Route::get('course', 'CourseController@index');
+Route::get('course', 'CourseController@index')->name('allCourse');
 
 Route::get('contact_us', 'ContactController@index');
 Route::get('overview/{course_toolkit}/{slug}', 'ContentController@overview');

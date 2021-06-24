@@ -96,6 +96,7 @@
                                     <th>Sl.</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Mobile No.</th>
                                     <th>Start Date</th>
                                     <th>Completed Date</th>
                                     <!-- <th>Certificate Purchase</th>
@@ -109,6 +110,7 @@
                                         <td>{{$i++}}</td>
                                         <td>{{$history->user->name}}</td>
                                         <td>{{$history->user->email}}</td>
+                                        <td>{{$history->user->phone_number}}</td>
                                         <td>{{$history->created_at }}</td>
                                         <td>{{isset($history->completion_date) ? $history->completion_date : 'Not Yet'}}</td>
                                         <!-- <td>{{isset($history->certificate_withdrawn_date) ? 'Yes' : 'No'}}</td>

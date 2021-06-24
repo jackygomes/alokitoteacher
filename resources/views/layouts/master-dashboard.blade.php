@@ -28,6 +28,8 @@
         gtag('config', 'UA-178521926-1');
     </script>
 
+<script data-ad-client="ca-pub-1285809732280483" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 
 
 </head>
@@ -84,10 +86,11 @@
                 <a class="nav-link text-black" href="{{ route('jobBoard') }}">Job Board</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-black" href="{{ url('all') }}">Course</a>
+                <a class="nav-link text-black" href="{{ url('all') }}">Courses</a>
             </li>
-
-
+            <li class="nav-item">
+                <a class="nav-link text-black" href="{{ route('allResource') }}">Innovations</a>
+            </li>
             <li class="nav-item">
 
                 <a class="nav-link text-black" href="{{ url('about_us') }}">About Us</a>
@@ -113,9 +116,8 @@
                         @if(Auth::user()->identifier == 101 || Auth::user()->identifier == 104)
                             <a class="dropdown-item" href="@if(Auth::user()->identifier == 101 || Auth::user()->identifier == 104) {{ url('dashboard') }}@endif">Dashboard</a>
                         @else
-                            @if(Auth::user()->identifier == 1)
-                                <a class="dropdown-item" href="{{url('t/dashboard')}}">Dashboard</a>
-                            @elseif(Auth::user()->identifier == 2)
+                        
+                            @if(Auth::user()->identifier == 2)
                                 <a class="dropdown-item" href="{{url('s/dashboard')}}">Dashboard</a>
                             @endif
                             <a class="dropdown-item" href="@if(Auth::user()->identifier == 1){{ url('t') }}@elseif(Auth::user()->identifier == 2) {{ url('s') }}@elseif(Auth::user()->identifier == 4) {{ url('stu') }}@endif/{{ Auth::user()->username }}">Profile</a>

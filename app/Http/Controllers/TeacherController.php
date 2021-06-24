@@ -93,9 +93,10 @@ class TeacherController extends Controller
 			$user->save();
 		}
 		$earnings = Transaction::where('user_id', Auth::id())->where('transaction_type', 'Earning')->sum('amount');
+		$resources = Resource::where('user_id', Auth::id())->where('deleted', 0)->get();
 
 
-		return view('teachers', compact('earnings', 'user_info', 'work_info', 'academic_info', 'skill_info', 'progresses', 'achievements', 'course_knowledges', 'leaderBoard', 'recent_work', 'recent_institute'));
+		return view('teachers', compact('earnings', 'user_info', 'work_info', 'academic_info', 'skill_info', 'progresses', 'achievements', 'course_knowledges', 'leaderBoard', 'recent_work', 'recent_institute', 'resources'));
 	}
 
 	public function dashboard()

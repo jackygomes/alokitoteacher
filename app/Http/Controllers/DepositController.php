@@ -22,8 +22,9 @@ class DepositController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
+        $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type', 'Earning')->sum('amount');
 
-        return view('deposit.create', compact('user_info'));
+        return view('deposit.create', compact('user_info', 'earnings'));
     }
 
     /**

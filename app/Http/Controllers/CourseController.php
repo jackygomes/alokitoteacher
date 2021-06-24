@@ -37,7 +37,7 @@ class CourseController extends Controller
         $course_info = DB::table('users')
             ->rightJoin('courses', 'users.id', '=', 'courses.user_id')
             ->leftJoin('course_ratings', 'courses.id', '=', 'course_ratings.course_id')
-            ->select('users.id', 'users.name', 'users.email', 'users.image', 'users.phone_number', 'users.balance', 'users.username', 'courses.id', 'courses.thumbnail', 'courses.title', 'courses.description', 'courses.price', 'courses.slug', DB::raw('avg(course_ratings.rating) as rating'))
+            ->select('users.id', 'users.name', 'users.email', 'users.image', 'users.phone_number', 'users.balance', 'users.username', 'courses.id', 'courses.thumbnail', 'courses.title', 'courses.description', 'courses.price', 'courses.slug', DB::raw('avg(course_ratings.rating) as rating'), DB::raw('count(course_ratings.rating) as rating_count'))
             ->where('courses.status', '=', 'Approved')
             ->groupBy('courses.id')
             ->orderBy('courses.created_at', 'desc')

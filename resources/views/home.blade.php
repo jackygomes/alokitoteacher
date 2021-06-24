@@ -240,6 +240,7 @@
                                             <i class="far fa-star text-light-dark"></i>
                                         @endif
                                     @endfor
+                                    ({{$v_course_info->rating_count}})
                                     <span class="float-right text-success font-weight-bold">
                                         @if($v_course_info->isBought == 1)
                                             Owned
@@ -343,15 +344,15 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h2 class="text-center font-weight-bold">Explore Teaching Resources</h2>
-                <a href="{{ route('allResource') }}" class="btn mt-3 text-center bg-white text-dark font-weight-bold home-explore-button">View All Resources</a>
+                <h2 class="text-center font-weight-bold">Explore Teaching Innovations</h2>
+                <a href="{{ route('allResource') }}" class="btn mt-3 text-center bg-white text-dark font-weight-bold home-explore-button">View All Innovations</a>
             </div>
         </div>
         <div class="row">
             <div id="exploreResource" class="owl-carousel card-slider">
                 @foreach ($resources as $resource)
                     <div class="item mt-5">
-                        <a href="{{ url('view') }}/c/{{$resource->slug}}">
+                        <a href="{{ url('overview') }}/r/{{$resource->slug}}">
                             <div class="card">
                                 <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
                                 <div class="card-body">

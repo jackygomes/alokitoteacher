@@ -5,14 +5,14 @@
     <section class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="mt-3 text-center font-weight-bold">Resources</h2>
+                <h2 class="mt-5 text-center font-weight-bold">Innovations</h2>
             </div>
         </div>
     </section>
 
     <section>
         <div class="container">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-lg-12">
                     <form action="{{route('allResource')}}" method="get" style="width: 100%;">
                         <div class="form-group row">
@@ -31,11 +31,11 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> --}}
             <div class="row">
                 @foreach ($resource_info as $resource)
                     <div class="col-md-4 mt-5">
-                        <a href="{{ url('view') }}/c/{{$resource->slug}}">
+                        <a href="{{ url('overview') }}/r/{{$resource->slug}}">
                             <div class="card">
                                 <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
                                 <div class="card-body">
