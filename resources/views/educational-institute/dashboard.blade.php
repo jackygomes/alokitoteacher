@@ -426,7 +426,7 @@
 
                     </div>
 
-                    <div class="form-row mt-1">
+                    <!-- <div class="form-row mt-1">
                         <div class="col-md-6 mb-5">
 
                             <div class="custom-control custom-checkbox">
@@ -436,7 +436,7 @@
 
                         </div>
 
-                    </div>
+                    </div> -->
 
 
                     <div class="form-row mt-1">
@@ -524,7 +524,7 @@
 
     function formSubmitPopupMessage(price) {
 
-        if(document.getElementById("featureJobCheckbox").checked) price+=500;
+        // if(document.getElementById("featureJobCheckbox").checked) price+=500;
 
         Swal.fire({
             icon: 'warning',

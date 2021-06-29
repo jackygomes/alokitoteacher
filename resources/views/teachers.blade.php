@@ -461,7 +461,17 @@
             <div class="col-md-3">
                 @include('leaderboard')
                 <div class="advertise">
-
+                  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                  <!-- Square Ad -->
+                  <ins class="adsbygoogle"
+                      style="display:block"
+                      data-ad-client="ca-pub-1285809732280483"
+                      data-ad-slot="7288328197"
+                      data-ad-format="auto"
+                      data-full-width-responsive="true"></ins>
+                  <script>
+                      (adsbygoogle = window.adsbygoogle || []).push({});
+                  </script>
                 </div>
             </div>
         @endif

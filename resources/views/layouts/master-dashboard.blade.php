@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{URL::asset('css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/style1.css')}}">
-    <link rel="stylesheet" href="{{URL::asset('css/custom.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('css/custom.css?v=123456789')}}">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178521926-1"></script>
     <script>
@@ -27,8 +27,7 @@
 
         gtag('config', 'UA-178521926-1');
     </script>
-
-<script data-ad-client="ca-pub-1285809732280483" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script data-ad-client="ca-pub-1285809732280483" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 
 
