@@ -87,7 +87,7 @@ Route::post('toolkit/video/update/{id}', 'ToolkitController@toolkit_video_update
 Route::post('toolkit/quiz/update/{id}', 'ToolkitController@toolkit_quiz_update')->name('toolkit.quiz.update');
 
 Route::get('toolkit/admin/view/{id}', 'AdminController@toolkit_admin_view')->name('toolkit.admin.view');
-Route::get('resource/admin/view/{id}', 'AdminController@resource_admin_view')->name('resource.admin.view');
+Route::get('innovation/admin/view/{id}', 'AdminController@resource_admin_view')->name('resource.admin.view');
 
 
 Route::delete('toolkit/delete/{id}', 'ToolkitController@destroy')->name('toolkit.delete');
@@ -99,10 +99,10 @@ Route::post('admin/load_content', 'AdminController@load_content');
 Route::post('admin/load_question', 'AdminController@load_question');
 // admin routes ends
 
-// Resource
+// Innovation
 Route::get('overview/r/{slug}', 'ResourceController@resourceOverview');
 Route::get('view/r/{slug}', 'ResourceController@resourceView');
-Route::group(['prefix' => 'resource'], function () {
+Route::group(['prefix' => 'innovation'], function () {
     Route::get('/', 'ResourceController@index')->name('allResource');
     Route::get('create', 'ResourceController@create')->name('resource.create');
     Route::post('store', 'ResourceController@store')->name('resource.store');
@@ -127,6 +127,10 @@ Route::get('all', 'AllController@index');
 Route::get('course', 'CourseController@index')->name('allCourse');
 
 Route::get('contact_us', 'ContactController@index');
+Route::get('admin/contact-messages', 'ContactController@adminMessageListView')->name('admin.contact.messages.list');
+Route::post('contact_us/store', 'ContactController@store')->name('contact.store');
+
+
 Route::get('overview/{course_toolkit}/{slug}', 'ContentController@overview');
 Route::get('view/{course_toolkit}/{slug}', 'ContentController@index');
 Route::post('load_content', 'ContentController@load_content');

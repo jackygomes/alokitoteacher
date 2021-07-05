@@ -444,6 +444,7 @@ a {
 }
 .dashboard-left-panel .info-wrap .info-image {
     margin-right: 5px;
+    margin-top: 4px;
 }
 .dashboard-left-panel .info-wrap .info-text {
     margin: 0;
@@ -465,6 +466,17 @@ a {
 .dashboard-left-panel .balance {
     overflow: hidden;
     color: #ffffff70;
+}
+.deposit-withdraw-buttons {
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+.deposit-withdraw-buttons a {
+    width: 46%;
+    padding: 14px 0;
+    border-radius: 10px;
+    font-weight: 700;
+    display: inline-block;
 }
 .dashboard-bg {
     background-color: #f0f0f0;

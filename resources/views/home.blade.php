@@ -345,6 +345,7 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h2 class="text-center font-weight-bold">Explore Teaching Innovations</h2>
+                <a href="{{ route('resource.create') }}" class="btn mt-3 text-center bg-white text-dark font-weight-bold home-explore-button">Submit My Innovation</a>
                 <a href="{{ route('allResource') }}" class="btn mt-3 text-center bg-white text-dark font-weight-bold home-explore-button">View All Innovations</a>
             </div>
         </div>
@@ -370,14 +371,15 @@
                                     <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 20) }}</strong></p>
 
                                     <div class="text-dark">
-{{--                                        @for($i = 1; $i <= 5; $i++)--}}
-{{--                                            @if($resources->rating - $i >= 0)--}}
-{{--                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
-{{--                                            @else--}}
-{{--                                                <i class="far fa-star text-light-dark"></i>--}}
-{{--                                            @endif--}}
-{{--                                        @endfor--}}
-                                        <span class="float-left text-success font-weight-bold">
+                                        @for($i = 0; $i < 5; $i++)
+                                            @if(round($resource->ratingCount->avg('rating')) - $i > 0)
+                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
+                                            @else
+                                                <i class="far fa-star text-light-dark"></i>
+                                            @endif
+                                        @endfor
+                                        ({{$resource->ratingCount->count()}})
+                                        <span class="float-right text-success font-weight-bold">
                                         @if($resource->isBought == 1)
                                                 Owned
                                             @else
@@ -432,45 +434,45 @@
                   <div class="top-3 mt-4 text-center">
                       <div class="second top-3-card">
                           <div class="image">
-                              @if($leaderBoard[2]['user']->image == null)
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
-                              @else
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[2]['user']->image}}">
-                              @endif
-                              <span class="position">2</span>
-                          </div>
-                          <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 10) }}</p>
-                              <p class="m-0">{{ $leaderBoard[2]->score }} points</p>
-                          </div>
-                      </div>
-                      <div class="first top-3-card">
-                          <div class="image">
                               @if($leaderBoard[1]['user']->image == null)
                                   <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
                               @else
                                   <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[1]['user']->image}}">
                               @endif
-                                  <span class="position background-yellow">1</span>
-                                  <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
+                              <span class="position">2</span>
                           </div>
                           <div class="content">
                               <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 10) }}</p>
                               <p class="m-0">{{ $leaderBoard[1]->score }} points</p>
                           </div>
                       </div>
-                      <div class="third top-3-card">
+                      <div class="first top-3-card">
                           <div class="image">
-                              @if($leaderBoard[3]['user']->image == null)
+                              @if($leaderBoard[0]['user']->image == null)
                                   <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
                               @else
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[3]['user']->image}}">
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[0]['user']->image}}">
+                              @endif
+                                  <span class="position background-yellow">1</span>
+                                  <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
+                          </div>
+                          <div class="content">
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[0]['user']->name), 10) }}</p>
+                              <p class="m-0">{{ $leaderBoard[0]->score }} points</p>
+                          </div>
+                      </div>
+                      <div class="third top-3-card">
+                          <div class="image">
+                              @if($leaderBoard[2]['user']->image == null)
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                              @else
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[2]['user']->image}}">
                               @endif
                               <span class="position">3</span>
                           </div>
                           <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[3]['user']->name), 10) }}</p>
-                              <p class="m-0">{{ $leaderBoard[3]->score }} points</p>
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 10) }}</p>
+                              <p class="m-0">{{ $leaderBoard[2]->score }} points</p>
                           </div>
                       </div>
                   </div>

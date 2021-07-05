@@ -4,8 +4,11 @@
 
     <section class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <h2 class="mt-5 text-center font-weight-bold">Innovations</h2>
+            <div class="col-lg-12 text-center">
+                <h2 class="mt-5  font-weight-bold">Teacher Innovation</h2>
+                <a href="{{ route('resource.create') }}" class="mt-3 btn text-center background-yellow text-white font-weight-bold home-explore-button">Submit My Innovation</a>
+                <p class="my-3">To celebrate and inspire teachers, Alokito Teachers is launching Alokito Teachers calls for Teacher Innovators aimed to get teachers to think creatively and contribute towards minimizing the challenges emerging from education disruption and the digital divide. This challenge will serve as a platform where teachers will be able to share their innovations and assume the role of leadership in these unprecedented times.</p>
+                <p>Innovation submit ends at 30th July, 2021</p>
             </div>
         </div>
     </section>
@@ -53,14 +56,15 @@
                                     <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 20) }}</strong></p>
 
                                     <div class="text-dark">
-                                        {{--                                        @for($i = 1; $i <= 5; $i++)--}}
-                                        {{--                                            @if($resources->rating - $i >= 0)--}}
-                                        {{--                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
-                                        {{--                                            @else--}}
-                                        {{--                                                <i class="far fa-star text-light-dark"></i>--}}
-                                        {{--                                            @endif--}}
-                                        {{--                                        @endfor--}}
-                                        <span class="float-left text-success font-weight-bold">
+                                        @for($i = 0; $i < 5; $i++)
+                                            @if(round($resource->ratingCount->avg('rating')) - $i > 0)
+                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
+                                            @else
+                                                <i class="far fa-star text-light-dark"></i>
+                                            @endif
+                                        @endfor
+                                        ({{$resource->ratingCount->count()}})
+                                        <span class="float-right text-success font-weight-bold">
                                         @if($resource->isBought == 1)
                                                 Owned
                                             @else

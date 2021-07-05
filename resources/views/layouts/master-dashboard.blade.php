@@ -27,7 +27,7 @@
 
         gtag('config', 'UA-178521926-1');
     </script>
-    <script data-ad-client="ca-pub-1285809732280483" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- <script data-ad-client="ca-pub-1285809732280483" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
 
 
 

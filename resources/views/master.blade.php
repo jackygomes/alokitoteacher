@@ -27,7 +27,7 @@
 
         gtag('config', 'UA-178521926-1');
     </script>
-    <script data-ad-client="ca-pub-1285809732280483" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- <script data-ad-client="ca-pub-1285809732280483" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
 
 
 
@@ -148,7 +148,7 @@
                         <a href="https://www.facebook.com/Alokito-Teachers-1022969321242132" target="_blank"><i class="fab fa-facebook fa-2x mr-2 custom-hover2" ></i></a>
                         <a href="https://www.youtube.com/channel/UCY4PBN9HLG5oxjCtYXGvfeg" target="_blank"><i class="fab fa-youtube fa-2x mr-2 custom-hover2"></i></a>
                         <a href="https://www.linkedin.com/company/14756318/" target="_blank"><i class="fab fa-linkedin fa-2x mr-2 custom-hover2"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-instagram fa-2x mr-2 custom-hover2"></i></a>
+                        <a href="https://instagram.com/alokitoteachers?utm_medium=copy_link" target="_blank"><i class="fab fa-instagram fa-2x mr-2 custom-hover2"></i></a>
                     </div>
                 </div>
                 <div class="col-md-2">

@@ -73,9 +73,9 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="resourceDescription" class="col-sm-2 col-form-label">Description:</label>
+                                <label for="resourceDescription" class="col-sm-2 col-form-label">About My Innovation:</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" name="resource_description" placeholder="Description" id="resourceDescription" rows="3"></textarea>
+                                    <textarea class="form-control" name="resource_description" placeholder="About My Innovation" id="resourceDescription" rows="3"></textarea>
                                 </div>
                             </div>
                             <!-- <div class="form-group row">

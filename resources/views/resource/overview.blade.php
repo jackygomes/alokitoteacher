@@ -4,7 +4,14 @@
     .right-panel {
         border: 2px solid #f59d1f;
         border-radius: 10px;
-        min-height: 100vh;
+    }
+    .resource-overview .thumbnail{
+        width: 100%;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 10px;
+        background-size: cover;
+        background-position: center;
     }
     .rating-inactive {
         color: #9d9d9d;
@@ -23,10 +30,13 @@
 
             <div class="col-md-8">
 
-                <img src="{{asset('images/thumbnail').'/'. $info->thumbnail}} " class="img-fluid" style="width: 100%; border-radius: 10px">
+                <div class="resource-overview">
+                    <div class="thumbnail" style="background-image: url({{asset('images/thumbnail').'/'. $info->thumbnail}})">
+                    </div>
 
-                <h3 class="mt-5">About</h3>
-                <p class="my-3"> {{ $info->description }}</p>
+                    <h3 class="mt-5">About</h3>
+                    <p class="my-3"> {{ $info->description }}</p>
+                </div>
 
             </div>
             <div class="col-md-4 text-center">
@@ -134,18 +144,22 @@
     </div>
   </div>
 </div>
-<div>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <!-- Horizontal Ad -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-1285809732280483"
-        data-ad-slot="5536262823"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            Horizontal Ad
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-1285809732280483"
+                data-ad-slot="5536262823"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
  </div>
 @push('js')
 <script>

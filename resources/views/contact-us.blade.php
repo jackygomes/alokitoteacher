@@ -25,32 +25,38 @@
             <div class="contact-us-content-bottom">
                 <p class="font-weight-bold mb-3">Follow us on</p>
                 <div>
-                    <a href=""><img src="{{asset('images/new_design/facebook.png')}}" alt=""></a>
-                    <a href=""><img src="{{asset('images/new_design/instagram.png')}}" alt=""></a>
-                    <a href=""><img src="{{asset('images/new_design/linkedin.png')}}" alt=""></a>
-                    <a href=""><img src="{{asset('images/new_design/youtube.png')}}" alt=""></a>
+                    <a href="https://www.facebook.com/Alokito-Teachers-1022969321242132" target="_blank"><img src="{{asset('images/new_design/facebook.png')}}" alt=""></a>
+                    <a href="https://instagram.com/alokitoteachers?utm_medium=copy_link" target="_blank"><img src="{{asset('images/new_design/instagram.png')}}" alt=""></a>
+                    <a href="https://www.linkedin.com/company/14756318/" target="_blank"><img src="{{asset('images/new_design/linkedin.png')}}" alt=""></a>
+                    <a href="https://www.youtube.com/channel/UCY4PBN9HLG5oxjCtYXGvfeg" target="_blank"><img src="{{asset('images/new_design/youtube.png')}}" alt=""></a>
                 </div>
             </div>
         </div>
 
             <div class="col-md-8">
-              <form>
+              @if($message = Session::get('success'))
+                <div class="alert alert-success">
+                    {{$message}}
+                </div>
+              @endif
+              <form method="POST" action="{{route('contact.store')}}">
+                <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="form-row">
                   <div class="col-md-6 col-sm-6 mb-6">
-                    <input type="text" class="form-control" id="validationServer01" placeholder="Name" value="" required>
+                    <input type="text" class="form-control" name="name" id="validationServer01" placeholder="Name" value="" required>
                   </div>
                   <div class="col-md-6 col-sm-6 mb-6 ">
-                    <input type="email" class="form-control" id="validationServer02" placeholder="Email" value="" required>
+                    <input type="email" class="form-control" name="email" id="validationServer02" placeholder="Email" value="" required>
                   </div>
                 </div>
 
                 <div class="form-row mt-3 mb-5">
                   <div class="col-md-12 col-sm-10">
-                   <textarea class="form-control" rows="5 placeholder="Message"></textarea>
+                   <textarea class="form-control" rows="5" name="message" placeholder="Message"></textarea>
                   </div>
                 </div>
 
-                <button type="button" class="mt-3 btn text-center background-yellow text-white font-weight-bold home-explore-button btn-block" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" >Submit Now</button>
+                <button type="submit" class="mt-3 btn text-center background-yellow text-white font-weight-bold home-explore-button btn-block" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" >Submit Now</button>
 
              </form>
             </div>

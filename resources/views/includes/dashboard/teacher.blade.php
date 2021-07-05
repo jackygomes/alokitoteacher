@@ -19,79 +19,79 @@
         @else
         <i class="far fa-star text-white"></i>
         @endif
-        @endfor
+    @endfor
 
-        <div class="row text-left p-2 mt-3 user-info">
-            <div class="col-12">
-                <div class="info-wrap">
-                    <img class="info-image" src="{{asset('images/new_design/bday.png')}}" alt="">
-                    <p class="info-text">@if($user_info->date_of_birth != null) {{ date("jS F, Y", strtotime($user_info->date_of_birth)) }} @else - @endif</p>
-                </div>
+    <div class="row text-left p-2 mt-3 user-info">
+        <div class="col-12">
+            <div class="info-wrap">
+                <img class="info-image" src="{{asset('images/new_design/bday.png')}}" alt="">
+                <p class="info-text">@if($user_info->date_of_birth != null) {{ date("jS F, Y", strtotime($user_info->date_of_birth)) }} @else - @endif</p>
             </div>
-            <div class="col-12">
-                <div class="info-wrap">
-                    <img class="info-image" src="{{asset('images/new_design/briefcase.png')}}" alt="">
-                    <p class="info-text">@if($recent_work != null) {{ $recent_work->institute }} @else - @endif</p>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="info-wrap">
-                    <img class="info-image" src="{{asset('images/new_design/user-2-line.png')}}" alt="">
-                    <p class="info-text">@if($recent_work != null) {{ $recent_work->position }} @else - @endif</p>
-                </div>
-            </div>
-            @if($user_info->id == Auth::id())
-            <div class="col-12">
-                <div class="info-wrap">
-                    <img class="info-image" src="{{asset('images/new_design/call.png')}}" alt="">
-                    <p class="info-text">@if($user_info->phone_number != null) {{ $user_info->phone_number }} @else - @endif</p>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="info-wrap">
-                    <img class="info-image" src="{{asset('images/new_design/mail.png')}}" alt="">
-                    <p class="info-text">@if($user_info->email != null) {{ $user_info->email }} @else - @endif</p>
-                </div>
-            </div>
-            @endif
         </div>
-        <div class="stat mt-4">
-            <div class="stat-block">
-                <p><span class="float-left">Course in progress</span><span class="float-right text-yellow">
-                        @if(isset($achievements))
-                            {{count($achievements)}}
-                        @else
-                            0
-                        @endif
-                    </span></p>
+        <div class="col-12">
+            <div class="info-wrap">
+                <img class="info-image" src="{{asset('images/new_design/briefcase.png')}}" alt="">
+                <p class="info-text">@if($recent_work != null) {{ $recent_work->institute }} @else - @endif</p>
             </div>
-            <div class="stat-block">
-                <p><span class="float-left">Course completed</span><span class="float-right text-yellow">
-                        @if(isset($progresses))
-                            {{count($progresses)}}
-                        @else
-                            0
-                        @endif
-                    </span></p>
-            </div>
-            <div class="stat-block">
-                <p><span class="float-left">Certificates earned</span><span class="float-right text-yellow">
-                        @if(isset($certificateCount))
-                            {{count($certificateCount)}}
-                        @else
-                            0
-                        @endif</span></p>
+        </div>
+        <div class="col-12">
+            <div class="info-wrap">
+                <img class="info-image" src="{{asset('images/new_design/user-2-line.png')}}" alt="">
+                <p class="info-text">@if($recent_work != null) {{ $recent_work->position }} @else - @endif</p>
             </div>
         </div>
         @if($user_info->id == Auth::id())
-        <hr class="my-5">
-
-        <p class="my-3 balance"><span class="float-left">Current Balance</span> <span class="float-right text-white">{{ round($user_info->balance, 2) }} Tk.</span></p>
-        <p class="my-3 balance"><span class="float-left">Total Earnings</span> <span class="float-right text-white">{{ $earnings }} Tk.</span></p>
-        <div class="">
-            <a href="{{route('deposit.form')}}" class=" btn btn-success px-4 float-left" style="display: inline-block">Deposit</a>
-            <a href="{{route('withdraw.form')}}" class=" btn btn-danger px-5 float-right" style="display: inline-block">Withdraw</a>
+        <div class="col-12">
+            <div class="info-wrap">
+                <img class="info-image" src="{{asset('images/new_design/call.png')}}" alt="">
+                <p class="info-text">@if($user_info->phone_number != null) {{ $user_info->phone_number }} @else - @endif</p>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="info-wrap">
+                <img class="info-image" src="{{asset('images/new_design/mail.png')}}" alt="">
+                <p class="info-text">@if($user_info->email != null) {{ $user_info->email }} @else - @endif</p>
+            </div>
         </div>
         @endif
+    </div>
+    <div class="stat mt-4">
+        <div class="stat-block">
+            <p><span class="float-left">Course in progress</span><span class="float-right text-yellow">
+                    @if(isset($achievements))
+                        {{count($achievements)}}
+                    @else
+                        0
+                    @endif
+                </span></p>
+        </div>
+        <div class="stat-block">
+            <p><span class="float-left">Course completed</span><span class="float-right text-yellow">
+                    @if(isset($progresses))
+                        {{count($progresses)}}
+                    @else
+                        0
+                    @endif
+                </span></p>
+        </div>
+        <div class="stat-block">
+            <p><span class="float-left">Certificates earned</span><span class="float-right text-yellow">
+                    @if(isset($certificateCount))
+                        {{count($certificateCount)}}
+                    @else
+                        0
+                    @endif</span></p>
+        </div>
+    </div>
+    @if($user_info->id == Auth::id())
+    <hr class="my-5">
+
+    <p class="my-3 balance"><span class="float-left">Current Balance</span> <span class="float-right text-white">{{ round($user_info->balance, 2) }} Tk.</span></p>
+    <p class="my-3 balance"><span class="float-left">Total Earnings</span> <span class="float-right text-white">{{ $earnings }} Tk.</span></p>
+    <div class="desposit-withdraw-buttons">
+        <a href="{{route('deposit.form')}}" class=" btn btn-success float-left">Deposit</a>
+        <a href="{{route('withdraw.form')}}" class=" btn btn-danger float-right">Withdraw</a>
+    </div>
+    @endif
 
 </div>

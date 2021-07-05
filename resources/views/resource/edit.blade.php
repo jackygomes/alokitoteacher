@@ -53,10 +53,10 @@
                     <div class="row">
                         <div class="col-lg-12">
                             @if(count($contents) < 1)
-                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
-                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addDocument">Add Document</button>
+                                <!-- <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addDocument">Add Document</button> -->
                             @endif
-                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="editResource">Edit Innovation Info</button>
+                            <!-- <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="editResource">Edit Innovation Info</button> -->
                         </div>
                     </div>
                     <div id="resourceSection">
@@ -90,9 +90,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="resourceDescription" class="col-sm-2 col-form-label">Description:</label>
+                                    <label for="resourceDescription" class="col-sm-2 col-form-label">About My Innovation:</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" name="resource_description" placeholder="Description" id="resourceDescription" rows="3">{{$resource->description}}</textarea>
+                                        <textarea class="form-control" name="resource_description" placeholder="About My Innovation" id="resourceDescription" rows="3">{{$resource->description}}</textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="form-group row">
