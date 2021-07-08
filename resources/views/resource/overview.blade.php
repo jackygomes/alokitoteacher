@@ -24,7 +24,6 @@
         <div class="row">
 
             <div class="col-md-12 text-left mb-3">
-                <small class="font-weight-bold "> Overview of</small>
                 <h3 class="font-weight-bold">{{ $info->resource_title }}</h3>
             </div>
 
@@ -34,8 +33,8 @@
                     <div class="thumbnail" style="background-image: url({{asset('images/thumbnail').'/'. $info->thumbnail}})">
                     </div>
 
-                    <h3 class="mt-5">About</h3>
-                    <p class="my-3"> {{ $info->description }}</p>
+                    <!-- <h3 class="mt-5">About</h3> -->
+                    <p class="my-5"> {{ $info->description }}</p>
                 </div>
 
             </div>
@@ -148,7 +147,7 @@
     <div class="row">
         <div class="col-md-12">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            Horizontal Ad
+            <!-- Horizontal Ad -->
             <ins class="adsbygoogle"
                 style="display:block"
                 data-ad-client="ca-pub-1285809732280483"

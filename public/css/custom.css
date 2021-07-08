@@ -237,6 +237,32 @@ a {
 .card {
     border-radius: 8px;
 }
+.card .img-wrap {
+    position: relative;
+}
+.card .img-wrap .overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #F59D1FE6;
+    opacity: 0;
+    transition: 0.5s;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.card:hover .img-wrap .overlay {
+    opacity: 1;
+}
+.card .img-wrap .overlay span{
+    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 20px;
+    color: #fff;
+}
 .card-body {
     overflow: hidden;
 }
@@ -382,7 +408,10 @@ a {
     position: relative;
     width: 135px;
     height: 135px;
-    margin-bottom: 20px;
+    margin: 0 auto;
+}
+.home-leaderboard .top-3 .top-3-card .content {
+    margin-top: 20px;
 }
 .home-leaderboard .top-3 .first .image {
     width: 170px;

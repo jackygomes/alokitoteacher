@@ -163,6 +163,7 @@
                                             <th style="width:30%">Innovation Name</th>
                                             <th style="width:10%">Price</th>
                                             <th style="width:10%">Creator</th>
+                                            <th style="width:10%">Submission Date</th>
                                             <th style="width:10%">Status</th>
                                             <th style="width:20%">Action</th>
                                         </tr>
@@ -175,6 +176,7 @@
                                             <td>{{$resource->resource_title}}</td>
                                             <td>{{($resource->price == 0) ? 'Free' : $resource->price}}</td>
                                             <td>{{$resource->user->name}}</td>
+                                            <td>{{$resource->created_at}}</td>
                                             <td>{{$resource->status}}</td>
                                             <td>
                                                 <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">

@@ -8,7 +8,7 @@
                 <h2 class="mt-5  font-weight-bold">Teacher Innovation</h2>
                 <a href="{{ route('resource.create') }}" class="mt-3 btn text-center background-yellow text-white font-weight-bold home-explore-button">Submit My Innovation</a>
                 <p class="my-3">To celebrate and inspire teachers, Alokito Teachers is launching Alokito Teachers calls for Teacher Innovators aimed to get teachers to think creatively and contribute towards minimizing the challenges emerging from education disruption and the digital divide. This challenge will serve as a platform where teachers will be able to share their innovations and assume the role of leadership in these unprecedented times.</p>
-                <p>Innovation submit ends at 30th July, 2021</p>
+                <p>Innovation submission ends at 30th July, 2021</p>
             </div>
         </div>
     </section>
@@ -40,7 +40,12 @@
                     <div class="col-md-4 mt-5">
                         <a href="{{ url('overview') }}/r/{{$resource->slug}}">
                             <div class="card">
-                                <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                <div class="img-wrap">
+                                    <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                    <div class="overlay">
+                                        <span>Read & Rate</span>
+                                    </div>
+                                </div>
                                 <div class="card-body">
                                     @if(strlen($resource->resource_title) < 26)
                                         <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($resource->resource_title), 26) }}</p>

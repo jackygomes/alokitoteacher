@@ -355,7 +355,12 @@
                     <div class="item mt-5">
                         <a href="{{ url('overview') }}/r/{{$resource->slug}}">
                             <div class="card">
-                                <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                <div class="img-wrap">
+                                    <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                    <div class="overlay">
+                                        <span>Read & Rate</span>
+                                    </div>
+                                </div>
                                 <div class="card-body">
                                     @if(strlen($resource->resource_title) < 26)
                                         <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($resource->resource_title), 26) }}</p>
@@ -430,7 +435,7 @@
       <div class="teachers-toolkits">
         <h2 class="font-weight-bold text-center mt-5 mb-5 text-dark pt-5">Leaderboard</h2>
           <div class="d-flex justify-content-center">
-              <div class="col-md-4">
+              <div class="col-md-6">
                   <div class="top-3 mt-4 text-center">
                       <div class="second top-3-card">
                           <div class="image">
@@ -442,7 +447,7 @@
                               <span class="position">2</span>
                           </div>
                           <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 10) }}</p>
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 16) }}</p>
                               <p class="m-0">{{ $leaderBoard[1]->score }} points</p>
                           </div>
                       </div>
@@ -457,7 +462,7 @@
                                   <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
                           </div>
                           <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[0]['user']->name), 10) }}</p>
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[0]['user']->name), 16) }}</p>
                               <p class="m-0">{{ $leaderBoard[0]->score }} points</p>
                           </div>
                       </div>
@@ -471,7 +476,7 @@
                               <span class="position">3</span>
                           </div>
                           <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 10) }}</p>
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 16) }}</p>
                               <p class="m-0">{{ $leaderBoard[2]->score }} points</p>
                           </div>
                       </div>
@@ -507,7 +512,7 @@
 </div>
 <!-- Leaderboar area ends -->
 
-<div class="alokito-journey">
+<!-- <div class="alokito-journey">
     <div class="container">
         <h2 class="text-center font-weight-bold text-dark mb-4">Your Alokito Journey</h2>
         <div class="row">
@@ -553,7 +558,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
  <!-- journey ends area -->
 <div class="container px-0">
