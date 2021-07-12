@@ -397,11 +397,11 @@
      </div>
      <hr>
  </div>
- <div class="container">
+ <!-- <div class="container">
     <div class="row">
         <div class="col-md-12">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- Horizontal Ad -->
+            Horizontal Ad
             <ins class="adsbygoogle"
                 style="display:block"
                 data-ad-client="ca-pub-1285809732280483"
@@ -413,7 +413,7 @@
             </script>
         </div>
     </div>
- </div>
+ </div> -->
  
 
 

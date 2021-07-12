@@ -19,7 +19,7 @@ class ResourceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['resourceSharePage']]);
     }
     /**
      * Display a listing of the resource.
@@ -485,5 +485,15 @@ class ResourceController extends Controller
                 'message'   => $e->getMessage(),
             ], 420);
         }
+    }
+
+    function resourceSharePage(Request $request) {
+        $info = Resource::where('slug', '=', $request->slug)->first();
+
+        if ($info == null) {
+            return abort(404);
+        }
+
+        return view('share-pages.resource', compact('info'));
     }
 }

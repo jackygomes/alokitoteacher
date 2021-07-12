@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{URL::asset('css/app.css')}}">
     <link rel="shortcut icon" href="{{URL::asset('favicon.ico')}}">
 
+    
+    @yield('meta')
+
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Exo&display=swap" rel="stylesheet">
@@ -17,7 +20,7 @@
     <link rel="stylesheet" href="{{URL::asset('css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/style1.css')}}">
-    <link rel="stylesheet" href="{{URL::asset('css/custom.css?v=123456789')}}">
+    <link rel="stylesheet" href="{{URL::asset('css/custom.css?v=123456')}}">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178521926-1"></script>
     <script>
@@ -220,7 +223,14 @@
         </div>
     </section>
 
-
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
     <script src="{{URL::asset('js/jquery.min.js')}}"></script>
     <script src="{{URL::asset('js/app.js')}}"></script>

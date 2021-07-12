@@ -68,7 +68,7 @@
                         <hr>
                         <br>
                         <br>
-                <!-- @if(Auth::user()->identifier != 2)
+                {{-- @if(Auth::user()->identifier != 2)
                     @if($info->price == 0)
                         <a href="{{ url('view') }}/{{ Request::segment(2) }}/{{ Request::segment(3) }}" class="mt-4 btn btn-success btn-lg">
                             View Resource
@@ -93,7 +93,7 @@
                             @endif
                         @endif
                     @endif
-                @endif -->
+                @endif --}}
                 @if(isset($content_rating))
                 <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal" disabled>Rate this innovation</button>
                 @else
@@ -143,11 +143,11 @@
     </div>
   </div>
 </div>
-<div class="container">
+<!-- <div class="container">
     <div class="row">
         <div class="col-md-12">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- Horizontal Ad -->
+            Horizontal Ad
             <ins class="adsbygoogle"
                 style="display:block"
                 data-ad-client="ca-pub-1285809732280483"
@@ -159,7 +159,7 @@
             </script>
         </div>
     </div>
- </div>
+ </div> -->
 @push('js')
 <script>
     $('.rating input').change(function () {

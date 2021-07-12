@@ -374,7 +374,11 @@
                                     @endif
                                     <hr>
                                     <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 20) }}</strong></p>
-
+                                    <!-- Your share button code -->
+                                    <div class="fb-share-button" 
+                                    data-href="{{ route('metaResource', $resource->slug) }}" 
+                                    data-layout="button_count">
+                                    </div>
                                     <div class="text-dark">
                                         @for($i = 0; $i < 5; $i++)
                                             @if(round($resource->ratingCount->avg('rating')) - $i > 0)

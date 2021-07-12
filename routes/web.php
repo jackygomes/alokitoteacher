@@ -103,6 +103,9 @@ Route::post('admin/load_question', 'AdminController@load_question');
 Route::get('overview/r/{slug}', 'ResourceController@resourceOverview');
 Route::get('view/r/{slug}', 'ResourceController@resourceView');
 Route::group(['prefix' => 'innovation'], function () {
+
+    Route::get('meta/r/{slug}', 'ResourceController@resourceSharePage')->name('metaResource');
+
     Route::get('/', 'ResourceController@index')->name('allResource');
     Route::get('create', 'ResourceController@create')->name('resource.create');
     Route::post('store', 'ResourceController@store')->name('resource.store');
