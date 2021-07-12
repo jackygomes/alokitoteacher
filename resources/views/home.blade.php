@@ -373,11 +373,17 @@
                                         </div>
                                     @endif
                                     <hr>
-                                    <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 20) }}</strong></p>
-                                    <!-- Your share button code -->
-                                    <div class="fb-share-button" 
-                                    data-href="{{ route('metaResource', $resource->slug) }}" 
-                                    data-layout="button_count">
+                                    <div class="posted-by">
+                                        <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 20) }}</strong></p>
+                                        <div class="share-button">
+                                            <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                            <div class="share-options">
+                                                <div class="fb-share-button" 
+                                                data-href="{{ route('metaResource', $resource->slug) }}" 
+                                                data-layout="button">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="text-dark">
                                         @for($i = 0; $i < 5; $i++)
@@ -388,7 +394,7 @@
                                             @endif
                                         @endfor
                                         ({{$resource->ratingCount->count()}})
-                                        <span class="float-right text-success font-weight-bold">
+                                        <span class="float-right text-success font-weight-bold">                                      
                                         @if($resource->isBought == 1)
                                                 Owned
                                             @else

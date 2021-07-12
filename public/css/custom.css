@@ -266,6 +266,36 @@ a {
 .card-body {
     overflow: hidden;
 }
+.posted-by p {
+    display: inline-block;
+}
+.card-body .share-button {
+    display: inline-block;
+    margin-left: 4px;
+    position: relative;
+    float: right;
+}
+.card-body .share-button i {
+    background-color: #1877f2;
+    padding: 4px 6px 5px;
+    border-radius: 5px;
+    color: #fff;
+}
+.card-body .share-button:hover .share-options {
+    z-index: 1;
+    opacity: 1;
+}
+.card-body .share-button .share-options {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    height: 24px;
+    width: 100px;
+    z-index: -1;
+    opacity: 0;
+    transition: 0.3s;
+}
 .card-img-top {
     width: 100%;
     border-top-left-radius: 8px;
