@@ -35,6 +35,9 @@
                         <a href="{{route('withdrawals')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             Withdrawal Requests
                         </a>
+                        <a href="{{route('workshop.index')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                            Workshop
+                        </a>
                         @endif
                     </div>
                 </div>
