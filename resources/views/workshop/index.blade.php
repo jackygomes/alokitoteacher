@@ -115,6 +115,7 @@
                                     <td>{{$workshop->last_date}}</td>
                                     <td>
                                         <a href="{{route('workshop.edit', $workshop->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                        <a href="{{route('workshop.delete', $workshop->id)}}" class="btn btn-danger text-white btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach

@@ -129,7 +129,7 @@ class ContentController extends Controller
 
             $info->isBought = $isOrdered ? 1 : 0;
 
-            $histories = TrackHistory::where('course_or_toolkit',1)->where('course_toolkit_id', $info->id)->orderBy('id', 'DESC')->get();
+            $histories = TrackHistory::where('course_or_toolkit', 1)->where('course_toolkit_id', $info->id)->orderBy('id', 'DESC')->get();
 
 
             if ($info == null) {
@@ -172,7 +172,7 @@ class ContentController extends Controller
                     ->where('product_id', $info->id)->first();
 
                 $info->isBought = $isOrdered ? 1 : 0;
-                $histories = TrackHistory::where('course_or_toolkit',0)->where('course_toolkit_id', $info->id)->orderBy('id', 'DESC')->get();
+                $histories = TrackHistory::where('course_or_toolkit', 0)->where('course_toolkit_id', $info->id)->orderBy('id', 'DESC')->get();
 
 
                 if ($info == null) {

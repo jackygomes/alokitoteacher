@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{URL::asset('css/custom.css?v=123456789')}}">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178521926-1"></script>
+    <script src="//cdn.ckeditor.com/4.15.1/basic/ckeditor.js"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -89,6 +90,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-black" href="{{ route('allResource') }}">Innovations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-black" href="{{ route('workshops.index') }}">Workshops</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-black" href="{{ url('about_us') }}">About Us</a>

@@ -16,6 +16,7 @@ class CreateWorkshopsTable extends Migration
         Schema::create('workshops', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('slug');
             $table->text('description')->nullable();
             $table->decimal('price', 9, 3)->default(0.0);
             $table->text('preview_video')->nullable();
@@ -27,6 +28,8 @@ class CreateWorkshopsTable extends Migration
             $table->string('date_time')->nullable();
             $table->date('starting_date')->nullable();
             $table->date('last_date')->nullable();
+            $table->text('about_this_workshop')->nullable();
+            $table->text('what_you_will_learn')->nullable();
             $table->timestamps();
         });
     }

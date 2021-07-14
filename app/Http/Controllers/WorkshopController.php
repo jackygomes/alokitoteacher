@@ -57,6 +57,7 @@ class WorkshopController extends Controller
 
             $workshop = [
                 'name' => $request->name,
+                'slug' => str_slug($request->name) . '-' . $this->generateRandomString(5),
                 'thumbnail' => $image_name,
                 'description' => $request->description,
                 'price' => $request->price,
@@ -64,10 +65,11 @@ class WorkshopController extends Controller
                 'trainers' => json_encode($request->trainers),
                 'type' => $request->type,
                 'duration' => $request->duration,
-
                 'total_credit_hours' => $request->total_credit_hours,
                 'date_time' => $request->date_time,
-                'last_date' => $request->last_date
+                'last_date' => $request->last_date,
+                'about_this_workshop' => $request->about_this_workshop,
+                'what_you_will_learn' => $request->what_you_will_learn
             ];
             // return $workshop;
 
@@ -121,6 +123,7 @@ class WorkshopController extends Controller
 
             $workshop = [
                 'name' => $request->name,
+                'slug' => str_slug($request->name) . '-' . $this->generateRandomString(5),
                 'thumbnail' => $image_name,
                 'description' => $request->description,
                 'price' => $request->price,
@@ -130,7 +133,9 @@ class WorkshopController extends Controller
                 'duration' => $request->duration,
                 'total_credit_hours' => $request->total_credit_hours,
                 'date_time' => $request->date_time,
-                'last_date' => $request->last_date
+                'last_date' => $request->last_date,
+                'about_this_workshop' => $request->about_this_workshop,
+                'what_you_will_learn' => $request->what_you_will_learn
             ];
             // return $workshop;
 
@@ -146,5 +151,39 @@ class WorkshopController extends Controller
                 'message'   => $e->getMessage(),
             ], 420);
         }
+    }
+
+    public function delete($id)
+    {
+        $workshop = Workshop::find($id);
+        $workshop->delete();
+        return redirect()->back()->with(['success' => 'Workshop Deleted Successfully!']);
+    }
+
+    public function overview($slug)
+    {
+
+        $workshop = Workshop::where('slug', $slug)->first();
+        $thumbnailPart = '<div class="video-content embed-responsive embed-responsive-16by9 "><iframe src="' . $workshop->preview_video . '" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div>';
+
+        return view('workshop.overview', compact('workshop', 'thumbnailPart'));
+    }
+
+    private function generateRandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    //For Teachers...
+    public function list()
+    {
+        $workshops = Workshop::paginate(10);
+        return view('workshop.list', compact('workshops'));
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Workshop extends Model
 {
     protected $fillable = [
-        'name', 'thumbnail', 'description', 'price', 'preview_video', 'trainers', 'type', 'duration', 'total_credit_hours',
-        'date_time', 'last_date'
+        'name', 'slug', 'thumbnail', 'description', 'price', 'preview_video', 'trainers', 'type', 'duration', 'total_credit_hours',
+        'date_time', 'last_date', 'about_this_workshop', 'what_you_will_learn'
     ];
 }

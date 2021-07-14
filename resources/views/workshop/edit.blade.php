@@ -155,6 +155,22 @@
                                 <input type="date" name="last_date" value="{{$workshop->last_date}}" class="form-control" id="last_date">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="courseName" class="col-sm-2 col-form-label">About This Workshop:</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="5" id="about_this_workshop" name="about_this_workshop" placeholder="About This Workshop">
+                                    {{$workshop->about_this_workshop}}
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="courseName" class="col-sm-2 col-form-label">What you will learn:</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="5" id="what_you_will_learn" name="what_you_will_learn" placeholder="What you will learn">
+                                    {{$workshop->what_you_will_learn}}
+                                </textarea>
+                            </div>
+                        </div>
                         <a href="{{route('workshop.index')}}" class="btn btn-dark mb-4 px-4 py-2 shadow font-weight-bold text-white">Cancel</a>
                         <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Update</button>
                     </form>
@@ -167,6 +183,8 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        CKEDITOR.replace( 'about_this_workshop');
+        CKEDITOR.replace( 'what_you_will_learn');
         // $("#thumbnailImage").checkImageSize({
         //     minWidth: 400,
         //     minHeight: 300,
