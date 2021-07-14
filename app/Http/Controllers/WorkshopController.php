@@ -6,8 +6,11 @@ use App\CourseActivist;
 use App\User;
 use App\Workshop;
 use App\Revenue;
+use App\WorkshopRegistration;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Exports\WorkshopRegistrationExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class WorkshopController extends Controller
 {
@@ -185,5 +188,46 @@ class WorkshopController extends Controller
     {
         $workshops = Workshop::paginate(10);
         return view('workshop.list', compact('workshops'));
+    }
+
+    public function register(Request $request)
+    {
+        // return $request;
+        try {
+            $register = [
+                'workshop_id' => $request->workshop_id,
+                'name' => $request->name,
+                'user_id' => $request->id,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'institution' => $request->institution,
+                'passing_year' => $request->passing_year,
+                'subject' => $request->subject,
+                'education_level' => $request->education_level,
+                'is_teacher' => $request->is_teacher,
+                'years_teaching' => $request->years_teaching,
+                'teaching_institution' => $request->teaching_institution,
+                'school_type' => $request->school_type,
+                'classes' => json_encode($request->classes),
+                'status' => 'Applied'
+            ];
+            // return $register;
+
+            $success = WorkshopRegistration::create($register);
+            if ($success) return redirect()->back()->with(['success' => 'Registration Successful!']);
+            else return redirect()->back('workshop.index')->with(['error' => 'Something went wrong!']);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
+    }
+
+    public function export($workshop)
+    {
+        return Excel::download(new WorkshopRegistrationExport($workshop), 'workshop.xlsx');
     }
 }
