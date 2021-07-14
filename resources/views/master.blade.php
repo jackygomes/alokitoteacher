@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{URL::asset('css/app.css')}}">
     <link rel="shortcut icon" href="{{URL::asset('favicon.ico')}}">
 
+    
+    @yield('meta')
+
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Exo&display=swap" rel="stylesheet">
@@ -17,7 +20,7 @@
     <link rel="stylesheet" href="{{URL::asset('css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/style1.css')}}">
-    <link rel="stylesheet" href="{{URL::asset('css/custom.css?v=123456789')}}">
+    <link rel="stylesheet" href="{{URL::asset('css/custom.css?v=123456')}}">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178521926-1"></script>
     <script src="//cdn.ckeditor.com/4.15.1/basic/ckeditor.js"></script>
@@ -28,7 +31,7 @@
 
         gtag('config', 'UA-178521926-1');
     </script>
-    <script data-ad-client="ca-pub-1285809732280483" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- <script data-ad-client="ca-pub-1285809732280483" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
 
 
 
@@ -152,7 +155,7 @@
                         <a href="https://www.facebook.com/Alokito-Teachers-1022969321242132" target="_blank"><i class="fab fa-facebook fa-2x mr-2 custom-hover2" ></i></a>
                         <a href="https://www.youtube.com/channel/UCY4PBN9HLG5oxjCtYXGvfeg" target="_blank"><i class="fab fa-youtube fa-2x mr-2 custom-hover2"></i></a>
                         <a href="https://www.linkedin.com/company/14756318/" target="_blank"><i class="fab fa-linkedin fa-2x mr-2 custom-hover2"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-instagram fa-2x mr-2 custom-hover2"></i></a>
+                        <a href="https://instagram.com/alokitoteachers?utm_medium=copy_link" target="_blank"><i class="fab fa-instagram fa-2x mr-2 custom-hover2"></i></a>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -224,7 +227,14 @@
         </div>
     </section>
 
-
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
     <script src="{{URL::asset('js/jquery.min.js')}}"></script>
     <script src="{{URL::asset('js/app.js')}}"></script>

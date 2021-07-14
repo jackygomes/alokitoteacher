@@ -19,7 +19,7 @@ class ResourceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['resourceSharePage']]);
     }
     /**
      * Display a listing of the resource.
@@ -36,9 +36,9 @@ class ResourceController extends Controller
             $category = ResourceCategory::where('id', $request->category)->first();
         }
         if($category){
-            $resource_info = Resource::with('user')->where('deleted',0)->where('category_id',$category->id)->where('status', 'Approved')->orderBy('created_at', 'desc')->paginate(9);
+            $resource_info = Resource::with('user')->with('ratingCount')->where('deleted',0)->where('category_id',$category->id)->where('status', 'Approved')->orderBy('created_at', 'desc')->paginate(9);
         }else {
-            $resource_info = Resource::with('user')->where('deleted',0)->where('status', 'Approved')->orderBy('created_at', 'desc')->paginate(9);
+            $resource_info = Resource::with('user')->with('ratingCount')->where('deleted',0)->where('status', 'Approved')->orderBy('created_at', 'desc')->paginate(9);
         }
 
         foreach($resource_info as $resource){
@@ -485,5 +485,15 @@ class ResourceController extends Controller
                 'message'   => $e->getMessage(),
             ], 420);
         }
+    }
+
+    function resourceSharePage(Request $request) {
+        $info = Resource::where('slug', '=', $request->slug)->first();
+
+        if ($info == null) {
+            return abort(404);
+        }
+
+        return view('share-pages.resource', compact('info'));
     }
 }

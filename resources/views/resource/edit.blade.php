@@ -53,10 +53,10 @@
                     <div class="row">
                         <div class="col-lg-12">
                             @if(count($contents) < 1)
-                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
-                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addDocument">Add Document</button>
+                                <!-- <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addVideo">Add Video</button>
+                                <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="addDocument">Add Document</button> -->
                             @endif
-                            <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="editResource">Edit Innovation Info</button>
+                            <!-- <button class="btn background-yellow mb-3 px-4 py-2 shadow font-weight-bold text-white" id="editResource">Edit Innovation Info</button> -->
                         </div>
                     </div>
                     <div id="resourceSection">
@@ -90,9 +90,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="resourceDescription" class="col-sm-2 col-form-label">Description:</label>
+                                    <label for="resourceDescription" class="col-sm-2 col-form-label">About My Innovation:</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" name="resource_description" placeholder="Description" id="resourceDescription" rows="3">{{$resource->description}}</textarea>
+                                        <textarea class="form-control" name="resource_description" placeholder="About My Innovation" id="resourceDescription" rows="3">{{$resource->description}}</textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="form-group row">
@@ -154,7 +154,8 @@
                                     <label for="thumbnail_image" class="col-sm-2 col-form-label">Choose New Thumbnail Image:</label>
                                     <div class="col-sm-10">
                                         <input type="file" name="thumbnailImage" class="form-control-file check-image-size" id="thumbnail_image" data-min-width="400" data-min-height="300" data-max-width="400" data-max-height="300" >
-                                        <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be  750px X 450px (width = 750px, height = 450px).</p>
+                                        <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be  400px X 300px (width = 400px, height = 300px).</p>
+                                        <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* For resizing your image visit here <a href="https://resizepic.com/" target="_blank" class="text-yellow">https://resizepic.com/</a></p>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Update</button>

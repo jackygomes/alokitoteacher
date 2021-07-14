@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Job;
+use App\Transaction;
 
 class SchoolController extends Controller
 {
@@ -40,7 +41,17 @@ class SchoolController extends Controller
 
         $users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
 
-        return view('schools', compact('user_info', 'job_info', 'users'));
+        $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type', 'Earning')->sum('amount');
+			$condition = [
+				['jobs.removed', '=', 0],
+				['jobs.admin_status', '=', 'Approved'],
+			];
+        $openJobs = Job::where('user_id', '=', $user_info->id)
+                ->where($condition)
+                ->whereDate('jobs.deadline', '>', Carbon::today()->toDateString())
+                ->get();
+
+        return view('schools', compact('openJobs', 'earnings', 'user_info', 'job_info', 'users'));
 
         //return var_dump($data);
 
@@ -64,12 +75,22 @@ class SchoolController extends Controller
         $deadLineMin = Carbon::now()->format('Y-m-d');
         $deadLineMax = Carbon::now()->addMonth(1)->format('Y-m-d');
         $featuredJobCount = Job::where('featured', 1)->whereDate('deadline', '>', \Carbon\Carbon::today()->toDateString())->count();
+        $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type', 'Earning')->sum('amount');
+
+        $condition = [
+            ['jobs.removed', '=', 0],
+            ['jobs.admin_status', '=', 'Approved'],
+        ];
+        $openJobs = Job::where('user_id', '=', $user_info->id)
+                ->where($condition)
+                ->whereDate('jobs.deadline', '>', Carbon::today()->toDateString())
+                ->get();
 
         foreach ($toolkits as $toolkit) {
             $toolkit->people_taken = TrackHistory::where('course_toolkit_id', $toolkit->id)->count();
         }
 
-        return view('educational-institute.dashboard', compact('leaderBoard', 'job_info', 'resources', 'toolkits', 'user_info', 'jobPrice', 'deadLineMin', 'deadLineMax', 'featuredJobCount'));
+        return view('educational-institute.dashboard', compact( 'openJobs', 'earnings','leaderBoard', 'job_info', 'resources', 'toolkits', 'user_info', 'jobPrice', 'deadLineMin', 'deadLineMax', 'featuredJobCount'));
     }
 
     function add_job(Request $request)

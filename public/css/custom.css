@@ -237,8 +237,65 @@ a {
 .card {
     border-radius: 8px;
 }
+.card .img-wrap {
+    position: relative;
+}
+.card .img-wrap .overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #F59D1FE6;
+    opacity: 0;
+    transition: 0.5s;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.card:hover .img-wrap .overlay {
+    opacity: 1;
+}
+.card .img-wrap .overlay span{
+    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 20px;
+    color: #fff;
+}
 .card-body {
     overflow: hidden;
+}
+.posted-by p {
+    display: inline-block;
+}
+.card-body .share-button {
+    display: inline-block;
+    margin-left: 4px;
+    position: relative;
+    float: right;
+}
+.card-body .share-button i {
+    background-color: #1877f2;
+    padding: 4px 6px 5px;
+    border-radius: 5px;
+    color: #fff;
+}
+.card-body .share-button:hover .share-options {
+    z-index: 1;
+    opacity: 1;
+}
+.card-body .share-button .share-options {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    height: 26px;
+    width: 144px;
+    z-index: -1;
+    opacity: 0;
+    transition: 0.3s;
+    padding: 0 5px;
 }
 .card-img-top {
     width: 100%;
@@ -382,7 +439,10 @@ a {
     position: relative;
     width: 135px;
     height: 135px;
-    margin-bottom: 20px;
+    margin: 0 auto;
+}
+.home-leaderboard .top-3 .top-3-card .content {
+    margin-top: 20px;
 }
 .home-leaderboard .top-3 .first .image {
     width: 170px;
@@ -444,6 +504,7 @@ a {
 }
 .dashboard-left-panel .info-wrap .info-image {
     margin-right: 5px;
+    margin-top: 4px;
 }
 .dashboard-left-panel .info-wrap .info-text {
     margin: 0;
@@ -465,6 +526,17 @@ a {
 .dashboard-left-panel .balance {
     overflow: hidden;
     color: #ffffff70;
+}
+.deposit-withdraw-buttons {
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+.deposit-withdraw-buttons a {
+    width: 46%;
+    padding: 14px 0;
+    border-radius: 10px;
+    font-weight: 700;
+    display: inline-block;
 }
 .dashboard-bg {
     background-color: #f0f0f0;

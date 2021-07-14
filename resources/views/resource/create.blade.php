@@ -73,9 +73,9 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="resourceDescription" class="col-sm-2 col-form-label">Description:</label>
+                                <label for="resourceDescription" class="col-sm-2 col-form-label">About My Innovation:</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" name="resource_description" placeholder="Description" id="resourceDescription" rows="3"></textarea>
+                                    <textarea class="form-control" name="resource_description" placeholder="About My Innovation" id="resourceDescription" rows="3"></textarea>
                                 </div>
                             </div>
                             <!-- <div class="form-group row">
@@ -110,7 +110,8 @@
                                 <label for="thumbnail_image" class="col-sm-2 col-form-label">Thumbnail Image:</label>
                                 <div class="col-sm-10">
                                     <input type="file" name="thumbnailImage" class="form-control-file check-image-size" id="thumbnail_image" data-min-width="400" data-min-height="300" data-max-width="400" data-max-height="300" >
-                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be  750px X 450px (width = 750px, height = 450px).</p>
+                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be  400px X 300px (width = 400px, height = 300px).</p>
+                                    <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* For resizing your image visit here <a href="https://resizepic.com/" target="_blank" class="text-yellow">https://resizepic.com/</a></p>
                                 </div>
                             </div>
                             <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Create</button>

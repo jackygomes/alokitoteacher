@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Academic;
+use App\Job;
 use App\WorkExperience;
+use Carbon\Carbon;
 use Hash;
 
 
@@ -35,7 +37,16 @@ class SettingsController extends Controller
 		    return view ('settings_teacher', compact('earnings','recent_work', 'recent_institute', 'user_info'));
 
     	}elseif(Auth::user()->identifier == 2) {
-            return view ('settings_school', compact('user_info'));
+			$earnings = Transaction::where('user_id', Auth::id())->where('transaction_type', 'Earning')->sum('amount');
+			$condition = [
+				['jobs.removed', '=', 0],
+				['jobs.admin_status', '=', 'Approved'],
+			];
+			$openJobs = Job::where('user_id', '=', $user_info->id)
+					->where($condition)
+					->whereDate('jobs.deadline', '>', Carbon::today()->toDateString())
+					->get();
+            return view ('settings_school', compact('openJobs', 'earnings', 'user_info'));
 
         } elseif(Auth::user()->identifier == 4) {
     	    $personalInfo = StudentPersonalInfo::where('user_id', Auth::user()->id)->first();

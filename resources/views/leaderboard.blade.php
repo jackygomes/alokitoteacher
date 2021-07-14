@@ -10,14 +10,14 @@
                             <a href="{{ url('t')}}/{{ $leaderBoard[1]['user']->username }}">
                                 <div class="serial">1.</div>
                                 <div class="image">
-                                    @if($leaderBoard[1]['user']->image == null)
+                                    @if($leaderBoard[0]['user']->image == null)
                                         <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
                                     @else
-                                        <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/{{ $leaderBoard[1]['user']->image }}">
+                                        <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/{{ $leaderBoard[0]['user']->image }}">
                                     @endif
                                     <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
                                 </div>
-                                <div class="name">{{ $leaderBoard[1]['user']->name }}</div>
+                                <div class="name">{{ $leaderBoard[0]['user']->name }}</div>
                             </a>
                         </li>
                         @foreach ($leaderBoard as $key =>$leader)

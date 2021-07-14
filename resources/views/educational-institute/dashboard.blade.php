@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master-dashboard')
 @section('content')
 <style>
     .custom-control-input:checked~.custom-control-label::before {
@@ -8,13 +8,13 @@
     }
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid dashboard-bg">
 
     <div class="row">
         @include('includes.dashboard.school')
 
         <div class="col-md-9 col-sm-12 mt-2">
-            <div class="container-fluid ">
+            <!-- <div class="container-fluid ">
                 <div class="row">
                     @if($message = Session::get('success'))
                     <div class="alert alert-success">
@@ -74,53 +74,69 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class=" mt-5 mb-3 col-sm-12">
-                        <h3 class="font-weight-bold mr-3" style="display: inline-block">Resource</h3>
-                        <a href="{{route('resource.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen"></i> <small>Add</small></span></a>
-                        <div class="mr=2">
-                            <div class="table-responsive-sm">
-                                <table class="table ">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:10%">No.</th>
-                                            <th style="width:30%">Toolkit Name</th>
-                                            <th style="width:10%">Price</th>
-                                            <th style="width:10%">Status</th>
-                                            <th style="width:20%">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $n = 1 ?>
-                                        @foreach ($resources as $resource)
-                                        <tr>
-                                            <td>{{$n}}</td>
-                                            <td>{{$resource->resource_title}}</td>
-                                            <td>{{($resource->price == 0) ? 'Free' : $resource->price}}</td>
-                                            <td>{{$resource->status}}</td>
-                                            <td>
-                                                <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">
-                                                    <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
-                                                    <input class="btn btn-danger btn-sm" onclick="resourceDeleteConfirm({{$resource->id}})" type="button" value="Remove" />
-                                                    <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
-                                                    @method('delete')
-                                                    @csrf
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        <?php $n++ ?>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                {{$resources->links()}}
-                                @if($resources->count() == 0)
-                                <h5 class="text-center text-muted">No Resource to Show</h5>
-                                @endif
-                            </div>
+            </div> -->
+            <div class="container-fluid">
+                <div class="row dashboard-content-block">
+                    <div class="col-md-12">
+                    <h3 class="font-weight-bold mr-3 pt-3 pb-2" style="display: inline-block">My Innovations</h3>
+                    <a href="{{route('resource.create')}}"><span class="fa-clickable"><i class="fas fa-pen"></i> <small>Add</small></span></a>
+                        <div id="exploreResource" class="owl-carousel card-slider">
+                            @foreach ($resources as $resource)
+                                <div class="item mt-3 mb-5">
+                                    <a href="{{ url('overview') }}/r/{{$resource->slug}}">
+                                        <div class="card">
+                                            <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                            <div class="card-body">
+                                                @if(strlen($resource->resource_title) < 26)
+                                                    <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($resource->resource_title), 26) }}</p>
+                                                @else
+                                                    <div class="ticker-wrap">
+                                                        <div class="ticker">
+                                                            <div class="ticker__item card-title text-dark font-weight-bold mb-0">
+                                                                {{$resource->resource_title}}</div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                <hr>
+                                                <div class="text-dark">
+            {{--                                        @for($i = 1; $i <= 5; $i++)--}}
+            {{--                                            @if($resources->rating - $i >= 0)--}}
+            {{--                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
+            {{--                                            @else--}}
+            {{--                                                <i class="far fa-star text-light-dark"></i>--}}
+            {{--                                            @endif--}}
+            {{--                                        @endfor--}}
+                                                <span class="text-success font-weight-bold">
+                                                @if($resource->isBought == 1)
+                                                        Owned
+                                                    @else
+                                                        @if($resource->price == 0)
+                                                            Free
+                                                        @else
+                                                            {{ round($resource->price, 2)}} BDT
+                                                        @endif
+                                                    @endif
+                                                    </span>
+                                                </div>
+                                                <div >
+                                                <hr>
+                                                    <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">
+                                                        <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                                        <input class="btn btn-danger btn-sm" onclick="resourceDeleteConfirm({{$resource->id}})" type="button" value="Remove" />
+                                                        <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                                        @method('delete')
+                                                        @csrf
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                </div>
-
+                    </div>
             </div>
             <div class="container-fluid mt-5">
                 <div class="row">

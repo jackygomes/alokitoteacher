@@ -4,9 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ResourceRating extends Model
+class ContactUsForm extends Model
 {
     //
     protected $guarded = [];
-
 }

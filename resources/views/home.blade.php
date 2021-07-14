@@ -161,7 +161,7 @@
                     <img src="{{asset('images/new_design/feature-icon-3.png')}}" alt="">
                 </div>
                 <div>
-                    <h3 class="font-weight-bold">100+</h3>
+                    <h3 class="font-weight-bold">10+</h3>
                     <p>Courses Created</p>
                 </div>
             </div>
@@ -214,10 +214,12 @@
             <div id="exploreCourse" class="owl-carousel card-slider">
             @foreach ($course_info as $v_course_info)
                 <div class="item mt-5">
-                    <a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
-                        <div class="card">
+                    <div class="card">
+                        <a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
                             <img src="{{url('images\thumbnail')}}\{{ $v_course_info->thumbnail }}" style="height: 262px;" class="card-img-top">
-                            <div class="card-body">
+                        </a>
+                        <div class="card-body">
+                            <a href="{{ url('view') }}/c/{{$v_course_info->slug}}">
                                 @if(strlen($v_course_info->title) < 26)
                                 <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($v_course_info->title), 26) }}</p>
                                 @else
@@ -228,33 +230,48 @@
                                     </div>
                                 </div>
                                 @endif
-                                <p class="text-light-dark">{{$v_course_info->lessons}} Lessons</p>
-                                <hr>
+                            </a>
+                            <p class="text-light-dark">{{$v_course_info->lessons}} Lessons</p>
+                            <hr>
+                            
+                            <div class="posted-by">
                                 <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($v_course_info->name), 20) }}</strong></p>
-
-                                <div class="text-dark">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        @if($v_course_info->rating - $i >= 0)
-                                            <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                                        @else
-                                            <i class="far fa-star text-light-dark"></i>
-                                        @endif
-                                    @endfor
-                                    ({{$v_course_info->rating_count}})
-                                    <span class="float-right text-success font-weight-bold">
-                                        @if($v_course_info->isBought == 1)
-                                            Owned
-                                        @else
-                                            @if($v_course_info->price == 0)
-                                                Free
-                                            @else
-                                                {{ round($v_course_info->price, 2)}} BDT
-                                            @endif
-                                        @endif
-                                    </span>
+                                <div class="share-button">
+                                    <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                    <div class="share-options">
+                                        <div class="fb-share-button" 
+                                        data-href="{{ route('metaCourse', $v_course_info->slug) }}" 
+                                        data-layout="button">
+                                        </div>
+                                        <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                                        <script type="IN/Share" data-url="{{ route('metaCourse', $v_course_info->slug) }}"></script>
+                                    </div>
                                 </div>
-
                             </div>
+
+                            <div class="text-dark">
+                                @for($i = 1; $i <= 5; $i++)
+                                    @if($v_course_info->rating - $i >= 0)
+                                        <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
+                                    @else
+                                        <i class="far fa-star text-light-dark"></i>
+                                    @endif
+                                @endfor
+                                ({{$v_course_info->rating_count}})
+                                <span class="float-right text-success font-weight-bold">
+                                    @if($v_course_info->isBought == 1)
+                                        Owned
+                                    @else
+                                        @if($v_course_info->price == 0)
+                                            Free
+                                        @else
+                                            {{ round($v_course_info->price, 2)}} BDT
+                                        @endif
+                                    @endif
+                                </span>
+                            </div>
+
+                        </div>
 {{--                            <div class="card-footer" style="background:--}}
 {{--                            @if($v_course_info->isBought == 1)--}}
 {{--                                #98b59d;--}}
@@ -274,8 +291,7 @@
 {{--                                    @endif--}}
 {{--                                </h5>--}}
 {{--                            </div>--}}
-                        </div>
-                    </a>
+                    </div>
                 </div>
             @endforeach
             </div>
@@ -345,6 +361,7 @@
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h2 class="text-center font-weight-bold">Explore Teaching Innovations</h2>
+                <a href="{{ route('resource.create') }}" class="btn mt-3 text-center bg-white text-dark font-weight-bold home-explore-button">Submit My Innovation</a>
                 <a href="{{ route('allResource') }}" class="btn mt-3 text-center bg-white text-dark font-weight-bold home-explore-button">View All Innovations</a>
             </div>
         </div>
@@ -352,10 +369,17 @@
             <div id="exploreResource" class="owl-carousel card-slider">
                 @foreach ($resources as $resource)
                     <div class="item mt-5">
-                        <a href="{{ url('overview') }}/r/{{$resource->slug}}">
-                            <div class="card">
-                                <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
-                                <div class="card-body">
+                        <div class="card">
+                            <div class="img-wrap">
+                                <a href="{{ url('overview') }}/r/{{$resource->slug}}">
+                                    <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                    <div class="overlay">
+                                        <span>Read & Rate</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{ url('overview') }}/r/{{$resource->slug}}">
                                     @if(strlen($resource->resource_title) < 26)
                                         <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($resource->resource_title), 26) }}</p>
                                     @else
@@ -366,52 +390,65 @@
                                             </div>
                                         </div>
                                     @endif
-                                    <hr>
+                                </a>
+                                <hr>
+                                <div class="posted-by">
                                     <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 20) }}</strong></p>
-
-                                    <div class="text-dark">
-{{--                                        @for($i = 1; $i <= 5; $i++)--}}
-{{--                                            @if($resources->rating - $i >= 0)--}}
-{{--                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
-{{--                                            @else--}}
-{{--                                                <i class="far fa-star text-light-dark"></i>--}}
-{{--                                            @endif--}}
-{{--                                        @endfor--}}
-                                        <span class="float-left text-success font-weight-bold">
-                                        @if($resource->isBought == 1)
-                                                Owned
-                                            @else
-                                                @if($resource->price == 0)
-                                                    Free
-                                                @else
-                                                    {{ round($resource->price, 2)}} BDT
-                                                @endif
-                                            @endif
-                                    </span>
+                                    <div class="share-button">
+                                        <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                        <div class="share-options">
+                                            <div class="fb-share-button" 
+                                            data-href="{{ route('metaResource', $resource->slug) }}" 
+                                            data-layout="button">
+                                            </div>
+                                            <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                                            <script type="IN/Share" data-url="{{ route('metaResource', $resource->slug) }}"></script>
+                                        </div>
                                     </div>
-
                                 </div>
-                                {{--                            <div class="card-footer" style="background:--}}
-                                {{--                            @if($v_course_info->isBought == 1)--}}
-                                {{--                                #98b59d;--}}
-                                {{--                            @else--}}
-                                {{--                                #51b964;--}}
-                                {{--                            @endif--}}
-                                {{--                                ">--}}
-                                {{--                                <h5 class="text-white text-center">--}}
-                                {{--                                    @if($v_course_info->isBought == 1)--}}
-                                {{--                                        Owned--}}
-                                {{--                                    @else--}}
-                                {{--                                        @if($v_course_info->price == 0)--}}
-                                {{--                                            Free--}}
-                                {{--                                        @else--}}
-                                {{--                                            {{ round($v_course_info->price, 2)}} BDT--}}
-                                {{--                                        @endif--}}
-                                {{--                                    @endif--}}
-                                {{--                                </h5>--}}
-                                {{--                            </div>--}}
+                                <div class="text-dark">
+                                    @for($i = 0; $i < 5; $i++)
+                                        @if(round($resource->ratingCount->avg('rating')) - $i > 0)
+                                            <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
+                                        @else
+                                            <i class="far fa-star text-light-dark"></i>
+                                        @endif
+                                    @endfor
+                                    ({{$resource->ratingCount->count()}})
+                                    <span class="float-right text-success font-weight-bold">                                      
+                                    @if($resource->isBought == 1)
+                                            Owned
+                                        @else
+                                            @if($resource->price == 0)
+                                                Free
+                                            @else
+                                                {{ round($resource->price, 2)}} BDT
+                                            @endif
+                                        @endif
+                                </span>
+                                </div>
+
                             </div>
-                        </a>
+                            {{--                            <div class="card-footer" style="background:--}}
+                            {{--                            @if($v_course_info->isBought == 1)--}}
+                            {{--                                #98b59d;--}}
+                            {{--                            @else--}}
+                            {{--                                #51b964;--}}
+                            {{--                            @endif--}}
+                            {{--                                ">--}}
+                            {{--                                <h5 class="text-white text-center">--}}
+                            {{--                                    @if($v_course_info->isBought == 1)--}}
+                            {{--                                        Owned--}}
+                            {{--                                    @else--}}
+                            {{--                                        @if($v_course_info->price == 0)--}}
+                            {{--                                            Free--}}
+                            {{--                                        @else--}}
+                            {{--                                            {{ round($v_course_info->price, 2)}} BDT--}}
+                            {{--                                        @endif--}}
+                            {{--                                    @endif--}}
+                            {{--                                </h5>--}}
+                            {{--                            </div>--}}
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -428,49 +465,49 @@
       <div class="teachers-toolkits">
         <h2 class="font-weight-bold text-center mt-5 mb-5 text-dark pt-5">Leaderboard</h2>
           <div class="d-flex justify-content-center">
-              <div class="col-md-4">
+              <div class="col-md-6">
                   <div class="top-3 mt-4 text-center">
                       <div class="second top-3-card">
-                          <div class="image">
-                              @if($leaderBoard[2]['user']->image == null)
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
-                              @else
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[2]['user']->image}}">
-                              @endif
-                              <span class="position">2</span>
-                          </div>
-                          <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 10) }}</p>
-                              <p class="m-0">{{ $leaderBoard[2]->score }} points</p>
-                          </div>
-                      </div>
-                      <div class="first top-3-card">
                           <div class="image">
                               @if($leaderBoard[1]['user']->image == null)
                                   <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
                               @else
                                   <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[1]['user']->image}}">
                               @endif
+                              <span class="position">2</span>
+                          </div>
+                          <div class="content">
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 16) }}</p>
+                              <p class="m-0">{{ $leaderBoard[1]->score }} points</p>
+                          </div>
+                      </div>
+                      <div class="first top-3-card">
+                          <div class="image">
+                              @if($leaderBoard[0]['user']->image == null)
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                              @else
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[0]['user']->image}}">
+                              @endif
                                   <span class="position background-yellow">1</span>
                                   <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
                           </div>
                           <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 10) }}</p>
-                              <p class="m-0">{{ $leaderBoard[1]->score }} points</p>
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[0]['user']->name), 16) }}</p>
+                              <p class="m-0">{{ $leaderBoard[0]->score }} points</p>
                           </div>
                       </div>
                       <div class="third top-3-card">
                           <div class="image">
-                              @if($leaderBoard[3]['user']->image == null)
+                              @if($leaderBoard[2]['user']->image == null)
                                   <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
                               @else
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[3]['user']->image}}">
+                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[2]['user']->image}}">
                               @endif
                               <span class="position">3</span>
                           </div>
                           <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[3]['user']->name), 10) }}</p>
-                              <p class="m-0">{{ $leaderBoard[3]->score }} points</p>
+                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 16) }}</p>
+                              <p class="m-0">{{ $leaderBoard[2]->score }} points</p>
                           </div>
                       </div>
                   </div>
@@ -505,7 +542,7 @@
 </div>
 <!-- Leaderboar area ends -->
 
-<div class="alokito-journey">
+<!-- <div class="alokito-journey">
     <div class="container">
         <h2 class="text-center font-weight-bold text-dark mb-4">Your Alokito Journey</h2>
         <div class="row">
@@ -551,7 +588,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
  <!-- journey ends area -->
 <div class="container px-0">

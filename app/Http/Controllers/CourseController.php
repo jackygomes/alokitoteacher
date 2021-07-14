@@ -29,6 +29,7 @@ class CourseController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['courseSharePage']]);
     }
 
     function index()
@@ -533,5 +534,15 @@ class CourseController extends Controller
         $question = CourseQuestion::find($id);
         $question->delete();
         return redirect()->back()->with('success', 'Question deleted successfully!');
+    }
+
+    function courseSharePage(Request $request) {
+        $info = Course::where('slug', '=', $request->slug)->first();
+
+        if ($info == null) {
+            return abort(404);
+        }
+
+        return view('share-pages.course', compact('info'));
     }
 }

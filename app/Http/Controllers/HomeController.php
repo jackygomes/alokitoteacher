@@ -58,7 +58,7 @@ class HomeController extends Controller
             $toolkit->isBought = $isOrdered ? 1 : 0;
         }
 
-        $resources = Resource::with('user')->limit(10)->where('deleted',0)->where('status', '=', 'Approved')->orderBy('created_at', 'desc')->get();
+       $resources = Resource::with('user')->with('ratingCount')->limit(10)->where('deleted',0)->where('status', '=', 'Approved')->orderBy('created_at', 'desc')->get();
 
         foreach($resources as $resource){
             $isOrdered = Order::where('status', 'paid')

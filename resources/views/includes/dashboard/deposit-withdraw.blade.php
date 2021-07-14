@@ -48,9 +48,9 @@
 
         <p class="my-3 balance"><span class="float-left">Current Balance</span> <span class="float-right text-white">{{ round($user_info->balance, 2) }} Tk.</span></p>
         <p class="my-3 balance"><span class="float-left">Total Earnings</span> <span class="float-right text-white">{{ $earnings }} Tk.</span></p>
-        <div class="">
-            <a href="{{route('deposit.form')}}" class=" btn btn-success px-4 float-left" style="display: inline-block">Deposit</a>
-            <a href="{{route('withdraw.form')}}" class=" btn btn-danger px-5 float-right" style="display: inline-block">Withdraw</a>
+        <div class="deposit-withdraw-buttons">
+            <a href="{{route('deposit.form')}}" class=" btn btn-success float-left">Deposit</a>
+            <a href="{{route('withdraw.form')}}" class=" btn btn-danger float-right">Withdraw</a>
         </div>
         @endif
 
