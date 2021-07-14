@@ -97,43 +97,43 @@
             <br>
 
 
-            {{-- @for($i = 1; $i <= 5; $i++) @if($content_rating - $i>= 0)
-                <i class="fa fa-star text-yellow" aria-hidden="true"></i>
-                @else
-                <i class="far fa-star rating-inactive"></i>
-                @endif
-                @endfor --}}
+            @for($i = 1; $i <= 5; $i++) @if($content_rating - $i>= 0)
+            <i class="fa fa-star text-yellow" aria-hidden="true"></i>
+            @else
+            <i class="far fa-star rating-inactive"></i>
+            @endif
+            @endfor
 
-                <button type="submit" class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#addJobModal">Register</button>
-                <br>
-                <br>
-                <hr>
-                <br>
-                <span>
-                    <span class="h3 text-success">
-                        @if($workshop->price == 0)
-                        Free
-                        @else
-                        {{ round($workshop->price, 2)}} BDT
-                        @endif
-                    </span>
+            <button type="submit" class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#addJobModal">Register</button>
+            <br>
+            <br>
+            <hr>
+            <br>
+            <span>
+                <span class="h3 text-success">
+                    @if($workshop->price == 0)
+                    Free
+                    @else
+                    {{ round($workshop->price, 2)}} BDT
+                    @endif
                 </span>
-                <br>
-                <!-- <button class="your-button-class" id="sslczPayBtn"
-                 token="{{ csrf_token() }}"
-                 postdata="your javascript arrays or objects which requires in backend"
-                 order="If you already have the transaction generated for current order"
-                 endpoint="{{ url('pay-via-ajax') }}"> Pay Now
-         </button> -->
-               
+            </span>
+            <br>
+            <!-- <button class="your-button-class" id="sslczPayBtn"
+                token="{{ csrf_token() }}"
+                postdata="your javascript arrays or objects which requires in backend"
+                order="If you already have the transaction generated for current order"
+                endpoint="{{ url('pay-via-ajax') }}"> Pay Now
+        </button> -->
+            
 
-                {{-- <p class="mt-2">Total enrolled: {{$histories->count()}}</p> --}}
+            {{-- <p class="mt-2">Total enrolled: {{$histories->count()}}</p> --}}
 
-                @if(Request::segment(2) == 't')
-                <p class="text-danger mt-3">***You can not retake this toolkit</p>
-                @elseif(Request::segment(2) == 'c')
-                <p class="text-danger mt-3">***You can not retake this course</p>
-                @endif
+            @if(isset($content_rating))
+            <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal" disabled>Rate this innovation</button>
+            @else
+            <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal">Rate this innovation</button>
+            @endif
         </div>
         </div>
 
@@ -159,6 +159,46 @@
            </script>
        </div>
    </div>
+</div>
+
+<!-- rating -->
+<div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Rate This Innovation</h5>
+
+      </div>
+      <div class="modal-body text-center">
+        <form method="POST" action="{{ route('workshops.rate') }}">
+            {{csrf_field()}}
+            <input type="hidden" name="workshop_id" value="{{$workshop->id}}">
+            <label for="">Innovation rating</label>
+            <div class="rating mb-3">
+                <label>
+                    <input type="radio" name="workshopRating" class="d-none" value="5" title="5 stars" required>
+                </label>
+                <label>
+                    <input type="radio" name="workshopRating" class="d-none" value="4" title="4 stars">
+                </label>
+                <label>
+                    <input type="radio" name="workshopRating" class="d-none" value="3" title="3 stars">
+                </label>
+                <label>
+                    <input type="radio" name="workshopRating" class="d-none" value="2" title="2 stars">
+                </label>
+                <label>
+                    <input type="radio" name="workshopRating" class="d-none" value="1" title="1 star">
+                </label>
+            </div>
+
+            <button type="submit" class="btn background-yellow px-4 py-2 shadow font-weight-bold text-white">Submit</button>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
 </div>
 
 
@@ -342,6 +382,12 @@
 
         window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
     })(window, document);
+
+    $('.rating input').change(function () {
+        var $radio = $(this);
+        $('.rating .selected').removeClass('selected');
+        $radio.closest('label').addClass('selected');
+    });
 </script>
 
 @endpush

@@ -251,4 +251,6 @@ Route::group(['prefix' => 'workshops', 'as' => 'workshops.'], function () {
     Route::get('/overview/{slug}', 'WorkshopController@overview')->name('overview');
     Route::post('/register', 'WorkshopController@register')->name('register');
     Route::get('/export/{workshop}', 'WorkshopController@export')->name('export');
+
+    Route::post('/rate', 'WorkshopController@rateWorkshop')->name('rate');
 });

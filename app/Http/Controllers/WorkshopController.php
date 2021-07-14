@@ -10,6 +10,8 @@ use App\WorkshopRegistration;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Exports\WorkshopRegistrationExport;
+use App\WorkshopRating;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class WorkshopController extends Controller
@@ -167,9 +169,12 @@ class WorkshopController extends Controller
     {
 
         $workshop = Workshop::where('slug', $slug)->first();
+        $content_rating = DB::table('workshop_ratings')
+                ->where('workshop_id', '=', $workshop->id)
+                ->avg('rating');
         $thumbnailPart = '<div class="video-content embed-responsive embed-responsive-16by9 "><iframe src="' . $workshop->preview_video . '" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div>';
 
-        return view('workshop.overview', compact('workshop', 'thumbnailPart'));
+        return view('workshop.overview', compact('workshop', 'thumbnailPart', 'content_rating'));
     }
 
     private function generateRandomString($length = 10)
@@ -229,5 +234,31 @@ class WorkshopController extends Controller
     public function export($workshop)
     {
         return Excel::download(new WorkshopRegistrationExport($workshop), 'workshop.xlsx');
+    }
+
+    function rateWorkshop(Request $request)
+    {
+        try{
+            $rating = WorkshopRating::where('user_id', '=', Auth::id())
+            ->where('workshop_id', '=', $request->workshop_id)
+            ->first();
+            if ($rating == null) {
+                $rating = new WorkshopRating;
+                $rating->user_id = Auth::id();
+                $rating->workshop_id = $request->workshop_id;
+            }
+
+            $rating->rating = $request->workshopRating;
+            $rating->save();
+
+            return back()->with('success', 'Workshop rated successfully!');
+
+
+        }catch(\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
     }
 }
