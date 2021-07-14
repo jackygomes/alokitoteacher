@@ -21,7 +21,7 @@
 
             @foreach ($workshops as $workshop)
                 <div class="col-md-4 mt-5">
-                    <a href="{{ route('workshop.overview',$workshop->slug) }}">
+                    <a href="{{ route('workshops.overview',$workshop->slug) }}">
                         <div class="card">
                             <img src="{{url('images\thumbnail')}}\{{ $workshop->thumbnail }}" style="height: 262px;" class="card-img-top">
                             <div class="card-body">
