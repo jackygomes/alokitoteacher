@@ -116,6 +116,7 @@
                                     <td>
                                         <a href="{{route('workshop.edit', $workshop->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
                                         <a href="{{route('workshop.delete', $workshop->id)}}" class="btn btn-danger text-white btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                                        <a href="{{route('workshops.export', $workshop->id)}}" class="btn btn-success text-white btn-sm">Export Enrolled List</a>
                                     </td>
                                 </tr>
                                 @endforeach

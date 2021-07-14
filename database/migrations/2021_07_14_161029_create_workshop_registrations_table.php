@@ -15,6 +15,7 @@ class CreateWorkshopRegistrationsTable extends Migration
     {
         Schema::create('workshop_registrations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('workshop_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name')->nullable();
             $table->string('gender')->nullable();

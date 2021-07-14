@@ -180,6 +180,7 @@
                         <div class="col-md-12">
                             <label>Name:</label>
                             <input type="hidden" name="id" value="{{Auth::user()->id}}">
+                            <input type="hidden" name="workshop_id" value="{{$workshop->id}}">
                             <input id="title" type="text" class="form-control border-yellow" name="name" placeholder="Name">
                         </div>
                     </div>

@@ -9,6 +9,8 @@ use App\Revenue;
 use App\WorkshopRegistration;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Exports\WorkshopRegistrationExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class WorkshopController extends Controller
 {
@@ -193,6 +195,7 @@ class WorkshopController extends Controller
         // return $request;
         try {
             $register = [
+                'workshop_id' => $request->workshop_id,
                 'name' => $request->name,
                 'user_id' => $request->id,
                 'gender' => $request->gender,
@@ -221,5 +224,10 @@ class WorkshopController extends Controller
                 'message'   => $e->getMessage(),
             ], 420);
         }
+    }
+
+    public function export($workshop)
+    {
+        return Excel::download(new WorkshopRegistrationExport($workshop), 'workshop.xlsx');
     }
 }
