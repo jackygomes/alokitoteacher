@@ -58,6 +58,8 @@ Route::get('admin/course/question/delete/{id}', 'CourseController@questionDelete
 Route::post('admin/course/video/update/{id}', 'CourseController@course_video_update')->name('course.update.edit');
 Route::post('admin/course/quiz/update/{id}', 'CourseController@course_quiz_update')->name('course.quiz.update');
 
+Route::get('course/meta/{slug}', 'CourseController@courseSharePage')->name('metaCourse');
+
 
 Route::get('admin/basic-info', 'AdminController@basicInfo')->name('admin.basic.info');
 Route::get('admin/leader-board', 'AdminController@leaderBoard')->name('admin.leader.board');
@@ -104,7 +106,7 @@ Route::get('overview/r/{slug}', 'ResourceController@resourceOverview');
 Route::get('view/r/{slug}', 'ResourceController@resourceView');
 Route::group(['prefix' => 'innovation'], function () {
 
-    Route::get('meta/r/{slug}', 'ResourceController@resourceSharePage')->name('metaResource');
+    Route::get('meta/{slug}', 'ResourceController@resourceSharePage')->name('metaResource');
 
     Route::get('/', 'ResourceController@index')->name('allResource');
     Route::get('create', 'ResourceController@create')->name('resource.create');
