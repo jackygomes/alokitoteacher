@@ -233,3 +233,25 @@ Route::post('/cancel', 'SslCommerzPaymentController@cancel');
 
 Route::post('/ipn', 'SslCommerzPaymentController@ipn');
 //SSLCOMMERZ END
+
+
+//Admin
+Route::group(['prefix' => 'admin/workshop', 'as' => 'workshop.'], function () {
+    Route::get('/', 'WorkshopController@index')->name('index');
+    Route::get('/create', 'WorkshopController@create')->name('create');
+    Route::post('/store', 'WorkshopController@store')->name('store');
+    Route::get('/edit/{id}', 'WorkshopController@edit')->name('edit');
+    Route::post('/update', 'WorkshopController@update')->name('update');
+    Route::get('/delete/{id}', 'WorkshopController@delete')->name('delete');
+    Route::get('/overview/{slug}', 'WorkshopController@overview')->name('overview');
+});
+
+//Teacher
+Route::group(['prefix' => 'workshops', 'as' => 'workshops.'], function () {
+    Route::get('/', 'WorkshopController@list')->name('index');
+    // Route::get('/create', 'WorkshopController@create')->name('create');
+    // Route::post('/store', 'WorkshopController@store')->name('store');
+    // Route::get('/edit/{id}', 'WorkshopController@edit')->name('edit');
+    // Route::post('/update', 'WorkshopController@update')->name('update');
+    // Route::get('/overview/{slug}', 'WorkshopController@overview')->name('overview');
+});

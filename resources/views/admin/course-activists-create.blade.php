@@ -102,6 +102,7 @@
                                             <option value="Facilitator">Facilitator</option>
                                             <option value="Advisor">Advisor</option>
                                             <option value="Designer">Designer</option>
+                                            <option value="Trainer">Trainer</option>
                                         </select>
                                     </div>
                                 </div>

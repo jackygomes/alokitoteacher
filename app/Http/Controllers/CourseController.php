@@ -45,7 +45,7 @@ class CourseController extends Controller
             ->paginate(9);
 
         $userId = Auth::check() ? Auth::user()->id : 0;
-        foreach($course_info as $course){
+        foreach ($course_info as $course) {
             $isOrdered = Order::where('status', 'paid')
                 ->where('product_type', 'course')
                 ->where('user_id', $userId)
@@ -214,16 +214,16 @@ class CourseController extends Controller
         $designers = CourseActivist::where('type', 'Designer')->get();
 
         //Course Publication status chack...
-        $t_quizes = CourseQuiz::where('course_id',$courseId)->pluck('id');
+        $t_quizes = CourseQuiz::where('course_id', $courseId)->pluck('id');
         $canEdit = 0;
-        foreach($t_quizes as $q){
-            $count = CourseQuestion::where('quiz_id',$q)->count();
-            if($count < 5) $canEdit = 0;
+        foreach ($t_quizes as $q) {
+            $count = CourseQuestion::where('quiz_id', $q)->count();
+            if ($count < 5) $canEdit = 0;
             else $canEdit = 1;
         }
         //Course Publication status chack...
 
-        return view('course.edit_objective', compact('canEdit','users', 'infoFacilitators', 'infoAdvisors', 'infoDesigners', 'facilitators', 'advisors', 'designers', 'previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
+        return view('course.edit_objective', compact('canEdit', 'users', 'infoFacilitators', 'infoAdvisors', 'infoDesigners', 'facilitators', 'advisors', 'designers', 'previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
     }
 
     public function courseDetailsUpdate(Request $request, $courseId)
@@ -514,16 +514,14 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        try{
+        try {
             $course = Course::find($id);
 
             $course->deleted = 1;
             $course->save();
 
             return back()->with('success', 'Course deleted successfully!');
-
-
-        }catch(\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'status'    => 'error',
                 'message'   => $e->getMessage(),
