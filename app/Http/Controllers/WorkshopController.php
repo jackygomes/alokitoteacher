@@ -218,7 +218,6 @@ class WorkshopController extends Controller
 
     public function register(Request $request)
     {
-        // return $request;
         try {
             $register = [
                 'workshop_id' => $request->workshop_id,
@@ -237,9 +236,15 @@ class WorkshopController extends Controller
                 'teaching_institution' => $request->teaching_institution,
                 'school_type' => $request->school_type,
                 'classes' => json_encode($request->classes),
-                'status' => 'Applied'
+                'subjects' => json_encode($request->subjects),
+                'previous_training' => $request->previous_training,
+                'training_programs' => $request->training_programs,
+                'online_workshop' => $request->online_workshop,
+                'ambassador' => $request->ambassador,
+                'ambassador_ref' => $request->ambassador_ref,
+                'lead' => $request->lead,
+                'status' => $request->status
             ];
-            // return $register;
 
             $success = WorkshopRegistration::create($register);
             if ($success) return redirect()->back()->with(['success' => 'Registration Successful!']);

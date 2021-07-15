@@ -30,7 +30,14 @@ class CreateWorkshopRegistrationsTable extends Migration
             $table->string('years_teaching')->nullable();
             $table->string('teaching_institution')->nullable();
             $table->string('school_type')->nullable();
-            $table->string('classes')->nullable();
+            $table->text('classes')->nullable();
+            $table->text('subjects')->nullable();
+            $table->string('previous_training')->nullable();
+            $table->string('training_programs')->nullable();
+            $table->string('online_workshop')->nullable();
+            $table->string('ambassador')->nullable();
+            $table->string('ambassador_ref')->nullable();
+            $table->string('lead')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

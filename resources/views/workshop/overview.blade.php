@@ -130,9 +130,9 @@
             {{-- <p class="mt-2">Total enrolled: {{$histories->count()}}</p> --}}
 
             @if(isset($content_rating))
-            <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal" disabled>Rate this innovation</button>
+            <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal" disabled>Rate this Workshop</button>
             @else
-            <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal">Rate this innovation</button>
+            <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal">Rate this Workshop</button>
             @endif
         </div>
         </div>
@@ -218,17 +218,17 @@
                     @csrf
                     <div class="form-row mb-4">
                         <div class="col-md-12">
-                            <label>Name:</label>
+                            <label>Name<span class="text-danger font-weight-bold"> *</span>:</label>
                             <input type="hidden" name="id" value="{{Auth::user()->id}}">
                             <input type="hidden" name="workshop_id" value="{{$workshop->id}}">
-                            <input id="title" type="text" class="form-control border-yellow" name="name" placeholder="Name">
+                            <input id="title" type="text" class="form-control border-yellow" name="name" placeholder="Name" required>
                         </div>
                     </div>
 
                     <div class="form-row mt-1">
                         <div class="col-md-12 mb-5">
-                            <label>Gender:</label>
-                            <select class="form-control border-yellow" name="gender">
+                            <label>Gender<span class="text-danger font-weight-bold"> *</span>:</label>
+                            <select class="form-control border-yellow" name="gender" required>
                                 <option value="" disabled selected>-- Select Prefered Gender --</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -239,23 +239,23 @@
 
                     <div class="form-row mt-1">
                         <div class="col-md-12 mb-5">
-                            <label>Date of Birth:</label>
-                            <input id="dob" type="date" class="form-control border-yellow" name="dob">
+                            <label>Date of Birth<span class="text-danger font-weight-bold"> *</span>:</label>
+                            <input id="dob" type="date" class="form-control border-yellow" name="dob" required>
                         </div>
 
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
-                            <label>Phone:</label>
-                            <input id="phone" type="text" class="form-control border-yellow" name="phone" placeholder="Phone">
+                            <label>Phone<span class="text-danger font-weight-bold"> *</span>:</label>
+                            <input id="phone" type="text" class="form-control border-yellow" name="phone" placeholder="Phone" required>
                         </div>
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
-                            <label>Email:</label>
-                            <input id="email" type="email" class="form-control border-yellow" name="email" placeholder="Email">
+                            <label>Email<span class="text-danger font-weight-bold"> *</span>:</label>
+                            <input id="email" type="email" class="form-control border-yellow" name="email" placeholder="Email" required>
                         </div>
                     </div>
 
@@ -264,36 +264,36 @@
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
-                            <label>From which institution have you completed your Bachelor's Degree?</label>
-                            <input id="institution" type="text" class="form-control border-yellow" name="institution" placeholder="From which institution have you completed your Bachelor's Degree?">
+                            <label>From which institution have you completed your Bachelor's Degree?<span class="text-danger font-weight-bold"> *</span></label>
+                            <input id="institution" type="text" class="form-control border-yellow" name="institution" placeholder="From which institution have you completed your Bachelor's Degree?" required>
                         </div>
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
-                            <label>In which year have you completed your Bachelor's Degree?</label>
-                            <input id="passing_year" type="text" class="form-control border-yellow" name="passing_year" placeholder="In which year have you completed your Bachelor's Degree?">
+                            <label>In which year have you completed your Bachelor's Degree?<span class="text-danger font-weight-bold"> *</span></label>
+                            <input id="passing_year" type="text" class="form-control border-yellow" name="passing_year" placeholder="In which year have you completed your Bachelor's Degree?" required>
                         </div>
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
-                            <label>In which subject have you completed your Bachelor's Degree?</label>
-                            <input id="subject" type="text" class="form-control border-yellow" name="subject" placeholder="In which subject have you completed your Bachelor's Degree?">
+                            <label>In which subject have you completed your Bachelor's Degree?<span class="text-danger font-weight-bold"> *</span></label>
+                            <input id="subject" type="text" class="form-control border-yellow" name="subject" placeholder="In which subject have you completed your Bachelor's Degree?" required>
                         </div>
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
-                            <label>What is your highest level of education?</label>
-                            <input id="education_level" type="text" class="form-control border-yellow" name="education_level" placeholder="What is your highest level of education?">
+                            <label>What is your highest level of education?<span class="text-danger font-weight-bold"> *</span></label>
+                            <input id="education_level" type="text" class="form-control border-yellow" name="education_level" placeholder="What is your highest level of education?" required>
                         </div>
                     </div>
 
                     <div class="form-row mt-1">
                         <div class="col-md-12 mb-5">
-                            <label>Are you a teacher?</label>
-                            <select class="form-control border-yellow" name="is_teacher" >
+                            <label>Are you a teacher?<span class="text-danger font-weight-bold"> *</span></label>
+                            <select class="form-control border-yellow" name="is_teacher" required>
                                 <option value="" disabled selected>-- Select --</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
@@ -303,22 +303,22 @@
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
-                            <label>For how many years are you in teaching profession?</label>
-                            <input id="years_teaching" type="text" class="form-control border-yellow" name="years_teaching" placeholder="For how many years are you in teaching profession?">
+                            <label>For how many years are you in teaching profession?<span class="text-danger font-weight-bold"> *</span></label>
+                            <input id="years_teaching" type="text" class="form-control border-yellow" name="years_teaching" placeholder="For how many years are you in teaching profession?" required>
                         </div>
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
-                            <label>In which institution are you teaching?</label>
-                            <input id="teaching_institution" type="text" class="form-control border-yellow" name="teaching_institution" placeholder="In which institution are you teaching?">
+                            <label>In which institution are you teaching?<span class="text-danger font-weight-bold"> *</span></label>
+                            <input id="teaching_institution" type="text" class="form-control border-yellow" name="teaching_institution" placeholder="In which institution are you teaching?" required>
                         </div>
                     </div>
 
                     <div class="form-row mt-1">
                         <div class="col-md-12 mb-5">
-                            <label>It is a/an</label>
-                            <select class="form-control border-yellow" name="school_type" >
+                            <label>It is a/an<span class="text-danger font-weight-bold"> *</span></label>
+                            <select class="form-control border-yellow" name="school_type" required>
                                 <option value="" disabled selected>-- Select --</option>
                                 <option value="Bangla Medium">Bangla Medium</option>
                                 <option value="English Medium">English Medium</option>
@@ -330,8 +330,8 @@
 
                     <div class="form-row mt-1">
                         <div class="col-md-12 mb-5">
-                            <label>In which classes do you teach in your school?</label>
-                            <select class="form-control" name="classes[]" id="classes" multiple="multiple">
+                            <label>In which classes do you teach in your school?<span class="text-danger font-weight-bold"> *</span></label>
+                            <select class="form-control" name="classes[]" id="classes" multiple="multiple" required>
                                 <option value="Playgroup">Playgroup</option>
                                 <option value="Kindergarten">Kindergarten</option>
                                 <option value="Nursery">Nursery</option>
@@ -345,6 +345,81 @@
                                 <option value="Class 8">Class 8</option>
                                 <option value="Class 9">Class 9</option>
                                 <option value="Class 10">Class 10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row mt-1">
+                        <div class="col-md-12 mb-5">
+                            <label>Which subjects do you teach in your school?<span class="text-danger font-weight-bold"> *</span></label>
+                            <select class="form-control" name="subjects[]" id="subjects" multiple="multiple" required>
+                                <option value="Bangla">Bangla</option>
+                                <option value="English">English</option>
+                                <option value="Math">Math</option>
+                                <option value="Social Science">Social Science</option>
+                                <option value="Science">Science</option>
+                                <option value="Physics">Physics</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="Biology">Biology</option>
+                                <option value="Geography">Geography</option>
+                                <option value="Religion">Religion</option>
+                                <option value="ICT">ICT</option>
+                                <option value="Accounting">Accounting</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="History">History</option>
+                                <option value="Health & Moral Education">Health & Moral Education</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-1">
+                        <div class="col-md-12 mb-5">
+                            <label>Have you completed any training previously?<span class="text-danger font-weight-bold"> *</span></label>
+                            <select class="form-control border-yellow" name="previous_training" required>
+                                <option value="" disabled selected>-- Select --</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col-md-12">
+                            <label>Mention the training programs you have attended</label>
+                            <input id="phone" type="text" class="form-control border-yellow" name="training_programs" placeholder="Mention the training programs you have attended">
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col-md-12">
+                            <label>Mention a topic that you want us to cover in our next online workshop<span class="text-danger font-weight-bold"> *</span></label>
+                            <input id="phone" type="text" class="form-control border-yellow" name="online_workshop" placeholder="Mention a topic that you want us to cover in our next online workshop" required>
+                        </div>
+                    </div>
+                    <div class="form-row mt-1">
+                        <div class="col-md-12 mb-5">
+                            <label>Are you a teacher ambassador of 'Alokito Teachers'?<span class="text-danger font-weight-bold"> *</span></label>
+                            <select class="form-control border-yellow" name="ambassador" required>
+                                <option value="" disabled selected>-- Select --</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col-md-12">
+                            <label>Reference of the teacher ambassador (Alokito Teachers) (if any)</label>
+                            <input id="phone" type="text" class="form-control border-yellow" name="ambassador_ref" placeholder="Reference of the teacher ambassador (Alokito Teachers) (if any)">
+                        </div>
+                    </div>
+                    <div class="form-row mt-1">
+                        <div class="col-md-12 mb-5">
+                            <label>From where did you know about this workshop?<span class="text-danger font-weight-bold"> *</span></label>
+                            <select class="form-control" name="lead" id="lead" required>
+                                <option value="Collegue">Collegue</option>
+                                <option value="Facebook Add">Facebook Add</option>
+                                <option value="Alokito Teachers Facebook Page">Alokito Teachers Facebook Page</option>
+                                <option value="School">School</option>
+                                <option value="Alokito Teachers' Ambassador">Alokito Teachers' Ambassador</option>
+                                <option value="Friends">Friends</option>
                             </select>
                         </div>
                     </div>
@@ -370,6 +445,9 @@
 
 <script>
    $('#classes').select2({
+            multiple: true,
+        });
+        $('#subjects').select2({
             multiple: true,
         });
     (function(window, document) {
