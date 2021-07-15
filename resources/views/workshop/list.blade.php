@@ -39,16 +39,16 @@
                                 <hr>
                                 <p class="card-text text-light-dark">Posted By <strong class="text-dark">Alokito</strong></p>
 
-                                {{-- <div class="text-dark">
+                                <div class="text-dark">
                                     @for($i = 1; $i <= 5; $i++)
-                                        @if($v_course_info->rating - $i >= 0)
+                                        @if($workshop->rating - $i >= 0)
                                             <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
                                         @else
                                             <i class="far fa-star text-light-dark"></i>
                                         @endif
                                     @endfor
-                                    ({{$v_course_info->rating_count}})
-                                    <span class="float-right text-success font-weight-bold">
+                                    ({{$workshop->ratingCount}})
+                                    {{-- <span class="float-right text-success font-weight-bold">
                                         @if($v_course_info->isBought == 1)
                                             Owned
                                         @else
@@ -58,8 +58,8 @@
                                                 {{ round($v_course_info->price, 2)}} BDT
                                             @endif
                                         @endif
-                                    </span>
-                                </div> --}}
+                                    </span> --}}
+                                </div>
 
                             </div>
                             {{--                            <div class="card-footer" style="background:--}}
