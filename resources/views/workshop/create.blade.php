@@ -150,6 +150,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="courseName" class="col-sm-2 col-form-label">Starting Date:</label>
+                            <div class="col-sm-10">
+                                <input type="date" name="starting_date" class="form-control" id="starting_date">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="courseName" class="col-sm-2 col-form-label">Last date of application:</label>
                             <div class="col-sm-10">
                                 <input type="date" name="last_date" class="form-control" id="last_date">
@@ -165,6 +171,15 @@
                             <label for="courseName" class="col-sm-2 col-form-label">What you will learn:</label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" rows="5" id="what_you_will_learn" name="what_you_will_learn" placeholder="What you will learn"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="subjects" class="col-sm-2 col-form-label">Status:</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select mr-sm-2" name="status" id="status">
+                                    <option value="Enabled">Enabled</option>
+                                    <option value="Disabled">Disabled</option>
+                                </select>
                             </div>
                         </div>
                         <a href="{{route('workshop.index')}}" class="btn btn-dark mb-4 px-4 py-2 shadow font-weight-bold text-white">Cancel</a>

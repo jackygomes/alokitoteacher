@@ -156,6 +156,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="courseName" class="col-sm-2 col-form-label">Starting Date:</label>
+                            <div class="col-sm-10">
+                                <input type="date" value="{{$workshop->starting_date}}" name="starting_date" class="form-control" id="starting_date">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="courseName" class="col-sm-2 col-form-label">About This Workshop:</label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" rows="5" id="about_this_workshop" name="about_this_workshop" placeholder="About This Workshop">
@@ -169,6 +175,15 @@
                                 <textarea class="form-control" rows="5" id="what_you_will_learn" name="what_you_will_learn" placeholder="What you will learn">
                                     {{$workshop->what_you_will_learn}}
                                 </textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="subjects" class="col-sm-2 col-form-label">Status:</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select mr-sm-2" name="status" id="status">
+                                    <option value="Enabled" {{$workshop->status=='Enabled' ? 'selected' : ''}}>Enabled</option>
+                                    <option value="Disabled" {{$workshop->status=='Disabled' ? 'selected' : ''}}>Disabled</option>
+                                </select>
                             </div>
                         </div>
                         <a href="{{route('workshop.index')}}" class="btn btn-dark mb-4 px-4 py-2 shadow font-weight-bold text-white">Cancel</a>

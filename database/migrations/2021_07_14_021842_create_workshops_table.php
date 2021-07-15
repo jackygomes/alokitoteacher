@@ -30,6 +30,7 @@ class CreateWorkshopsTable extends Migration
             $table->date('last_date')->nullable();
             $table->text('about_this_workshop')->nullable();
             $table->text('what_you_will_learn')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

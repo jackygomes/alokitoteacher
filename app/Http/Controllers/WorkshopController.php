@@ -53,7 +53,9 @@ class WorkshopController extends Controller
                 'duration' => 'required',
                 'total_credit_hours' => 'required',
                 'date_time' => 'required',
-                'last_date' => 'required'
+                'last_date' => 'required',
+                'starting_date' => 'required',
+                'status' => 'required'
             ]);
 
             $image = $request->file('thumbnail');
@@ -73,8 +75,10 @@ class WorkshopController extends Controller
                 'total_credit_hours' => $request->total_credit_hours,
                 'date_time' => $request->date_time,
                 'last_date' => $request->last_date,
+                'starting_date' => $request->starting_date,
                 'about_this_workshop' => $request->about_this_workshop,
-                'what_you_will_learn' => $request->what_you_will_learn
+                'what_you_will_learn' => $request->what_you_will_learn,
+                'status' => $request->status
             ];
             // return $workshop;
 
@@ -115,7 +119,9 @@ class WorkshopController extends Controller
                 'duration' => 'required',
                 'total_credit_hours' => 'required',
                 'date_time' => 'required',
-                'last_date' => 'required'
+                'last_date' => 'required',
+                'starting_date' => 'required',
+                'status' => 'required'
             ]);
             $image = Workshop::where('id', $request->id)->pluck('thumbnail');
             $image_name = sizeof($image) ? $image[0] : null;
@@ -126,9 +132,12 @@ class WorkshopController extends Controller
                 $image->move(public_path("images/thumbnail"), $image_name);
             }
 
+            $oldData = Workshop::find($request->id);
+
+
             $workshop = [
                 'name' => $request->name,
-                'slug' => str_slug($request->name) . '-' . $this->generateRandomString(5),
+                'slug' => $oldData->name == $request->name ? $oldData->slug : str_slug($request->name) . '-' . $this->generateRandomString(5),
                 'thumbnail' => $image_name,
                 'description' => $request->description,
                 'price' => $request->price,
@@ -139,8 +148,10 @@ class WorkshopController extends Controller
                 'total_credit_hours' => $request->total_credit_hours,
                 'date_time' => $request->date_time,
                 'last_date' => $request->last_date,
+                'starting_date' => $request->starting_date,
                 'about_this_workshop' => $request->about_this_workshop,
-                'what_you_will_learn' => $request->what_you_will_learn
+                'what_you_will_learn' => $request->what_you_will_learn,
+                'status' => $request->status
             ];
             // return $workshop;
 
@@ -191,7 +202,7 @@ class WorkshopController extends Controller
     //For Teachers...
     public function list()
     {
-        $workshops = Workshop::paginate(10);
+        $workshops = Workshop::where('status', 'Enabled')->paginate(10);
 
         foreach ($workshops as $workshop) {
             $workshop->rating = DB::table('workshop_ratings')
