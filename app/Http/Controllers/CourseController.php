@@ -64,7 +64,7 @@ class CourseController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
 
             return abort(404);
         }
@@ -78,7 +78,7 @@ class CourseController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
 
             return abort(404);
         }
@@ -130,7 +130,7 @@ class CourseController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
 
             return abort(404);
         }
@@ -161,7 +161,7 @@ class CourseController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
 
             return abort(404);
         }
@@ -231,7 +231,7 @@ class CourseController extends Controller
 
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
 
             return abort(404);
         }
@@ -330,7 +330,7 @@ class CourseController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
 
             return abort(404);
         }
@@ -358,7 +358,7 @@ class CourseController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
 
             return abort(404);
         }
@@ -407,7 +407,7 @@ class CourseController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 &&  $user_info->identifier != 1)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
 
             return abort(404);
         }

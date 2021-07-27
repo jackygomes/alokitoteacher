@@ -35,10 +35,10 @@
                         <a href="{{route('withdrawals')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             Withdrawal Requests
                         </a>
+                        @endif
                         <a href="{{route('workshop.index')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             Workshop
                         </a>
-                        @endif
                         <a href="{{route('admin.contact.messages.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             Contact Messages
                         </a>

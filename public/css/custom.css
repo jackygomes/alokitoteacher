@@ -393,6 +393,30 @@ a {
     padding: 0 70px 40px;
     margin-bottom: 40px;
 }
+.home-leaderboard .nav-tabs {
+    margin-bottom: 130px;
+    border-bottom: none;
+}
+.home-leaderboard .nav-tabs li {
+    width: 33%;
+    text-align: center;
+    padding-bottom: 0;
+    font-size: 20px;
+}
+.home-leaderboard .nav-tabs li a {
+    color: #B5B5B5 !important;
+    border-bottom: 1px solid #E1E1E1;
+}
+.home-leaderboard .nav-tabs li a:hover {
+    border:none;
+    border-bottom: 1px solid #E1E1E1;
+}
+.home-leaderboard .nav-tabs li a.active {
+    background-color: transparent;
+    border: none;
+    color: #000 !important;
+    border-bottom: 1px solid#000;
+}
 .home-leaderboard ul {
     list-style: none;
     margin: 0;

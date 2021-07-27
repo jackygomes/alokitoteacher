@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{URL::asset('css/bootstrap-datepicker.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/style1.css')}}">
-    <link rel="stylesheet" href="{{URL::asset('css/custom.css?v=123456')}}">
+    <link rel="stylesheet" href="{{URL::asset('css/custom.css?v=123')}}">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178521926-1"></script>
     <script src="//cdn.ckeditor.com/4.15.1/basic/ckeditor.js"></script>

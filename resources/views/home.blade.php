@@ -465,75 +465,228 @@
       <div class="teachers-toolkits">
         <h2 class="font-weight-bold text-center mt-5 mb-5 text-dark pt-5">Leaderboard</h2>
           <div class="d-flex justify-content-center">
-              <div class="col-md-6">
-                  <div class="top-3 mt-4 text-center">
-                      <div class="second top-3-card">
-                          <div class="image">
-                              @if($leaderBoard[1]['user']->image == null)
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
-                              @else
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[1]['user']->image}}">
-                              @endif
-                              <span class="position">2</span>
-                          </div>
-                          <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 16) }}</p>
-                              <p class="m-0">{{ $leaderBoard[1]->score }} points</p>
-                          </div>
-                      </div>
-                      <div class="first top-3-card">
-                          <div class="image">
-                              @if($leaderBoard[0]['user']->image == null)
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
-                              @else
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[0]['user']->image}}">
-                              @endif
-                                  <span class="position background-yellow">1</span>
-                                  <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
-                          </div>
-                          <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[0]['user']->name), 16) }}</p>
-                              <p class="m-0">{{ $leaderBoard[0]->score }} points</p>
-                          </div>
-                      </div>
-                      <div class="third top-3-card">
-                          <div class="image">
-                              @if($leaderBoard[2]['user']->image == null)
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
-                              @else
-                                  <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[2]['user']->image}}">
-                              @endif
-                              <span class="position">3</span>
-                          </div>
-                          <div class="content">
-                              <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 16) }}</p>
-                              <p class="m-0">{{ $leaderBoard[2]->score }} points</p>
-                          </div>
-                      </div>
-                  </div>
-                  <ul>
-                  @foreach ($leaderBoard as $key =>$leader)
-                      @if($key > 2)
+                <div class="col-md-6">
+                    <ul class="nav nav-tabs d-flex justify-content-center" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">General</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Course</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Innovation</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="top-3 mt-4 text-center">
+                                <div class="second top-3-card">
+                                    <div class="image">
+                                        @if($leaderBoard[1]['user']->image == null)
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                        @else
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[1]['user']->image}}">
+                                        @endif
+                                        <span class="position">2</span>
+                                    </div>
+                                    <div class="content">
+                                        <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 16) }}</p>
+                                        <p class="m-0">{{ $leaderBoard[1]->score }} points</p>
+                                    </div>
+                                </div>
+                                <div class="first top-3-card">
+                                    <div class="image">
+                                        @if($leaderBoard[0]['user']->image == null)
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                        @else
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[0]['user']->image}}">
+                                        @endif
+                                            <span class="position background-yellow">1</span>
+                                            <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <p class="m-0">{{ str_limit(strip_tags($leaderBoard[0]['user']->name), 16) }}</p>
+                                        <p class="m-0">{{ $leaderBoard[0]->score }} points</p>
+                                    </div>
+                                </div>
+                                <div class="third top-3-card">
+                                    <div class="image">
+                                        @if($leaderBoard[2]['user']->image == null)
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                        @else
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[2]['user']->image}}">
+                                        @endif
+                                        <span class="position">3</span>
+                                    </div>
+                                    <div class="content">
+                                        <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 16) }}</p>
+                                        <p class="m-0">{{ $leaderBoard[2]->score }} points</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul>
+                            @foreach ($leaderBoard as $key =>$leader)
+                                @if($key > 2)
 
-                          <li>
-                              <a href="{{ url('t')}}/{{ $leader['user']->username }}">
-                               <div class="serial">{{$key + 1}}.</div>
-                               <div class="image">
-                                   @if($leader['user']->image == null)
-                                       <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
-                                   @else
-                                       <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/{{ $leader['user']->image }}">
-                                   @endif
-                               </div>
-                               <div class="name">{{ $leader['user']->name }}</div>
-                               <div class="points">{{$leader->score}} points</div>
-                              </a>
-                          </li>
+                                    <li>
+                                        <a href="{{ url('t')}}/{{ $leader['user']->username }}">
+                                        <div class="serial">{{$key + 1}}.</div>
+                                        <div class="image">
+                                            @if($leader['user']->image == null)
+                                                <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                            @else
+                                                <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/{{ $leader['user']->image }}">
+                                            @endif
+                                        </div>
+                                        <div class="name">{{ $leader['user']->name }}</div>
+                                        <div class="points">{{$leader->score}} points</div>
+                                        </a>
+                                    </li>
 
-                      @endif
-                  @endforeach
-                  </ul>
-              </div>
+                                @endif
+                            @endforeach
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="top-3 mt-4 text-center">
+                                <div class="second top-3-card">
+                                    <div class="image">
+                                        @if($courseleaderBoard[1]['user']->image == null)
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                        @else
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$courseleaderBoard[1]['user']->image}}">
+                                        @endif
+                                        <span class="position">2</span>
+                                    </div>
+                                    <div class="content">
+                                        <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[1]['user']->name), 16) }}</p>
+                                        <p class="m-0">{{ $courseleaderBoard[1]->score }} points</p>
+                                    </div>
+                                </div>
+                                <div class="first top-3-card">
+                                    <div class="image">
+                                        @if($courseleaderBoard[0]['user']->image == null)
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                        @else
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$courseleaderBoard[0]['user']->image}}">
+                                        @endif
+                                            <span class="position background-yellow">1</span>
+                                            <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[0]['user']->name), 16) }}</p>
+                                        <p class="m-0">{{ $courseleaderBoard[0]->score }} points</p>
+                                    </div>
+                                </div>
+                                <div class="third top-3-card">
+                                    <div class="image">
+                                        @if($courseleaderBoard[2]['user']->image == null)
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                        @else
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$leaderBoard[2]['user']->image}}">
+                                        @endif
+                                        <span class="position">3</span>
+                                    </div>
+                                    <div class="content">
+                                        <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[2]['user']->name), 16) }}</p>
+                                        <p class="m-0">{{ $courseleaderBoard[2]->score }} points</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul>
+                            @foreach ($courseleaderBoard as $key =>$leader)
+                                @if($key > 2)
+
+                                    <li>
+                                        <a href="{{ url('t')}}/{{ $leader['user']->username }}">
+                                        <div class="serial">{{$key + 1}}.</div>
+                                        <div class="image">
+                                            @if($leader['user']->image == null)
+                                                <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                            @else
+                                                <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/{{ $leader['user']->image }}">
+                                            @endif
+                                        </div>
+                                        <div class="name">{{ $leader['user']->name }}</div>
+                                        <div class="points">{{$leader->score}} points</div>
+                                        </a>
+                                    </li>
+
+                                @endif
+                            @endforeach
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="top-3 mt-4 text-center">
+                                <div class="second top-3-card">
+                                    <div class="image">
+                                        @if($resourceleaderBoard[1]['user']->image == null)
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                        @else
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$resourceleaderBoard[1]['user']->image}}">
+                                        @endif
+                                        <span class="position">2</span>
+                                    </div>
+                                    <div class="content">
+                                        <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[1]['user']->name), 16) }}</p>
+                                        <p class="m-0">{{ $resourceleaderBoard[1]->score }} points</p>
+                                    </div>
+                                </div>
+                                <div class="first top-3-card">
+                                    <div class="image">
+                                        @if($resourceleaderBoard[0]['user']->image == null)
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                        @else
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$resourceleaderBoard[0]['user']->image}}">
+                                        @endif
+                                            <span class="position background-yellow">1</span>
+                                            <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[0]['user']->name), 16) }}</p>
+                                        <p class="m-0">{{ $resourceleaderBoard[0]->score }} points</p>
+                                    </div>
+                                </div>
+                                <div class="third top-3-card">
+                                    <div class="image">
+                                        @if($resourceleaderBoard[2]['user']->image == null)
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                        @else
+                                            <img class="img-fluid rounded-circle" src="{{ url('images/profile_picture') }}/{{$resourceleaderBoard[2]['user']->image}}">
+                                        @endif
+                                        <span class="position">3</span>
+                                    </div>
+                                    <div class="content">
+                                        <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[2]['user']->name), 16) }}</p>
+                                        <p class="m-0">{{ $resourceleaderBoard[2]->score }} points</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul>
+                            @foreach ($resourceleaderBoard as $key =>$leader)
+                                @if($key > 2)
+
+                                    <li>
+                                        <a href="{{ url('t')}}/{{ $leader['user']->username }}">
+                                        <div class="serial">{{$key + 1}}.</div>
+                                        <div class="image">
+                                            @if($leader['user']->image == null)
+                                                <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/default-profile-picture.png">
+                                            @else
+                                                <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/profile_picture') }}/{{ $leader['user']->image }}">
+                                            @endif
+                                        </div>
+                                        <div class="name">{{ $leader['user']->name }}</div>
+                                        <div class="points">{{$leader->score}} points</div>
+                                        </a>
+                                    </li>
+
+                                @endif
+                            @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
           </div>
 
       </div>

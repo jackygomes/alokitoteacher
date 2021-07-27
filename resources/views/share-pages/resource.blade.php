@@ -9,6 +9,7 @@ $urlImg = url('images\thumbnail').'/'.$info->thumbnail ;
 @section('fb_image', $urlImg)--}}
 
 @section('meta')
+<link rel="canonical" href="{{route('metaResource', $info->slug)}}"/>
 <meta property="og:url" content="{{route('metaResource', $info->slug)}}" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="{{$info->resource_title}}" /> 
@@ -18,6 +19,11 @@ $urlImg = url('images\thumbnail').'/'.$info->thumbnail ;
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:image:alt" content="{{$info->resource_title}}" />
 @endsection
+@php
+$url = url('overview').'/r/'.$info->slug ;
+header("Refresh: 1;url=$url");
 
+@endphp
 @section('content')
+
 @endsection

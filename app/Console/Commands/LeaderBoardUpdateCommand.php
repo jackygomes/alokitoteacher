@@ -1,7 +1,12 @@
 <?php
 
 namespace App\Console\Commands;
+
+use App\CourseLeaderBoards;
 use App\LeaderBoard;
+use App\Resource;
+use App\ResourceLeaderBoards;
+use App\ResourceRating;
 use App\ToolkitHistory;
 use App\ToolkitQuiz;
 use App\User;
@@ -42,21 +47,22 @@ class LeaderBoardUpdateCommand extends Command
      */
     public function handle()
     {
+
         //script for toolkit point percentage just for one time
-        $toolkitHistories = ToolkitHistory::get();
-        foreach($toolkitHistories as $toolkitHistory){
-            $quiz = ToolkitQuiz::find($toolkitHistory->quiz_id);
-            if($quiz->question_count > 0){
-                $totalPoint = 2 * $quiz->question_count;
-                $percentage = ($toolkitHistory->points * 100 ) / $totalPoint;
+        // $toolkitHistories = ToolkitHistory::get();
+        // foreach($toolkitHistories as $toolkitHistory){
+        //     $quiz = ToolkitQuiz::find($toolkitHistory->quiz_id);
+        //     if($quiz->question_count > 0){
+        //         $totalPoint = 2 * $quiz->question_count;
+        //         $percentage = ($toolkitHistory->points * 100 ) / $totalPoint;
 
-                $history = ToolkitHistory::find($toolkitHistory->id);
-                $history->point_percentage = $percentage;
-                $history->save();
-            }
-        }
+        //         $history = ToolkitHistory::find($toolkitHistory->id);
+        //         $history->point_percentage = $percentage;
+        //         $history->save();
+        //     }
+        // }
         // script end
-
+    
         //Rating calculation...
         $users = User::where('identifier', '=','1')->where('id', '!=', 13)->get();
         foreach ($users as $user) {
@@ -77,34 +83,84 @@ class LeaderBoardUpdateCommand extends Command
                 }
                 $coursePercentage = $courseTotal / $courseCount;
             }
-
             //course percentage ends
 
-            // toolkit percentage calculation
-            $toolkits = DB::select("
-            select tk.toolkit_title, s.subject_name, th.point_percentage, sum(th.points) as totalPoints
-            FROM toolkits as tk
-            JOIN subjects as s ON s.id = tk.subject_id
-            JOIN toolkit_quizzes as tq ON tq.toolkit_id = tk.id
-            JOIN toolkit_histories as th ON th.quiz_id = tq.id AND th.user_id = '$user->id'
-            GROUP BY tk.id
-             ");
+            // course leaderboard start
+            
+            $courseleaderboard = CourseLeaderBoards::where('user_id', $user->id)->first();
+            if($courseleaderboard) {
+                $courseleaderboard->score = $coursePercentage;
+                $courseleaderboard->save();
+            } else {
+                $courseleaderboardData = [
+                    'user_id'   => $user->id,
+                    'score'     => $coursePercentage,
+                    'position'  => 9999,
 
-            $toolkitTotal = 0;
-            $toolkitCount = 0;
-            $toolkitPercentage = 0;
-            if($toolkits){
-                foreach ($toolkits as $toolkit){
-                    $toolkitCount++;
-                    $toolkitTotal += $toolkit->point_percentage;
-                }
-                $toolkitPercentage = $toolkitTotal / $toolkitCount;
+                ];
+                CourseLeaderBoards::create($courseleaderboardData);
             }
+
+            // course leaderboard End
+
+            // Resource leaderboard Start
+
+            $resources = Resource::where('user_id', $user->id)->get();
+			$resourceRatingCount = 0;
+			$totalRating = 0;
+			foreach($resources as $resource){
+				
+				$resource_rating = ResourceRating::where('resource_id', $resource->id)->get();
+				foreach($resource_rating as $rating){
+					$resourceRatingCount++;
+					$totalRating += $rating->rating;
+				}
+			}
+
+            if($resourceRatingCount > 0) $aveResourceRating = (($totalRating / $resourceRatingCount) / 5) * 100;
+            else $aveResourceRating = 0;
+
+            $resourceleaderboard = ResourceLeaderBoards::where('user_id', $user->id)->first();
+            if($resourceleaderboard) {
+                $resourceleaderboard->score = $aveResourceRating;
+                $resourceleaderboard->save();
+            } else {
+                $resourceleaderboardData = [
+                    'user_id'   => $user->id,
+                    'score'     => $aveResourceRating,
+                    'position'  => 9999,
+
+                ];
+                ResourceLeaderBoards::create($resourceleaderboardData);
+            }
+
+            // Resource leaderboard End
+
+            // toolkit percentage calculation
+            // $toolkits = DB::select("
+            // select tk.toolkit_title, s.subject_name, th.point_percentage, sum(th.points) as totalPoints
+            // FROM toolkits as tk
+            // JOIN subjects as s ON s.id = tk.subject_id
+            // JOIN toolkit_quizzes as tq ON tq.toolkit_id = tk.id
+            // JOIN toolkit_histories as th ON th.quiz_id = tq.id AND th.user_id = '$user->id'
+            // GROUP BY tk.id
+            //  ");
+
+            // $toolkitTotal = 0;
+            // $toolkitCount = 0;
+            // $toolkitPercentage = 0;
+            // if($toolkits){
+            //     foreach ($toolkits as $toolkit){
+            //         $toolkitCount++;
+            //         $toolkitTotal += $toolkit->point_percentage;
+            //     }
+            //     $toolkitPercentage = $toolkitTotal / $toolkitCount;
+            // }
 
             //toolkit percentage ends
 
             //Final percentage calculation
-            $totalAveragePoints = (($teacherRating + $coursePercentage + $toolkitPercentage) * 3 ) / 10;
+            $totalAveragePoints = (($teacherRating + $coursePercentage) * 2 ) / 10;
 
             $leaderboard = LeaderBoard::where('user_id', $user->id)->first();
             if($leaderboard) {
@@ -121,6 +177,7 @@ class LeaderBoardUpdateCommand extends Command
                 LeaderBoard::create($leaderboardData);
             }
         }
+        // general leaderboard Entry start
         $leaderboardUsers = LeaderBoard::orderBy('score', 'desc')->get();
         $i = 0;
         $factor = 1;
@@ -137,21 +194,31 @@ class LeaderBoardUpdateCommand extends Command
             $leaderboardUser->score += $leaderboardUser->streak_point * $factor;
             $leaderboardUser->save();
         }
+        // general leaderboard Entry end
 
+        // Course leaderboard Entry Start
+        $courseleaderboardUsers = CourseLeaderBoards::orderBy('score', 'desc')->get();
+        $coursePosition = 0;
+        foreach($courseleaderboardUsers as $user){
+            $coursePosition++;
+            $user->position = $coursePosition;
+            $user->save();
+        }
+        // Course leaderboard Entry End
 
+        // Resource leaderboard Entry Start
 
+        $resourceleaderboardUsers = ResourceLeaderBoards::orderBy('score', 'desc')->get();
+        $resourcePosition = 0;
+        foreach($resourceleaderboardUsers as $user){
+            $resourcePosition++;
+            $user->position = $resourcePosition;
+            $user->save();
+        }
+
+        // Resource leaderboard Entry End
 
         //Only rating in leaderboards table..
-
-        //Users table...
-
-
-
-
-        //Leaderboard table... insert if doesn't exist, update if exists..
-        // Score, Pos, Streak
-
-
 
     }
 }

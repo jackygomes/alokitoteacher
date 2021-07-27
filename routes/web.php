@@ -102,7 +102,7 @@ Route::post('admin/load_question', 'AdminController@load_question');
 // admin routes ends
 
 // Innovation
-Route::get('overview/r/{slug}', 'ResourceController@resourceOverview');
+Route::get('overview/r/{slug}', 'ResourceController@resourceOverview')->name('resourceOverview');
 Route::get('view/r/{slug}', 'ResourceController@resourceView');
 Route::group(['prefix' => 'innovation'], function () {
 
