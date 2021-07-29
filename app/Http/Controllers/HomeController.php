@@ -23,7 +23,7 @@ class HomeController extends Controller
 
 	function index(){
         
-        return $courses = DB::select("SELECT * FROM (SELECT courses.title, courses.id, (SELECT count(*) FROM course_quizzes WHERE course_quizzes.course_id = courses.id) AS total_quizzes, count(course_histories.id) AS completed_quizzes, sum(course_histories.points) AS gained_points, sum((SELECT count(*) FROM course_questions WHERE course_quizzes.id = course_questions.quiz_id)) AS total_questions FROM courses JOIN course_quizzes ON courses.id = course_quizzes.course_id JOIN course_histories ON course_quizzes.id = course_histories.quiz_id WHERE course_histories.user_id = 422 GROUP BY courses.id) a WHERE a.completed_quizzes = a.total_quizzes");
+    
         $course_info = DB::table('users')
 						->rightJoin('courses', 'users.id', '=','courses.user_id')
 						->leftJoin('course_ratings', 'courses.id', '=', 'course_ratings.course_id')

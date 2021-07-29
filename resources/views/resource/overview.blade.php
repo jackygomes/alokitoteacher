@@ -94,8 +94,8 @@
                         @endif
                     @endif
                 @endif --}}
-                @if(isset($content_rating))
-                <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal" disabled>Rate this innovation</button>
+                @if(isset($ratingGiven))
+                <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal" disabled>Already rated</button>
                 @else
                 <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal">Rate this innovation</button>
                 @endif

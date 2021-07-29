@@ -412,7 +412,9 @@ class ResourceController extends Controller
                 ->where('resource_id', '=', $info->id)
                 ->avg('rating');
 
-        return view('resource.overview', compact('info','creator', 'content_rating'));
+        $ratingGiven = ResourceRating::where('resource_id', $info->id)->where('user_id', $userId)->first();
+
+        return view('resource.overview', compact('info','creator', 'content_rating', 'ratingGiven'));
     }
 
     public function resourceView(Request $request) {

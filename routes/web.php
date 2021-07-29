@@ -62,6 +62,7 @@ Route::get('course/meta/{slug}', 'CourseController@courseSharePage')->name('meta
 
 
 Route::get('admin/basic-info', 'AdminController@basicInfo')->name('admin.basic.info');
+Route::get('admin/innovations', 'AdminController@innovation')->name('admin.innovations');
 Route::get('admin/leader-board', 'AdminController@leaderBoard')->name('admin.leader.board');
 Route::get('admin/job-list', 'AdminController@adminJobList')->name('admin.job.list');
 Route::post('admin/total-count-update/{id}', 'AdminController@totalCountUpdate')->name('admin.total.count.update');

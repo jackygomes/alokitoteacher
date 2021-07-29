@@ -103,7 +103,9 @@
         <div class="row dashboard-content-block">
           <div class="col-md-12">
           <h3 class="font-weight-bold mr-3 pt-3 pb-2" style="display: inline-block">My Innovations</h3>
-          <a href="{{route('resource.create')}}"><span class="fa-clickable"><i class="fas fa-pen"></i> <small>Add</small></span></a>
+          @if($user_info->id == Auth::id())
+            <a href="{{route('resource.create')}}"><span class="fa-clickable"><i class="fas fa-pen"></i> <small>Add</small></span></a>
+          @endif
             <div id="exploreResource" class="owl-carousel card-slider">
                 @foreach ($resources as $resource)
                     <div class="item mt-3 mb-5">
@@ -143,6 +145,7 @@
                                         </span>
                                       </div>
                                       <div >
+                                      @if($user_info->id == Auth::id())
                                       <hr>
                                         <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">
                                             <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
@@ -152,6 +155,7 @@
                                             @csrf
                                         </form>
                                       </div>
+                                      @endif
 
                                 </div>
                             </div>

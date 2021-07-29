@@ -117,7 +117,7 @@ class LeaderBoardUpdateCommand extends Command
 				}
 			}
 
-            if($resourceRatingCount > 0) $aveResourceRating = (($totalRating / $resourceRatingCount) / 5) * 100;
+            if($resourceRatingCount > 0) $aveResourceRating = (($totalRating / $resourceRatingCount));
             else $aveResourceRating = 0;
 
             $resourceleaderboard = ResourceLeaderBoards::where('user_id', $user->id)->first();

@@ -468,7 +468,7 @@
                 <div class="col-md-6">
                     <ul class="nav nav-tabs d-flex justify-content-center" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">General</a>
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Overall</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Course</a>
@@ -490,7 +490,9 @@
                                         <span class="position">2</span>
                                     </div>
                                     <div class="content">
-                                        <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 16) }}</p>
+                                        <a href="{{ url('t')}}/{{ $leaderBoard[1]['user']->username }}">
+                                            <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 16) }}</p>
+                                        </a>
                                         <p class="m-0">{{ $leaderBoard[1]->score }} points</p>
                                     </div>
                                 </div>
@@ -505,7 +507,9 @@
                                             <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
                                     </div>
                                     <div class="content">
-                                        <p class="m-0">{{ str_limit(strip_tags($leaderBoard[0]['user']->name), 16) }}</p>
+                                        <a href="{{ url('t')}}/{{ $leaderBoard[0]['user']->username }}">
+                                            <p class="m-0">{{ str_limit(strip_tags($leaderBoard[0]['user']->name), 16) }}</p>
+                                        </a>
                                         <p class="m-0">{{ $leaderBoard[0]->score }} points</p>
                                     </div>
                                 </div>
@@ -519,7 +523,9 @@
                                         <span class="position">3</span>
                                     </div>
                                     <div class="content">
-                                        <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 16) }}</p>
+                                        <a href="{{ url('t')}}/{{ $leaderBoard[2]['user']->username }}">
+                                            <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 16) }}</p>
+                                        </a>
                                         <p class="m-0">{{ $leaderBoard[2]->score }} points</p>
                                     </div>
                                 </div>
@@ -559,7 +565,9 @@
                                         <span class="position">2</span>
                                     </div>
                                     <div class="content">
-                                        <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[1]['user']->name), 16) }}</p>
+                                        <a href="{{ url('t')}}/{{ $courseleaderBoard[1]['user']->username }}">
+                                            <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[1]['user']->name), 16) }}</p>
+                                        </a>
                                         <p class="m-0">{{ $courseleaderBoard[1]->score }} points</p>
                                     </div>
                                 </div>
@@ -574,7 +582,9 @@
                                             <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
                                     </div>
                                     <div class="content">
-                                        <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[0]['user']->name), 16) }}</p>
+                                        <a href="{{ url('t')}}/{{ $courseleaderBoard[0]['user']->username }}">
+                                            <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[0]['user']->name), 16) }}</p>
+                                        </a>
                                         <p class="m-0">{{ $courseleaderBoard[0]->score }} points</p>
                                     </div>
                                 </div>
@@ -588,7 +598,9 @@
                                         <span class="position">3</span>
                                     </div>
                                     <div class="content">
-                                        <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[2]['user']->name), 16) }}</p>
+                                        <a href="{{ url('t')}}/{{ $courseleaderBoard[2]['user']->username }}">
+                                            <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[2]['user']->name), 16) }}</p>
+                                        </a>
                                         <p class="m-0">{{ $courseleaderBoard[2]->score }} points</p>
                                     </div>
                                 </div>
@@ -628,8 +640,10 @@
                                         <span class="position">2</span>
                                     </div>
                                     <div class="content">
-                                        <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[1]['user']->name), 16) }}</p>
-                                        <p class="m-0">{{ $resourceleaderBoard[1]->score }} points</p>
+                                        <a href="{{ url('t')}}/{{ $resourceleaderBoard[1]['user']->username }}">
+                                            <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[1]['user']->name), 16) }}</p>
+                                        </a>
+                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[1]->score }}</p>
                                     </div>
                                 </div>
                                 <div class="first top-3-card">
@@ -643,8 +657,10 @@
                                             <img class="crown" src="{{asset('images/new_design/crown.png')}}" alt="">
                                     </div>
                                     <div class="content">
-                                        <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[0]['user']->name), 16) }}</p>
-                                        <p class="m-0">{{ $resourceleaderBoard[0]->score }} points</p>
+                                        <a href="{{ url('t')}}/{{ $resourceleaderBoard[0]['user']->username }}">
+                                            <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[0]['user']->name), 16) }}</p>
+                                        </a>
+                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[0]->score }}</p>
                                     </div>
                                 </div>
                                 <div class="third top-3-card">
@@ -657,8 +673,10 @@
                                         <span class="position">3</span>
                                     </div>
                                     <div class="content">
-                                        <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[2]['user']->name), 16) }}</p>
-                                        <p class="m-0">{{ $resourceleaderBoard[2]->score }} points</p>
+                                        <a href="{{ url('t')}}/{{ $resourceleaderBoard[2]['user']->username }}">
+                                            <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[2]['user']->name), 16) }}</p>
+                                        </a>
+                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[2]->score }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -677,7 +695,7 @@
                                             @endif
                                         </div>
                                         <div class="name">{{ $leader['user']->name }}</div>
-                                        <div class="points">{{$leader->score}} points</div>
+                                        <div class="points"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{$leader->score}}</div>
                                         </a>
                                     </li>
 
