@@ -94,6 +94,14 @@
                         @endif
                     @endif
                 @endif --}}
+                <div class="share-options">
+                    <div class="fb-share-button" 
+                    data-href="{{ route('metaResource', $info->slug) }}" 
+                    data-layout="button">
+                    </div>
+                    <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                    <script type="IN/Share" data-url="{{ route('metaResource', $info->slug) }}"></script>
+                </div>
                 @if(isset($ratingGiven))
                 <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal" disabled>Already rated</button>
                 @else

@@ -19,7 +19,7 @@ class ResourceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['resourceSharePage']]);
+        $this->middleware('auth', ['except' => ['resourceSharePage', 'index']]);
     }
     /**
      * Display a listing of the resource.

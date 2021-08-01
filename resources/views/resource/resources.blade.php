@@ -8,7 +8,7 @@
                 <h2 class="mt-5  font-weight-bold">Teacher Innovation</h2>
                 <a href="{{ route('resource.create') }}" class="mt-3 btn text-center background-yellow text-white font-weight-bold home-explore-button">Submit My Innovation</a>
                 <p class="my-3">To celebrate and inspire teachers, Alokito Teachers is launching <strong>Alokito Teachers calls for Teacher Innovators</strong> aimed to get teachers to think creatively and contribute towards minimizing the challenges emerging from education disruption and the digital divide. This challenge will serve as a platform where teachers will be able to share their innovations and assume the role of leadership in these unprecedented times.</p>
-                <p class="text-yellow" style="font-size: 20px;"><strong>Innovation submission ends at 30th July, 2021</strong></p>
+                <p class="text-yellow" style="font-size: 20px;"><strong>Innovation submission ends in 30th August, 2021</strong></p>
             </div>
         </div>
     </section>

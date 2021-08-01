@@ -14,8 +14,8 @@ $urlImg = url('images\thumbnail').'/'.$info->thumbnail ;
 <meta property="og:type" content="website" />
 <meta property="og:title" content="{{$info->title}}" /> 
 <meta property="og:description" content="{{$info->description}}" />
-<meta property="og:image" itemprop="image" content="{{url('images\thumbnail')}}/{{$info->thumbnail}}" />
-<meta property="og:image:secure_url" content="{{url('images\thumbnail')}}/{{$info->thumbnail}}" />
+<meta property="og:image" itemprop="image" content="{{url('images/thumbnail')}}/{{$info->thumbnail}}" />
+<meta property="og:image:secure_url" content="{{url('images/thumbnail')}}/{{$info->thumbnail}}" />
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:image:alt" content="{{$info->title}}" />
 @endsection

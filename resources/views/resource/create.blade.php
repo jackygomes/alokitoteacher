@@ -107,7 +107,7 @@
                             </div> -->
 
                             <div class="form-group row">
-                                <label for="thumbnail_image" class="col-sm-2 col-form-label">Thumbnail Image:</label>
+                                <label for="thumbnail_image" class="col-sm-2 col-form-label">Image of your innovation:</label>
                                 <div class="col-sm-10">
                                     <input type="file" name="thumbnailImage" class="form-control-file check-image-size" id="thumbnail_image" data-min-width="400" data-min-height="300" data-max-width="400" data-max-height="300" >
                                     <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be  400px X 300px (width = 400px, height = 300px).</p>
