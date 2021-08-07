@@ -197,14 +197,14 @@
     $(document).ready(function() {
         CKEDITOR.replace( 'about_this_workshop');
         CKEDITOR.replace( 'what_you_will_learn');
-        // $("#thumbnailImage").checkImageSize({
-        //     minWidth: 400,
-        //     minHeight: 300,
-        //     maxWidth: 400,
-        //     maxHeight: 300,
-        //     showError:true,
-        //     ignoreError:false
-        // });
+        $("#thumbnailImage").checkImageSize({
+            minWidth: 400,
+            minHeight: 300,
+            maxWidth: 400,
+            maxHeight: 300,
+            showError:true,
+            ignoreError:false
+        });
         $('#trainer').select2({
             multiple: true,
         });

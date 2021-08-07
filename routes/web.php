@@ -63,6 +63,7 @@ Route::get('course/meta/{slug}', 'CourseController@courseSharePage')->name('meta
 
 Route::get('admin/basic-info', 'AdminController@basicInfo')->name('admin.basic.info');
 Route::get('admin/innovations', 'AdminController@innovation')->name('admin.innovations');
+Route::get('admin/blogs', 'AdminController@blog')->name('admin.blogs');
 Route::get('admin/leader-board', 'AdminController@leaderBoard')->name('admin.leader.board');
 Route::get('admin/job-list', 'AdminController@adminJobList')->name('admin.job.list');
 Route::post('admin/total-count-update/{id}', 'AdminController@totalCountUpdate')->name('admin.total.count.update');
@@ -254,4 +255,20 @@ Route::group(['prefix' => 'workshops', 'as' => 'workshops.'], function () {
     Route::get('/export/{workshop}', 'WorkshopController@export')->name('export');
 
     Route::post('/rate', 'WorkshopController@rateWorkshop')->name('rate');
+});
+
+// Admin
+Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
+    Route::get('/', 'BlogController@index')->name('index');
+    Route::get('/create', 'BlogController@create')->name('create');
+    Route::post('/store', 'BlogController@store')->name('store');
+    Route::get('/edit/{id}', 'BlogController@edit')->name('edit');
+    Route::post('/update', 'BlogController@update')->name('update');
+    Route::get('/delete/{id}', 'BlogController@delete')->name('delete');
+});
+
+// User
+Route::group(['prefix' => 'blogs', 'as' => 'blogs.'], function () {
+    Route::get('/', 'BlogController@list')->name('index');
+    Route::get('/blog/{slug}', 'BlogController@blogSingle')->name('single');
 });

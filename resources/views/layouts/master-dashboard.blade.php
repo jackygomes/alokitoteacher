@@ -91,6 +91,12 @@
                 <a class="nav-link text-black" href="{{ route('allResource') }}">Innovations</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link text-black" href="{{ route('blogs.index') }}">Blogs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-black" href="{{ route('workshops.index') }}">Workshops</a>
+            </li>
+            <li class="nav-item">
 
                 <a class="nav-link text-black" href="{{ url('about_us') }}">About Us</a>
 

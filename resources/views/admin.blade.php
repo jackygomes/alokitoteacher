@@ -16,6 +16,9 @@
                         <a href="{{route('admin.innovations')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             Innovations
                         </a>
+                        <a href="{{route('blog.index')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                            Blogs
+                        </a>
                         <a href="{{route('admin.basic.info')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             Basic Info
                         </a>
