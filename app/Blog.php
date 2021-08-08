@@ -14,4 +14,14 @@ class Blog extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'model_id')->where('likes.model', '=', 'blog');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'model_id')->where('comments.model', '=', 'blog');
+    }
 }

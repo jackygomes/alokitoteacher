@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Blog;
 use App\Revenue;
 use App\User;
+use App\Like;
+use App\Comment;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,7 +63,7 @@ class BlogController extends Controller
         if (isset($user_info) && ($user_info->identifier != 101)) {
             return abort(404);
         }
-        
+
         try {
             $request->validate([
                 'name' => 'required',
@@ -141,7 +143,7 @@ class BlogController extends Controller
         if (isset($user_info) && ($user_info->identifier != 101)) {
             return abort(404);
         }
-        
+
         try {
             $request->validate([
                 'name' => 'required',
@@ -217,18 +219,64 @@ class BlogController extends Controller
 
     public function list()
     {
-        $blogs = Blog::where('status', 'Enabled')->paginate(10);
-
+        $blogs = Blog::with('likes')->with('comments')->where('status', 'Enabled')->paginate(10);
         return view('blog.list', compact('blogs'));
     }
 
     public function blogSingle(Request $request)
     {
-        $blog = Blog::where('slug', $request->slug)->first();
+        $blog = Blog::with('likes')->with('comments.user')->where('slug', $request->slug)->first();
+        $like = 0;
+        if (Auth::check()) {
+            $like = Like::where('model', 'blog')
+                ->where('model_id', $blog->id)
+                ->where('user_id', auth()->user()->id)
+                ->count();
+        }
 
-        if(!isset($blog)){
+        if (!isset($blog)) {
             return abort(404);
         }
-        return view('blog.single', compact('blog'));
+        return view('blog.single', compact('blog', 'like'));
+    }
+
+    public function like(Request $request)
+    {
+        $like = Like::where('model', 'blog')
+            ->where('model_id', $request->model_id)
+            ->where('user_id', $request->user_id)
+            ->count();
+        if ($like) {
+            Like::where('model', 'blog')
+                ->where('model_id', $request->model_id)
+                ->where('user_id', $request->user_id)
+                ->delete();
+            $blogLikes = Like::where('model', 'blog')->where('model_id', $request->model_id)->count();
+            return response()->json([
+                'status' => 'unliked',
+                'likes' => $blogLikes,
+            ]);
+        }
+        $like = new Like();
+        $like->model = 'blog';
+        $like->model_id = $request->model_id;
+        $like->user_id = $request->user_id;
+        $like->save();
+        $blogLikes = Like::where('model', 'blog')->where('model_id', $request->model_id)->count();
+        return response()->json([
+            'status' => 'liked',
+            'likes' => $blogLikes,
+        ]);
+    }
+
+    public function comment(Request $request)
+    {
+        $comment = new Comment();
+        $comment->model = 'blog';
+        $comment->comment = $request->comment;
+        $comment->model_id = $request->model_id;
+        $comment->user_id = auth()->user()->id;
+        $comment->save();
+        return redirect()->back()->with('success', 'Comment posted Successfully!');
     }
 }

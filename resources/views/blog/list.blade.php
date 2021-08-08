@@ -47,8 +47,8 @@
                                 </div>
                                 <hr>
                                 <ul>
-                                    <li>26 likes</li>
-                                    <li>2 Comments</li>
+                                    <li>{{sizeof($blog->likes)}} likes</li>
+                                    <li>{{sizeof($blog->comments)}} Comments</li>
                                     <li>5 Shares</li>
                                 </ul>
                             </div>
@@ -106,8 +106,8 @@
                                 </div>
                                 <hr>
                                 <ul>
-                                    <li>26 likes</li>
-                                    <li>2 Comments</li>
+                                    <li>{{sizeof($blog->likes)}} likes</li>
+                                    <li>{{sizeof($blog->comments)}} Comments</li>
                                     <li>5 Shares</li>
                                 </ul>
                             </div>
