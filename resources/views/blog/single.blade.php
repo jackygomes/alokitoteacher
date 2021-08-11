@@ -1,4 +1,15 @@
 @extends('master')
+@section('meta')
+<link rel="canonical" href="{{route('blogs.single', $blog->slug)}}"/>
+<meta property="og:url" content="{{route('blogs.single', $blog->slug)}}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{$blog->name}}" /> 
+<meta property="og:description" content="{{$blog->short_description}}" />
+<meta property="og:image" itemprop="image" content="{{asset('images/thumbnail')}}/{{ $blog->thumbnail }}" />
+<meta property="og:image:secure_url" content="{{asset('images/thumbnail')}}/{{ $blog->thumbnail }}" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:alt" content="{{$blog->name}}" />
+@endsection
 @section('content')
 
 <style>
@@ -151,11 +162,11 @@ textarea {
                             <div><img src="{{asset('images/new_design/main-share.png')}}"> Share</div>
                             <div class="share-options">
                                 <div class="fb-share-button" 
-                                data-href="" 
+                                data-href="{{route('blogs.single', $blog->slug)}}" 
                                 data-layout="button">
                                 </div>
                                 <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
-                                <script type="IN/Share" data-url=""></script>
+                                <script type="IN/Share" data-url="{{route('blogs.single', $blog->slug)}}"></script>
                             </div>
                         </div>
                     </div>
@@ -171,31 +182,40 @@ textarea {
         </div>
         <div class="row">
             <div class="col-md-12">
+              @if(Auth::user())
                 {!!$blog->content!!}
+              @else
+              <p>{{$blog->short_description}}</p>
+              <p class="text-right">Please <a class="text-yellow" href="{{url('login')}}">login</a> to see more</p>
+              @endif
             </div>
         </div>
-        
+        <hr>
         <div class="row">
             <div class="col-md-12">
-                <h1>Comments</h1>
+                <p><img src="{{asset('images/new_design/comment.png')}}"> {{count($blog->comments)}} {{ count($blog->comments) > 1 ? 'Comments' : 'Comment' }}</p>
 
                 @foreach ($blog->comments as $comment)
                     <div class="container mt-2">
                         <div class="d-flex row">
-                            <div class="col-md-12">
-                                <div class="d-flex flex-column comment-section">
-                                    <div class="bg-white p-2">
-                                        <div class="d-flex flex-row user-info"><img class="rounded-circle" src="{{ env('APP_URL') . '/images/profile_picture/' . $comment->user->image}}" width="40">
-                                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{$comment->user->name}}</span><span class="date text-black-50">Shared publicly - Jan 2020</span></div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <p class="comment-text">{{$comment->comment}}</p>
-                                        </div>
+                          <div class="d-flex flex-column comment-section">
+                              <div class="bg-white p-2 pl-0">
+                                  <div class="d-flex flex-row user-info">
+                                    <div>
+                                      <img class="rounded-circle" src="{{ env('APP_URL') . '/images/profile_picture/' . $comment->user->image}}" width="40">
                                     </div>
-                                </div>
-                            </div>
+                                      <div class="d-flex flex-column justify-content-start ml-2">
+                                        <span class="d-block font-weight-bold name">{{$comment->user->name}}</span>
+                                        <span class="date text-black-50">{{$comment->created_at->format('F j, Y')}}</span>
+                                        <div class="mt-2">
+                                          <p class="comment-text">{{$comment->comment}}</p>
+                                        </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
                         </div>
-                    </div><hr>
+                    </div>
                 @endforeach
 
                 @if(Auth::check())
@@ -203,8 +223,8 @@ textarea {
                     {{ csrf_field() }}
                     <div class="form-group">
                         <input type="hidden" name="model_id" value="{{$blog->id}}">
-                        <textarea name="comment" id="comment" class="form-control" rows="5" placeholder="Write your Comment.." required></textarea><br>
-                        <button type="submit" class="btn btn-primary float-right">Post Comment</button>
+                        <textarea name="comment" id="comment" class="form-control" rows="7" placeholder="Write your Comment.." required></textarea><br>
+                        <button type="submit" class="btn background-yellow text-white font-weight-bold home-explore-button">Post Comment</button>
                     </div>
                 </form>
                 @endif
@@ -229,7 +249,7 @@ textarea {
     }
     likeStatus();
     function like(blog_id,user_id){
-        axios.post('http://alokitoteacher.localhost/public/api/blog/like',{
+        axios.post('http://alokitoteacher.local/api/blog/like',{
             'user_id': user_id,
             'model_id': blog_id
         } , {

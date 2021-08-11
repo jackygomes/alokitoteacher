@@ -64,7 +64,8 @@ class LeaderBoardUpdateCommand extends Command
         // script end
     
         //Rating calculation...
-        $users = User::where('identifier', '=','1')->where('id', '!=', 13)->get();
+        $userTodeduct = [7,8,14,9,10,12,11,1589,16,577,5,83,13,32];
+        $users = User::where('identifier', '=','1')->whereNotIn('id',  $userTodeduct)->get();
         foreach ($users as $user) {
 
             // teacher rating making out of hundred

@@ -219,8 +219,20 @@ class BlogController extends Controller
 
     public function list()
     {
-        $blogs = Blog::with('likes')->with('comments')->where('status', 'Enabled')->paginate(10);
-        return view('blog.list', compact('blogs'));
+        // $topBlogs = Blog::with('likes')->with('comments')->where('status', 'Enabled')->limit(3)->get();
+        $topBlogs = Blog::with('likes')->with('comments')
+                    ->select('*')->selectSub(function ($q) {
+                        $q->from('likes')
+                            ->whereRaw('likes.model_id = blogs.id')
+                            ->selectRaw('count(*)');
+                    }, 'likes_count')
+                    ->where('status', 'Enabled')
+                    ->orderBy('likes_count', 'desc')
+                    ->take(3)
+                    ->get();
+        $blogs = Blog::with('likes')->with('comments')->where('status', 'Enabled')->paginate(9);
+        
+        return view('blog.list', compact('blogs', 'topBlogs'));
     }
 
     public function blogSingle(Request $request)

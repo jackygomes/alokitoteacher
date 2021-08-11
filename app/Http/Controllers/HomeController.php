@@ -22,8 +22,6 @@ class HomeController extends Controller
 {
 
 	function index(){
-        
-    
         $course_info = DB::table('users')
 						->rightJoin('courses', 'users.id', '=','courses.user_id')
 						->leftJoin('course_ratings', 'courses.id', '=', 'course_ratings.course_id')

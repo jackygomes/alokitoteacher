@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="row">
-            @foreach ($blogs as $blog)
+            @foreach ($topBlogs as $blog)
                 <div class="col-md-4">
                     <div class="item mt-5 blog-card">
                         <div class="card">
@@ -37,11 +37,11 @@
                                         <div><img src="{{asset('images/new_design/main-share.png')}}"> Share</div>
                                         <div class="share-options">
                                             <div class="fb-share-button" 
-                                            data-href="" 
+                                            data-href="{{route('blogs.single', $blog->slug)}}" 
                                             data-layout="button">
                                             </div>
                                             <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
-                                            <script type="IN/Share" data-url=""></script>
+                                            <script type="IN/Share" data-url="{{route('blogs.single', $blog->slug)}}"></script>
                                         </div>
                                     </div>
                                 </div>
@@ -64,12 +64,14 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="font-weight-bold">Recent Blogs<a href="#" class="float-right"><span class="fa-clickable blog-view-all" data-toggle="modal" data-target="#addJobModal">View all</span></a></h2>
+                <!-- <h2 class="font-weight-bold">All Blogs<a href="#" class="float-right"><span class="fa-clickable blog-view-all" data-toggle="modal" data-target="#addJobModal">View all</span></a></h2> -->
+                <h2 class="font-weight-bold">All Blogs</h2>
             </div>
         </div>
         <div class="row">
-            <div id="blogSlider" class="owl-carousel card-slider">
+            <!-- <div id="blogSlider" class="owl-carousel card-slider"> -->
                 @foreach ($blogs as $blog)
+                <div class="col-md-4">
                     <div class="item mt-5 blog-card">
                         <div class="card">
                             <div class="img-wrap">
@@ -96,11 +98,11 @@
                                         <div><img src="{{asset('images/new_design/main-share.png')}}"> Share</div>
                                         <div class="share-options">
                                             <div class="fb-share-button" 
-                                            data-href="" 
+                                            data-href="{{route('blogs.single', $blog->slug)}}" 
                                             data-layout="button">
                                             </div>
                                             <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
-                                            <script type="IN/Share" data-url=""></script>
+                                            <script type="IN/Share" data-url="{{route('blogs.single', $blog->slug)}}"></script>
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +115,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 @endforeach
+        </div>
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                {{$blogs->links()}}
             </div>
         </div>
     </div>

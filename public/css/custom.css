@@ -843,3 +843,7 @@ a {
     height: 50vh;
     border-radius: 8px;
 }
+.comment-section img {
+    height: 50px;
+    width: 50px;
+}

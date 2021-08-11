@@ -268,8 +268,8 @@ Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
 });
 
 // User
-Route::group(['prefix' => 'blogs', 'as' => 'blogs.'], function () {
-    Route::get('/', 'BlogController@list')->name('index');
-    Route::get('/blog/{slug}', 'BlogController@blogSingle')->name('single');
+Route::group(['prefix' => 'blog', 'as' => 'blogs.'], function () {
+    Route::get('/list', 'BlogController@list')->name('index');
+    Route::get('/{slug}', 'BlogController@blogSingle')->name('single');
     Route::post('/comment', 'BlogController@comment')->name('comment');
 });
