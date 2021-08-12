@@ -142,6 +142,11 @@ textarea {
 
 <section class="blog-single section-space">
     <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <a href="{{ route('blogs.index') }}" class="mb-5 d-block"><i class="fas fa-long-arrow-alt-left mr-2"></i> Back to blogs</a>
+        </div>
+      </div>
         <div class="row">
             <div class="col-md-12">
                 <h1>{{$blog->name}}</h1>
