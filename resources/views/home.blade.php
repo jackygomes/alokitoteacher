@@ -643,7 +643,7 @@
                                         <a href="{{ url('t')}}/{{ $resourceleaderBoard[1]['user']->username }}">
                                             <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[1]['user']->name), 16) }}</p>
                                         </a>
-                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[1]->score }}</p>
+                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[1]->score }} ({{$resourceleaderBoard[1]->no_of_review}})</p>
                                     </div>
                                 </div>
                                 <div class="first top-3-card">
@@ -660,7 +660,7 @@
                                         <a href="{{ url('t')}}/{{ $resourceleaderBoard[0]['user']->username }}">
                                             <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[0]['user']->name), 16) }}</p>
                                         </a>
-                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[0]->score }}</p>
+                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[0]->score }} ({{$resourceleaderBoard[0]->no_of_review}})</p>
                                     </div>
                                 </div>
                                 <div class="third top-3-card">
@@ -676,7 +676,7 @@
                                         <a href="{{ url('t')}}/{{ $resourceleaderBoard[2]['user']->username }}">
                                             <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[2]['user']->name), 16) }}</p>
                                         </a>
-                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[2]->score }}</p>
+                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[2]->score }} ({{$resourceleaderBoard[2]->no_of_review}})</p>
                                     </div>
                                 </div>
                             </div>
@@ -695,7 +695,7 @@
                                             @endif
                                         </div>
                                         <div class="name">{{ $leader['user']->name }}</div>
-                                        <div class="points"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{$leader->score}}</div>
+                                        <div class="points"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{$leader->score}} ({{$leader->no_of_review}})</div>
                                         </a>
                                     </li>
 

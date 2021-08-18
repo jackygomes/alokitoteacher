@@ -64,7 +64,7 @@ class LeaderBoardUpdateCommand extends Command
         // script end
     
         //Rating calculation...
-        $userTodeduct = [7,8,14,9,10,12,11,1589,16,577,5,83,13,32];
+        $userTodeduct = [7,8,14,9,10,12,11,1589,16,577,5,83,13,32, 66];
         $users = User::where('identifier', '=','1')->whereNotIn('id',  $userTodeduct)->get();
         foreach ($users as $user) {
 
@@ -109,12 +109,14 @@ class LeaderBoardUpdateCommand extends Command
             $resources = Resource::where('user_id', $user->id)->get();
 			$resourceRatingCount = 0;
 			$totalRating = 0;
+            $totalReview = 0;
 			foreach($resources as $resource){
 				
 				$resource_rating = ResourceRating::where('resource_id', $resource->id)->get();
 				foreach($resource_rating as $rating){
 					$resourceRatingCount++;
 					$totalRating += $rating->rating;
+                    $totalReview ++;
 				}
 			}
 
@@ -124,12 +126,14 @@ class LeaderBoardUpdateCommand extends Command
             $resourceleaderboard = ResourceLeaderBoards::where('user_id', $user->id)->first();
             if($resourceleaderboard) {
                 $resourceleaderboard->score = $aveResourceRating;
+                $resourceleaderboard->no_of_review  = $totalReview;
                 $resourceleaderboard->save();
             } else {
                 $resourceleaderboardData = [
                     'user_id'   => $user->id,
                     'score'     => $aveResourceRating,
                     'position'  => 9999,
+                    'no_of_review'  => $totalReview,
 
                 ];
                 ResourceLeaderBoards::create($resourceleaderboardData);
@@ -189,10 +193,17 @@ class LeaderBoardUpdateCommand extends Command
             }
             if($leaderboardUser->position < 11) $leaderboardUser->streak +=1;
             else $leaderboardUser->streak = 0;
-            $leaderboardUser->position = $i;
             if($i<11) $leaderboardUser->streak_point += (11- $i) * .1;
 
             $leaderboardUser->score += $leaderboardUser->streak_point * $factor;
+            $leaderboardUser->save();
+        }
+
+        $leaderboardUsers = LeaderBoard::orderBy('score', 'desc')->limit(10)->get();
+        $leaderBoardPosition = 0;
+        foreach($leaderboardUsers as $leaderboardUser){
+            $leaderBoardPosition++;
+            $leaderboardUser->position = $leaderBoardPosition;
             $leaderboardUser->save();
         }
         // general leaderboard Entry end
@@ -209,7 +220,7 @@ class LeaderBoardUpdateCommand extends Command
 
         // Resource leaderboard Entry Start
 
-        $resourceleaderboardUsers = ResourceLeaderBoards::orderBy('score', 'desc')->get();
+        $resourceleaderboardUsers = ResourceLeaderBoards::orderBy('score', 'desc')->orderBy('no_of_review', 'desc')->get();
         $resourcePosition = 0;
         foreach($resourceleaderboardUsers as $user){
             $resourcePosition++;

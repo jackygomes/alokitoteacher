@@ -156,7 +156,7 @@ textarea {
                         <ul >
                             <li><span id="totalLikes">{{sizeof($blog->likes)}}</span> likes</li>
                             <li>{{sizeof($blog->comments)}} Comments</li>
-                            <li>5 Shares</li>
+                            <!-- <li>5 Shares</li> -->
                         </ul>
                     </div>
                     <div class="header-right">

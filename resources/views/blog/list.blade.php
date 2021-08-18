@@ -49,7 +49,7 @@
                                 <ul>
                                     <li>{{sizeof($blog->likes)}} likes</li>
                                     <li>{{sizeof($blog->comments)}} Comments</li>
-                                    <li>5 Shares</li>
+                                    <!-- <li>5 Shares</li> -->
                                 </ul>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                                 <ul>
                                     <li>{{sizeof($blog->likes)}} likes</li>
                                     <li>{{sizeof($blog->comments)}} Comments</li>
-                                    <li>5 Shares</li>
+                                    <!-- <li>5 Shares</li> -->
                                 </ul>
                             </div>
                         </div>
