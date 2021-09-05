@@ -80,7 +80,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-12 mb-5">
-                            <h3 class="font-weight-bold mr-3">List of Educators Enrolled <span class="float-right">Total Enrolled: {{$histories->count()}}</span></h3>
+                            <h3 class="font-weight-bold mr-3">List of Educators Rated <span class="float-right">Total Rated: {{$ratingUsers->count()}}</span></h3>
                             @if($message = Session::get('success'))
                                 <div class="alert alert-success">
                                     {{$message}}
@@ -96,21 +96,21 @@
                                     <th>Sl.</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Rating</th>
                                     <th>Start Date</th>
-                                    <th>Completed Date</th>
                                     <!-- <th>Certificate Purchase</th>
                                     <th>Certificate Purchase Date</th> -->
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i = 1; ?>
-                                @foreach($histories as $history)
+                                @foreach($ratingUsers as $ratedUser)
                                     <tr>
                                         <td>{{$i++}}</td>
-                                        <td>{{$history->user->name}}</td>
-                                        <td>{{$history->user->email}}</td>
-                                        <td>{{$history->created_at }}</td>
-                                        <td>{{isset($history->completion_date) ? $history->completion_date : 'Not Yet'}}</td>
+                                        <td>{{$ratedUser->user->name}}</td>
+                                        <td>{{$ratedUser->user->email}}</td>
+                                        <td>{{$ratedUser->rating}}</td>
+                                        <td>{{$ratedUser->created_at }}</td>
                                         <!-- <td>{{isset($history->certificate_withdrawn_date) ? 'Yes' : 'No'}}</td>
                                         <td>{{isset($history->certificate_withdrawn_date) ? $history->certificate_withdrawn_date : 'Not Yet'}}</td> -->
                                     </tr>

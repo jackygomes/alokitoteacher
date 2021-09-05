@@ -109,10 +109,12 @@
             <div id="exploreResource" class="owl-carousel card-slider">
                 @foreach ($resources as $resource)
                     <div class="item mt-3 mb-5">
-                        <a href="{{ url('overview') }}/r/{{$resource->slug}}">
                             <div class="card">
-                                <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                <a href="{{ url('overview') }}/r/{{$resource->slug}}">
+                                  <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                                </a>
                                 <div class="card-body">
+                                <a href="{{ url('overview') }}/r/{{$resource->slug}}">
                                     @if(strlen($resource->resource_title) < 26)
                                         <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($resource->resource_title), 26) }}</p>
                                     @else
@@ -123,6 +125,7 @@
                                             </div>
                                         </div>
                                     @endif
+                                </a>
                                     <hr>
                                     <div class="text-dark">
 {{--                                        @for($i = 1; $i <= 5; $i++)--}}
@@ -148,7 +151,9 @@
                                       @if($user_info->id == Auth::id())
                                       <hr>
                                         <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">
-                                            <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                            @if($resource->status != "Approved")
+                                              <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                            @endif
                                             <input class="btn btn-danger btn-sm" onclick="resourceDeleteConfirm({{$resource->id}})" type="button" value="Remove" />
                                             <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
                                             @method('delete')
@@ -159,7 +164,6 @@
 
                                 </div>
                             </div>
-                        </a>
                     </div>
                   @endforeach
               </div>

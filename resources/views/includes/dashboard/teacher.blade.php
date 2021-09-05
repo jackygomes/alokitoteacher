@@ -58,17 +58,18 @@
     <div class="stat mt-4">
         <div class="stat-block">
             <p><span class="float-left">Course in progress</span><span class="float-right text-yellow">
-                    @if(isset($achievements))
-                        {{count($achievements)}}
+                    @if(isset($progresses))
+                        {{count($progresses)}}
                     @else
                         0
                     @endif
+                    
                 </span></p>
         </div>
         <div class="stat-block">
             <p><span class="float-left">Course completed</span><span class="float-right text-yellow">
-                    @if(isset($progresses))
-                        {{count($progresses)}}
+                    @if(isset($achievements))
+                        {{count($achievements)}}
                     @else
                         0
                     @endif

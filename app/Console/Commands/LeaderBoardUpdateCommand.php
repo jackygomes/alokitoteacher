@@ -106,7 +106,7 @@ class LeaderBoardUpdateCommand extends Command
 
             // Resource leaderboard Start
 
-            $resources = Resource::where('user_id', $user->id)->get();
+            $resources = Resource::where('user_id', $user->id)->where('status', 'Approved')->where('deleted', '0')->get();
 			$resourceRatingCount = 0;
 			$totalRating = 0;
             $totalReview = 0;

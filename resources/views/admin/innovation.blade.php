@@ -1,6 +1,6 @@
 @extends('master')
 @section('content')
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 <div class="container-fluid">
 
     <div class="row">
@@ -28,7 +28,7 @@
                         <a href="{{route('resource.create')}}"><span class="fa-clickable" data-toggle="modal" data-target="#academics"><i class="fas fa-pen"></i> <small>Add</small></span></a>
                         <div class="mr=2">
                             <div class="table-responsive-sm">
-                                <table class="table ">
+                                <table id="innovaion" class="table ">
                                     <thead>
                                         <tr>
                                             <th style="width:10%">No.</th>
@@ -67,7 +67,6 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{$resources->links()}}
                                 {{--@if($toolkits->count() == 0)--}}
                                 {{--<h5 class="text-center text-muted">No Toolkit to Show</h5>--}}
                                 {{--@endif--}}
@@ -81,8 +80,13 @@
 </div>
 
 @push('js')
-
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
+    $(document).ready(function() {
+        $('#innovaion').DataTable();
+    });
+
     $('#pro_pic_choose').on('click', function() {
         $("#profile_picture").click();
     });
@@ -105,6 +109,7 @@
             }
         })
     }
+
 </script>
 
 @endpush
