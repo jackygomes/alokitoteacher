@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ResourceLeaderBoards extends Model
+class ResourceLeaderBoard extends Model
 {
     //
     protected $guarded = [];

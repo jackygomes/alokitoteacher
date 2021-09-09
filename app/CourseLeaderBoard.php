@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CourseLeaderBoards extends Model
+class CourseLeaderBoard extends Model
 {
     protected $guarded = [];
     //

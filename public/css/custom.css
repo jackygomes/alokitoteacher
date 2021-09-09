@@ -521,6 +521,7 @@ a {
 .dashboard-left-panel .info-wrap {
     margin-bottom: 10px;
     overflow: hidden;
+    word-wrap: anywhere;
 }
 .dashboard-left-panel .info-wrap .info-text, .dashboard-left-panel .info-wrap .info-image {
     display: inline-block;

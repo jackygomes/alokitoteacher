@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\ContactUsForm;
-use App\CourseLeaderBoards;
+use App\CourseLeaderBoard;
 use App\LeaderBoard;
 use App\Resource;
-use App\ResourceLeaderBoards;
+use App\ResourceLeaderBoard;
 use App\ResourceRating;
 use App\Revenue;
 use App\User;

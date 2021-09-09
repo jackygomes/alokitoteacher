@@ -40,7 +40,6 @@
                 <p class="info-text">@if($recent_work != null) {{ $recent_work->position }} @else - @endif</p>
             </div>
         </div>
-        @if($user_info->id == Auth::id())
         <div class="col-12">
             <div class="info-wrap">
                 <img class="info-image" src="{{asset('images/new_design/call.png')}}" alt="">
@@ -53,7 +52,6 @@
                 <p class="info-text">@if($user_info->email != null) {{ $user_info->email }} @else - @endif</p>
             </div>
         </div>
-        @endif
     </div>
     <div class="stat mt-4">
         <div class="stat-block">
