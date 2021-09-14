@@ -275,9 +275,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($applicants as $applicant)
+                        @foreach($applicants as $index => $applicant)
                             <tr>
-                                <td>{{$applicant->no}}</td>
+                                <td>{{$index + 1}}</td>
                                 <td>
                                     <a class="" href="{{ url('t')}}/{{ $applicant->user->username }}">
                                         {{$applicant->user->name}}

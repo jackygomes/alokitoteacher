@@ -50,8 +50,11 @@
         </div>
 
         <div class="col-md-8">
-
+            @if($thumbnailPart)
             {!! $thumbnailPart !!}
+            @else
+            <img src="{{url('images\thumbnail')}}\{{ $workshop->thumbnail }}" style="height: 262px;" class="card-img-top">
+            @endif
 
             <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
                 <li class="nav-item">

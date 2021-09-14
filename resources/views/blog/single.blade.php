@@ -244,7 +244,6 @@ textarea {
            }
            document.getElementById('totalLikes').innerHTML = response.data.likes;
         })
-
     }
 
 </script>

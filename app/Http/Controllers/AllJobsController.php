@@ -218,18 +218,12 @@ class AllJobsController extends Controller
         $user_info = User::find($job_info->user_id);
         $users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
         $leaderBoard = \App\LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
-        $applicants = JobApplication::where('job_id', $request->job_id)->paginate(10);
+        $applicants = JobApplication::where('job_id', $request->job_id)->get();
         $n = 0;
 
         $userId = Auth::check() ? Auth::user()->id : 0;
         $appliedCount = JobApplication::where('user_id', '=', $userId)->where('job_id', '=', $job_info->id)->count();
         $job_info->isApplied = $appliedCount ? 1 : 0;
-
-        foreach ($applicants as $applicant) {
-            $n++;
-            $applicant->no = $n;
-        }
-
 
         return view('job_details', compact('user_info', 'job_info', 'users', 'leaderBoard', 'applicants'));
     }
