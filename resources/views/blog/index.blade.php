@@ -43,7 +43,7 @@
                                     <td>{{$blog->status}}</td>
                                     <td>{{$blog->created_at}}</td>
                                     <td>
-                                        <a href="#" class="btn btn-info text-white btn-sm">View</a>
+                                        <a href="{{ route('blogs.single', $blog->slug) }}" class="btn btn-info text-white btn-sm">View</a>
                                         <a href="{{route('blog.edit', $blog->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
                                         <a href="{{route('blog.delete', $blog->id)}}" class="btn btn-danger text-white btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
                                     </td>

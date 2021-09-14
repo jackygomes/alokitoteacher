@@ -521,6 +521,7 @@ a {
 .dashboard-left-panel .info-wrap {
     margin-bottom: 10px;
     overflow: hidden;
+    word-wrap: anywhere;
 }
 .dashboard-left-panel .info-wrap .info-text, .dashboard-left-panel .info-wrap .info-image {
     display: inline-block;
@@ -842,4 +843,8 @@ a {
     width: 100%;
     height: 50vh;
     border-radius: 8px;
+}
+.comment-section img {
+    height: 50px;
+    width: 50px;
 }

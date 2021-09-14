@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\CourseLeaderBoards;
+use App\CourseLeaderBoard;
 use App\LeaderBoard;
 use App\Resource;
-use App\ResourceLeaderBoards;
+use App\ResourceLeaderBoard;
 use App\ResourceRating;
 use App\ToolkitHistory;
 use App\ToolkitQuiz;
@@ -64,7 +64,8 @@ class LeaderBoardUpdateCommand extends Command
         // script end
     
         //Rating calculation...
-        $users = User::where('identifier', '=','1')->where('id', '!=', 13)->get();
+        $userTodeduct = [7,8,14,9,10,12,11,1589,16,577,5,83,13,32, 66];
+        $users = User::where('identifier', '=','1')->whereNotIn('id',  $userTodeduct)->get();
         foreach ($users as $user) {
 
             // teacher rating making out of hundred
@@ -87,7 +88,7 @@ class LeaderBoardUpdateCommand extends Command
 
             // course leaderboard start
             
-            $courseleaderboard = CourseLeaderBoards::where('user_id', $user->id)->first();
+            $courseleaderboard = CourseLeaderBoard::where('user_id', $user->id)->first();
             if($courseleaderboard) {
                 $courseleaderboard->score = $coursePercentage;
                 $courseleaderboard->save();
@@ -98,40 +99,44 @@ class LeaderBoardUpdateCommand extends Command
                     'position'  => 9999,
 
                 ];
-                CourseLeaderBoards::create($courseleaderboardData);
+                CourseLeaderBoard::create($courseleaderboardData);
             }
 
             // course leaderboard End
 
             // Resource leaderboard Start
 
-            $resources = Resource::where('user_id', $user->id)->get();
+            $resources = Resource::where('user_id', $user->id)->where('status', 'Approved')->where('deleted', '0')->get();
 			$resourceRatingCount = 0;
 			$totalRating = 0;
+            $totalReview = 0;
 			foreach($resources as $resource){
 				
 				$resource_rating = ResourceRating::where('resource_id', $resource->id)->get();
 				foreach($resource_rating as $rating){
 					$resourceRatingCount++;
 					$totalRating += $rating->rating;
+                    $totalReview ++;
 				}
 			}
 
             if($resourceRatingCount > 0) $aveResourceRating = (($totalRating / $resourceRatingCount));
             else $aveResourceRating = 0;
 
-            $resourceleaderboard = ResourceLeaderBoards::where('user_id', $user->id)->first();
+            $resourceleaderboard = ResourceLeaderBoard::where('user_id', $user->id)->first();
             if($resourceleaderboard) {
                 $resourceleaderboard->score = $aveResourceRating;
+                $resourceleaderboard->no_of_review  = $totalReview;
                 $resourceleaderboard->save();
             } else {
                 $resourceleaderboardData = [
                     'user_id'   => $user->id,
                     'score'     => $aveResourceRating,
                     'position'  => 9999,
+                    'no_of_review'  => $totalReview,
 
                 ];
-                ResourceLeaderBoards::create($resourceleaderboardData);
+                ResourceLeaderBoard::create($resourceleaderboardData);
             }
 
             // Resource leaderboard End
@@ -188,16 +193,23 @@ class LeaderBoardUpdateCommand extends Command
             }
             if($leaderboardUser->position < 11) $leaderboardUser->streak +=1;
             else $leaderboardUser->streak = 0;
-            $leaderboardUser->position = $i;
             if($i<11) $leaderboardUser->streak_point += (11- $i) * .1;
 
             $leaderboardUser->score += $leaderboardUser->streak_point * $factor;
             $leaderboardUser->save();
         }
+
+        $leaderboardUsers = LeaderBoard::orderBy('score', 'desc')->limit(10)->get();
+        $leaderBoardPosition = 0;
+        foreach($leaderboardUsers as $leaderboardUser){
+            $leaderBoardPosition++;
+            $leaderboardUser->position = $leaderBoardPosition;
+            $leaderboardUser->save();
+        }
         // general leaderboard Entry end
 
         // Course leaderboard Entry Start
-        $courseleaderboardUsers = CourseLeaderBoards::orderBy('score', 'desc')->get();
+        $courseleaderboardUsers = CourseLeaderBoard::orderBy('score', 'desc')->get();
         $coursePosition = 0;
         foreach($courseleaderboardUsers as $user){
             $coursePosition++;
@@ -208,7 +220,7 @@ class LeaderBoardUpdateCommand extends Command
 
         // Resource leaderboard Entry Start
 
-        $resourceleaderboardUsers = ResourceLeaderBoards::orderBy('score', 'desc')->get();
+        $resourceleaderboardUsers = ResourceLeaderBoard::orderBy('score', 'desc')->orderBy('no_of_review', 'desc')->get();
         $resourcePosition = 0;
         foreach($resourceleaderboardUsers as $user){
             $resourcePosition++;

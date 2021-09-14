@@ -184,15 +184,9 @@ class PurchaseController extends Controller
 
             $earningAmount = 0;
             $earningUserId = $product->user_id;
-            if($user->identifier == 101){
-                //if admin
-                if($order->product_type == 'Job'){
-                    //if admin and job
-                    $earningAmount = 0;
-                } else {
-                    $earningAmount = $order->amount;
-                }
-            }else {
+
+            if($user->identifier != 101 && $user->identifier != 104)
+            {
                 if($order->product_type == 'Job'){
                     $earningAmount = $order->amount;
 
@@ -202,7 +196,16 @@ class PurchaseController extends Controller
                     $payCut = ($order->amount * 15)/100;
                     $earningAmount = $order->amount - $payCut;
                 }
+            } else {
+                //if admin
+                if($order->product_type == 'Job'){
+                    //if admin and job
+                    $earningAmount = 0;
+                } else {
+                    $earningAmount = $order->amount;
+                }
             }
+
 
             // Earning entry
             $transactionEarningData = [
@@ -217,20 +220,21 @@ class PurchaseController extends Controller
             Transaction::create($transactionEarningData);
 
             // Revenue Entry
-            if($user->identifier == 101){
+            if($user->identifier != 101 && $user->identifier != 104){
+                if($order->product_type != 'Job'){
+                    $revenueAmount = $payCut;
+
+                    //user balance update
+                    $admin = User::where('identifier',101)->first();
+                    $admin->balance += floatval($earningAmount);
+                    $admin->save();
+                } else $revenueAmount = $order->amount;
+            }else {
                 $revenueAmount = $order->amount;
 
                 //admin balance update
                 $user->balance += floatval($revenueAmount);
                 $user->save();
-            }else {
-                if($order->product_type != 'Job'){
-                    $revenueAmount = $payCut;
-
-                    //user balance update
-                    $user->balance += floatval($earningAmount);
-                    $user->save();
-                } else $revenueAmount = $order->amount;
             }
             $revenueData = [
                 'order_id'          => $order->id,

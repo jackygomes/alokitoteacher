@@ -18,7 +18,7 @@
                 <input type="submit" class="btn background-yellow text-white mt-2" value="Upload">
               </div> -->
               <input type="file" name="image" id="profile_picture" data-min-width="200" data-min-height="200" data-max-width="200" data-max-height="200">
-              <button type="button" id="pro_pic_choose" class="btn background-yellow text-white mt-2 mb-3 ml-5">Upload</button>
+              <button type="submit" id="pro_pic_choose" class="btn background-yellow text-white mt-2 mb-3 ml-5">Upload</button>
           </form>
         <h3 class="font-weight-bold" >Basic Info</h3>
         <hr>
@@ -179,20 +179,7 @@
 @push('js')
 
     <script type="text/javascript">
-        {{--      $('#pro_pic_choose').on('click', function () {--}}
-        {{--          $("#profile_picture").click();--}}
-        {{--      });--}}
-        {{--      $("#profile_picture").change(function () {--}}
-        {{--        $("#pro_pic_upload_form").submit();--}}
-        {{--      });--}}
-        $("#profile_picture").checkImageSize({
-            minWidth: 200,
-            minHeight: 200,
-            maxWidth: 200,
-            maxHeight: 200,
-            showError:true,
-            ignoreError:false
-        });
+        
     </script>
 
 @endpush

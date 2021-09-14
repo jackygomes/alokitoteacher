@@ -407,8 +407,8 @@
                                     </div>
                                 </div>
                                 <div class="text-dark">
-                                    @for($i = 0; $i < 5; $i++)
-                                        @if(round($resource->ratingCount->avg('rating')) - $i > 0)
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($resource->ratingCount->avg('rating') - $i >= 0)
                                             <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
                                         @else
                                             <i class="far fa-star text-light-dark"></i>
@@ -491,7 +491,15 @@
                                     </div>
                                     <div class="content">
                                         <a href="{{ url('t')}}/{{ $leaderBoard[1]['user']->username }}">
-                                            <p class="m-0">{{ str_limit(strip_tags($leaderBoard[1]['user']->name), 16) }}</p>
+                                            @if(strlen($leaderBoard[1]['user']->name) < 15)
+                                            <p class="m-0">{{$leaderBoard[1]['user']->name}}</p>
+                                            @else
+                                                @php
+                                                    $pieces = explode(' ', $leaderBoard[1]['user']->name);
+                                                    $last_name = array_pop($pieces);
+                                                @endphp
+                                                <p class="m-0">{{$last_name}}</p>
+                                            @endif
                                         </a>
                                         <p class="m-0">{{ $leaderBoard[1]->score }} points</p>
                                     </div>
@@ -508,7 +516,15 @@
                                     </div>
                                     <div class="content">
                                         <a href="{{ url('t')}}/{{ $leaderBoard[0]['user']->username }}">
-                                            <p class="m-0">{{ str_limit(strip_tags($leaderBoard[0]['user']->name), 16) }}</p>
+                                            @if(strlen($leaderBoard[0]['user']->name) < 15)
+                                            <p class="m-0">{{$leaderBoard[0]['user']->name}}</p>
+                                            @else
+                                                @php
+                                                    $pieces = explode(' ', $leaderBoard[0]['user']->name);
+                                                    $last_name = array_pop($pieces);
+                                                @endphp
+                                                <p class="m-0">{{$last_name}}</p>
+                                            @endif
                                         </a>
                                         <p class="m-0">{{ $leaderBoard[0]->score }} points</p>
                                     </div>
@@ -524,7 +540,15 @@
                                     </div>
                                     <div class="content">
                                         <a href="{{ url('t')}}/{{ $leaderBoard[2]['user']->username }}">
-                                            <p class="m-0">{{ str_limit(strip_tags($leaderBoard[2]['user']->name), 16) }}</p>
+                                            @if(strlen($leaderBoard[2]['user']->name) < 15)
+                                            <p class="m-0">{{$leaderBoard[2]['user']->name}}</p>
+                                            @else
+                                                @php
+                                                    $pieces = explode(' ', $leaderBoard[2]['user']->name);
+                                                    $last_name = array_pop($pieces);
+                                                @endphp
+                                                <p class="m-0">{{$last_name}}</p>
+                                            @endif
                                         </a>
                                         <p class="m-0">{{ $leaderBoard[2]->score }} points</p>
                                     </div>
@@ -566,7 +590,15 @@
                                     </div>
                                     <div class="content">
                                         <a href="{{ url('t')}}/{{ $courseleaderBoard[1]['user']->username }}">
-                                            <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[1]['user']->name), 16) }}</p>
+                                            @if(strlen($courseleaderBoard[1]['user']->name) < 15)
+                                            <p class="m-0">{{$courseleaderBoard[1]['user']->name}}</p>
+                                            @else
+                                                @php
+                                                    $pieces = explode(' ', $courseleaderBoard[1]['user']->name);
+                                                    $last_name = array_pop($pieces);
+                                                @endphp
+                                                <p class="m-0">{{$last_name}}</p>
+                                            @endif
                                         </a>
                                         <p class="m-0">{{ $courseleaderBoard[1]->score }} points</p>
                                     </div>
@@ -583,7 +615,15 @@
                                     </div>
                                     <div class="content">
                                         <a href="{{ url('t')}}/{{ $courseleaderBoard[0]['user']->username }}">
-                                            <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[0]['user']->name), 16) }}</p>
+                                            @if(strlen($courseleaderBoard[0]['user']->name) < 15)
+                                            <p class="m-0">{{$courseleaderBoard[0]['user']->name}}</p>
+                                            @else
+                                                @php
+                                                    $pieces = explode(' ', $courseleaderBoard[0]['user']->name);
+                                                    $last_name = array_pop($pieces);
+                                                @endphp
+                                                <p class="m-0">{{$last_name}}</p>
+                                            @endif
                                         </a>
                                         <p class="m-0">{{ $courseleaderBoard[0]->score }} points</p>
                                     </div>
@@ -599,7 +639,15 @@
                                     </div>
                                     <div class="content">
                                         <a href="{{ url('t')}}/{{ $courseleaderBoard[2]['user']->username }}">
-                                            <p class="m-0">{{ str_limit(strip_tags($courseleaderBoard[2]['user']->name), 16) }}</p>
+                                            @if(strlen($courseleaderBoard[2]['user']->name) < 15)
+                                            <p class="m-0">{{$courseleaderBoard[2]['user']->name}}</p>
+                                            @else
+                                                @php
+                                                    $pieces = explode(' ', $courseleaderBoard[2]['user']->name);
+                                                    $last_name = array_pop($pieces);
+                                                @endphp
+                                                <p class="m-0">{{$last_name}}</p>
+                                            @endif
                                         </a>
                                         <p class="m-0">{{ $courseleaderBoard[2]->score }} points</p>
                                     </div>
@@ -641,9 +689,17 @@
                                     </div>
                                     <div class="content">
                                         <a href="{{ url('t')}}/{{ $resourceleaderBoard[1]['user']->username }}">
-                                            <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[1]['user']->name), 16) }}</p>
+                                            @if(strlen($resourceleaderBoard[1]['user']->name) < 15)
+                                            <p class="m-0">{{$resourceleaderBoard[1]['user']->name}}</p>
+                                            @else
+                                                @php
+                                                    $pieces = explode(' ', $resourceleaderBoard[1]['user']->name);
+                                                    $last_name = array_pop($pieces);
+                                                @endphp
+                                                <p class="m-0">{{$last_name}}</p>
+                                            @endif
                                         </a>
-                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[1]->score }}</p>
+                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[1]->score }} ({{$resourceleaderBoard[1]->no_of_review}})</p>
                                     </div>
                                 </div>
                                 <div class="first top-3-card">
@@ -658,9 +714,17 @@
                                     </div>
                                     <div class="content">
                                         <a href="{{ url('t')}}/{{ $resourceleaderBoard[0]['user']->username }}">
-                                            <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[0]['user']->name), 16) }}</p>
+                                            @if(strlen($resourceleaderBoard[0]['user']->name) < 15)
+                                            <p class="m-0">{{$resourceleaderBoard[0]['user']->name}}</p>
+                                            @else
+                                                @php
+                                                    $pieces = explode(' ', $resourceleaderBoard[0]['user']->name);
+                                                    $last_name = array_pop($pieces);
+                                                @endphp
+                                                <p class="m-0">{{$last_name}}</p>
+                                            @endif
                                         </a>
-                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[0]->score }}</p>
+                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[0]->score }} ({{$resourceleaderBoard[0]->no_of_review}})</p>
                                     </div>
                                 </div>
                                 <div class="third top-3-card">
@@ -674,9 +738,17 @@
                                     </div>
                                     <div class="content">
                                         <a href="{{ url('t')}}/{{ $resourceleaderBoard[2]['user']->username }}">
-                                            <p class="m-0">{{ str_limit(strip_tags($resourceleaderBoard[2]['user']->name), 16) }}</p>
+                                            @if(strlen($resourceleaderBoard[2]['user']->name) < 15)
+                                            <p class="m-0">{{$resourceleaderBoard[2]['user']->name}}</p>
+                                            @else
+                                                @php
+                                                    $pieces = explode(' ', $resourceleaderBoard[2]['user']->name);
+                                                    $last_name = array_pop($pieces);
+                                                @endphp
+                                                <p class="m-0">{{$last_name}}</p>
+                                            @endif
                                         </a>
-                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[2]->score }}</p>
+                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[2]->score }} ({{$resourceleaderBoard[2]->no_of_review}})</p>
                                     </div>
                                 </div>
                             </div>
@@ -695,7 +767,7 @@
                                             @endif
                                         </div>
                                         <div class="name">{{ $leader['user']->name }}</div>
-                                        <div class="points"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{$leader->score}}</div>
+                                        <div class="points"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{$leader->score}} ({{$leader->no_of_review}})</div>
                                         </a>
                                     </li>
 

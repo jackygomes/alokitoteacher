@@ -76,8 +76,8 @@
                                     </div>
                                 </div>
                                 <div class="text-dark">
-                                    @for($i = 0; $i < 5; $i++)
-                                        @if(round($resource->ratingCount->avg('rating')) - $i > 0)
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($resource->ratingCount->avg('rating') - $i >= 0)
                                             <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
                                         @else
                                             <i class="far fa-star text-light-dark"></i>
@@ -126,7 +126,7 @@
 
 
     <div class="container">
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-sm-12">
                 {{$resource_info->links()}}
             </div>

@@ -214,11 +214,11 @@
 
       </div>
       <div class="modal-body text-center">
-        You can not retake this toolkits.
+        You can not retake this Course.
 
       </div>
       <div class="modal-footer">
-        <a class="btn background-yellow float-right" href="{{ url('all') }}">See All Courses/Toolkits</a>
+        <a class="btn background-yellow float-right" href="{{ url('all') }}">See All Courses</a>
       </div>
     </div>
   </div>

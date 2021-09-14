@@ -13,17 +13,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Course;
-use App\CourseLeaderBoards;
+use App\CourseLeaderBoard;
 use App\Toolkit;
 use App\EmailSubscriber;
-use App\ResourceLeaderBoards;
+use App\ResourceLeaderBoard;
 
 class HomeController extends Controller
 {
 
 	function index(){
-        
-    
         $course_info = DB::table('users')
 						->rightJoin('courses', 'users.id', '=','courses.user_id')
 						->leftJoin('course_ratings', 'courses.id', '=', 'course_ratings.course_id')
@@ -77,8 +75,8 @@ class HomeController extends Controller
 		$stat = TeacherStudentCount::find(1);
 
         $leaderBoard = LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
-        $courseleaderBoard = CourseLeaderBoards::orderby('position', 'asc')->with('user')->limit(10)->get();
-        $resourceleaderBoard = ResourceLeaderBoards::orderby('position', 'asc')->with('user')->limit(10)->get();
+        $courseleaderBoard = CourseLeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
+        $resourceleaderBoard = ResourceLeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
 
 //        return $leaderBoard;
 	    return view ('home',compact('course_info','toolkit_info', 'users','stat','leaderBoard', 'resources', 'courseleaderBoard', 'resourceleaderBoard'));

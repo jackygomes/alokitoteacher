@@ -75,6 +75,7 @@
                      @if(isset($infoAdvisors) && count($infoAdvisors))
                      @foreach($infoAdvisors as $advisor)
                          <div class="col-lg-4 pb-3">
+                            <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$advisor->id}}">
                              <div class="card text-center">
                                  <div class="card-header">
                                      <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$advisor->image}}">
@@ -85,9 +86,10 @@
                                          @if(strlen($advisor->description) < 40) {!! nl2br(e($advisor->description)) !!}
                                          @else
                                              {!! nl2br(e(substr($advisor->description,0,40))).'...' !!}
-                                             <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$advisor->id}}">
-                                                 Read More
-                                             </a>
+                                             
+                                                 
+                                             
+                                             <span class="text-yellow">Read More</span>
                                              <!-- Modal -->
                                              <div class="modal fade" id="advisorModal_{{$advisor->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -115,6 +117,7 @@
                                      {{$advisor->type}}
                                  </div>
                              </div>
+                             </a>
                          </div>
                     @endforeach
                     @else
@@ -125,6 +128,7 @@
                      @if(isset($infoDesigners) && count($infoDesigners))
                      @foreach($infoDesigners as $Designer)
                          <div class="col-lg-4 pb-3">
+                            <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$Designer->id}}">
                              <div class="card text-center">
                                  <div class="card-header">
                                      <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$Designer->image}}">
@@ -135,9 +139,10 @@
                                          @if(strlen($Designer->description) < 40) {!! nl2br(e($Designer->description)) !!}
                                          @else
                                              {!! nl2br(e(substr($Designer->description,0,40))).'...' !!}
-                                             <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$Designer->id}}">
-                                                 Read More
-                                             </a>
+                                             
+                                                 
+                                             
+                                             <span class="text-yellow">Read More</span>
                                              <!-- Modal -->
                                              <div class="modal fade" id="advisorModal_{{$Designer->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -165,6 +170,7 @@
                                      {{$Designer->type}}
                                  </div>
                              </div>
+                             </a>
                          </div>
                      @endforeach
                      @else
@@ -175,6 +181,7 @@
                      @if(isset($infoFacilitators) && count($infoFacilitators))
                      @foreach($infoFacilitators as $Facilitators)
                          <div class="col-lg-4 pb-3">
+                            <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$Facilitators->id}}">
                              <div class="card text-center">
                                  <div class="card-header">
                                      <img class="img-fluid rounded-circle" style="max-height: 50px;" src="{{ url('images/course_activist_image') }}/{{$Facilitators->image}}">
@@ -185,9 +192,7 @@
                                          @if(strlen($Facilitators->description) < 40) {!! nl2br(e($Facilitators->description)) !!}
                                          @else
                                              {!! nl2br(e(substr($Facilitators->description,0,40))).'...' !!}
-                                             <a href="#" class="" data-toggle="modal" data-target="#advisorModal_{{$Facilitators->id}}">
-                                                 Read More
-                                             </a>
+                                                 <span class="text-yellow">Read More</span>
                                              <!-- Modal -->
                                              <div class="modal fade" id="advisorModal_{{$Facilitators->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -214,6 +219,7 @@
                                 <div class="card-footer text-muted">
                                  {{$Facilitators->type}}
                                 </div>
+                            </a>
                             </div>
                          </div>
                      @endforeach

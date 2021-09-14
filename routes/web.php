@@ -264,12 +264,12 @@ Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
     Route::post('/store', 'BlogController@store')->name('store');
     Route::get('/edit/{id}', 'BlogController@edit')->name('edit');
     Route::post('/update', 'BlogController@update')->name('update');
-    Route::get('/delete/{id}', 'BlogController@delete')->name('delete');
+    Route::get('/delete/{id}', 'BlogController@destroy')->name('delete');
 });
 
 // User
-Route::group(['prefix' => 'blogs', 'as' => 'blogs.'], function () {
-    Route::get('/', 'BlogController@list')->name('index');
-    Route::get('/blog/{slug}', 'BlogController@blogSingle')->name('single');
+Route::group(['prefix' => 'blog', 'as' => 'blogs.'], function () {
+    Route::get('/list', 'BlogController@list')->name('index');
+    Route::get('/{slug}', 'BlogController@blogSingle')->name('single');
     Route::post('/comment', 'BlogController@comment')->name('comment');
 });

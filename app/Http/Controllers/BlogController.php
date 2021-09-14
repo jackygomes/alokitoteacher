@@ -60,7 +60,7 @@ class BlogController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if (isset($user_info) && ($user_info->identifier != 101)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
             return abort(404);
         }
 
@@ -139,8 +139,8 @@ class BlogController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-
-        if (isset($user_info) && ($user_info->identifier != 101)) {
+        
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
             return abort(404);
         }
 
@@ -149,7 +149,6 @@ class BlogController extends Controller
                 'name' => 'required',
                 'short_description' => 'required',
                 'content' => 'required',
-                'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
             ]);
 
             $oldData = Blog::find($request->id);
@@ -183,7 +182,7 @@ class BlogController extends Controller
                 $blogData
             );
 
-            if ($success) return redirect()->route('blog.index')->with(['success' => 'Blog Saved Successfully!']);
+            if ($success) return redirect()->route('blog.index')->with(['success' => 'Blog Updated Successfully!']);
             else return redirect()->route('blog.index')->with(['error' => 'Something went wrong!']);
         } catch (\Exception $e) {
             return response()->json([
@@ -219,8 +218,21 @@ class BlogController extends Controller
 
     public function list()
     {
-        $blogs = Blog::with('likes')->with('comments')->where('status', 'Enabled')->paginate(10);
-        return view('blog.list', compact('blogs'));
+        // $topBlogs = Blog::with('likes')->with('comments')->where('status', 'Enabled')->limit(3)->get();
+        $topBlogs = Blog::with('likes')->with('comments')
+                    ->select('*')->selectSub(function ($q) {
+                        $q->from('likes')
+                            ->whereRaw('likes.model_id = blogs.id')
+                            ->selectRaw('count(*)');
+                    }, 'likes_count')
+                    ->where('status', 'Enabled')
+                    ->orderBy('likes_count', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->take(3)
+                    ->get();
+        $blogs = Blog::with('likes')->with('comments')->where('status', 'Enabled')->orderBy('created_at', 'desc')->paginate(9);
+        
+        return view('blog.list', compact('blogs', 'topBlogs'));
     }
 
     public function blogSingle(Request $request)

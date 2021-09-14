@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Job;
 use App\Course;
+use App\ResourceRating;
 
 class AdminController extends Controller
 {
@@ -72,7 +73,7 @@ class AdminController extends Controller
         if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
             return abort(404);
         }
-        $resources = Resource::where('deleted', 0)->paginate(10);
+        $resources = Resource::where('deleted', 0)->get();
 
         $revenue = Revenue::all()->sum('revenue');
 
@@ -232,7 +233,9 @@ class AdminController extends Controller
         $revenue = Revenue::all()->sum('revenue');
         $histories = Order::where('product_type', 'resource')->where('status', 'paid')->where('product_id', $id)->get();
 
-        return view('resource.admin_view', compact('user_info', 'revenue', 'histories'));
+        $ratingUsers = ResourceRating::where('resource_id', $id)->get();
+
+        return view('resource.admin_view', compact('user_info', 'revenue', 'histories', 'ratingUsers'));
     }
 
     /**

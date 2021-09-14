@@ -15,6 +15,7 @@
 {{--    @endif--}}
       <div class="container-fluid ">
 
+      @if($user_info->id == Auth::id())
         <div class="row">
           <div class="col-md-12">
               <a href="{{route('teacher.job.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
@@ -22,6 +23,7 @@
               </a>
           </div>
         </div>
+      @endif
         @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}
@@ -109,22 +111,25 @@
             <div id="exploreResource" class="owl-carousel card-slider">
                 @foreach ($resources as $resource)
                     <div class="item mt-3 mb-5">
-                        <a href="{{ url('overview') }}/r/{{$resource->slug}}">
-                            <div class="card">
-                                <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
-                                <div class="card-body">
-                                    @if(strlen($resource->resource_title) < 26)
-                                        <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($resource->resource_title), 26) }}</p>
-                                    @else
-                                        <div class="ticker-wrap">
-                                            <div class="ticker">
-                                                <div class="ticker__item card-title text-dark font-weight-bold mb-0">
-                                                    {{$resource->resource_title}}</div>
-                                            </div>
+                        <div class="card">
+                            <a href="{{ url('overview') }}/r/{{$resource->slug}}">
+                              <img src="{{url('images\thumbnail')}}\{{ $resource->thumbnail }}" style="height: 262px;" class="card-img-top">
+                            </a>
+                            <div class="card-body">
+                            <a href="{{ url('overview') }}/r/{{$resource->slug}}">
+                                @if(strlen($resource->resource_title) < 26)
+                                    <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($resource->resource_title), 26) }}</p>
+                                @else
+                                    <div class="ticker-wrap">
+                                        <div class="ticker">
+                                            <div class="ticker__item card-title text-dark font-weight-bold mb-0">
+                                                {{$resource->resource_title}}</div>
                                         </div>
-                                    @endif
-                                    <hr>
-                                    <div class="text-dark">
+                                    </div>
+                                @endif
+                            </a>
+                            <hr>
+                            <div class="text-dark">
 {{--                                        @for($i = 1; $i <= 5; $i++)--}}
 {{--                                            @if($resources->rating - $i >= 0)--}}
 {{--                                                <i class="fa fa-star checked-yellow" aria-hidden="true"></i>--}}
@@ -132,34 +137,34 @@
 {{--                                                <i class="far fa-star text-light-dark"></i>--}}
 {{--                                            @endif--}}
 {{--                                        @endfor--}}
-                                      <span class="text-success font-weight-bold">
-                                      @if($resource->isBought == 1)
-                                              Owned
-                                          @else
-                                              @if($resource->price == 0)
-                                                  Free
-                                              @else
-                                                  {{ round($resource->price, 2)}} BDT
-                                              @endif
-                                          @endif
-                                        </span>
-                                      </div>
-                                      <div >
-                                      @if($user_info->id == Auth::id())
-                                      <hr>
-                                        <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">
-                                            <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
-                                            <input class="btn btn-danger btn-sm" onclick="resourceDeleteConfirm({{$resource->id}})" type="button" value="Remove" />
-                                            <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
-                                            @method('delete')
-                                            @csrf
-                                        </form>
-                                      </div>
+                              <span class="text-success font-weight-bold">
+                              @if($resource->isBought == 1)
+                                      Owned
+                                  @else
+                                      @if($resource->price == 0)
+                                          Free
+                                      @else
+                                          {{ round($resource->price, 2)}} BDT
                                       @endif
-
-                                </div>
+                                  @endif
+                                </span>
+                              </div>
+                              <div >
+                              @if($user_info->id == Auth::id())
+                              <hr>
+                                <form id="resourceDeleteForm_{{$resource->id}}" action="{{ route('resource.delete', ['id' => $resource->id]) }}" method="post">
+                                    @if($resource->status != "Approved")
+                                      <a href="{{route('resource.edit',$resource->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                                    @endif
+                                    <input class="btn btn-danger btn-sm" onclick="resourceDeleteConfirm({{$resource->id}})" type="button" value="Remove" />
+                                    <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Remove" />
+                                    @method('delete')
+                                    @csrf
+                                </form>
+                                @endif
+                              </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                   @endforeach
               </div>
