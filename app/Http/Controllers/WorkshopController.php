@@ -183,7 +183,12 @@ class WorkshopController extends Controller
         $content_rating = DB::table('workshop_ratings')
             ->where('workshop_id', '=', $workshop->id)
             ->avg('rating');
-        $thumbnailPart = '<div class="video-content embed-responsive embed-responsive-16by9 "><iframe src="' . $workshop->preview_video . '" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div>';
+        if ($workshop->preview_video) {
+            $thumbnailPart = '<div class="video-content embed-responsive embed-responsive-16by9 "><iframe src="' . $workshop->preview_video . '" width="1150" height="650" frameborder="0" allow="autoplay;   fullscreen" allowfullscreen></iframe></div>';
+        } else {
+            $thumbnailPart = false;
+        }
+
 
         return view('workshop.overview', compact('workshop', 'thumbnailPart', 'content_rating'));
     }
