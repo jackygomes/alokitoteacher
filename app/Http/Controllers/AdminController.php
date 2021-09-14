@@ -55,7 +55,7 @@ class AdminController extends Controller
             return abort(404);
         }
 
-        $courses = Course::where('deleted', 0)->paginate(10);
+        $courses = Course::where('deleted', 0)->get();
         $toolkits = Toolkit::with('subject')->where('deleted', 0)->paginate(10);
         $resources = Resource::where('deleted', 0)->paginate(10);
 

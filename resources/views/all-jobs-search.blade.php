@@ -34,9 +34,9 @@
 
                                     <span class="label-image"><img class="img-fluid" src="{{asset('images/new_design/salary.png')}}"></span><span class="text-dark"> {{ $v_job_info->expected_salary_range }}</span><br>
 
-                                    {{--												<span class="font-weight-bold">Type:</span><span>@if($featuredJob->nature == 1) Permanent @elseif($featuredJob->nature == 2) Part-Time  @elseif($featuredJob->nature == 3) Contractual @else - @endif</span><br>--}}
+                                    {{--												<span class="font-weight-bold">Type:</span><span></span><br>--}}
 
-                                    {{--												<span class="font-weight-bold">Vacancy:</span><span> {{ $featuredJob->vacancy }}</span><br>--}}
+                                    {{--												<span class="font-weight-bold">Vacancy:</span><span> </span><br>--}}
 
                                     <p class="ma-0 description">{{ str_limit(strip_tags($v_job_info->description), 150) }}</p>
 
@@ -61,7 +61,7 @@
                                         @if(Auth::check())
                                             @if(Auth::user()->identifier != 101 && Auth::user()->identifier != 2 && Auth::user()->identifier != 104)
                                                 @if($v_job_info->isApplied == 0)
-                                                    <button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$featuredJob->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
+                                                    <button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
                                                 @else
                                                     <button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" disabled>Applied</button>
                                                 @endif
