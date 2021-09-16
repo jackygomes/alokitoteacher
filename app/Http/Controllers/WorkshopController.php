@@ -178,7 +178,6 @@ class WorkshopController extends Controller
 
     public function overview($slug)
     {
-
         $workshop = Workshop::where('slug', $slug)->first();
         $content_rating = DB::table('workshop_ratings')
             ->where('workshop_id', '=', $workshop->id)
@@ -189,8 +188,35 @@ class WorkshopController extends Controller
             $thumbnailPart = false;
         }
 
-
-        return view('workshop.overview', compact('workshop', 'thumbnailPart', 'content_rating'));
+        $formData = WorkshopRegistration::where('user_id', auth()->user()->id)->first();
+        if ($formData) $formData->toarray();
+        else {
+            $userData = auth()->user();
+            $formData = [
+                'name' => $userData->name,
+                'email' => $userData->email,
+                'phone' => $userData->phone,
+                'gender' => $userData->gender,
+                "dob" => "",
+                "institution" => "",
+                "passing_year" => "",
+                "subject" => "",
+                "education_level" => "",
+                "is_teacher" => "",
+                "years_teaching" => "",
+                "teaching_institution" => "",
+                "school_type" => "",
+                "previous_training" => "",
+                "training_programs" => "",
+                "online_workshop" => "",
+                "ambassador" => "",
+                "ambassador_ref" => "",
+                "lead" => ""
+            ];
+        }
+        $alreadyRegistered = WorkshopRegistration::where('workshop_id', $workshop->id)->where('user_id', auth()->user()->id)->count();
+        $ratingGiven = WorkshopRating::where('workshop_id', $workshop->id)->where('user_id', auth()->user()->id)->count();
+        return view('workshop.overview', compact('workshop', 'thumbnailPart', 'content_rating', 'formData', 'alreadyRegistered', 'ratingGiven'));
     }
 
     private function generateRandomString($length = 10)
