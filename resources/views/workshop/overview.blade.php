@@ -131,11 +131,11 @@
             
 
             {{-- <p class="mt-2">Total enrolled: {{$histories->count()}}</p> --}}
-
-            @if(isset($content_rating))
-            <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal" disabled>Rate this Workshop</button>
-            @else
+            @if($alreadyRegistered && !$ratingGiven)
             <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal">Rate this Workshop</button>
+            
+            @else
+            <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal" disabled>Rate this Workshop</button>
             @endif
         </div>
         </div>
@@ -169,14 +169,14 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Rate This Innovation</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Rate This Workshop</h5>
 
       </div>
       <div class="modal-body text-center">
         <form method="POST" action="{{ route('workshops.rate') }}">
             {{csrf_field()}}
             <input type="hidden" name="workshop_id" value="{{$workshop->id}}">
-            <label for="">Innovation rating</label>
+            <label for="">Workshop rating</label>
             <div class="rating mb-3">
                 <label>
                     <input type="radio" name="workshopRating" class="d-none" value="5" title="5 stars" required>
@@ -217,21 +217,21 @@
 
             <div class="modal-body" id="modalBody">
 
-                <form id="jobPost" action="{{ route('workshops.register') }}" method="POST" class="mb-5">
+                <form id="jobPost" action="{{ route('workshops.register') }}" method="POST" class="mb-5" name="jobPost">
                     @csrf
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>Name<span class="text-danger font-weight-bold"> *</span>:</label>
                             <input type="hidden" name="id" value="{{Auth::user()->id}}">
                             <input type="hidden" name="workshop_id" value="{{$workshop->id}}">
-                            <input id="title" type="text" class="form-control border-yellow" name="name" placeholder="Name" required>
+                            <input id="title" type="text" class="form-control border-yellow" value="{{$formData ? $formData['name'] : ''}}" name="name" placeholder="Name" required>
                         </div>
                     </div>
 
                     <div class="form-row mt-1">
                         <div class="col-md-12 mb-5">
                             <label>Gender<span class="text-danger font-weight-bold"> *</span>:</label>
-                            <select class="form-control border-yellow" name="gender" required>
+                            <select class="form-control border-yellow" name="gender" id="gender" required>
                                 <option value="" disabled selected>-- Select Prefered Gender --</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -243,7 +243,7 @@
                     <div class="form-row mt-1">
                         <div class="col-md-12 mb-5">
                             <label>Date of Birth<span class="text-danger font-weight-bold"> *</span>:</label>
-                            <input id="dob" type="date" class="form-control border-yellow" name="dob" required>
+                            <input  value="{{$formData ? $formData['dob'] : ''}}" id="dob" type="date" class="form-control border-yellow" name="dob" required>
                         </div>
 
                     </div>
@@ -251,52 +251,49 @@
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>Phone<span class="text-danger font-weight-bold"> *</span>:</label>
-                            <input id="phone" type="text" class="form-control border-yellow" name="phone" placeholder="Phone" required>
+                            <input  value="{{$formData ? $formData['phone'] : ''}}" id="phone" type="text" class="form-control border-yellow" name="phone" placeholder="Phone" required>
                         </div>
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>Email<span class="text-danger font-weight-bold"> *</span>:</label>
-                            <input id="email" type="email" class="form-control border-yellow" name="email" placeholder="Email" required>
+                            <input value="{{$formData ?  $formData['email'] : ''}}" id="email" type="email" class="form-control border-yellow" name="email" placeholder="Email" required>
                         </div>
                     </div>
-
-
-
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>From which institution have you completed your Bachelor's Degree?<span class="text-danger font-weight-bold"> *</span></label>
-                            <input id="institution" type="text" class="form-control border-yellow" name="institution" placeholder="From which institution have you completed your Bachelor's Degree?" required>
+                            <input value="{{$formData ? $formData['institution'] : ''}}" id="institution" type="text" class="form-control border-yellow" name="institution" placeholder="From which institution have you completed your Bachelor's Degree?" required>
                         </div>
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>In which year have you completed your Bachelor's Degree?<span class="text-danger font-weight-bold"> *</span></label>
-                            <input id="passing_year" type="text" class="form-control border-yellow" name="passing_year" placeholder="In which year have you completed your Bachelor's Degree?" required>
+                            <input value="{{$formData ? $formData['passing_year'] : ''}}" id="passing_year" type="text" class="form-control border-yellow" name="passing_year" placeholder="In which year have you completed your Bachelor's Degree?" required>
                         </div>
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>In which subject have you completed your Bachelor's Degree?<span class="text-danger font-weight-bold"> *</span></label>
-                            <input id="subject" type="text" class="form-control border-yellow" name="subject" placeholder="In which subject have you completed your Bachelor's Degree?" required>
+                            <input value="{{$formData ? $formData['subject'] : ''}}" id="subject" type="text" class="form-control border-yellow" name="subject" placeholder="In which subject have you completed your Bachelor's Degree?" required>
                         </div>
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>What is your highest level of education?<span class="text-danger font-weight-bold"> *</span></label>
-                            <input id="education_level" type="text" class="form-control border-yellow" name="education_level" placeholder="What is your highest level of education?" required>
+                            <input value="{{$formData ? $formData['education_level'] : ''}}" id="education_level" type="text" class="form-control border-yellow" name="education_level" placeholder="What is your highest level of education?" required>
                         </div>
                     </div>
 
                     <div class="form-row mt-1">
                         <div class="col-md-12 mb-5">
                             <label>Are you a teacher?<span class="text-danger font-weight-bold"> *</span></label>
-                            <select class="form-control border-yellow" name="is_teacher" required>
+                            <select class="form-control border-yellow" name="is_teacher" id="is_teacher" required>
                                 <option value="" disabled selected>-- Select --</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
@@ -307,14 +304,14 @@
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>For how many years are you in teaching profession?<span class="text-danger font-weight-bold"> *</span></label>
-                            <input id="years_teaching" type="text" class="form-control border-yellow" name="years_teaching" placeholder="For how many years are you in teaching profession?" required>
+                            <input value="{{$formData ? $formData['years_teaching'] : ''}}" id="years_teaching" type="text" class="form-control border-yellow" name="years_teaching" placeholder="For how many years are you in teaching profession?" required>
                         </div>
                     </div>
 
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>In which institution are you teaching?<span class="text-danger font-weight-bold"> *</span></label>
-                            <input id="teaching_institution" type="text" class="form-control border-yellow" name="teaching_institution" placeholder="In which institution are you teaching?" required>
+                            <input value="{{$formData ? $formData['teaching_institution'] : ''}}" id="teaching_institution" type="text" class="form-control border-yellow" name="teaching_institution" placeholder="In which institution are you teaching?" required>
                         </div>
                     </div>
 
@@ -388,13 +385,13 @@
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>Mention the training programs you have attended</label>
-                            <input id="phone" type="text" class="form-control border-yellow" name="training_programs" placeholder="Mention the training programs you have attended">
+                            <input value="{{$formData ? $formData['training_programs'] : ''}}" id="training_programs" type="text" class="form-control border-yellow" name="training_programs" placeholder="Mention the training programs you have attended">
                         </div>
                     </div>
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>Mention a topic that you want us to cover in our next online workshop<span class="text-danger font-weight-bold"> *</span></label>
-                            <input id="phone" type="text" class="form-control border-yellow" name="online_workshop" placeholder="Mention a topic that you want us to cover in our next online workshop" required>
+                            <input value="{{$formData ? $formData['online_workshop'] : ''}}" id="online_workshop" type="text" class="form-control border-yellow" name="online_workshop" placeholder="Mention a topic that you want us to cover in our next online workshop" required>
                         </div>
                     </div>
                     <div class="form-row mt-1">
@@ -410,7 +407,7 @@
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>Reference of the teacher ambassador (Alokito Teachers) (if any)</label>
-                            <input id="phone" type="text" class="form-control border-yellow" name="ambassador_ref" placeholder="Reference of the teacher ambassador (Alokito Teachers) (if any)">
+                            <input id="ambassador_ref" value="{{$formData ? $formData['ambassador_ref'] : ''}}" type="text" class="form-control border-yellow" name="ambassador_ref" placeholder="Reference of the teacher ambassador (Alokito Teachers) (if any)">
                         </div>
                     </div>
                     <div class="form-row mt-1">
@@ -469,6 +466,16 @@
         $('.rating .selected').removeClass('selected');
         $radio.closest('label').addClass('selected');
     });
+</script>
+
+<script>
+    document.forms['jobPost'].elements['gender'].value=`{{$formData['gender']}}`;
+    document.forms['jobPost'].elements['is_teacher'].value=`{{$formData['is_teacher']}}`;
+    document.forms['jobPost'].elements['school_type'].value=`{{$formData['school_type']}}`;
+    document.forms['jobPost'].elements['previous_training'].value=`{{$formData['previous_training']}}`;
+    document.forms['jobPost'].elements['ambassador'].value=`{{$formData['ambassador']}}`;
+    document.forms['jobPost'].elements['lead'].value=`{{$formData['lead']}}`;
+    
 </script>
 
 @endpush
