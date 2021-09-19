@@ -166,10 +166,12 @@ class AdminController extends Controller
         $this->validate($request, [
             'teacher' => 'required',
             'future_number' => 'required',
+            'courses_number' => 'required',
         ]);
         $stat = TeacherStudentCount::find($id);
         $stat->teacher = $request->teacher;
         $stat->future_number = $request->future_number;
+        $stat->courses_number = $request->courses_number;
 
         $stat->save();
 

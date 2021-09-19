@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Blog;
 use App\CourseVideo;
 use App\LeaderBoard;
 use App\Order;
@@ -61,6 +62,7 @@ class HomeController extends Controller
         }
 
        $resources = Resource::with('user')->with('ratingCount')->limit(10)->where('deleted',0)->where('status', '=', 'Approved')->orderBy('created_at', 'desc')->get();
+       $blogs = Blog::with('likes')->with('comments')->where('status', 'Enabled')->orderBy('created_at', 'desc')->paginate(9);
 
         foreach($resources as $resource){
             $isOrdered = Order::where('status', 'paid')
@@ -79,7 +81,7 @@ class HomeController extends Controller
         $resourceleaderBoard = ResourceLeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
 
 //        return $leaderBoard;
-	    return view ('home',compact('course_info','toolkit_info', 'users','stat','leaderBoard', 'resources', 'courseleaderBoard', 'resourceleaderBoard'));
+	    return view ('home',compact('course_info','toolkit_info', 'users','stat','leaderBoard', 'resources', 'courseleaderBoard', 'resourceleaderBoard', 'blogs'));
 	}
 
 	function email_subscribe(Request $request){

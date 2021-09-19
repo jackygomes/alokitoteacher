@@ -110,6 +110,7 @@
                                                     <br>
                                                     <p class="ma-0 text-dark">Deadline: {{ date("jS M, Y", strtotime($featuredJob->deadline)) }}</p>
 
+													<div class="button-section">
                                                     @if(Auth::check())
                                                         @if(Auth::user()->identifier != 101 && Auth::user()->identifier != 2 && Auth::user()->identifier != 104)
                                                             @if($featuredJob->isApplied == 0)
@@ -119,7 +120,7 @@
                                                             @endif
                                                         @endif
                                                     @endif
-                                                    <div class="button-section">
+                                                    
                                                         <a href="{{ url('job_detail') }}/{{ $featuredJob->job_id }}" class="btn background-yellow text-white">View Job</a>
                                                     </div>
                                                 </div>

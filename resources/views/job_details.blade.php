@@ -92,7 +92,7 @@
 		</div>
 
 
-	<div class="col-md-8" style="background-color: #f3f2f0;">
+	<div class="col-md-7" style="background-color: #f3f2f0;">
 
 		<div class="container-fluid mt-2">
 			<h3>Job Details</h3>
@@ -335,7 +335,9 @@
 
     </div> <!-- 2nd col ends here -->
 
-		@include('leaderboard')
+		<div class="col-md-3 pt-4" style="background-color: #f3f2f0;">
+            @include('leaderboard')
+        </div>
 
 
     </div><!-- row ends here -->

@@ -56,14 +56,7 @@
                             </div>
 
                             <div class="text-dark">
-                                @for($i = 1; $i <= 5; $i++)
-                                    @if($v_course_info->rating - $i >= 0)
-                                        <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                                    @else
-                                        <i class="far fa-star text-light-dark"></i>
-                                    @endif
-                                @endfor
-                                ({{$v_course_info->rating_count}})
+                            <div class="card-rating"><i class="fa fa-star text-white" aria-hidden="true"></i> <span>{{round($v_course_info->rating, 2)}} ({{$v_course_info->rating_count}})</span></div>
                                 <span class="float-right text-success font-weight-bold">
                                     @if($v_course_info->isBought == 1)
                                         Owned

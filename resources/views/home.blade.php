@@ -24,6 +24,15 @@
     color:#fff;
     opacity:1;
   }
+  .blog-section .blog-card{
+      background-color: #fff;
+      border-radius: 8px;
+  }
+  .blog-section .blog-card .card .card-body{
+      padding-left: 15px;
+      padding-right: 15px;
+  }
+
 </style>
 
 <div class="home-hero-slider">
@@ -161,7 +170,7 @@
                     <img src="{{asset('images/new_design/feature-icon-3.png')}}" alt="">
                 </div>
                 <div>
-                    <h3 class="font-weight-bold">10+</h3>
+                    <h3 class="font-weight-bold">{{$stat->courses_number}}</h3>
                     <p>Courses Created</p>
                 </div>
             </div>
@@ -206,8 +215,8 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h2 class="text-center font-weight-bold">Explore Teaching Courses</h2>
-                <a href="{{ url('course') }}" class="mt-3 btn text-center background-yellow text-white font-weight-bold home-explore-button">Explore More</a>
+            <a href="{{ url('course') }}"><h2 class="text-center font-weight-bold">Explore Teaching Courses</h2></a>
+                <a href="{{ url('course') }}" class="mt-3 btn text-center background-yellow text-white font-weight-bold home-explore-button">View all courses</a>
             </div>
         </div>
         <div class="row">
@@ -250,14 +259,7 @@
                             </div>
 
                             <div class="text-dark">
-                                @for($i = 1; $i <= 5; $i++)
-                                    @if($v_course_info->rating - $i >= 0)
-                                        <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                                    @else
-                                        <i class="far fa-star text-light-dark"></i>
-                                    @endif
-                                @endfor
-                                ({{$v_course_info->rating_count}})
+                                <div class="card-rating"><i class="fa fa-star text-white" aria-hidden="true"></i> <span>{{round($v_course_info->rating, 2)}} ({{$v_course_info->rating_count}})</span></div>
                                 <span class="float-right text-success font-weight-bold">
                                     @if($v_course_info->isBought == 1)
                                         Owned
@@ -360,7 +362,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h2 class="text-center font-weight-bold">Explore Teaching Innovations</h2>
+            <a href="{{ route('allResource') }}"><h2 class="text-center font-weight-bold">Explore Teaching Innovations</h2></a>
                 <a href="{{ route('resource.create') }}" class="btn mt-3 text-center bg-white text-dark font-weight-bold home-explore-button">Submit My Innovation</a>
                 <a href="{{ route('allResource') }}" class="btn mt-3 text-center bg-white text-dark font-weight-bold home-explore-button">View All Innovations</a>
             </div>
@@ -407,14 +409,7 @@
                                     </div>
                                 </div>
                                 <div class="text-dark">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        @if($resource->ratingCount->avg('rating') - $i >= 0)
-                                            <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                                        @else
-                                            <i class="far fa-star text-light-dark"></i>
-                                        @endif
-                                    @endfor
-                                    ({{$resource->ratingCount->count()}})
+                                    <div class="card-rating"><i class="fa fa-star text-white" aria-hidden="true"></i> <span>{{round($resource->ratingCount->avg('rating'), 2)}} ({{$resource->ratingCount->count()}})</span></div>
                                     <span class="float-right text-success font-weight-bold">                                      
                                     @if($resource->isBought == 1)
                                             Owned
@@ -425,7 +420,7 @@
                                                 {{ round($resource->price, 2)}} BDT
                                             @endif
                                         @endif
-                                </span>
+                                    </span>
                                 </div>
 
                             </div>
@@ -456,6 +451,68 @@
     </div>
 </div>
 {{--resource end--}}
+
+{{--blog--}}
+<div class="explore-teaching blog-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2 class="text-center font-weight-bold">Explore Blogs</h2>
+                <a href="{{ route('blogs.index') }}" class="mt-3 btn text-center background-yellow text-white font-weight-bold home-explore-button">View all blogs</a>
+            </div>
+        </div>
+        <div class="row">
+            <div id="exploreBlog" class="owl-carousel card-slider">
+            @foreach ($blogs as $blog)
+                <div class="item mt-5 blog-card">
+                    <div class="card">
+                        <div class="img-wrap">
+                            <a href="{{ route('blogs.single', $blog->slug) }}">
+                                <img src="{{url('images\thumbnail')}}\{{ $blog->thumbnail }}" style="height: 262px;" class="card-img-top">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <a href="{{ route('blogs.single', $blog->slug) }}">
+                                @if(strlen($blog->name) < 26)
+                                    <p class="card-title text-dark font-weight-bold mb-0" style="font-size: 20px">{{ str_limit(strip_tags($blog->name), 26) }}</p>
+                                @else
+                                    <div class="ticker-wrap">
+                                        <div class="ticker">
+                                            <div class="ticker__item card-title text-dark font-weight-bold mb-0">
+                                                {{$blog->name}}</div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </a>
+                            <div class="posted-by mt-2">
+                                <p class="card-text text-light-dark mb-0">By <strong class="text-yellow">{{ str_limit(strip_tags($blog->user->name), 20) }}</strong></p>
+                                <div class="share-button">
+                                    <div><img src="{{asset('images/new_design/main-share.png')}}"> Share</div>
+                                    <div class="share-options">
+                                        <div class="fb-share-button" 
+                                        data-href="{{route('blogs.single', $blog->slug)}}" 
+                                        data-layout="button">
+                                        </div>
+                                        <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                                        <script type="IN/Share" data-url="{{route('blogs.single', $blog->slug)}}"></script>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <ul>
+                                <li>{{sizeof($blog->likes)}} likes</li>
+                                <li>{{sizeof($blog->comments)}} Comments</li>
+                                <!-- <li>5 Shares</li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+{{--blog end--}}
 {{--new design end--}}
 
 <!--Leaderboard Area-->
@@ -920,6 +977,25 @@
         //     }
         // });
         $('#exploreResource').owlCarousel({
+            loop:true,
+            margin:30,
+            nav:true,
+            autoplay:true,
+            autoplayTimeout:2000,
+            autoplayHoverPause:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:3
+                },
+                1000:{
+                    items:3
+                }
+            }
+        });
+        $('#exploreBlog').owlCarousel({
             loop:true,
             margin:30,
             nav:true,

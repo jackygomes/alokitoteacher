@@ -266,6 +266,18 @@ a {
 .card-body {
     overflow: hidden;
 }
+.card-body .card-rating{
+    display: inline-block;
+    background-color: #f59d1f;
+    color: #fff;
+    padding: 2px 8px 4px;
+    border-radius: 4px;
+}
+.card-body .card-rating i{
+    float: left;
+    margin-top: 4px;
+    margin-right: 5px;
+}
 .posted-by p {
     display: inline-block;
 }
@@ -847,4 +859,7 @@ a {
 .comment-section img {
     height: 50px;
     width: 50px;
+}
+.paginate_button.page-item.active .page-link, .page-item.active .page-link{
+    background-color: #F59D1F !important;
 }

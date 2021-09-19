@@ -76,14 +76,7 @@
                                     </div>
                                 </div>
                                 <div class="text-dark">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        @if($resource->ratingCount->avg('rating') - $i >= 0)
-                                            <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                                        @else
-                                            <i class="far fa-star text-light-dark"></i>
-                                        @endif
-                                    @endfor
-                                    ({{$resource->ratingCount->count()}})
+                                <div class="card-rating"><i class="fa fa-star text-white" aria-hidden="true"></i> <span>{{round($resource->ratingCount->avg('rating'), 2)}} ({{$resource->ratingCount->count()}})</span></div>
                                     <span class="float-right text-success font-weight-bold">
                                     @if($resource->isBought == 1)
                                             Owned

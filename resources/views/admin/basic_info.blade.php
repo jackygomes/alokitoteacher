@@ -98,6 +98,13 @@
                                         <input id="student" type="number" class="form-control border-yellow" name="future_number" value="{{$teacher_student_count->future_number}}" required>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label for="course" class="col-md-2 col-form-label text-md-right">Course Number</label>
+
+                                    <div class="col-md-6">
+                                        <input id="course" type="text" class="form-control border-yellow" name="courses_number" value="{{$teacher_student_count->courses_number}}" required>
+                                    </div>
+                                </div>
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-2">
                                         <button type="submit" class="btn background-yellow">

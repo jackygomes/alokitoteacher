@@ -58,16 +58,17 @@
                                         <br>
                                         <p class="ma-0 text-dark">Deadline: {{ date("jS M, Y", strtotime($v_job_info->deadline)) }}</p>
 
+                                        <div class="button-section">
                                         @if(Auth::check())
                                             @if(Auth::user()->identifier != 101 && Auth::user()->identifier != 2 && Auth::user()->identifier != 104)
                                                 @if($v_job_info->isApplied == 0)
-                                                    <button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
+                                                    <button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" onclick="passJobIdToForm({{$v_job_info->job_id}})" data-toggle="modal" data-target="#coverLetterModal">Apply</button>
                                                 @else
                                                     <button type="button" value="{{ $v_job_info->job_id }}" class="btn btn-success applyButton" disabled>Applied</button>
                                                 @endif
                                             @endif
                                         @endif
-                                        <div class="button-section">
+                                        
                                             <a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="btn background-yellow text-white">View Job</a>
                                         </div>
                                     </div>
