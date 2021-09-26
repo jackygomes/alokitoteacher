@@ -38,7 +38,7 @@ class WorkshopController extends Controller
             return abort(404);
         }
         $trainers = CourseActivist::where('type', 'Trainer')->get();
-        return view('workshop.create', compact('user_info', 'users', 'trainers'));
+        return view('workshop.create', compact('user_info', 'trainers'));
     }
 
     public function store(Request $request)
