@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Library\SslCommerz;
 
 abstract class AbstractSslCommerz implements SslCommerzInterface
@@ -93,7 +94,9 @@ abstract class AbstractSslCommerz implements SslCommerzInterface
         } else {
             if (isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL'] != "") {
                 // this is important to show the popup, return or echo to send json response back
-                if(isset($this->getApiUrl()) && $this->getApiUrl() == 'https://securepay.sslcommerz.com') {
+
+                $apiUrl = $this->getApiUrl();
+                if(isset($apiUrl) && $apiUrl == 'https://securepay.sslcommerz.com') {
                    $response = json_encode(['status' => 'SUCCESS', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
                 } else {
                     $response = json_encode(['status' => 'success', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);

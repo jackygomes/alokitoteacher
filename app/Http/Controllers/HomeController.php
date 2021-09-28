@@ -9,6 +9,7 @@ use App\Order;
 use App\Resource;
 use App\TeacherStudentCount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -85,11 +86,23 @@ class HomeController extends Controller
 	}
 
 	function email_subscribe(Request $request){
+
+        $request->validate([
+            'email' => 'required'
+        ]);
+
 		$email_subscribe = new EmailSubscriber;
 		$email_subscribe->email = $request->email;
 		$email_subscribe->save();
 
-		return back()->with('subscribed', 'Successfully Subscribed');
+        $emailText = 'Thanks for subscribing to our newsletter. By signing up to our newsletter, you will be the first to hear about our latest updates and receive exclusive features and promotions straight to your inbox.';
+
+        Mail::raw($emailText, function($email) use ($request) {
+            $email->to($request->email)->subject('Alokito Subscription');
+            $email->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+        });
+
+		return back()->with('subscribed', true);
 
 	}
 }

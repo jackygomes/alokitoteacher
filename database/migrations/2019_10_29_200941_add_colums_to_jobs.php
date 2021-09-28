@@ -19,6 +19,7 @@ class AddColumsToJobs extends Migration
             $table->date('deadline');
             $table->integer('nature');
             $table->integer('vacancy');
+            $table->boolean('removed')->default(0);
         });
     }
 
@@ -30,7 +31,7 @@ class AddColumsToJobs extends Migration
     public function down()
     {
         Schema::table('jobs', function (Blueprint $table) {
-            $table->dropColumn(['educational_requirement', 'age_limit', 'deadline', 'nature', 'vacancy']);
+            $table->dropColumn(['educational_requirement', 'age_limit', 'deadline', 'nature', 'vacancy', 'removed']);
         });
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumsToJobs extends Migration
+class AddGenderToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumsToJobs extends Migration
      */
     public function up()
     {
-        Schema::table('jobs', function (Blueprint $table) {
-            $table->boolean('removed')->default(0);
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('gender')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddColumsToJobs extends Migration
      */
     public function down()
     {
-        Schema::table('jobs', function (Blueprint $table) {
-            $table->dropColumn('removed');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('gender');
         });
     }
 }

@@ -45,7 +45,7 @@ class BlogController extends Controller
             return abort(404);
         }
         $revenue = Revenue::all()->sum('revenue');
-        return view('blog.create', compact('user_info', 'users', 'revenue'));
+        return view('blog.create', compact('user_info', 'revenue'));
     }
 
     /**
@@ -139,7 +139,7 @@ class BlogController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        
+
         if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
             return abort(404);
         }
@@ -231,7 +231,7 @@ class BlogController extends Controller
                     ->take(3)
                     ->get();
         $blogs = Blog::with('likes')->with('comments')->where('status', 'Enabled')->orderBy('created_at', 'desc')->paginate(9);
-        
+
         return view('blog.list', compact('blogs', 'topBlogs'));
     }
 

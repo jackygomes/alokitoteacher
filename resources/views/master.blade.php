@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{URL::asset('css/app.css')}}">
     <link rel="shortcut icon" href="{{URL::asset('favicon.ico')}}">
 
-    
+
     @yield('meta')
 
 
@@ -196,7 +196,7 @@
                             <div class="col-sm-3 col-md-12">
                                 <div class="">
                                     <form action="{{ url('email_subscribe') }}" method="POST">
-                                        <input type="email" name="email" class="form-control" placeholder="Your Email Address">
+                                        <input type="email" name="email" class="form-control" placeholder="Your Email Address" required>
                                         <button type="submit" class="mt-3 btn background-yellow px-4 py-2 shadow font-weight-bold text-white">SUBSCRIBE</button>
 
                                     </form>
@@ -247,6 +247,7 @@
     <script src="{{URL::asset('js/owl.carousel.min.js')}}"></script>
 
     <script src="{{URL::asset('js/custom.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript">
         $('#popover').popover();
@@ -256,6 +257,21 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
+
+        @if(Session::get('subscribed'))
+            $('document').ready(function(){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    iconColor : '#38c172',
+                    title: 'Subscribed to Alokito',
+                    showConfirmButton: false,
+                    timer: 5000,
+                    toast : true
+                })
+            });
+        @endif
+
     </script>
 
     @stack('js')
