@@ -221,6 +221,7 @@ class ResourceController extends Controller
         // $resource->category_id = $request->category;
         $resource->resource_title = $request->resource_name;
         $resource->description = $request->resource_description;
+        $resource->juri_point = $request->juri_point;
         // $resource->price = $request->resource_price;
         $resource->status = $request->status;
         $resource->slug = $slug;

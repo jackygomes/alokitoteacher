@@ -18,7 +18,7 @@ class ContactController extends Controller
 {
    function index(){
 	// 	$userTodeduct = [7,8,14,9,10,12,11,1589,16,577,5,83,13,32];
-	// 	$user = User::where('identifier', '=','1')->where('id', 14)->first();
+		// $user = User::where('identifier', '=','1')->where('id', 14)->first();
 		
 	// 	// foreach ($users as $user) {
 
@@ -77,6 +77,14 @@ class ContactController extends Controller
 	// 	// $leaderboard->save();
 
 	// 	return $leaderboardUser;
+
+		// $resourceleaderboardUsers = ResourceLeaderBoard::orderBy('score', 'desc')->orderBy('no_of_review', 'desc')->get();
+        // $resourcePosition = 0;
+        // foreach($resourceleaderboardUsers as $user){
+        //     $resourcePosition++;
+        //     $user->position = $resourcePosition;
+        //     $user->save();
+        // }
 	
 		return view('contact-us');
 	}

@@ -103,6 +103,14 @@
                                     </div>
                                 </div> -->
 
+                                <div class="form-group row">
+                                    <label for="juri_point" class="col-sm-2 col-form-label">Juri Point:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="juri_point" class="form-control" value="{{$resource->juri_point}}" id="juri_point" placeholder="0">
+                                        <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Enter point between 0 - 60</p>
+                                    </div>
+                                </div>
+
                                 <!-- <div class="form-group row">
                                     <label for="toolkitPrice" class="col-sm-2 col-form-label">Your Earnings</label>
                                     <div class="col-sm-10">
@@ -251,6 +259,16 @@
                         event.preventDefault();
                     }
                 });
+
+                $("#juri_point").keydown(function (event) {
+                    // Allow Only: keyboard 0-9, numpad 0-9, backspace, tab, left arrow, right arrow, delete
+                    if ((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 46) {
+                        // Allow normal operation
+                    } else {
+                        // Prevent the rest
+                        event.preventDefault();
+                    }
+                });
             });
 
             function earnings(){
@@ -269,6 +287,12 @@
                     $("#Price").val(defaultPrice);
                     $('#earnings').val(defaultPriceCut);
                     popupAlertInsufficientBalance();
+                }
+            });
+
+            $("#juri_point").bind('keyup', function () {
+                if($("#juri_point").val() > 60){
+                    $("#juri_point").val(60);
                 }
             });
 
