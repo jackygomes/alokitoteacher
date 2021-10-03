@@ -47,7 +47,7 @@ class WorkshopController extends Controller
             $request->validate([
                 'name' => 'required',
                 // 'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
-                'description' => 'required',
+                // 'description' => 'required',
                 'price' => 'required',
                 'type' => 'required',
                 'duration' => 'required',
@@ -113,7 +113,7 @@ class WorkshopController extends Controller
             $request->validate([
                 'name' => 'required',
                 // 'thumbnail' => 'required',
-                'description' => 'required',
+                // 'description' => 'required',
                 'price' => 'required',
                 'type' => 'required',
                 'duration' => 'required',

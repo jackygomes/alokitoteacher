@@ -60,6 +60,16 @@
                                         @endif
                                     </span> --}}
                                 </div>
+                                <div class="text-dark">
+                                    <div class="card-rating"><i class="fa fa-star text-white" aria-hidden="true"></i> <span>{{round($workshop->rating, 2)}} ({{$workshop->ratingCount}})</span></div>
+                                    <span class="float-right text-success font-weight-bold">
+                                        @if($workshop->price == 0)
+                                            Free
+                                        @else
+                                            {{ round($workshop->price, 2)}} BDT
+                                        @endif
+                                    </span>
+                                </div>
 
                             </div>
                             {{--                            <div class="card-footer" style="background:--}}

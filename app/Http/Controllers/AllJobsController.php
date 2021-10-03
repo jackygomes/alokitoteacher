@@ -25,7 +25,7 @@ class AllJobsController extends Controller
         //        $this->middleware('auth');
         //        $this->middleware('auth')->except(['index']);
         $this->purchaseController = $purchaseController;
-        $this->middleware('auth', ['except' => ['index', 'search_filter']]);
+        $this->middleware('auth', ['except' => ['index', 'search_filter', 'job_detail']]);
     }
 
     function index(Request $request)

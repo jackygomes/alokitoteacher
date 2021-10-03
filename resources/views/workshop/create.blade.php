@@ -78,12 +78,12 @@
                                 <input type="text" name="name" class="form-control" id="name" placeholder="Workshop Name">
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <label for="courseDescription" class="col-sm-2 col-form-label">Workshop Description:</label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" name="description" placeholder="Description" id="description" rows="3"></textarea>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group row">
                             <label for="coursePrice" class="col-sm-2 col-form-label">Workshop Price:</label>
                             <div class="col-sm-10">

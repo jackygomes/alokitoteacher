@@ -1,6 +1,19 @@
 @extends('master')
 @section('content')
-
+<style>
+	.share-button {
+		display: inline-block;
+		margin-left: 4px;
+		position: relative;
+		float: left;
+		margin-right: 20px;
+		padding-top: 6px;
+	}
+	.share-button .share-options {
+		bottom: 0;
+		top: unset;
+	}
+</style>
 
 <div class="container-fluid all-job" style="min-height: 100vh">
 	<div class="row">

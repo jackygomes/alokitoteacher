@@ -38,6 +38,12 @@
             color: #000;
             border-bottom: 2px solid #000;
         }
+        .select2-container  {
+            width: 100% !important;
+        }
+        .select2-selection--multiple {
+            border-color: #f5b82f !important;
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -53,16 +59,16 @@
             @if($thumbnailPart)
             {!! $thumbnailPart !!}
             @else
-            <img src="{{url('images\thumbnail')}}\{{ $workshop->thumbnail }}" style="height: 262px;" class="card-img-top">
+            <img src="{{url('images\thumbnail')}}\{{ $workshop->thumbnail }}" style="" class="card-img-top">
             @endif
 
             <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#about" role="tab" aria-controls="home" aria-selected="true">About this Workshop</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#what" role="tab" aria-controls="profile" aria-selected="false">What you will learn</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" id="home-tab" data-toggle="tab" href="#details" role="tab" aria-controls="home" aria-selected="true">Workshop Details</a>
                 </li>
@@ -71,15 +77,15 @@
                 <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab">
                     <p>{!!$workshop->about_this_workshop!!}</p>
                 </div>
-                <div class="tab-pane fade show" id="what" role="tabpanel" aria-labelledby="about-tab">
+                <!-- <div class="tab-pane fade show" id="what" role="tabpanel" aria-labelledby="about-tab">
                   <p>{!!$workshop->what_you_will_learn!!}</p>
-                </div>
+                </div> -->
                 <div class="tab-pane fade show" id="details" role="tabpanel" aria-labelledby="about-tab">
-                    <p>Workshop Type: {!!$workshop->type!!}</p>
-                    <p>Workshop Duration: {!!$workshop->duration!!}</p>
-                    <p>Total Credit Hours: {!!$workshop->total_credit_hours!!}</p>
-                    <p>Date & Time: {!!$workshop->date_time!!}</p>
-                  </div>
+                    <p><span class="text-yellow">Workshop Type:</span> {!!$workshop->type!!}</p>
+                    <p><span class="text-yellow">Workshop Duration:</span> {!!$workshop->duration!!}</p>
+                    <p><span class="text-yellow">Total Credit Hours:</span> {!!$workshop->total_credit_hours!!}</p>
+                    <p><span class="text-yellow">Date & Time:</span> {!!$workshop->date_time!!}</p>
+                </div>
                 
                 
                 

@@ -58,7 +58,19 @@
                                         <br>
                                         <p class="ma-0 text-dark">Deadline: {{ date("jS M, Y", strtotime($v_job_info->deadline)) }}</p>
 
+
                                         <div class="button-section">
+                                            <div class="share-button">
+                                                <div><img src="{{asset('images/new_design/main-share.png')}}"> Share</div>
+                                                <div class="share-options">
+                                                    <div class="fb-share-button" 
+                                                    data-href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" 
+                                                    data-layout="button">
+                                                    </div>
+                                                    <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                                                    <script type="IN/Share" data-url="{{ url('job_detail') }}/{{ $v_job_info->job_id }}"></script>
+                                                </div>
+                                            </div>
                                         @if(Auth::check())
                                             @if(Auth::user()->identifier != 101 && Auth::user()->identifier != 2 && Auth::user()->identifier != 104)
                                                 @if($v_job_info->isApplied == 0)

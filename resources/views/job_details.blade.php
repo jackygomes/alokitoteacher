@@ -1,7 +1,23 @@
 
 @extends('master')
+@section('meta')
+@php
+$img = '';
+if($user_info->image) $img = url('images/profile_picture')."/".$job_info->user->image;
+else $img = asset('images/new_design/CM.jpg');
+@endphp
+<link rel="canonical" href="{{ url('job_detail') }}/{{ $job_info->id }}"/>
+<meta property="og:url" content="{{ url('job_detail') }}/{{ $job_info->id }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{$job_info->job_title}}" /> 
+<meta property="og:description" content="{{$job_info->description}}" />
+<meta property="og:image" itemprop="image" content="{{$img}}" />
+<meta property="og:image:secure_url" content="{{ $img }}" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:alt" content="{{$job_info->job_title}}" />
+@endsection
 @section('content')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
 <div class="container-fluid">
 	<div class="row" style="min-height: 90vh">
@@ -94,10 +110,11 @@
 
 	<div class="col-md-7" style="background-color: #f3f2f0;">
 
-		<div class="container-fluid mt-2">
+		<div class="container-fluid mt-5 mb-5">
 			<h3>Job Details</h3>
 			<div class="row mt-3">
 				<div class="col-md-9 card p-3">
+                    @if(Auth::user())
                     @if(Auth::user()->identifier == 2)
                     <div class="form-group row mb-0">
                         <label class="col-sm-3 col-form-label font-weight-bold">Job Status:</label>
@@ -106,13 +123,14 @@
                         </div>
                     </div>
 
-                    @if(isset($job_info->admin_comment))
-                        <div class="form-group row mb-0">
-                            <label class="col-sm-3 col-form-label font-weight-bold" style="color: #f40c0c;">Admin Comment:</label>
-                            <div class="col-sm-9">
-                                <p style="margin: 6px 0 0">{!! nl2br(e($job_info->admin_comment)) !!}</p>
+                        @if(isset($job_info->admin_comment))
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-3 col-form-label font-weight-bold" style="color: #f40c0c;">Admin Comment:</label>
+                                <div class="col-sm-9">
+                                    <p style="margin: 6px 0 0">{!! nl2br(e($job_info->admin_comment)) !!}</p>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     @endif
                     @endif
 
@@ -228,14 +246,17 @@
                             <a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
                         @endif
 					@endif
-                    @if(Auth::user()->identifier == 101)
-                        <a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
+                    @if(Auth::user())
+                        @if(Auth::user()->identifier == 101)
+                            <a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
+                        @endif
                     @endif
 
 				</div>
 
 
 			</div>
+            @if(Auth::user())
 			@if(Auth::user()->identifier == 1)
 
 			<div class="row justify-content-center mt-3">
@@ -250,11 +271,13 @@
 
 
 			@endif
+            @endif
 
 
 
         </div>
 
+        @if(Auth::user())
         @if(Auth::user()->identifier == 2 && $user_info->id == Auth::id())
         <div class="row">
             <div class=" mt-5 mb-3 col-sm-12">
@@ -327,6 +350,7 @@
                 </div>
             </div>
         </div>
+        @endif
         @endif
 
 
