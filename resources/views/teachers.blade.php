@@ -172,7 +172,43 @@
           </div>
         </div>
 
-
+      <div class="container-fluid mt-5">
+        <div class="row dashboard-content-block">
+          <div class="col-sm-12">
+            <h3 class="font-weight-bold mt-5" >Workshop</h3>
+              <div class="table-responsive-sm">
+                <table id="workshop" class="table ">
+                  <thead>
+                    <tr>
+                      <th style="width:10%">No.</th>
+                      <th style="width:35%">Workshop name</th>
+                      <th style="width:15%">Price</th>
+                      <th style="width:15%">Duration</th>
+                      <th style="width:15%">Type</th>
+                      <th style="width:20%">Last Date</th>
+                      <th style="width:20%">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($workshops as $index => $workshop)
+                    <tr>
+                        <td>{{$index+1}}.</td>
+                        <td>{{$workshop->workshop->name }}</td>
+                        <td>{{$workshop->workshop->price }}</td>
+                        <td>{{$workshop->workshop->duration }}</td>
+                        <td>{{$workshop->workshop->type}}</td>
+                        <td>{{$workshop->workshop->last_date}}</td>
+                        <td>
+                            <a href="{{ route('workshops.overview',$workshop->workshop->slug) }}" target="_blank" class="btn btn-info text-white btn-sm">View</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+          </div>
+        </div>
+      </div>
 
       @if($user_info->id == Auth::id())
       @php
@@ -692,6 +728,9 @@
  @push('js')
 
     <script type="text/javascript">
+      $(document).ready(function() {
+          $('#workshop').DataTable();
+      });
         $('#exploreResource').owlCarousel({
             loop:false,
             margin:30,

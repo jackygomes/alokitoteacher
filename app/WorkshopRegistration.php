@@ -11,4 +11,12 @@ class WorkshopRegistration extends Model
         'is_teacher', 'years_teaching', 'teaching_institution', 'school_type', 'classes', 'status', 'subjects', 'previous_training',
         'training_programs', 'online_workshop', 'ambassador', 'ambassador_ref', 'lead'
     ];
+
+    public function user() {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function workshop() {
+        return $this->hasOne(Workshop::class, 'id', 'workshop_id');
+    }
 }

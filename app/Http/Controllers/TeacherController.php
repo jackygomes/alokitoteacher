@@ -23,6 +23,8 @@ use App\Academic;
 use App\Course;
 use App\SubjectBasedKnowledge;
 use App\Skill;
+use App\Workshop;
+use App\WorkshopRegistration;
 
 class TeacherController extends Controller
 {
@@ -92,11 +94,14 @@ class TeacherController extends Controller
 			$user->rating = $teacherRating;
 			$user->save();
 		}
+
+		$workshops = WorkshopRegistration::where('user_id', $user_info->id)->get();
+
 		$earnings = Transaction::where('user_id', Auth::id())->where('transaction_type', 'Earning')->sum('amount');
 		$resources = Resource::where('user_id', $user_info->id)->where('deleted', 0)->get();
 
 
-		return view('teachers', compact('earnings', 'user_info', 'work_info', 'academic_info', 'skill_info', 'progresses', 'achievements', 'course_knowledges', 'leaderBoard', 'recent_work', 'recent_institute', 'resources'));
+		return view('teachers', compact('workshops', 'earnings', 'user_info', 'work_info', 'academic_info', 'skill_info', 'progresses', 'achievements', 'course_knowledges', 'leaderBoard', 'recent_work', 'recent_institute', 'resources'));
 	}
 
 	public function dashboard()
