@@ -246,7 +246,7 @@
                             <div class="posted-by">
                                 <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($v_course_info->name), 20) }}</strong></p>
                                 <div class="share-button">
-                                    <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                    <div class="text-light-dark"><img src="{{asset('images/new_design/main-share.png')}}"> Share</div>
                                     <div class="share-options">
                                         <div class="fb-share-button" 
                                         data-href="{{ route('metaCourse', $v_course_info->slug) }}" 
@@ -397,7 +397,7 @@
                                 <div class="posted-by">
                                     <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 20) }}</strong></p>
                                     <div class="share-button">
-                                        <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                        <div class="text-light-dark"><img src="{{asset('images/new_design/main-share.png')}}"> Share</div>
                                         <div class="share-options">
                                             <div class="fb-share-button" 
                                             data-href="{{ route('metaResource', $resource->slug) }}" 
@@ -756,7 +756,7 @@
                                                 <p class="m-0">{{$last_name}}</p>
                                             @endif
                                         </a>
-                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[1]->score }} ({{$resourceleaderBoard[1]->no_of_review}})</p>
+                                        <p class="m-0">{{ $resourceleaderBoard[1]->score }} </p>
                                     </div>
                                 </div>
                                 <div class="first top-3-card">
@@ -781,7 +781,7 @@
                                                 <p class="m-0">{{$last_name}}</p>
                                             @endif
                                         </a>
-                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[0]->score }} ({{$resourceleaderBoard[0]->no_of_review}})</p>
+                                        <p class="m-0">{{ $resourceleaderBoard[0]->score }} </p>
                                     </div>
                                 </div>
                                 <div class="third top-3-card">
@@ -805,7 +805,7 @@
                                                 <p class="m-0">{{$last_name}}</p>
                                             @endif
                                         </a>
-                                        <p class="m-0"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{ $resourceleaderBoard[2]->score }} ({{$resourceleaderBoard[2]->no_of_review}})</p>
+                                        <p class="m-0">{{ $resourceleaderBoard[2]->score }} </p>
                                     </div>
                                 </div>
                             </div>
@@ -824,7 +824,7 @@
                                             @endif
                                         </div>
                                         <div class="name">{{ $leader['user']->name }}</div>
-                                        <div class="points"><i class="fa fa-star checked-yellow" aria-hidden="true"></i> {{$leader->score}} ({{$leader->no_of_review}})</div>
+                                        <div class="points">{{$leader->score}}</div>
                                         </a>
                                     </li>
 

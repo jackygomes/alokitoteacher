@@ -62,9 +62,9 @@
                                 </a>
                                 <hr>
                                 <div class="posted-by">
-                                    <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 20) }}</strong></p>
+                                    <p class="card-text text-light-dark">Posted By <strong class="text-dark">{{ str_limit(strip_tags($resource->user->name), 16) }}</strong></p>
                                     <div class="share-button">
-                                        <i class="fa fa-share-alt" aria-hidden="true"></i>
+                                    <div class="text-light-dark"><img src="{{asset('images/new_design/main-share.png')}}"> Share</div>
                                         <div class="share-options">
                                             <div class="fb-share-button" 
                                             data-href="{{ route('metaResource', $resource->slug) }}" 

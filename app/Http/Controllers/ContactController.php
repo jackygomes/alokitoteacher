@@ -17,75 +17,59 @@ use Illuminate\Support\Facades\DB;
 class ContactController extends Controller
 {
    function index(){
-	// 	$userTodeduct = [7,8,14,9,10,12,11,1589,16,577,5,83,13,32];
-		// $user = User::where('identifier', '=','1')->where('id', 14)->first();
-		
-	// 	// foreach ($users as $user) {
+		// $userTodeduct = [7,8,14,9,10,12,11,1589,16,577,5,83,13,32];
+		// $users = User::where('identifier', '=','1')->where('id', 2005)->get();
+		// $users = User::where('identifier', '=','1')->whereNotIn('id',  $userTodeduct)->get();
+		// $juri=0;
+		// $rating=0;
+		// $noRating=0;
+		// foreach ($users as $user) {
+		// // Resource leaderboard Start
 
-	// 	// teacher rating making out of hundred
-	// 	$teacherRating = $user->rating * 20;
+		// 	$resources = Resource::where('user_id', $user->id)->where('status', 'Approved')->where('deleted', '0')->get();
+		// 	$resourceRatingCount = 0;
+		// 	$totalRating = 0;
+		// 	$totalReview = 0;
+		// 	$resourceCount = 0;
+		// 	$totalJuriPoint = 0;
+		// 	$aveJuriPoint = 0;
+		// 	$noOfRating = 0;
+		// 	foreach($resources as $resource){
+		// 		$resourceCount++;
+		// 		$totalJuriPoint += $resource->juri_point;
+		// 		$resource_rating = ResourceRating::where('resource_id', $resource->id)->get();
+		// 		foreach($resource_rating as $rating){
+		// 			$resourceRatingCount++;
+		// 			$totalRating += $rating->rating;
+		// 			$totalReview ++;
+		// 		}
+		// 	}
+		// 	if($resourceCount > 0) $juri = $aveJuriPoint = $totalJuriPoint/$resourceCount;
+		// 	if($resourceRatingCount > 0) {
+		// 		$rating = $aveResourceRating = ((($totalRating / $resourceRatingCount)/5)*20);
+		// 		$noRating = $noOfRating = ($totalReview/$users->count())*20;
+		// 	} else $aveResourceRating = 0;
 
-	// 	//course percentage calculation
-	// 	$courses = DB::select("SELECT * FROM (SELECT courses.title, courses.id, (SELECT count(*) FROM course_quizzes WHERE course_quizzes.course_id = courses.id) AS total_quizzes, count(course_histories.id) AS completed_quizzes, sum(course_histories.points) AS gained_points, sum((SELECT count(*) FROM course_questions WHERE course_quizzes.id = course_questions.quiz_id)) AS total_questions FROM courses JOIN course_quizzes ON courses.id = course_quizzes.course_id JOIN course_histories ON course_quizzes.id = course_histories.quiz_id WHERE course_histories.user_id = ".$user->id." GROUP BY courses.id) a WHERE a.completed_quizzes = a.total_quizzes");
-	// 	$coursePercentage = 0;
-	// 	if($courses){
-	// 		$courseTotal = 0;
-	// 		$courseCount = 0;
-	// 		foreach($courses as $course){
-	// 			$courseCount++;
-	// 			$percentage = round((($course->gained_points/($course->total_questions * 2)) * 100), 1);
-	// 			$courseTotal += $percentage;
-	// 		}
-	// 		$coursePercentage = $courseTotal / $courseCount;
-	// 	}
-	// 	$coursePercentage;
+		// 	$totalScore = $aveJuriPoint + $aveResourceRating + $noOfRating;
 
+		// 	$resourceleaderboard = ResourceLeaderBoard::where('user_id', $user->id)->first();
+		// 	if($resourceleaderboard) {
+		// 		$resourceleaderboard->score = $totalScore;
+		// 		$resourceleaderboard->no_of_review  = $totalReview;
+		// 		$resourceleaderboard->save();
+		// 	} else {
+		// 		$resourceleaderboardData = [
+		// 			'user_id'   => $user->id,
+		// 			'score'     => $aveResourceRating,
+		// 			'position'  => 9999,
+		// 			'no_of_review'  => $totalReview,
 
-	// 	//Final percentage calculation
-	// 	$totalAveragePoints = (($teacherRating + $coursePercentage) * 2 ) / 10;
-		
-	// 	$check = $coursePercentage;
-
-	// 	$leaderboard = LeaderBoard::where('user_id', $user->id)->first();
-	// 	if($leaderboard) {
-	// 		$leaderboard->score = $totalAveragePoints;
-	// 		// $leaderboard->save();
-	// 	} 
-	// 	// else {
-	// 	// 	$leaderboardData = [
-	// 	// 		'user_id'   => $user->id,
-	// 	// 		'score'     => $totalAveragePoints,
-	// 	// 		'position'  => 9999,
-	// 	// 		'streak'    => 0,
-
-	// 	// 	];
-	// 	// 	LeaderBoard::create($leaderboardData);
-	// 	// }
-	// // }
-	// 	$leaderboardUser = LeaderBoard::where('user_id', 14)->first();
-	// 	$i = 0;
-	// 	$factor = 1;
-	// 	$i++;
-	// 	if($i==1) {
-	// 		$factor = 10 / $leaderboardUser->score;
-	// 	}
-	// 	if($leaderboardUser->position < 11) $leaderboardUser->streak +=1;
-	// 	else $leaderboardUser->streak = 0;
-	// 	if($i<11) $leaderboardUser->streak_point += (11- $i) * .1;
-
-	// 	$leaderboardUser->score += $leaderboardUser->streak_point * $factor;
-	// 	// $leaderboard->save();
-
-	// 	return $leaderboardUser;
-
-		// $resourceleaderboardUsers = ResourceLeaderBoard::orderBy('score', 'desc')->orderBy('no_of_review', 'desc')->get();
-        // $resourcePosition = 0;
-        // foreach($resourceleaderboardUsers as $user){
-        //     $resourcePosition++;
-        //     $user->position = $resourcePosition;
-        //     $user->save();
-        // }
+		// 		];
+		// 		ResourceLeaderBoard::create($resourceleaderboardData);
+		// 	}
+		// }
 	
+		// return $juri.' | '. $rating.' | '. $noRating ;
 		return view('contact-us');
 	}
 
