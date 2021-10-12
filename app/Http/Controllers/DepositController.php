@@ -210,6 +210,38 @@ class DepositController extends Controller
     public function paymentComplete(Request $request)
     {
 //        return $request->all();
+        // Ipn validation
+        $ipn_data = array();
+        $ipn_data['val_id'] = $request->val_id;
+
+        if(env('APP_ENV') == 'local') {
+            $ipn_data['store_id'] = env('TEST_SSL_STORE_ID');
+            $ipn_data['store_passwd'] = env('TEST_SSL_STORE_PASSWORD');
+        } elseif(env('APP_ENV') == 'production') {
+            $ipn_data['store_id'] = env('LIVE_SSL_STORE_ID');
+            $ipn_data['store_passwd'] = env('LIVE_SSL_STORE_PASSWORD');
+        }
+
+        if(env('APP_ENV') == 'local') {
+            $direct_validation_api_url = env('TEST_SSL_VALIDATION_API');
+        } elseif(env('APP_ENV') == 'production') {
+            $direct_validation_api_url = env('TEST_SSL_VALIDATION_API');
+        }
+
+        $handle = curl_init();
+        curl_setopt($handle, CURLOPT_URL, $direct_validation_api_url );
+        curl_setopt($handle, CURLOPT_TIMEOUT, 30);
+        curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($handle, CURLOPT_POST, 1 );
+        curl_setopt($handle, CURLOPT_POSTFIELDS, $ipn_data);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
+
+
+        $content = curl_exec($handle );
+
+        $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
         try{
             $userId = Auth::id();
             $status = '';

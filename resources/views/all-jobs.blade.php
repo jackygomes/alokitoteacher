@@ -6,7 +6,7 @@
 		margin-left: 4px;
 		position: relative;
 		float: left;
-		margin-right: 20px;
+		margin-right: 8px;
 		padding-top: 6px;
 	}
 	.share-button .share-options {

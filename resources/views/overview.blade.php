@@ -57,6 +57,9 @@
                  </li>
                  @if(Request::segment(2) == 'c')
                  <li class="nav-item">
+                     <a class="nav-link" id="object-tab" data-toggle="tab" href="#object" role="tab" aria-controls="profile" aria-selected="false">Learning Objective</a>
+                 </li>
+                 <li class="nav-item">
                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#advisor" role="tab" aria-controls="profile" aria-selected="false">Course Advisor</a>
                  </li>
                  <li class="nav-item">
@@ -70,6 +73,9 @@
              <div class="tab-content pt-4" id="myTabContent">
                  <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab">
                      <p>{{$info->description}}</p>
+                 </div>
+                 <div class="tab-pane fade show " id="object" role="tabpanel" aria-labelledby="home-tab">
+                     <p>{{$info->learning_objective}}</p>
                  </div>
                  <div class="tab-pane fade" id="advisor" role="tabpanel" aria-labelledby="profile-tab">
                      @if(isset($infoAdvisors) && count($infoAdvisors))

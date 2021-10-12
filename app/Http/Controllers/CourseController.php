@@ -70,11 +70,12 @@ class CourseController extends Controller
         $facilitators = CourseActivist::where('type', 'Facilitator')->get();
         $advisors = CourseActivist::where('type', 'Advisor')->get();
         $designers = CourseActivist::where('type', 'Designer')->get();
-        return view('course.create', compact('user_info', 'users', 'facilitators', 'advisors', 'designers'));
+        return view('course.create', compact('user_info', 'facilitators', 'advisors', 'designers'));
     }
 
     public function store(Request $request)
     {
+        // return $request->all();
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
         if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
@@ -84,6 +85,7 @@ class CourseController extends Controller
         $this->validate($request, [
             'course_name'           => 'required',
             'course_description'    => 'required',
+            'learning_objective'    => 'required',
             'course_price'          => 'required',
             'certificate_price'     => 'required',
             'preview_video'         => 'required',
@@ -105,6 +107,7 @@ class CourseController extends Controller
             'user_id'    => $userId,
             'title'    => isset($request->course_name) ? $request->course_name : "",
             'description'    => isset($request->course_description) ? $request->course_description : "",
+            'learning_objective'    => isset($request->learning_objective) ? $request->learning_objective : "",
             'price'    => isset($request->course_price) ? $request->course_price : "",
             'certificate_price'    => isset($request->certificate_price) ? $request->certificate_price : "",
             'slug'    => $slug,
@@ -222,7 +225,7 @@ class CourseController extends Controller
         }
         //Course Publication status chack...
 
-        return view('course.edit_objective', compact('canEdit', 'users', 'infoFacilitators', 'infoAdvisors', 'infoDesigners', 'facilitators', 'advisors', 'designers', 'previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
+        return view('course.edit_objective', compact('canEdit', 'infoFacilitators', 'infoAdvisors', 'infoDesigners', 'facilitators', 'advisors', 'designers', 'previewVideo', 'publishEnable', 'quizzes', 'info', 'contents'));
     }
 
     public function courseDetailsUpdate(Request $request, $courseId)
@@ -238,6 +241,7 @@ class CourseController extends Controller
         $this->validate($request, [
             'course_name'          => 'required',
             'course_description'   => 'required',
+            'learning_objective'   => 'required',
             'course_price'         => 'required',
             'certificate_price'    => 'required',
             'preview_video'        => 'required',
@@ -262,6 +266,7 @@ class CourseController extends Controller
 
         $course->title = $request->input('course_name');
         $course->description = $request->input('course_description');
+        $course->learning_objective = $request->input('learning_objective');
         $course->price = $request->input('course_price');
         $course->certificate_price = $request->input('certificate_price');
         $course->status = isset($request->status) ? $request->input('status') : "Pending";

@@ -71,6 +71,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="learning_objective" class="col-sm-2 col-form-label">Learning Objective:</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="learning_objective" placeholder="Description" id="learning_objective" rows="3">{{$info->learning_objective}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="coursePrice" class="col-sm-2 col-form-label">Course Price:</label>
                             <div class="col-sm-10">
                                 <input type="text" name="course_price" class="form-control" value="{{$info->price}}" id="coursePrice" placeholder="Course Price">

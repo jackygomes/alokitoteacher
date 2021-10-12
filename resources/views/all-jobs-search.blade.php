@@ -27,7 +27,7 @@
 				        		</div>
 
 
-			        			<div class="col-md-7">
+			        			<div class="col-md-6">
                                     <span class="font-weight-bold text-dark">{{ $v_job_info->job_title }}</span><br>
 
                                     <span class="text-yellow">{{ $v_job_info->name }}</span><br>
@@ -44,7 +44,7 @@
 
 			        			</div>
 
-                                <div class="col-md-3 text-right">
+                                <div class="col-md-4 text-right">
                                     <div class="job-card-right">
                                         <small>
                                             @php
@@ -80,7 +80,16 @@
                                                 @endif
                                             @endif
                                         @endif
-                                        
+                                        @if(Auth::check())
+                                            @if(Auth::user()->identifier == 101 || Auth::user()->identifier == 104)
+                                            <a href="{{ url('remove_job') }}/{{ $v_job_info->job_id }}" class="btn btn-danger">Remove</a>
+                                            @endif
+                                        @endif
+                                        @if($v_job_info->user_id == Auth::id())
+                                            @if($v_job_info->removed == 0)
+                                            <a href="{{ url('remove_job') }}/{{ $v_job_info->job_id }}" class="btn btn-danger">Remove</a>
+                                            @endif
+                                        @endif
                                             <a href="{{ url('job_detail') }}/{{ $v_job_info->job_id }}" class="btn background-yellow text-white">View Job</a>
                                         </div>
                                     </div>

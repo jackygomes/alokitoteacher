@@ -247,9 +247,11 @@ else $img = asset('images/new_design/CM.jpg');
                         @endif
 					@endif
                     @if(Auth::user())
-                        @if(Auth::user()->identifier == 101)
+                        @if(Auth::user()->identifier == 101 || Auth::user()->identifier == 104)
                             <a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
                         @endif
+                    @else
+                    <span class="text-danger">**Login to apply for job**</span>
                     @endif
 
 				</div>
