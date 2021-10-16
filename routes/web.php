@@ -20,6 +20,7 @@ Route::get('test-email', function () {
 
 Route::get('/', 'HomeController@index');
 Route::post('email_subscribe', 'HomeController@email_subscribe');
+Route::get('admin/email_subscribe_list', 'AdminController@emailSubscriberList')->name('admin.email.subscriber.list');
 
 
 Route::get('t/dashboard', 'TeacherController@dashboard')->name('teacher.dashboard');
@@ -250,6 +251,7 @@ Route::group(['prefix' => 'admin/workshop', 'as' => 'workshop.'], function () {
 //Teacher
 Route::group(['prefix' => 'workshops', 'as' => 'workshops.'], function () {
     Route::get('/', 'WorkshopController@list')->name('index');
+    Route::get('/register/login/{slug}', 'WorkshopController@registerLogin')->name('registerLogin');
     Route::get('/overview/{slug}', 'WorkshopController@overview')->name('overview');
     Route::post('/register', 'WorkshopController@register')->name('register');
     Route::get('/export/{workshop}', 'WorkshopController@export')->name('export');

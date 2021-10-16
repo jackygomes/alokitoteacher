@@ -251,7 +251,7 @@ else $img = asset('images/new_design/CM.jpg');
                             <a href="{{ url('remove_job') }}/{{ $job_info->id }}" class="btn btn-danger btn-sm">Remove</a>
                         @endif
                     @else
-                    <span class="text-danger">**Login to apply for job**</span>
+                    <span class="text-danger">**Login or SignUp to apply for job**</span>
                     @endif
 
 				</div>

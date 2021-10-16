@@ -16,6 +16,20 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class WorkshopController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => 'registerLogin']);
+    }
+    public function registerLogin($slug) {
+        if(strpos($slug, 'no-slug') !== false){
+            $data = explode("|", $slug);
+            $workshopId = $data[1];
+            return redirect()->route('workshops.index', compact('workshopId'));
+        }else{
+            return redirect()->route('workshops.overview', $slug);
+        }
+    }
+
     public function index()
     {
         $userId = Auth::id();
@@ -187,16 +201,114 @@ class WorkshopController extends Controller
         } else {
             $thumbnailPart = false;
         }
-
-        $formData = WorkshopRegistration::where('user_id', auth()->user()->id)->first();
-        if ($formData) $formData->toarray();
-        else {
-            $userData = auth()->user();
+        if(Auth::user()){
+            $formData = WorkshopRegistration::where('user_id', auth()->user()->id)->first();
+            if ($formData) $formData->toarray();
+            else {
+                $userData = auth()->user();
+                $formData = [
+                    'name' => $userData->name,
+                    'email' => $userData->email,
+                    'phone' => $userData->phone,
+                    'gender' => $userData->gender,
+                    "dob" => "",
+                    "institution" => "",
+                    "passing_year" => "",
+                    "subject" => "",
+                    "education_level" => "",
+                    "is_teacher" => "",
+                    "years_teaching" => "",
+                    "teaching_institution" => "",
+                    "school_type" => "",
+                    "previous_training" => "",
+                    "training_programs" => "",
+                    "online_workshop" => "",
+                    "ambassador" => "",
+                    "ambassador_ref" => "",
+                    "lead" => ""
+                ];
+            }
+            $alreadyRegistered = WorkshopRegistration::where('workshop_id', $workshop->id)->where('user_id', auth()->user()->id)->count();
+            $ratingGiven = WorkshopRating::where('workshop_id', $workshop->id)->where('user_id', auth()->user()->id)->count();
+        }else {
             $formData = [
-                'name' => $userData->name,
-                'email' => $userData->email,
-                'phone' => $userData->phone,
-                'gender' => $userData->gender,
+                'name' => '',
+                'email' => '',
+                'phone' => '',
+                'gender' => '',
+                "dob" => "",
+                "institution" => "",
+                "passing_year" => "",
+                "subject" => "",
+                "education_level" => "",
+                "is_teacher" => "",
+                "years_teaching" => "",
+                "teaching_institution" => "",
+                "school_type" => "",
+                "previous_training" => "",
+                "training_programs" => "",
+                "online_workshop" => "",
+                "ambassador" => "",
+                "ambassador_ref" => "",
+                "lead" => ""
+            ];
+            $alreadyRegistered = [];
+            $ratingGiven = 0;
+        }
+        
+        return view('workshop.overview', compact('workshop', 'thumbnailPart', 'content_rating', 'formData', 'alreadyRegistered', 'ratingGiven'));
+    }
+
+    private function generateRandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    //For Teachers...
+    public function list(Request $request)
+    {
+        $workshopId = $request->workshopId;
+        $workshops = Workshop::where('status', 'Enabled')->paginate(10);
+
+        if(Auth::user()){
+            $formData = WorkshopRegistration::where('user_id', auth()->user()->id)->first();
+            if ($formData) $formData->toarray();
+            else {
+                $userData = auth()->user();
+                $formData = [
+                    'name' => $userData->name,
+                    'email' => $userData->email,
+                    'phone' => $userData->phone,
+                    'gender' => $userData->gender,
+                    "dob" => "",
+                    "institution" => "",
+                    "passing_year" => "",
+                    "subject" => "",
+                    "education_level" => "",
+                    "is_teacher" => "",
+                    "years_teaching" => "",
+                    "teaching_institution" => "",
+                    "school_type" => "",
+                    "previous_training" => "",
+                    "training_programs" => "",
+                    "online_workshop" => "",
+                    "ambassador" => "",
+                    "ambassador_ref" => "",
+                    "lead" => ""
+                ];
+            }
+        }else {
+            $formData = [
+                'name' => '',
+                'email' => '',
+                'phone' => '',
+                'gender' => '',
                 "dob" => "",
                 "institution" => "",
                 "passing_year" => "",
@@ -214,26 +326,6 @@ class WorkshopController extends Controller
                 "lead" => ""
             ];
         }
-        $alreadyRegistered = WorkshopRegistration::where('workshop_id', $workshop->id)->where('user_id', auth()->user()->id)->count();
-        $ratingGiven = WorkshopRating::where('workshop_id', $workshop->id)->where('user_id', auth()->user()->id)->count();
-        return view('workshop.overview', compact('workshop', 'thumbnailPart', 'content_rating', 'formData', 'alreadyRegistered', 'ratingGiven'));
-    }
-
-    private function generateRandomString($length = 10)
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
-
-    //For Teachers...
-    public function list()
-    {
-        $workshops = Workshop::where('status', 'Enabled')->paginate(10);
 
         foreach ($workshops as $workshop) {
             $workshop->rating = DB::table('workshop_ratings')
@@ -244,7 +336,7 @@ class WorkshopController extends Controller
                 ->count('rating');
         }
 
-        return view('workshop.list', compact('workshops'));
+        return view('workshop.list', compact('workshops', 'formData', 'workshopId'));
     }
 
     public function register(Request $request)

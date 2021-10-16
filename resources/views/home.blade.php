@@ -531,7 +531,7 @@
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Course</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Innovation</a>
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Innovation <small><span class="text-yellow" id="popover" title="How does innovation leaderboard work?" data-content="Leaderboard score is an accumulation of 60% of the total scores received from the jury board, 20% of the average rating received on the website, and 20% of the total number of voting received  on the website." data-trigger="hover"><i class="fas fa-question-circle"></i></span></small></a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">

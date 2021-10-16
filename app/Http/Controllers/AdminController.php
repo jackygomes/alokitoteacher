@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Job;
 use App\Course;
+use App\EmailSubscriber;
 use App\ResourceRating;
 
 class AdminController extends Controller
@@ -440,5 +441,21 @@ class AdminController extends Controller
         $activist->delete();
 
         return redirect()->back()->with('success', $activist->type.' Deleted Successfully ');
+    }
+
+    public function emailSubscriberList()
+    {
+
+        $userId = Auth::id();
+        $user_info = User::where('id', '=', $userId)->first();
+
+        if (isset($user_info) && $user_info->identifier != 101 && $user_info->identifier != 104) {
+            return abort(404);
+        }
+
+        $revenue = Revenue::all()->sum('revenue');
+        $subscriberList = EmailSubscriber::get();
+
+        return view('admin.email_subscribers', compact('user_info', 'revenue', 'subscriberList'));
     }
 }

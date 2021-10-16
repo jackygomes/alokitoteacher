@@ -48,6 +48,9 @@
                         <a href="{{route('admin.contact.messages.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
                             Contact Messages
                         </a>
+                        <a href="{{route('admin.email.subscriber.list')}}" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">
+                            Email Subscribers
+                        </a>
                     </div>
                 </div>
                 <div class="row">

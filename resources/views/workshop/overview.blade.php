@@ -113,7 +113,11 @@
             @endif
             @endfor
 
-            <button type="submit" class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#addJobModal">Register</button>
+            @if(Auth::user())
+            <button type="submit" class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#addJobModal">Register Now</button>
+            @else
+            <a href="{{ route('workshops.registerLogin', $workshop->slug) }}" class="login-to-register mt-4 btn text-white background-yellow btn-lg">Register Now</a>
+            @endif
             <br>
             <br>
             <hr>
@@ -228,8 +232,10 @@
                     <div class="form-row mb-4">
                         <div class="col-md-12">
                             <label>Name<span class="text-danger font-weight-bold"> *</span>:</label>
+                            @if(Auth::user())
                             <input type="hidden" name="id" value="{{Auth::user()->id}}">
                             <input type="hidden" name="workshop_id" value="{{$workshop->id}}">
+                            @endif
                             <input id="title" type="text" class="form-control border-yellow" value="{{$formData ? $formData['name'] : ''}}" name="name" placeholder="Name" required>
                         </div>
                     </div>
@@ -450,7 +456,14 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
 <script>
-   $('#classes').select2({
+    $(".login-to-register").mouseover(function() {
+        $(this).html("Login To Register");
+    });
+    $(".login-to-register").mouseout(function() {
+        $(this).html("Register Now");
+    });
+
+    $('#classes').select2({
             multiple: true,
         });
         $('#subjects').select2({

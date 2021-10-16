@@ -102,6 +102,35 @@
 
                 <form action="{{ url('register')}}" method="POST">
                   {{csrf_field()}}
+                    <div class="form-row mt-1 d-flex justify-content-center text-center">
+                        <label class="radio-img">
+                            <input type="radio" name="identifier" value="1" checked/>
+                            <div class="image" >
+                                <img src="{{asset('images/new_design/education.png')}}" alt="">
+                                <img class="checkmark" src="{{asset('images/new_design/login-checkmark-circle.png')}}" alt="">
+                                <p>Educator</p>
+                            </div>
+                        </label>
+
+                        <label class="radio-img">
+                            <input type="radio" name="identifier" value="2" />
+                            <div class="image">
+                                <img src="{{asset('images/new_design/institution.png')}}" alt="">
+                                <img class="checkmark" src="{{asset('images/new_design/login-checkmark-circle.png')}}" alt="">
+                                <p>Educational<br>Institution</p>
+                            </div>
+                        </label>
+
+                        <label class="radio-img">
+                            <input type="radio" name="identifier" value="4" />
+                            <div class="image">
+                                <img src="{{asset('images/new_design/student.png')}}" alt="">
+                                <img class="checkmark" src="{{asset('images/new_design/login-checkmark-circle.png')}}" alt="">
+                                <p>Student</p>
+                            </div>
+                        </label>
+                    </div>
+
                     <div class="form-row mb-4">
                       <div class="col-md-12">
 
@@ -117,6 +146,7 @@
                       </div>
 
                     </div>
+                    
                     <div class="form-row mt-1">
                       <div class="col-md-12 mb-3">
 
@@ -159,18 +189,31 @@
                       </div>
 
                     </div>
-                        <div class="form-row mt-1">
-                            <div class="col-md-12">
-                                <div class="form-group">
+                    <div id="gender-block" class="form-row mt-1">
+                        <div class="col-md-12">
+                            <div class="form-group">
 {{--                                    <label>Gender:</label>--}}
-                                    <select class="form-control border-grey" name="gender">
-                                        <option value="" disabled selected>Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                </div>
+                                <select class="form-control border-grey" name="gender">
+                                    <option value="" disabled selected>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
+                    <div id="institution-block" class="form-row mt-1">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select class="form-control border-grey" name="school_type">
+                                    <option value="" disabled selected>School Type</option>
+                                    <option value="Bangla medium">Bangla medium</option>
+                                    <option value="English medium">English medium</option>
+                                    <option value="English version">English version</option>
+                                    <option value="Madrasa">Madrasa</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-row mt-1">
                       <div class="col-md-12 mb-3">
 
@@ -199,48 +242,7 @@
                       </div>
 
                     </div>
-{{--                    <div class="form-row mt-1">--}}
-{{--                      <div class="col-md-12 mb-3">--}}
-{{--                        <div class="form-group">--}}
-{{--                          <label>User Type:</label>--}}
-{{--                          <select class="form-control border-grey" name="identifier" required>--}}
-{{--                            <option value="" disabled selected>-- Select User Type --</option>--}}
-{{--                            <option value="1">Educator</option>--}}
-{{--                            <option value="2">Educational Institute</option>--}}
-{{--                            <option value="4">Student</option>--}}
-{{--                          </select>--}}
-{{--                        </div>--}}
-{{--                      </div>--}}
-{{--                    </div>--}}
 
-                    <div class="form-row mt-1 d-flex justify-content-center text-center">
-                        <label class="radio-img">
-                            <input type="radio" name="identifier" value="1" checked/>
-                            <div class="image" >
-                                <img src="{{asset('images/new_design/education.png')}}" alt="">
-                                <img class="checkmark" src="{{asset('images/new_design/login-checkmark-circle.png')}}" alt="">
-                                <p>Educator</p>
-                            </div>
-                        </label>
-
-                        <label class="radio-img">
-                            <input type="radio" name="identifier" value="2" />
-                            <div class="image">
-                                <img src="{{asset('images/new_design/institution.png')}}" alt="">
-                                <img class="checkmark" src="{{asset('images/new_design/login-checkmark-circle.png')}}" alt="">
-                                <p>Educational<br>Institution</p>
-                            </div>
-                        </label>
-
-                        <label class="radio-img">
-                            <input type="radio" name="identifier" value="4" />
-                            <div class="image">
-                                <img src="{{asset('images/new_design/student.png')}}" alt="">
-                                <img class="checkmark" src="{{asset('images/new_design/login-checkmark-circle.png')}}" alt="">
-                                <p>Student</p>
-                            </div>
-                        </label>
-                    </div>
                     <div class="form-row mt-1">
                       <div class="col-md-12">
                         <button type="submit" class="btn background-yellow text-white px-4 py-2 shadow font-weight-bold btn-block" >Signup</button>
@@ -257,5 +259,23 @@
 
     </div>
 </div>
+@push('js')
 
-    @endsection
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            $('#institution-block').hide();
+            $('input[type=radio][name=identifier]').change(function() {
+                if (this.value == '2') {
+                    $('#gender-block').hide();
+                    $('#institution-block').show();
+                } else {
+                    $('#gender-block').show();
+                    $('#institution-block').hide();
+                }
+            });
+        });
+    </script>
+@endpush
+@endsection

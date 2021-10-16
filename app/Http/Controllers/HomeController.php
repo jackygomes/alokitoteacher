@@ -77,9 +77,9 @@ class HomeController extends Controller
 		$users = User::where('identifier', '=', 1)->where('id', '!=', 1)->orderBy('rating', 'DESC')->limit(10)->get();
 		$stat = TeacherStudentCount::find(1);
 
-        $leaderBoard = LeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
-        $courseleaderBoard = CourseLeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
-        $resourceleaderBoard = ResourceLeaderBoard::orderby('position', 'asc')->with('user')->limit(10)->get();
+        $leaderBoard = LeaderBoard::orderby('score', 'desc')->with('user')->limit(10)->get();
+        $courseleaderBoard = CourseLeaderBoard::orderby('score', 'desc')->with('user')->limit(10)->get();
+        $resourceleaderBoard = ResourceLeaderBoard::orderby('score', 'desc')->with('user')->limit(10)->get();
 
 //        return $leaderBoard;
 	    return view ('home',compact('course_info','toolkit_info', 'users','stat','leaderBoard', 'resources', 'courseleaderBoard', 'resourceleaderBoard', 'blogs'));
