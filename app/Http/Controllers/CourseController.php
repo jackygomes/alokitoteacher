@@ -241,7 +241,7 @@ class CourseController extends Controller
         $this->validate($request, [
             'course_name'          => 'required',
             'course_description'   => 'required',
-            'learning_objective'   => 'required',
+            // 'learning_objective'   => 'required',
             'course_price'         => 'required',
             'certificate_price'    => 'required',
             'preview_video'        => 'required',
