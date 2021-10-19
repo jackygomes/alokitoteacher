@@ -1,4 +1,15 @@
 @extends('master')
+@section('meta')
+<link rel="canonical" href="{{ route('workshops.overview',$workshop->slug) }}"/>
+<meta property="og:url" content="{{ route('workshops.overview',$workshop->slug) }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ $workshop->name }}" /> 
+<meta property="og:description" content="{{ $workshop->description }}" />
+<meta property="og:image" itemprop="image" content="{{url('images/thumbnail')}}/{{ $workshop->thumbnail }}" />
+<meta property="og:image:secure_url" content="{{url('images/thumbnail')}}/{{ $workshop->thumbnail }}" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:alt" content="{{ $workshop->name }}" />
+@endsection
 @section('content')
     <style>
         .card-body {
@@ -147,6 +158,14 @@
             @else
             <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal" disabled>Rate this Workshop</button>
             @endif
+            <div class="share-options mt-3">
+                <div class="fb-share-button" 
+                data-href="{{ route('workshops.overview',$workshop->slug) }}" 
+                data-layout="button">
+                </div>
+                <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                <script type="IN/Share" data-url="{{ route('workshops.overview',$workshop->slug) }}"></script>
+            </div>
         </div>
         </div>
 

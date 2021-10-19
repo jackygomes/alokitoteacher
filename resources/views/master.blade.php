@@ -245,11 +245,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{URL::asset('js/jquery.checkImageSize.min.js')}}"></script>
     <script src="{{URL::asset('js/owl.carousel.min.js')}}"></script>
+    
 
     <script src="{{URL::asset('js/custom.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript">
+        $('[data-toggle="tooltip"]').tooltip();
         $('#popover').popover();
         $('.datepicker').datepicker({
             format: 'dd-mm-yyyy'

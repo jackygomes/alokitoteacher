@@ -39,7 +39,7 @@
 
         <div class="row dashboard-content-block">
           <div class="col-sm-12 mt-2">
-          <h3 class="font-weight-bold mt-2 mb-2" >Achievements</h3>
+          <h3 class="font-weight-bold mt-2 mb-4" >Achievements</h3>
 
             {{--
             {{Auth::id()}}
@@ -56,6 +56,7 @@
             $no_achievement = true;
             @endphp
 
+            <h5 class="ml-2">Courses</h5>
             @foreach ($achievements as $achievement)
 
             @if($achievement->total_quizzes != 0 && $achievement->completed_quizzes != 0)
@@ -64,47 +65,50 @@
             $no_achievement = false;
               $percentage = round((($achievement->gained_points/($achievement->total_questions * 2)) * 100), 1);
             @endphp
-            <div style="margin: 10px 0;">
-	            <i class="fas fa-medal fa-2x mr-2" style=" color:
-                @if($percentage >= 85)
-	            #d4af37;
-	            @elseif($percentage >= 70 && $percentage <= 84)
-	            #aaa9ad;
-	            @elseif($percentage >= 60 && $percentage <= 69)
-	            #cd7f32;
-	            @elseif($percentage >= 50 && $percentage <= 59)
-	            #00a74a;
-	            @else
-	            #ff4f4f;
-	            @endif
-	            ">
+            <div class="ml-2" style="margin: 10px 0;">
+	            <p style="display: inline-block; overflow:hidden; margin-bottom: 0;">
+                <span class="py-2 float-left">
+                <i class="fas fa-medal fa-2x mr-2" style=" color:
+                  @if($percentage >= 85)
+                  #d4af37;
+                  @elseif($percentage >= 70 && $percentage <= 84)
+                  #aaa9ad;
+                  @elseif($percentage >= 60 && $percentage <= 69)
+                  #cd7f32;
+                  @elseif($percentage >= 50 && $percentage <= 59)
+                  #00a74a;
+                  @else
+                  #ff4f4f;
+                  @endif
+                  ">
 
-	            </i>
-	            <h5 style="display: inline-block">{{ $achievement->title }} - Average Score ({{$percentage}}%)
+                  </i>
+                  {{ $achievement->title }} - Average Score ({{$percentage}}%)</span>
                     @if($user_info->id == Auth::id())
                         @if($percentage >= 50)
-                            <a href="{{route('certificate', $achievement->id)}}" class="btn background-yellow text-right ml-2 px-4 py-2 shadow font-weight-bold text-white">
+                            <a href="{{route('certificate', $achievement->id)}}" class="float-right btn background-yellow text-right ml-2 px-4 py-2 shadow font-weight-bold text-white">
                                 Get Certificate
                             </a>
                         @endif
                     @endif
-                </h5>
+              </p>
             </div>
             @endif
             @endforeach
 
             @if($no_achievement == true)
-            <h5 class="text-center text-muted">No Achievements to Show</h5>
+            <p class="text-center text-muted">No Achievements to Show</p>
             @endif
-              <h3 class="font-weight-bold mt-3 mb-2" >Workshop</h3>
+            <h5 class="ml-2">Wokrshops</h5>
               @foreach($workshopCertificates as $certificate)
-                <h5><i class="fas fa-certificate text-yellow mr-2"></i> {{$certificate->workshop->name}}
+                <p class="ml-2" style="overflow: hidden">
+                  <span class="float-left py-2"><i class="fas fa-certificate text-yellow mr-2"></i> {{$certificate->workshop->name}}</span>
                   @if($user_info->id == Auth::id())
-                    <a href="{{route('workshops.certificate', $certificate->workshop_id)}}" class="btn background-yellow text-right ml-2 px-4 py-2 shadow font-weight-bold text-white">
+                    <a href="{{route('workshops.certificate', $certificate->workshop_id)}}" class="float-right btn background-yellow text-right ml-2 px-4 py-2 shadow font-weight-bold text-white">
                         Get Certificate
                     </a>
                   @endif
-                </h5>
+                </p>
               @endforeach
           </div>
         </div>
@@ -195,7 +199,6 @@
                       <th style="width:15%">Duration</th>
                       <th style="width:15%">Type</th>
                       <th style="width:20%">Last Date</th>
-                      <th style="width:20%">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -207,9 +210,6 @@
                         <td>{{$workshop->workshop->duration }}</td>
                         <td>{{$workshop->workshop->type}}</td>
                         <td>{{$workshop->workshop->last_date}}</td>
-                        <td>
-                            <a href="{{ route('workshops.overview',$workshop->workshop->slug) }}" target="_blank" class="btn btn-info text-white btn-sm">View</a>
-                        </td>
                     </tr>
                     @endforeach
                   </tbody>
@@ -347,7 +347,7 @@
                           <th style="width:10%">CGPA/GPA</th>
 {{--                          <th style="width:20%">Date</th>--}}
                           @if($user_info->id == Auth::id())
-                           <th style="width:10%">Action</th>
+                           <!-- <th style="width:10%">Action</th> -->
                           @endif
                         </tr>
                       </thead>
@@ -377,9 +377,9 @@
                                     <td>{{$academic_info->cgpa}}</td>
 {{--                                    <td>{{ date("jS F, Y", strtotime($academic_info->date)) }}</td>--}}
 
-                                    @if($user_info->id == Auth::id())
+                                   {{-- @if($user_info->id == Auth::id())
                                     <td><a href="{{ url('remove') }}/academic/{{ $academic_info->id }}" class="btn btn-danger btn-sm">Remove</a></td>
-                                    @endif
+                                    @endif --}}
 
                                   </tr>
                                   @endforeach

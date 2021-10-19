@@ -40,29 +40,21 @@
                             </a>
                             {{-- <p class="text-light-dark">{{$v_course_info->lessons}} Lessons</p> --}}
                             <hr>
-                            <p class="card-text text-light-dark">Posted By <strong class="text-dark">Alokito</strong></p>
-
-                            <div class="text-dark">
-                                @for($i = 1; $i <= 5; $i++)
-                                    @if($workshop->rating - $i >= 0)
-                                        <i class="fa fa-star checked-yellow" aria-hidden="true"></i>
-                                    @else
-                                        <i class="far fa-star text-light-dark"></i>
-                                    @endif
-                                @endfor
-                                ({{$workshop->ratingCount}}) 
-                                {{-- <span class="float-right text-success font-weight-bold">
-                                    @if($v_course_info->isBought == 1)
-                                        Owned
-                                    @else
-                                        @if($v_course_info->price == 0)
-                                            Free
-                                        @else
-                                            {{ round($v_course_info->price, 2)}} BDT
-                                        @endif
-                                    @endif
-                                </span> --}}
+                            <div class="posted-by">
+                                <p class="card-text text-light-dark">Posted By <strong class="text-dark">Alokito</strong></p>
+                                <div class="share-button">
+                                    <div class="text-light-dark"><img src="{{asset('images/new_design/main-share.png')}}"> Share</div>
+                                    <div class="share-options">
+                                        <div class="fb-share-button" 
+                                        data-href="{{ route('workshops.overview',$workshop->slug) }}" 
+                                        data-layout="button">
+                                        </div>
+                                        <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+                                        <script type="IN/Share" data-url="{{ route('workshops.overview',$workshop->slug) }}"></script>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="text-dark">
                                 <div class="card-rating"><i class="fa fa-star text-white" aria-hidden="true"></i> <span>{{round($workshop->rating, 2)}} ({{$workshop->ratingCount}})</span></div>
                                 <span class="float-right text-success font-weight-bold">

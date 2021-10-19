@@ -254,7 +254,7 @@ textarea {
     }
     likeStatus();
     function like(blog_id,user_id){
-        axios.post('http://alokitoteacher.local/api/blog/like',{
+        axios.post('https://alokitoteachers.com/api/blog/like',{
             'user_id': user_id,
             'model_id': blog_id
         } , {

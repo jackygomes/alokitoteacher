@@ -52,8 +52,10 @@
                 </div>
 
                 @endif
-                <h4 class="mt-3">Revenue Balance </h4>
-                <p>{{ $revenue }} BDT</p>
+                @if($user_info->identifier == 101)
+                    <h4 class="mt-3">Revenue Balance </h4>
+                    <p>{{ $revenue }} BDT</p>
+                @endif
 
 
         </div>
