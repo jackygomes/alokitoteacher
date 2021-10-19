@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Exports\WorkshopRegistrationExport;
 use App\WorkshopRating;
+use App\WorkshopCertificate;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Transaction;
 
 class WorkshopController extends Controller
 {
@@ -401,6 +403,91 @@ class WorkshopController extends Controller
             $rating->save();
 
             return back()->with('success', 'Workshop rated successfully!');
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
+    }
+    public function userList ($id) 
+    {
+        try{
+            $userId = Auth::id();
+            $user_info = User::where('id', '=', $userId)->first();
+            if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
+
+                return abort(404);
+            }
+            $revenue = Revenue::all()->sum('revenue');
+            $workshopUsers = WorkshopRegistration::where('workshop_id', $id)->get();
+            foreach($workshopUsers as $workshopRegister){
+                $isCertified = WorkshopCertificate::where('user_id', $workshopRegister->user_id)->where('workshop_id', $workshopRegister->workshop_id)->first();
+                $workshopRegister->certified = $isCertified ? 1 : 0;
+            }
+            $workshopUsers;
+            return view('workshop.user_list', compact('user_info', 'workshopUsers', 'revenue'));
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
+    }
+    public function giveCertificate (Request $request) 
+    {
+        try{
+            $certificateData = [
+                'workshop_id' => $request->workshop_id,
+                'user_id' => $request->user_id,
+            ];
+
+            WorkshopCertificate::create($certificateData);
+            return back()->with('success', 'Certificate Given!');
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
+    }
+
+    public function certificate($id) 
+    {
+        try{
+            $userId = Auth::id();
+            $user_info = User::where('id', '=', $userId)->first();
+            if (isset($user_info) && $user_info->identifier != 1) {
+
+                return abort(404);
+            }
+            $certificateInfo = WorkshopCertificate::where('user_id', $user_info->id)->where('workshop_id', $id)->first();
+            $earnings = Transaction::where('user_id', Auth::id())->where('transaction_type', 'Earning')->sum('amount');
+
+            return view('certificate.workshop', compact('user_info', 'certificateInfo', 'earnings', 'user_info'));
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => $e->getMessage(),
+            ], 420);
+        }
+    }
+
+    public function certificateNameSet(Request $request) 
+    {
+        try{
+            $userId = Auth::id();
+            $user_info = User::where('id', '=', $userId)->first();
+            if (isset($user_info) && $user_info->identifier != 1) {
+
+                return abort(404);
+            }
+            $certificateInfo = WorkshopCertificate::find($request->certificate_id);
+            $certificateInfo->certificate_name = $request->candidate_name;
+            $certificateInfo->save();
+
+            return back()->with('success', 'Certificate Name set successfully!');
         } catch (\Exception $e) {
             return response()->json([
                 'status'    => 'error',

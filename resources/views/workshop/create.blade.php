@@ -119,6 +119,7 @@
                             <div class="col-sm-10">
                                 <input type="file" name="thumbnail" class="form-control-file check-image-size" id="thumbnail" data-min-width="400" data-min-height="300" data-max-width="400" data-max-height="300" >
                                 <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* Thumbnail image ratio should be 400px X 300px (width = 400px, height = 300px).</p>
+                                <p style="margin: 5px 0 0; font-size: 14px; color: #721c24">* For resizing your image visit here <a href="https://resizepic.com/" target="_blank" class="text-yellow">https://resizepic.com/</a></p>
                             </div>
                         </div>
                         <div class="form-group row">

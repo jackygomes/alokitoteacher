@@ -246,6 +246,8 @@ Route::group(['prefix' => 'admin/workshop', 'as' => 'workshop.'], function () {
     Route::get('/edit/{id}', 'WorkshopController@edit')->name('edit');
     Route::post('/update', 'WorkshopController@update')->name('update');
     Route::get('/delete/{id}', 'WorkshopController@delete')->name('delete');
+    Route::get('/user-list/{id}', 'WorkshopController@userList')->name('user.list');
+    Route::post('/give-certificate', 'WorkshopController@giveCertificate')->name('give.certificate');
 });
 
 //Teacher
@@ -257,6 +259,8 @@ Route::group(['prefix' => 'workshops', 'as' => 'workshops.'], function () {
     Route::get('/export/{workshop}', 'WorkshopController@export')->name('export');
 
     Route::post('/rate', 'WorkshopController@rateWorkshop')->name('rate');
+    Route::get('/certificate/{id}', 'WorkshopController@certificate')->name('certificate');
+    Route::post('/certificate-name', 'WorkshopController@certificateNameSet')->name('certificate.name-set');
 });
 
 // Admin

@@ -79,7 +79,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-12 mb-5">
-                        <h3 class="font-weight-bold mr-3" style="display: inline-block">Workshop List</h3>
+                        <h3 class="font-weight-bold mr-3" style="display: inline-block">Workshop User List</h3>
                         <a href="{{route('workshop.create')}}">
                         <span class="fa-clickable text-primary" data-toggle="modal" data-target="#addJobModal"><i class="fas fa-pen"></i> <small>Add</small></span>
                         </a>
@@ -96,28 +96,32 @@
                             <thead>
                                 <tr>
                                     <th>Sl.</th>
-                                    <th>Workshop Title</th>
-                                    <th>Price</th>
-                                    <th>Duration</th>
-                                    <th>Type</th>
-                                    <th>Last Date</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($workshops as $index => $workshop)
+                                @foreach($workshopUsers as $index => $workshopUser)
                                 <tr>
                                     <td>{{$index+1}}.</td>
-                                    <td>{{$workshop->name }}</td>
-                                    <td>{{$workshop->price }}</td>
-                                    <td>{{$workshop->duration }}</td>
-                                    <td>{{$workshop->type}}</td>
-                                    <td>{{$workshop->last_date}}</td>
+                                    <td>{{$workshopUser->user->name }}</td>
+                                    <td>{{$workshopUser->user->email }}</td>
+                                    <td>{{$workshopUser->user->phone_number }}</td>
                                     <td>
-                                        <a href="{{route('workshop.edit', $workshop->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
-                                        <a href="{{route('workshop.delete', $workshop->id)}}" class="btn btn-danger text-white btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
-                                        <a href="{{route('workshops.export', $workshop->id)}}" class="btn btn-success text-white btn-sm">Export Enrolled List</a>
-                                        <a href="{{route('workshop.user.list', $workshop->id)}}" class="btn btn-info text-white btn-sm">View Users</a>
+                                        @if($workshopUser->certified == 1)
+                                            <button class="btn btn-success btn-sm text-white">Certified</button>
+                                        @else
+                                        <form id="workshopCertificateForm_{{$workshopUser->user->id}}" action="{{ route('workshop.give.certificate') }}" method="post">
+                                            <input class="btn btn-info btn-sm text-white" onclick="giveCertificateConfirm({{$workshopUser->user->id}}, '{{$workshopUser->user->name}}')" type="button" value="Give Certificate" />
+                                            <input class="btn btn-info btn-sm " type="hidden" name="user_id" value="{{$workshopUser->user->id}}" />
+                                            <input class="btn btn-info btn-sm " type="hidden" name="workshop_id" value="{{$workshopUser->workshop->id}}" />
+                                            
+                                            <input class="btn btn-info btn-sm " style="display: none" type="submit" value="Give Certificate" />
+                                            @csrf
+                                        </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -136,15 +140,26 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#userList').DataTable();
+      $('#userList').DataTable();
+        
+      
     });
 
-    $('#pro_pic_choose').on('click', function() {
-        $("#profile_picture").click();
-    });
-    $("#profile_picture").change(function() {
-        $("#pro_pic_upload_form").submit();
-    });
+    function giveCertificateConfirm(id, name) {
+          Swal.fire({
+              icon: 'question',
+              title: 'Are you sure to give certificate to '+name+'?',
+              confirmButtonColor: '#f5b82f',
+              confirmButtonText: "Yes",
+              showCancelButton: true,
+              cancelButtonText: 'No',
+              cancelButtonColor: '#d33'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  $("#workshopCertificateForm_" + id).find('[type="submit"]').trigger('click');
+              }
+          })
+      }
 
 </script>
 

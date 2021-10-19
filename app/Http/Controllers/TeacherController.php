@@ -25,6 +25,7 @@ use App\SubjectBasedKnowledge;
 use App\Skill;
 use App\Workshop;
 use App\WorkshopRegistration;
+use App\WorkshopCertificate;
 
 class TeacherController extends Controller
 {
@@ -57,6 +58,8 @@ class TeacherController extends Controller
 		$progresses = DB::select("SELECT * FROM (SELECT courses.title, (SELECT count(*) FROM course_quizzes WHERE course_quizzes.course_id = courses.id) AS total_quizzes, count(course_histories.id) AS completed_quizzes, MAX(course_histories.updated_at) AS updated_at FROM courses JOIN course_quizzes ON courses.id = course_quizzes.course_id JOIN course_histories ON course_quizzes.id = course_histories.quiz_id WHERE course_histories.user_id = " . $user_info->id . " GROUP BY courses.id) a WHERE a.completed_quizzes != a.total_quizzes");
 
 		$achievements = DB::select("SELECT * FROM (SELECT courses.title, courses.id, (SELECT count(*) FROM course_quizzes WHERE course_quizzes.course_id = courses.id) AS total_quizzes, count(course_histories.id) AS completed_quizzes, sum(course_histories.points) AS gained_points, sum((SELECT count(*) FROM course_questions WHERE course_quizzes.id = course_questions.quiz_id)) AS total_questions FROM courses JOIN course_quizzes ON courses.id = course_quizzes.course_id JOIN course_histories ON course_quizzes.id = course_histories.quiz_id WHERE course_histories.user_id = " . $user_info->id . " GROUP BY courses.id) a WHERE a.completed_quizzes = a.total_quizzes");
+
+		$workshopCertificates = WorkshopCertificate::where('user_id', $user_info->id)->where('status', 1)->get();
 
 
 		//		$course_knowledges = DB::select("SELECT * FROM (SELECT subjects.subject_name, (SELECT count(*) FROM toolkit_quizzes WHERE toolkit_quizzes.toolkit_id = toolkits.id) AS total_quizzes, count(toolkit_histories.id) AS completed_quizzes, MAX(toolkit_histories.updated_at) AS updated_at, sum(toolkit_histories.points) AS gained_points, sum((SELECT count(*) FROM toolkit_questions WHERE toolkit_quizzes.id = toolkit_questions.quiz_id)) AS total_questions FROM toolkits JOIN toolkit_quizzes ON toolkits.id = toolkit_quizzes.toolkit_id JOIN toolkit_histories ON toolkit_quizzes.id = toolkit_histories.quiz_id JOIN subjects ON subjects.id = toolkits.subject_id WHERE toolkit_histories.user_id = ".$user_info->id." GROUP BY toolkits.subject_id) a WHERE a.completed_quizzes = a.total_quizzes");
@@ -101,7 +104,7 @@ class TeacherController extends Controller
 		$resources = Resource::where('user_id', $user_info->id)->where('deleted', 0)->get();
 
 
-		return view('teachers', compact('workshops', 'earnings', 'user_info', 'work_info', 'academic_info', 'skill_info', 'progresses', 'achievements', 'course_knowledges', 'leaderBoard', 'recent_work', 'recent_institute', 'resources'));
+		return view('teachers', compact('workshopCertificates', 'workshops', 'earnings', 'user_info', 'work_info', 'academic_info', 'skill_info', 'progresses', 'achievements', 'course_knowledges', 'leaderBoard', 'recent_work', 'recent_institute', 'resources'));
 	}
 
 	public function dashboard()

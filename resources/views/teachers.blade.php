@@ -39,7 +39,7 @@
 
         <div class="row dashboard-content-block">
           <div class="col-sm-12 mt-2">
-          <h3 class="font-weight-bold mt-2 mb-5" >Achievements</h3>
+          <h3 class="font-weight-bold mt-2 mb-2" >Achievements</h3>
 
             {{--
             {{Auth::id()}}
@@ -96,7 +96,16 @@
             @if($no_achievement == true)
             <h5 class="text-center text-muted">No Achievements to Show</h5>
             @endif
-
+              <h3 class="font-weight-bold mt-3 mb-2" >Workshop</h3>
+              @foreach($workshopCertificates as $certificate)
+                <h5><i class="fas fa-certificate text-yellow mr-2"></i> {{$certificate->workshop->name}}
+                  @if($user_info->id == Auth::id())
+                    <a href="{{route('workshops.certificate', $certificate->workshop_id)}}" class="btn background-yellow text-right ml-2 px-4 py-2 shadow font-weight-bold text-white">
+                        Get Certificate
+                    </a>
+                  @endif
+                </h5>
+              @endforeach
           </div>
         </div>
       </div>

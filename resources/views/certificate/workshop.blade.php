@@ -201,43 +201,9 @@
             <div class="col-md-9 col-sm-12 mt-5">
                 <div class="container-fluid">
                     <div class="row">
-                        @if($message = Session::get('success'))
-                            <div class="alert alert-success">
-                                {{$message}}
-                            </div>
-                        @elseif($message = Session::get('error'))
-                            <div class="alert alert-danger">
-                                {{$message}}
-                            </div>
-                        @endif
-                    </div>
-                    <div class="row">
-                        @if($course->certificate_price == 0)
-                            @if($courseItem->certificate == 0)
-                            <div class="col-md-12">
-                                <h3 class="text-yellow font-weight-bold">Certificate is Free.</h3>
-                            </div>
-                            @endif
-                        @else
-                            @if($courseItem->certificate == 0)
-                            <div class="col-md-12">
-                                <h3>Purchase Certificate</h3>
-                            </div>
-                            <div class="col-md-12">
-
-                                <p class="text-yellow font-weight-bold" style="font-size: 18px;">Certificate price is {{round($course->certificate_price, 2)}} BDT.</p>
-
-                            </div>
-                            @endif
-                        @endif
                         <div class="col-md-12">
-                            @if($courseItem->certificate == 0)
-                                @if($course->certificate_price == 0)
-                                    <p style="font-size: 18px;">Click "<span class="font-weight-bold">Purchase</span>" to get your certificate now.</p>
-                                @else
-                                    <p style="font-size: 18px;">If you want to purchase certificate click "<span class="font-weight-bold">Purchase</span>" button.</p>
-                                @endif
-                                <p style="font-size: 18px;">Please fill candidate name before you purchase your certificate.</p>
+                            @if($certificateInfo->certificate_name == null)
+                                <p style="font-size: 18px;">Please fill candidate name before you get your certificate.</p>
                                     @if(session()->has('success'))
                                         <div class="alert alert-success col-md-6">
                                             {{ session()->get('success') }}
@@ -251,32 +217,25 @@
                                             @endforeach
                                         </div>
                                     @endif
-                                <form id="certificatePurchase" action="{{route('certificate.purchase')}}" method="post">
+                                <form id="certificateNameSet" action="{{route('workshops.certificate.name-set')}}" method="post">
                                     @csrf
-                                    <input type="hidden" name="order_id" value="{{$courseItem->id}}">
-                                    <input type="hidden" name="certificate_price" value="{{$course->certificate_price}}">
+                                    <input type="hidden" name="certificate_id" value="{{$certificateInfo->id}}">
 
                                     <div class="form-group col-md-6 pl-0">
                                         <label style="font-size: 18px;">Candidate Name:</label>
-                                        <input name="candidate_name" class="form-control" value="{{$user_info->name}}" value=""/>
+                                        <input name="candidate_name" class="form-control" placeholder="John Doe"/>
                                     </div>
                                     <input class="btn btn-danger btn-sm" style="display: none" type="submit" value="Purchase" />
-                                    <button type="button" onclick="certificatePurchase()" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Purchase</button>
+                                    <button type="button" onclick="setCertificateName()" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Set Name</button>
                                 </form>
                             @else
                                 <p style="font-size: 18px;">Download your certificate.</p>
-                                @if($courseId == 3)
-                                <button type="button" onClick="downloadPdf(2)" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Download</button>
-                                @else
                                 <button type="button" onClick="downloadPdf(1)" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white">Download</button>
-                                @endif
                             @endif
                         </div>
-
                     </div>
                 </div>
-                @if($courseItem->certificate != 0)
-                @if($courseId != 3)
+                @if($certificateInfo->certificate_name != null)
                 <div class="container-fluid ">
                     <div class="container">
                         <div class="row">
@@ -302,13 +261,9 @@
                                             </div>
                                             <p>This is to certify that</p>
                                             <div class="info">
-                                                <p class="person-name">{{isset($certificateData) ? $certificateData->candidate_name : $user_info->name}}</p>
-                                                <p class="top-border">has successfully completed
-                                                    @if($courseScore >= 85)
-                                                    <span class="gold-badge">with a gold badge<img src="{{asset('images/certificate/gold-badge.png')}}" alt=""></span>
-                                                    @endif
-                                                    the online course on</p>
-                                                <p class="course-name bold">{{$course->title}}</p>
+                                                <p class="person-name">{{$certificateInfo->certificate_name}}</p>
+                                                <p class="top-border">has successfully completed the Workshop</p>
+                                                <p class="course-name bold">{{$certificateInfo->workshop->name}}</p>
                                             </div>
                                         </div>
                                         <div class="bottom-section">
@@ -328,62 +283,8 @@
                             </div>
                         </div>
                     </div>
-                    @else
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div id="certificate-wrap-2">
-                                    <div class="inner-wrap">
-                                    <div class="top-section">
-                                        <div class="top-left">
-                                            <ul>
-                                                <li><img src="{{asset('images/certificate/alokito_teacher.png')}}" alt=""></li>
-                                                <li><img src="{{asset('images/certificate/alokito_hridoy.png')}}" alt=""></li>
-                                            </ul>
-                                        </div>
-                                        <div class="top-right other-certificate">
-                                            <ul>
-                                                <li><img src="{{asset('images/certificate/mutho_path.png')}}" alt=""></li>
-                                                <li><img src="{{asset('images/certificate/a2i.png')}}" alt=""></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="middle-section">
-                                        <div class="certificate-heading">
-                                            <h2><span class="bold">CERTIFICATE</span></h2>
-                                            <p>OF PARTICIPATION</p>
-                                        </div>
-                                        <p>This is to certify that</p>
-                                        <div class="info">
-                                            <p class="person-name">{{isset($certificateData) ? $certificateData->candidate_name : $user_info->name}}</p>
-                                            <p class="top-border">has successfully completed
-                                                @if($courseScore >= 85)
-                                                    <span class="gold-badge">with gold badge<img src="{{asset('images/certificate/gold-badge.png')}}" alt=""></span>
-                                                @endif
-                                                   the online course on</p>
-                                            <p class="course-name bold">{{$course->title}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="bottom-section">
-                                        <div class="bottom-left">
-                                            <img class="azwa" src="{{asset('images/certificate/Azwa_nayeem.png')}}" alt="">
-                                            <p class="top-border">Azwa Nayeem</p>
-                                            <p class="designation">Chairperson <br>Alokito Hridoy Foundation</p>
-                                        </div>
-                                        <div class="bottom-right">
-                                            <img class="mannan" src="{{asset('images/certificate/abdul_mannan.png')}}" alt="">
-                                            <p class="top-border">Dr. Md Abdul Mannan(PAA)</p>
-                                            <p class="designation">Joint Secretary and Project Director Access to Information(a2i) Programme ICT Division</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                    @endif
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -392,10 +293,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
         <script type="application/javascript">
-            function certificatePurchase() {
+            function setCertificateName() {
                 Swal.fire({
                     icon: 'question',
-                    title: 'Are you sure to purchase certificate?',
+                    title: 'Are you sure to set this name for certificate?',
                     confirmButtonColor: '#f5b82f',
                     confirmButtonText: "Yes",
                     showCancelButton: true,
@@ -403,7 +304,7 @@
                     cancelButtonColor: '#d33'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $("#certificatePurchase").find('[type="submit"]').trigger('click');
+                        $("#certificateNameSet").find('[type="submit"]').trigger('click');
                     }
                 })
             }
