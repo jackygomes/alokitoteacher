@@ -232,6 +232,7 @@ class WorkshopController extends Controller
             }
             $alreadyRegistered = WorkshopRegistration::where('workshop_id', $workshop->id)->where('user_id', auth()->user()->id)->count();
             $ratingGiven = WorkshopRating::where('workshop_id', $workshop->id)->where('user_id', auth()->user()->id)->count();
+            $isCertified = WorkshopCertificate::where('workshop_id', $workshop->id)->where('user_id', auth()->user()->id)->count();
         }else {
             $formData = [
                 'name' => '',
@@ -256,9 +257,10 @@ class WorkshopController extends Controller
             ];
             $alreadyRegistered = [];
             $ratingGiven = 0;
+            $isCertified = 0;
         }
         
-        return view('workshop.overview', compact('workshop', 'thumbnailPart', 'content_rating', 'formData', 'alreadyRegistered', 'ratingGiven'));
+        return view('workshop.overview', compact('isCertified','workshop', 'thumbnailPart', 'content_rating', 'formData', 'alreadyRegistered', 'ratingGiven'));
     }
 
     private function generateRandomString($length = 10)

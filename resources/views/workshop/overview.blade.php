@@ -152,7 +152,7 @@
             
 
             {{-- <p class="mt-2">Total enrolled: {{$histories->count()}}</p> --}}
-            @if($alreadyRegistered && !$ratingGiven)
+            @if($alreadyRegistered && $ratingGiven == 0 && $isCertified == 1)
             <button class="mt-4 btn text-white background-yellow btn-lg" data-toggle="modal" data-target="#ratingModal">Rate this Workshop</button>
             
             @else
