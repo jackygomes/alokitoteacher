@@ -28,7 +28,7 @@ Route::get('t/dashboard', 'TeacherController@dashboard')->name('teacher.dashboar
 Route::get('s/dashboard', 'SchoolController@dashboard')->name('school.dashboard');
 
 
-Route::get('t/{username}', 'TeacherController@index');
+Route::get('t/{username}', 'TeacherController@index')->name('teacher.profile');
 Route::post('add_work_experience', 'TeacherController@add_work_experience');
 Route::post('add_academics', 'TeacherController@add_academics');
 Route::post('add_skills', 'TeacherController@add_skills');

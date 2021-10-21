@@ -60,6 +60,19 @@
                                 <textarea class="form-control" name="content" placeholder="Content" id="content" rows="3">{{$blog->content}}</textarea>
                             </div>
                         </div>
+                        @if(Auth::user()->identifier == 101 || Auth::user()->identifier == 104)
+                        @php $statusOptions = ['Disabled', 'Enabled']; @endphp
+                        <div class="form-group row">
+                            <label for="subjects" class="col-sm-2 col-form-label">Status:</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select mr-sm-2" name="status" id="status">
+                                    @foreach($statusOptions as $options)
+                                        <option value="{{$options}}" {{$blog->status == $options ? "selected" : ""}}>{{$options}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @endif
                         <a href="{{route('blog.index')}}" class="btn btn-dark mb-4 px-4 py-2 shadow font-weight-bold text-white">Cancel</a>
                         <button type="submit" class="btn background-yellow mb-4 px-4 py-2 shadow font-weight-bold text-white" id="quizButton">Update</button>
                     </form>

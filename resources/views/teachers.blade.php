@@ -1,6 +1,6 @@
 @extends('layouts.master-dashboard')
 @section('content')
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
 <div class="container-fluid dashboard-bg">
 
@@ -220,34 +220,38 @@
       </div>
       <div class="container-fluid mt-5">
         <div class="row dashboard-content-block">
-          <div class="col-sm-12">
-            <h3 class="font-weight-bold mt-5" style="display: inline-block">Blog</h3>
+          <div class="col-sm-12 mt-5">
+            <h3 class="font-weight-bold d-inline mr-2" >Blog</h3>
               @if($user_info->id == Auth::id())
                 <a href="{{route('blog.create')}}"><span class="fa-clickable"><i class="fas fa-pen"></i> <small>Add</small></span></a>
               @endif
-              <div class="table-responsive-sm">
-                <table id="workshop" class="table ">
+              <div class="table-responsive-sm mt-3">
+                <table id="blog" class="table ">
                   <thead>
                     <tr>
-                      <th style="width:10%">No.</th>
-                      <th style="width:35%">Workshop name</th>
-                      <th style="width:15%">Price</th>
-                      <th style="width:15%">Duration</th>
-                      <th style="width:15%">Type</th>
-                      <th style="width:20%">Last Date</th>
+                      <th>Sl.</th>
+                      <th>Blog Title</th>
+                      <th>status</th>
+                      <th>Upload Date</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {{-- @foreach($workshops as $index => $workshop)
+                    @foreach($blogs as $index => $blog)
                     <tr>
                         <td>{{$index+1}}.</td>
-                        <td>{{$workshop->workshop->name }}</td>
-                        <td>{{$workshop->workshop->price }}</td>
-                        <td>{{$workshop->workshop->duration }}</td>
-                        <td>{{$workshop->workshop->type}}</td>
-                        <td>{{$workshop->workshop->last_date}}</td>
+                        <td>{{$blog->name }}</td>
+                        <td>{{$blog->status}}</td>
+                        <td>{{$blog->created_at}}</td>
+                        <td>
+                          @if($blog->status == 'Enabled')
+                            <a href="{{route('blog.edit', $blog->id)}}" class="btn btn-info text-white btn-sm disabled">Edit</a>
+                          @else
+                            <a href="{{route('blog.edit', $blog->id)}}" class="btn btn-info text-white btn-sm">Edit</a>
+                          @endif
+                        </td>
                     </tr>
-                    @endforeach --}}
+                    @endforeach
                   </tbody>
                 </table>
               </div>
@@ -771,10 +775,13 @@
 
 
  @push('js')
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
     <script type="text/javascript">
       $(document).ready(function() {
           $('#workshop').DataTable();
+          $('#blog').DataTable();
       });
         $('#exploreResource').owlCarousel({
             loop:false,

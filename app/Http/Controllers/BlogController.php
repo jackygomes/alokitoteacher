@@ -40,7 +40,7 @@ class BlogController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 && $user_info->identifier != 1)) {
 
             return abort(404);
         }
@@ -60,7 +60,7 @@ class BlogController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 && $user_info->identifier != 1)) {
             return abort(404);
         }
 
@@ -76,6 +76,8 @@ class BlogController extends Controller
             $image_name = 'Blog' . md5(rand()) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path("images/thumbnail"), $image_name);
 
+            if($user_info->identifier == 1) $status = 'Disabled';
+            else $status = 'Enabled';
             $blogData = [
                 'user_id'           => Auth::id(),
                 'name'              => $request->name,
@@ -83,13 +85,18 @@ class BlogController extends Controller
                 'short_description' => $request->short_description,
                 'content'           => $request->content,
                 'thumbnail'         => $image_name,
-                'status'            => 'Enabled'
+                'status'            => $status
             ];
             // return $blogData;
 
             $success = Blog::create($blogData);
-            if ($success) return redirect()->route('blog.index')->with(['success' => 'Blog Saved Successfully!']);
-            else return redirect()->route('blog.index')->with(['error' => 'Something went wrong!']);
+            if($user_info->identifier == 1){
+                if ($success) return redirect()->route('teacher.profile', Auth::user()->username)->with(['success' => 'Blog Saved Successfully!']); 
+                else return redirect()->route('teacher.profile', Auth::user()->username)->with(['danger' => 'Something went wrong!']); 
+            }else {
+                if ($success) return redirect()->route('blog.index')->with(['success' => 'Blog Saved Successfully!']);
+                else return redirect()->route('blog.index')->with(['error' => 'Something went wrong!']);
+            }
         } catch (\Exception $e) {
             return response()->json([
                 'status'    => 'error',
@@ -119,13 +126,13 @@ class BlogController extends Controller
     {
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 && $user_info->identifier != 1)) {
 
             return abort(404);
         }
         $blog = Blog::find($id);
         $revenue = Revenue::all()->sum('revenue');
-        return view('blog.edit', compact('user_info', 'users', 'blog', 'revenue'));
+        return view('blog.edit', compact('user_info', 'blog', 'revenue'));
     }
 
     /**
@@ -140,7 +147,7 @@ class BlogController extends Controller
         $userId = Auth::id();
         $user_info = User::where('id', '=', $userId)->first();
 
-        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104)) {
+        if (isset($user_info) && ($user_info->identifier != 101 && $user_info->identifier != 104 && $user_info->identifier != 1)) {
             return abort(404);
         }
 
@@ -167,13 +174,12 @@ class BlogController extends Controller
             }
 
             $blogData = [
-                'user_id'           => Auth::id(),
                 'name'              => $request->name,
                 'slug'              => $oldData->name == $request->name ? $oldData->slug : str_slug($request->name) . '-' . $this->generateRandomString(5),
                 'short_description' => $request->short_description,
                 'content'           => $request->content,
                 'thumbnail'         => $image_name,
-                'status'            => 'Enabled'
+                'status'            => $request->status
             ];
             // return $blogData;
 
